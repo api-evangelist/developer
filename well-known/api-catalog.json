@@ -1,0 +1,49 @@
+---
+layout: none
+permalink: /.well-known/api-catalog
+---
+{
+  "linkset": [
+{%- for feed in site.data.feeds %}
+    {
+      "anchor": {{ feed.url | jsonify }},
+      "service-desc": [
+        {
+          "href": {{ feed.feed_url | jsonify }},
+          "type": "application/json",
+          "title": {{ feed.name | append: " feed (JSON)" | jsonify }}
+        }{% if feed.apis_json_url and feed.apis_json_url != feed.feed_url %},
+        {
+          "href": {{ feed.apis_json_url | jsonify }},
+          "type": "application/json",
+          "title": "APIs.json catalog (apisjson.org)"
+        }{% endif %}
+      ],
+      "service-doc": [
+        {
+          "href": {{ site.url | append: "/feeds/" | append: feed.slug | append: "/" | jsonify }},
+          "type": "text/html",
+          "title": {{ feed.name | append: " feed documentation" | jsonify }}
+        }
+      ]{% if feed.repo_url %},
+      "service-meta": [
+        {
+          "href": {{ feed.repo_url | jsonify }},
+          "type": "text/html",
+          "title": "Source repository"
+        }
+      ]{% endif %},
+      "describedby": [
+        {
+          "href": "https://apisjson.org/format/",
+          "type": "text/html",
+          "title": "APIs.json specification"
+        }
+      ]{% if feed.tags %},
+      "linkset-meta": {
+        "tags": {{ feed.tags | jsonify }}
+      }{% endif %}
+    }{% unless forloop.last %},{% endunless %}
+{%- endfor %}
+  ]
+}
