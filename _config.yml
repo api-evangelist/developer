@@ -1,0 +1,21 @@
+name: API Evangelist Developer Portal
+description: Static JSON feeds for the API Evangelist network — APIs, policies, rules, properties, schema, standards, strategies, guidance, conversations, experiences, and more.
+image: https://kinlane-productions2.s3.amazonaws.com/api-evangelist-logos/api-evangelist-logo-butterfly.png
+url: https://developer.apievangelist.com
+
+keywords:
+  - APIs
+  - API Evangelist
+  - Developer Portal
+  - JSON Feeds
+  - API Governance
+  - API Discovery
+
+permalink: /:categories/:year/:month/:day/:title/
+exclude: [".rvmrc", ".rbenv-version", "README.md", "Rakefile", "changelog.md"]
+
+github_org: api-evangelist
+github_repo: developer
+
+paginate: 25
+paginate_path: "/blog/:num/"

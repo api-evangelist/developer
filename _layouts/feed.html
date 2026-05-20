@@ -1,0 +1,95 @@
+---
+layout: default
+---
+
+{% assign feed = site.data.feeds | where: "slug", page.feed_slug | first %}
+
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{{ site.url }}/">Home</a></li>
+    <li class="breadcrumb-item"><a href="{{ site.url }}/feeds/">Feeds</a></li>
+    <li class="breadcrumb-item active" aria-current="page">{{ feed.name }}</li>
+  </ol>
+</nav>
+
+<div class="d-flex justify-content-between align-items-start mb-4">
+  <div>
+    <h1>{{ feed.name }} Feed</h1>
+    <p class="lead text-muted">{{ feed.description }}</p>
+    {% for tag in feed.tags %}<span class="badge bg-secondary me-1">{{ tag }}</span>{% endfor %}
+  </div>
+  <div class="text-end ms-4 flex-shrink-0">
+    <a href="{{ feed.feed_url }}" class="btn btn-primary mb-2 d-block" target="_blank" rel="noopener">JSON Feed &rarr;</a>
+    <a href="{{ feed.url }}" class="btn btn-outline-secondary d-block" target="_blank" rel="noopener">Browse {{ feed.name }}</a>
+  </div>
+</div>
+
+<hr>
+
+<h2>Feed Endpoint</h2>
+
+<div class="p-3 bg-light rounded mb-4">
+  <strong>GET</strong> <code>{{ feed.feed_url }}</code>
+</div>
+
+<p>No authentication required. Returns a JSON array. CORS headers are set on all feeds.</p>
+
+{% if feed.repo_url %}
+<p><strong>Source repository:</strong> <a href="{{ feed.repo_url }}" target="_blank" rel="noopener">{{ feed.repo_url }}</a></p>
+{% endif %}
+
+{% if feed.openapi_url %}
+<p><strong>OpenAPI:</strong> <a href="{{ feed.openapi_url }}" target="_blank" rel="noopener"><code>{{ feed.openapi_url }}</code></a></p>
+{% endif %}
+
+{% if feed.apis_json_url %}
+<p><strong>APIs.json:</strong> <a href="{{ feed.apis_json_url }}" target="_blank" rel="noopener"><code>{{ feed.apis_json_url }}</code></a></p>
+{% endif %}
+
+<h2>Response Schema</h2>
+
+<p>Each item in the feed has these fields:</p>
+
+<table class="table table-bordered table-sm">
+  <thead class="table-light">
+    <tr><th>Field</th><th>Type</th><th>Description</th></tr>
+  </thead>
+  <tbody>
+    {% for field in feed.fields %}
+    <tr>
+      <td><code>{{ field.name }}</code></td>
+      <td>{{ field.type }}</td>
+      <td>{{ field.description }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<h2>Example Request</h2>
+
+<pre><code class="language-bash">curl -s {{ feed.feed_url }} | head -c 500</code></pre>
+
+<h2>Usage</h2>
+
+<h3>JavaScript / Browser</h3>
+
+<pre><code class="language-javascript">const response = await fetch('{{ feed.feed_url }}');
+const items = await response.json();
+
+items.forEach(item =&gt; {
+  console.log(item.name, item.slug);
+});</code></pre>
+
+<h3>Python</h3>
+
+<pre><code class="language-python">import requests
+
+response = requests.get('{{ feed.feed_url }}')
+items = response.json()
+
+for item in items:
+    print(item.get('name'), item.get('slug'))</code></pre>
+
+<hr>
+
+<p><strong>Browse the full {{ feed.name }} catalog at <a href="{{ feed.url }}">{{ feed.url }}</a>.</strong></p>
