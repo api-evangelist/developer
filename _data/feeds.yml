@@ -78,14 +78,14 @@
       type: array
       description: Tags
 
-- slug: contracts
-  name: Contracts
-  description: The business and technical details of API resources offered from across different entities operating in almost every business sector.
-  url: https://contracts.apievangelist.com/
-  feed_url: https://contracts.apievangelist.com/apis.json
-  repo_url: https://github.com/api-evangelist/contracts
+- slug: companies
+  name: Companies
+  description: An alphabetical listing of every company tracked across the API Evangelist network, operating in almost every business sector.
+  url: https://companies.apievangelist.com/
+  feed_url: https://companies.apievangelist.com/apis.json
+  repo_url: https://github.com/api-evangelist/companies
   tags:
-    - Contracts
+    - Companies
     - APIs.json
   fields:
     - name: aid

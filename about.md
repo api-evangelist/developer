@@ -11,7 +11,7 @@ This is the developer portal for the [API Evangelist](https://apievangelist.com)
 
 ## What this portal provides
 
-API Evangelist has long published its research across a set of focused sites, each one dedicated to one dimension of API operations: APIs themselves, plus contracts, policies, rules, properties, schema, standards, strategies, guidance, conversations, experiences, partners, utilities, videos, and vocabularies. Every site is its own Jekyll project, every site renders an HTML browse view, and every site emits a static JSON feed of the same data.
+API Evangelist has long published its research across a set of focused sites, each one dedicated to one dimension of API operations: APIs themselves, plus companies, policies, rules, properties, schema, standards, strategies, guidance, conversations, experiences, partners, utilities, videos, and vocabularies. Every site is its own Jekyll project, every site renders an HTML browse view, and every site emits a static JSON feed of the same data.
 
 This portal aggregates those feeds. Each feed is documented here as if it were an API — because for the purposes of integration, that's exactly what it is. Pick a feed, fetch the JSON file, parse it, integrate it. No API key, no rate limit, no signup.
 
@@ -20,7 +20,7 @@ This portal aggregates those feeds. Each feed is documented here as if it were a
 - **[APIs]({{ site.url }}/feeds/apis/)** — individual API resources with OpenAPI reviews
 - **[Posts]({{ site.url }}/feeds/posts/)** — 4,000+ blog posts since 2010
 - **[Conversations]({{ site.url }}/feeds/conversations/)** — interviews with producers, consumers, and service providers
-- **[Contracts]({{ site.url }}/feeds/contracts/)** — business and technical details of API resources
+- **[Companies]({{ site.url }}/feeds/companies/)** — alphabetical listing of companies across the network
 - **[Experiences]({{ site.url }}/feeds/experiences/)** — developer-experience records across teams
 - **[Guidance]({{ site.url }}/feeds/guidance/)** — modular best-practice guidance
 - **[Partners]({{ site.url }}/feeds/partners/)** — API Evangelist partner network

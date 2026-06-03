@@ -75,19 +75,19 @@ apis:
       - FN: Kin Lane
         email: info@apievangelist.com
 
-  - name: Contracts Feed
-    description: Static JSON feed of API contracts — the business and technical details of API resources across providers.
+  - name: Companies Feed
+    description: Static JSON feed of every company tracked across the API Evangelist network.
     image: https://kinlane-productions2.s3.amazonaws.com/api-evangelist-logos/api-evangelist-logo-butterfly.png
-    humanURL: https://developer.apievangelist.com/feeds/contracts/
-    baseURL: https://contracts.apievangelist.com
-    tags: [Contracts]
+    humanURL: https://developer.apievangelist.com/feeds/companies/
+    baseURL: https://companies.apievangelist.com/
+    tags: [Companies]
     properties:
       - type: Documentation
-        url: https://developer.apievangelist.com/feeds/contracts/
+        url: https://developer.apievangelist.com/feeds/companies/
       - type: JSONFeed
-        url: https://contracts.apievangelist.com/apis.json
+        url: https://companies.apievangelist.com/apis.json
       - type: GitHubRepository
-        url: https://github.com/api-evangelist/contracts
+        url: https://github.com/api-evangelist/companies
     contact:
       - FN: Kin Lane
         email: info@apievangelist.com
