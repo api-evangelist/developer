@@ -79,13 +79,13 @@ apis:
     description: Static JSON feed of every company tracked across the API Evangelist network.
     image: https://kinlane-productions2.s3.amazonaws.com/api-evangelist-logos/api-evangelist-logo-butterfly.png
     humanURL: https://developer.apievangelist.com/feeds/companies/
-    baseURL: https://companies.apievangelist.com/
+    baseURL: https://providers.apievangelist.com/
     tags: [Companies]
     properties:
       - type: Documentation
         url: https://developer.apievangelist.com/feeds/companies/
       - type: JSONFeed
-        url: https://companies.apievangelist.com/apis.json
+        url: https://providers.apievangelist.com/apis.json
       - type: GitHubRepository
         url: https://github.com/api-evangelist/companies
     contact:

@@ -24,7 +24,7 @@ The feeds documented here are pulled from these collections:
 | [apis.apievangelist.com](https://apis.apievangelist.com) | Individual APIs with OpenAPI reviews | [apis](https://github.com/api-evangelist/apis) |
 | [posts.apievangelist.com](https://posts.apievangelist.com) | 4,000+ blog posts since 2010 | [posts](https://github.com/api-evangelist/posts) |
 | [conversations.apievangelist.com](https://conversations.apievangelist.com) | Producer/consumer/provider conversations | [conversations](https://github.com/api-evangelist/conversations) |
-| [companies.apievangelist.com](https://companies.apievangelist.com) | Alphabetical listing of companies across the network | [companies](https://github.com/api-evangelist/companies) |
+| [providers.apievangelist.com](https://providers.apievangelist.com) | Alphabetical listing of companies across the network | [companies](https://github.com/api-evangelist/companies) |
 | [experiences.apievangelist.com](https://experiences.apievangelist.com) | Developer-experience records | [experiences](https://github.com/api-evangelist/experiences) |
 | [guidance.apievangelist.com](https://guidance.apievangelist.com) | Modular best-practice guidance | [guidance](https://github.com/api-evangelist/guidance) |
 | [partners.apievangelist.com](https://partners.apievangelist.com) | Partner network | [partners](https://github.com/api-evangelist/partners) |

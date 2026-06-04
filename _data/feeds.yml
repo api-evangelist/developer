@@ -81,8 +81,8 @@
 - slug: companies
   name: Companies
   description: An alphabetical listing of every company tracked across the API Evangelist network, operating in almost every business sector.
-  url: https://companies.apievangelist.com/
-  feed_url: https://companies.apievangelist.com/apis.json
+  url: https://providers.apievangelist.com/
+  feed_url: https://providers.apievangelist.com/apis.json
   repo_url: https://github.com/api-evangelist/companies
   tags:
     - Companies
