@@ -1,6 +1,6 @@
 name: API Evangelist Developer Portal
 description: Static JSON feeds for the API Evangelist network — APIs, policies, rules, properties, schema, standards, strategies, guidance, conversations, experiences, and more.
-image: https://kinlane-productions2.s3.amazonaws.com/api-evangelist-logos/api-evangelist-logo-butterfly.png
+image: https://kinlane-images.s3.amazonaws.com/shared/api-evangelist-logos/api-evangelist-logo-butterfly.png
 url: https://developer.apievangelist.com
 
 keywords:

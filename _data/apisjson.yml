@@ -8,7 +8,7 @@ description: >-
   contracts, partners, utilities, videos, and vocabularies. Everything Kin Lane
   publishes across api-evangelist sites, surfaced as feeds that are easy to consume.
 
-image: https://kinlane-productions2.s3.amazonaws.com/api-evangelist-logos/api-evangelist-logo-butterfly.png
+image: https://kinlane-images.s3.amazonaws.com/shared/api-evangelist-logos/api-evangelist-logo-butterfly.png
 
 tags:
   - APIs
@@ -26,7 +26,7 @@ apis:
 
   - name: APIs Feed
     description: Static JSON feed of individual APIs tracked across the API Evangelist network with OpenAPI reviews.
-    image: https://kinlane-productions2.s3.amazonaws.com/api-evangelist-logos/api-evangelist-logo-butterfly.png
+    image: https://kinlane-images.s3.amazonaws.com/shared/api-evangelist-logos/api-evangelist-logo-butterfly.png
     humanURL: https://developer.apievangelist.com/feeds/apis/
     baseURL: https://apis.apievangelist.com
     tags: [APIs, Discovery]
@@ -43,7 +43,7 @@ apis:
 
   - name: Posts Feed
     description: Static JSON feed of API Evangelist blog posts — 4,000+ stories since 2010.
-    image: https://kinlane-productions2.s3.amazonaws.com/api-evangelist-logos/api-evangelist-logo-butterfly.png
+    image: https://kinlane-images.s3.amazonaws.com/shared/api-evangelist-logos/api-evangelist-logo-butterfly.png
     humanURL: https://developer.apievangelist.com/feeds/posts/
     baseURL: https://posts.apievangelist.com
     tags: [Posts, Blog]
@@ -60,7 +60,7 @@ apis:
 
   - name: Conversations Feed
     description: Static JSON feed of API Evangelist conversations with producers, consumers, and service providers.
-    image: https://kinlane-productions2.s3.amazonaws.com/api-evangelist-logos/api-evangelist-logo-butterfly.png
+    image: https://kinlane-images.s3.amazonaws.com/shared/api-evangelist-logos/api-evangelist-logo-butterfly.png
     humanURL: https://developer.apievangelist.com/feeds/conversations/
     baseURL: https://conversations.apievangelist.com
     tags: [Conversations]
@@ -77,7 +77,7 @@ apis:
 
   - name: Companies Feed
     description: Static JSON feed of every company tracked across the API Evangelist network.
-    image: https://kinlane-productions2.s3.amazonaws.com/api-evangelist-logos/api-evangelist-logo-butterfly.png
+    image: https://kinlane-images.s3.amazonaws.com/shared/api-evangelist-logos/api-evangelist-logo-butterfly.png
     humanURL: https://developer.apievangelist.com/feeds/companies/
     baseURL: https://providers.apievangelist.com/
     tags: [Companies]
@@ -94,7 +94,7 @@ apis:
 
   - name: Experiences Feed
     description: Static JSON feed of API Evangelist developer-experience records.
-    image: https://kinlane-productions2.s3.amazonaws.com/api-evangelist-logos/api-evangelist-logo-butterfly.png
+    image: https://kinlane-images.s3.amazonaws.com/shared/api-evangelist-logos/api-evangelist-logo-butterfly.png
     humanURL: https://developer.apievangelist.com/feeds/experiences/
     baseURL: https://experiences.apievangelist.com
     tags: [Experiences]
@@ -111,7 +111,7 @@ apis:
 
   - name: Guidance Feed
     description: Static JSON feed of API Evangelist modular guidance for API teams.
-    image: https://kinlane-productions2.s3.amazonaws.com/api-evangelist-logos/api-evangelist-logo-butterfly.png
+    image: https://kinlane-images.s3.amazonaws.com/shared/api-evangelist-logos/api-evangelist-logo-butterfly.png
     humanURL: https://developer.apievangelist.com/feeds/guidance/
     baseURL: https://guidance.apievangelist.com
     tags: [Guidance]
@@ -128,7 +128,7 @@ apis:
 
   - name: Partners Feed
     description: Static JSON feed of API Evangelist partners.
-    image: https://kinlane-productions2.s3.amazonaws.com/api-evangelist-logos/api-evangelist-logo-butterfly.png
+    image: https://kinlane-images.s3.amazonaws.com/shared/api-evangelist-logos/api-evangelist-logo-butterfly.png
     humanURL: https://developer.apievangelist.com/feeds/partners/
     baseURL: https://partners.apievangelist.com
     tags: [Partners]
@@ -145,7 +145,7 @@ apis:
 
   - name: Policies Feed
     description: Static JSON feed of API Evangelist policies — the business reasons behind governing API operations.
-    image: https://kinlane-productions2.s3.amazonaws.com/api-evangelist-logos/api-evangelist-logo-butterfly.png
+    image: https://kinlane-images.s3.amazonaws.com/shared/api-evangelist-logos/api-evangelist-logo-butterfly.png
     humanURL: https://developer.apievangelist.com/feeds/policies/
     baseURL: https://policies.apievangelist.com
     tags: [Policies, Governance]
@@ -164,7 +164,7 @@ apis:
 
   - name: Properties Feed
     description: Static JSON feed of API Evangelist properties — individual properties of API operations that can be governed.
-    image: https://kinlane-productions2.s3.amazonaws.com/api-evangelist-logos/api-evangelist-logo-butterfly.png
+    image: https://kinlane-images.s3.amazonaws.com/shared/api-evangelist-logos/api-evangelist-logo-butterfly.png
     humanURL: https://developer.apievangelist.com/feeds/properties/
     baseURL: https://properties.apievangelist.com
     tags: [Properties, Governance]
@@ -181,7 +181,7 @@ apis:
 
   - name: Rules Feed
     description: Static JSON feed of API Evangelist rules — technical guardrails that can be automated and enforced.
-    image: https://kinlane-productions2.s3.amazonaws.com/api-evangelist-logos/api-evangelist-logo-butterfly.png
+    image: https://kinlane-images.s3.amazonaws.com/shared/api-evangelist-logos/api-evangelist-logo-butterfly.png
     humanURL: https://developer.apievangelist.com/feeds/rules/
     baseURL: https://rules.apievangelist.com
     tags: [Rules, Spectral, Governance]
@@ -198,7 +198,7 @@ apis:
 
   - name: Schema Feed
     description: Static JSON feed of schema definitions for digital objects passed via APIs.
-    image: https://kinlane-productions2.s3.amazonaws.com/api-evangelist-logos/api-evangelist-logo-butterfly.png
+    image: https://kinlane-images.s3.amazonaws.com/shared/api-evangelist-logos/api-evangelist-logo-butterfly.png
     humanURL: https://developer.apievangelist.com/feeds/schema/
     baseURL: https://schema.apievangelist.com
     tags: [Schema, JSON Schema]
@@ -215,7 +215,7 @@ apis:
 
   - name: Standards Feed
     description: Static JSON feed of Internet and industry standards used to define API operations.
-    image: https://kinlane-productions2.s3.amazonaws.com/api-evangelist-logos/api-evangelist-logo-butterfly.png
+    image: https://kinlane-images.s3.amazonaws.com/shared/api-evangelist-logos/api-evangelist-logo-butterfly.png
     humanURL: https://developer.apievangelist.com/feeds/standards/
     baseURL: https://standards.apievangelist.com
     tags: [Standards]
@@ -232,7 +232,7 @@ apis:
 
   - name: Strategies Feed
     description: Static JSON feed of high-level API operations strategies.
-    image: https://kinlane-productions2.s3.amazonaws.com/api-evangelist-logos/api-evangelist-logo-butterfly.png
+    image: https://kinlane-images.s3.amazonaws.com/shared/api-evangelist-logos/api-evangelist-logo-butterfly.png
     humanURL: https://developer.apievangelist.com/feeds/strategies/
     baseURL: https://strategies.apievangelist.com
     tags: [Strategies]
@@ -249,7 +249,7 @@ apis:
 
   - name: Utilities Feed
     description: Static JSON feed of utility APIs that power API Evangelist operations.
-    image: https://kinlane-productions2.s3.amazonaws.com/api-evangelist-logos/api-evangelist-logo-butterfly.png
+    image: https://kinlane-images.s3.amazonaws.com/shared/api-evangelist-logos/api-evangelist-logo-butterfly.png
     humanURL: https://developer.apievangelist.com/feeds/utilities/
     baseURL: https://utilities.apievangelist.com
     tags: [Utilities]
@@ -266,7 +266,7 @@ apis:
 
   - name: Videos Feed
     description: Static JSON feed of API Evangelist video content — topics, interviews, and walkthroughs.
-    image: https://kinlane-productions2.s3.amazonaws.com/api-evangelist-logos/api-evangelist-logo-butterfly.png
+    image: https://kinlane-images.s3.amazonaws.com/shared/api-evangelist-logos/api-evangelist-logo-butterfly.png
     humanURL: https://developer.apievangelist.com/feeds/videos/
     baseURL: https://videos.apievangelist.com
     tags: [Videos]
@@ -283,7 +283,7 @@ apis:
 
   - name: Vocabularies Feed
     description: Static JSON feed of controlled vocabularies used across API Evangelist collections.
-    image: https://kinlane-productions2.s3.amazonaws.com/api-evangelist-logos/api-evangelist-logo-butterfly.png
+    image: https://kinlane-images.s3.amazonaws.com/shared/api-evangelist-logos/api-evangelist-logo-butterfly.png
     humanURL: https://developer.apievangelist.com/feeds/vocabularies/
     baseURL: https://vocabularies.apievangelist.com
     tags: [Vocabularies, Taxonomy]
@@ -300,7 +300,7 @@ apis:
 
   - name: Spotlight Rules Feed
     description: Static JSON feed of the Spotlight Rules curated API governance ruleset.
-    image: https://kinlane-productions2.s3.amazonaws.com/api-evangelist-logos/api-evangelist-logo-butterfly.png
+    image: https://kinlane-images.s3.amazonaws.com/shared/api-evangelist-logos/api-evangelist-logo-butterfly.png
     humanURL: https://developer.apievangelist.com/feeds/spotlight-rules/
     baseURL: https://spotlight-rules.com
     tags: [Rules, Spotlight]

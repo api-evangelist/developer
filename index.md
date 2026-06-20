@@ -5,7 +5,7 @@ description: Static JSON feeds for the API Evangelist network — APIs, posts, p
 ---
 
 <div class="text-center mb-5">
-  <img src="https://kinlane-productions2.s3.amazonaws.com/api-evangelist-logos/api-evangelist-logo-butterfly.png" alt="API Evangelist" class="hero-butterfly">
+  <img src="https://kinlane-images.s3.amazonaws.com/shared/api-evangelist-logos/api-evangelist-logo-butterfly.png" alt="API Evangelist" class="hero-butterfly">
   <h1 class="display-5 fw-bold">API Evangelist Developer Portal</h1>
   <p class="lead text-muted">Static JSON feeds for every collection across the API Evangelist network. No authentication. No rate limits. Just data.</p>
   <a href="/feeds/" class="btn btn-primary btn-lg me-2">Browse Feeds</a>
