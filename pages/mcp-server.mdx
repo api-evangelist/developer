@@ -1,0 +1,98 @@
+---
+title: MCP Server
+---
+
+The entire API Evangelist network is available to AI agents as a **Model Context Protocol**
+server over Streamable HTTP:
+
+```
+https://mcp.apievangelist.com/mcp
+```
+
+It covers the same resources as the [REST API](/api), plus concierge tools that bundle curated
+research for a topic. The server card is published at
+[https://apievangelist.com/.well-known/mcp/server-card.json](https://apievangelist.com/.well-known/mcp/server-card.json).
+
+## Start with the concierge
+
+Two tools are designed as the entry point — agents should reach for these first:
+
+- **`get_overview`** — start here: what the network contains, counts per resource type, and how
+  the tools fit together.
+- **`guide_topic(topic)`** — a curated bundle for one topic: the area plus its guidance, rules,
+  policies, papers, stories, and services in a single call.
+
+## Tools
+
+| Tool | What it does |
+| --- | --- |
+| `get_overview` | Start here — network contents, counts, and how the tools fit together |
+| `guide_topic(topic)` | Curated bundle: area + guidance/rules/policies + papers + stories + services |
+| `find_services` / `get_service` | API Evangelist services (`party=first` by default — Kin's own offerings) |
+| `search_api_evangelist` | Unified search across every resource type, faceted with `types=` |
+| `find_posts` / `get_post` | 5,100+ blog stories since 2010 |
+| `find_areas` / `get_area` | The 77 topic areas and their related-area graph |
+| `find_building_blocks(type)` / `get_building_block(type, slug)` | Guidance, rules, policies, standards, strategies, schema, properties, experiences, lifecycle |
+| `find_conversations` / `get_conversation` | Conversations with API producers, consumers, and vendors |
+| `find_papers` / `get_paper` | White papers |
+| `find_vocabulary(category)` | The API vocabulary |
+| `get_feeds` | Machine-readable index of the static JSON feeds |
+
+## Connect
+
+### Claude Code
+
+```bash
+claude mcp add --transport http api-evangelist https://mcp.apievangelist.com/mcp
+```
+
+### Claude Desktop / `.mcp.json`
+
+```json
+{
+  "mcpServers": {
+    "api-evangelist": {
+      "type": "http",
+      "url": "https://mcp.apievangelist.com/mcp"
+    }
+  }
+}
+```
+
+### Cursor (`~/.cursor/mcp.json`)
+
+```json
+{
+  "mcpServers": {
+    "api-evangelist": {
+      "url": "https://mcp.apievangelist.com/mcp"
+    }
+  }
+}
+```
+
+### VS Code (`.vscode/mcp.json`)
+
+```json
+{
+  "servers": {
+    "api-evangelist": {
+      "type": "http",
+      "url": "https://mcp.apievangelist.com/mcp"
+    }
+  }
+}
+```
+
+## Poke it directly
+
+The server speaks JSON-RPC — `initialize`, `tools/list`, and `tools/call`:
+
+```bash
+curl -s https://mcp.apievangelist.com/mcp \
+  -H 'content-type: application/json' \
+  -d '{"jsonrpc":"2.0","id":1,"method":"tools/list"}'
+```
+
+The same [tiers and limits](./authentication) apply as the REST API — keyless free tier, with
+higher limits by request.

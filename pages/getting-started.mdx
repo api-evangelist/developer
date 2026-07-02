@@ -1,0 +1,73 @@
+---
+title: Getting Started
+---
+
+No signup or key is required — the free tier allows **5 requests/second and 1,000 requests/day**
+straight away. The base URL is `https://api.apievangelist.com/v1`.
+
+## Hello, network
+
+```bash
+curl "https://api.apievangelist.com/v1"
+```
+
+The service root returns counts per resource type, entry points, and documentation links — a good
+first call for both humans and agents.
+
+## Search everything
+
+```bash
+curl "https://api.apievangelist.com/v1/search?q=gateway&limit=5"
+```
+
+`meta.facets.types` carries per-type hit counts for the full result set; narrow with `types=`:
+
+```bash
+curl "https://api.apievangelist.com/v1/search?q=gateway&types=posts,guidance&limit=5"
+```
+
+## Browse an area
+
+```bash
+curl "https://api.apievangelist.com/v1/areas/gateway"
+```
+
+Areas connect stories, building blocks, papers, and services around one of 77 topics.
+
+## Query a building block collection
+
+```bash
+curl "https://api.apievangelist.com/v1/guidance?q=governance"
+```
+
+The same shape works across all nine collections: `guidance`, `rules`, `policies`, `standards`,
+`strategies`, `schema`, `properties`, `experiences`, and `lifecycle`.
+
+## Inline the full content
+
+List responses return summaries. Add `include=content` to inline the markdown body:
+
+```bash
+curl "https://api.apievangelist.com/v1/posts?tags=governance&limit=3&include=content"
+```
+
+## From JavaScript
+
+```javascript
+const res = await fetch(
+  "https://api.apievangelist.com/v1/search?q=gateway&limit=5"
+);
+const { meta, data } = await res.json();
+
+console.log(meta.facets.types); // per-type hit counts
+data.forEach((hit) => console.log(hit.type, hit.name ?? hit.title));
+```
+
+## Shaping responses
+
+- **Pagination** — `page` + `limit` (max `limit=100`)
+- **Sparse fields** — `fields=name,slug,tags` to trim payloads
+- **Tag filtering** — `tags=governance,gateway` with `match=any|all`
+
+See the full [API Reference](/api) for every parameter and response shape, and
+[Authentication](./authentication) when you outgrow the free tier.

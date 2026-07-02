@@ -1,0 +1,52 @@
+---
+title: About
+---
+
+# About
+
+This is the developer portal for the [API Evangelist](https://apievangelist.com) network — the
+family of sites maintained by Kin Lane covering the technology, business, politics, and people of
+APIs.
+
+## What this portal provides
+
+API Evangelist has long published its research across a set of focused sites, each one dedicated
+to one dimension of API operations: APIs themselves, plus companies, policies, rules, properties,
+schema, standards, strategies, guidance, conversations, experiences, partners, utilities, videos,
+and vocabularies. Every site renders an HTML browse view, and every site emits a static JSON feed
+of the same data.
+
+This portal documents three ways to consume all of that:
+
+- **The [Network API](/api)** — `https://api.apievangelist.com/v1`, one REST API over the whole
+  network with unified search, topic areas, and every collection as a resource. Keyless free
+  tier; see [Authentication](./authentication).
+- **The [MCP server](./mcp-server)** — `https://mcp.apievangelist.com/mcp`, the same research
+  exposed as Model Context Protocol tools for AI agents, including the `get_overview` and
+  `guide_topic` concierge tools.
+- **The [static feeds](./feeds/index)** — each collection's JSON file, documented as if it were
+  an API, because for the purposes of integration that's exactly what it is. Pick a feed, fetch
+  the JSON, parse it, integrate it. No API key, no rate limit, no signup.
+
+## Discovery
+
+The portal publishes an [RFC 9727 API catalog](https://developer.apievangelist.com/.well-known/api-catalog)
+at `/.well-known/api-catalog`, cataloging the API, the MCP server, and every static feed as a
+machine-readable linkset. The feeds themselves follow the
+[APIs.json specification](https://apisjson.org) — the discovery format Kin Lane has been
+championing for over a decade.
+
+## Open source
+
+The portal is open source at
+[github.com/api-evangelist/developer](https://github.com/api-evangelist/developer). Each
+underlying collection lives in its own repo under the
+[api-evangelist GitHub organization](https://github.com/api-evangelist), and the API + MCP server
+live in [apievangelist-aws](https://github.com/api-evangelist/apievangelist-aws).
+
+## Contact
+
+Questions, issues, or pull requests:
+[github.com/api-evangelist/developer/issues](https://github.com/api-evangelist/developer/issues)
+or [info@apievangelist.com](mailto:info@apievangelist.com) — the same address to use when
+[requesting higher API limits](./authentication).

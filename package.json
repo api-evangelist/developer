@@ -1,0 +1,17 @@
+{
+  "name": "apievangelist-developer",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "API Evangelist developer portal (Zudoku) — served at developer.apievangelist.com",
+  "scripts": {
+    "prebuild": "node scripts/generate-feeds-pages.mjs && node scripts/generate-well-known.mjs",
+    "predev": "npm run prebuild",
+    "dev": "zudoku dev",
+    "build": "npm run prebuild && zudoku build"
+  },
+  "dependencies": {
+    "js-yaml": "^4.1.0",
+    "zudoku": "0.82.1"
+  }
+}

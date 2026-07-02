@@ -1,0 +1,44 @@
+---
+title: Authentication
+---
+
+The API is read-only, and the free tier works with **no key at all**. Keys exist only to raise
+limits.
+
+## Tiers
+
+| Tier | Who | How | Limits |
+| --- | --- | --- | --- |
+| **Free** | Everyone | No key — just call the API | 5 req/s, 1,000 req/day |
+| **Internal** | API Evangelist network sites | Automatic — requests from `*.apievangelist.com` origins are recognized | Elevated |
+| **Higher tiers** | Partners, high-volume consumers | By request — email [info@apievangelist.com](mailto:info@apievangelist.com) | Negotiated |
+
+## Using an API key
+
+If you've been issued a key, send it in the `x-api-key` header:
+
+```bash
+curl "https://api.apievangelist.com/v1/search?q=governance" \
+  -H "x-api-key: YOUR_API_KEY"
+```
+
+```javascript
+const res = await fetch("https://api.apievangelist.com/v1/posts?limit=50", {
+  headers: { "x-api-key": process.env.APIEVANGELIST_API_KEY },
+});
+```
+
+## Internal tier
+
+Browser requests originating from apievangelist.com network sites (any `*.apievangelist.com`
+origin) get the internal tier automatically — no key or configuration needed. This is how the
+network's own sites consume the API.
+
+## Requesting higher limits
+
+If the free tier's 1,000 requests/day doesn't cover your use case, email
+[info@apievangelist.com](mailto:info@apievangelist.com) with a short description of what you're
+building. Keys are issued per consumer with limits matched to the use case.
+
+And if you'd rather skip rate limits entirely for bulk consumption, the
+[static feeds](./feeds/index) remain free, keyless, and unmetered.

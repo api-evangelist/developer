@@ -1,9 +1,6 @@
-_site/
-.sass-cache/
-.jekyll-cache/
-.jekyll-metadata
 node_modules/
+dist/
+pages/feeds/
+public/.well-known/api-catalog*
+public/apis/
 .DS_Store
-Gemfile.lock
-Gemfile
-_site_new/

@@ -1,5 +1,0 @@
-# Cloudflare Pages _redirects: route rewrites.
-# Docs: https://developers.cloudflare.com/pages/configuration/redirects/
-
-# RFC 9727 canonical path (no extension) → Jekyll's actual output.
-/.well-known/api-catalog       /.well-known/api-catalog.json       200

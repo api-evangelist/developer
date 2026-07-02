@@ -1,0 +1,44 @@
+---
+title: Overview
+---
+
+This is the developer front door to the **[API Evangelist](https://apievangelist.com)** network —
+sixteen years of API research served as **one API and one MCP server**: 5,100+ stories, 77 focused
+topic areas, 2,400+ governance building blocks (guidance, rules, policies, standards, strategies,
+schema, properties, experiences, lifecycle), white papers, conversations, services, and the API
+vocabulary — plus the legacy static JSON feeds that predate the API.
+
+## Three ways in
+
+| Surface | Where | Best for |
+| --- | --- | --- |
+| **REST API** | `https://api.apievangelist.com/v1` — [API Reference](/api) | Search, browse, and integrate any resource type |
+| **MCP server** | `https://mcp.apievangelist.com/mcp` — [MCP Server](./mcp-server) | AI agents; start with `get_overview` and `guide_topic` |
+| **Static feeds** | [Static Feeds](./feeds/index) | Zero-auth JSON files, one per collection — no key, no limits |
+
+## What's inside
+
+- **Stories** — 5,100+ blog posts since 2010 (`/posts`)
+- **Areas** — 77 focused topic areas and their related-area graph (`/areas`)
+- **Building blocks** — 2,400+ across nine collections: `/guidance`, `/rules`, `/policies`,
+  `/standards`, `/strategies`, `/schema`, `/properties`, `/experiences`, `/lifecycle`
+- **Media** — `/conversations`, `/papers`, `/newsletters`
+- **Services** — Kin Lane's first-party offerings and the third-party vendor registry (`/services?party=first|third`)
+- **Vocabulary** — the words used to describe APIs (`/vocabulary`)
+- **Feeds** — a machine-readable index of the static feeds (`/feeds`)
+
+Everything is read-only `GET`, and the free tier needs no key — see
+[Authentication](./authentication).
+
+## Start here
+
+- [Getting Started](./getting-started) — runnable curl and JavaScript examples
+- [API Reference](/api) — every endpoint, parameter, and response shape
+- [MCP Server](./mcp-server) — connect Claude Code, Claude Desktop, Cursor, or VS Code
+- [Static Feeds](./feeds/index) — the no-key alternative to the API
+
+## Looking for API providers?
+
+The API provider catalog (thousands of companies and their APIs) intentionally lives on
+**[APIs.io](https://apis.io/developer/)** — this API covers API Evangelist's own research network
+and does not duplicate it.

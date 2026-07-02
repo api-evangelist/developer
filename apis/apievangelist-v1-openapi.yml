@@ -1,0 +1,544 @@
+openapi: 3.1.0
+info:
+  title: API Evangelist Network API
+  version: 1.0.0
+  summary: Sixteen years of API research as one API.
+  description: |
+    The API Evangelist network — 5,000+ stories, 77 topic areas, 2,400+ governance building
+    blocks (guidance, rules, policies, standards, strategies, schema, properties, experiences,
+    lifecycle), conversations, white papers, services, and the API vocabulary — served as a
+    single, searchable REST API.
+
+    **Tiers.** The API works without a key on the free tier (5 req/s, 1,000 req/day). Requests
+    from apievangelist.com network sites get the internal tier automatically. Higher-limit keys
+    are available by request — email info@apievangelist.com.
+
+    **Providers.** The API provider catalog (4,500+ companies) intentionally lives on
+    [APIs.io](https://apis.io/developer/) — this API covers API Evangelist's own research
+    network and does not duplicate it.
+
+    **MCP.** Every resource here is also available as MCP tools at
+    `https://mcp.apievangelist.com/mcp` (Streamable HTTP), including concierge tools
+    (`get_overview`, `guide_topic`) that bundle curated guidance for a topic.
+  contact:
+    name: API Evangelist
+    email: info@apievangelist.com
+    url: https://apievangelist.com
+  license:
+    name: CC BY-SA 4.0
+    url: https://creativecommons.org/licenses/by-sa/4.0/
+servers:
+  - url: https://api.apievangelist.com/v1
+security:
+  - {}
+  - ApiKeyAuth: []
+tags:
+  - name: Service
+    description: Service info and unified search.
+  - name: Stories
+    description: The API Evangelist blog — 5,000+ posts since 2010.
+  - name: Areas
+    description: The 77 focused topic areas and their related-area graph.
+  - name: Building Blocks
+    description: Guidance, rules, policies, standards, strategies, schema, properties, experiences, and lifecycle.
+  - name: Media
+    description: Conversations, papers, and newsletters.
+  - name: Services
+    description: API Evangelist's first-party offerings and the third-party vendor registry.
+  - name: Reference
+    description: Vocabulary and static feeds.
+paths:
+  /:
+    get:
+      operationId: getServiceInfo
+      tags: [Service]
+      summary: Service info
+      description: Counts per resource type, entry points, documentation links, and how to engage.
+      responses:
+        '200':
+          description: Service overview.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  service: { type: string }
+                  version: { type: string }
+                  description: { type: string }
+                  counts:
+                    type: object
+                    additionalProperties: { type: integer }
+                  resources:
+                    type: array
+                    items: { type: string }
+                  documentation: { type: string, format: uri }
+                  openapi: { type: string, format: uri }
+                  mcp: { type: string, format: uri }
+                  engage: { $ref: '#/components/schemas/Engage' }
+  /search:
+    get:
+      operationId: searchNetwork
+      tags: [Service]
+      summary: Unified search
+      description: >
+        Search every resource type at once. `meta.facets.types` carries per-type hit counts
+        for the full result set (useful for filter chips); narrow with `types=`.
+      parameters:
+        - $ref: '#/components/parameters/Q'
+        - name: types
+          in: query
+          description: Comma-separated resource types to include (default all).
+          schema: { type: string, example: 'posts,guidance,rules' }
+        - $ref: '#/components/parameters/Tags'
+        - $ref: '#/components/parameters/Match'
+        - $ref: '#/components/parameters/Sort'
+        - $ref: '#/components/parameters/Fields'
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: Paged, type-faceted results.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/SearchEnvelope' }
+              examples:
+                gateway:
+                  summary: Search "gateway" across the network
+                  value:
+                    meta:
+                      total: 1835
+                      page: 1
+                      limit: 3
+                      pages: 612
+                      query: { q: gateway }
+                      facets:
+                        types: { posts: 1076, areas: 22, guidance: 24, standards: 67 }
+                    data:
+                      - type: areas
+                        slug: gateway
+                        title: Gateway
+                        summary: A collection of services, tooling, and open source solutions for API gateway management…
+                        url: https://gateway.apievangelist.com
+                        tags: [API Gateway, Traffic Management]
+  /posts:
+    get:
+      operationId: listPosts
+      tags: [Stories]
+      summary: List / search stories
+      parameters:
+        - $ref: '#/components/parameters/Q'
+        - name: year
+          in: query
+          description: Filter to one publication year.
+          schema: { type: string, example: '2026' }
+        - $ref: '#/components/parameters/Tags'
+        - $ref: '#/components/parameters/Match'
+        - $ref: '#/components/parameters/Sort'
+        - $ref: '#/components/parameters/Fields'
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: Paged stories, newest first by default.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/PagedEnvelope' }
+  /posts/{slug}:
+    get:
+      operationId: getPost
+      tags: [Stories]
+      summary: One story
+      parameters:
+        - $ref: '#/components/parameters/Slug'
+        - $ref: '#/components/parameters/Include'
+      responses:
+        '200':
+          description: The story; `include=content` adds the full markdown body.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Doc' }
+        '404': { $ref: '#/components/responses/NotFound' }
+  /areas:
+    get:
+      operationId: listAreas
+      tags: [Areas]
+      summary: List / search topic areas
+      parameters:
+        - $ref: '#/components/parameters/Q'
+        - $ref: '#/components/parameters/Tags'
+        - $ref: '#/components/parameters/Fields'
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: The 77 topic areas.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/PagedEnvelope' }
+  /areas/{slug}:
+    get:
+      operationId: getArea
+      tags: [Areas]
+      summary: One topic area with its related-area graph resolved
+      parameters:
+        - $ref: '#/components/parameters/Slug'
+      responses:
+        '200':
+          description: The area; `related` is resolved to `{slug,title,url,summary}` objects.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Area' }
+        '404': { $ref: '#/components/responses/NotFound' }
+  /guidance:
+    get: { $ref: '#/components/pathItems/BlockList/get' }
+  /guidance/{slug}:
+    get: { $ref: '#/components/pathItems/BlockItem/get' }
+  /rules:
+    get: { $ref: '#/components/pathItems/BlockList/get' }
+  /rules/{slug}:
+    get: { $ref: '#/components/pathItems/BlockItem/get' }
+  /policies:
+    get: { $ref: '#/components/pathItems/BlockList/get' }
+  /policies/{slug}:
+    get: { $ref: '#/components/pathItems/BlockItem/get' }
+  /standards:
+    get: { $ref: '#/components/pathItems/BlockList/get' }
+  /standards/{slug}:
+    get: { $ref: '#/components/pathItems/BlockItem/get' }
+  /strategies:
+    get: { $ref: '#/components/pathItems/BlockList/get' }
+  /strategies/{slug}:
+    get: { $ref: '#/components/pathItems/BlockItem/get' }
+  /schema:
+    get: { $ref: '#/components/pathItems/BlockList/get' }
+  /schema/{slug}:
+    get: { $ref: '#/components/pathItems/BlockItem/get' }
+  /properties:
+    get: { $ref: '#/components/pathItems/BlockList/get' }
+  /properties/{slug}:
+    get: { $ref: '#/components/pathItems/BlockItem/get' }
+  /experiences:
+    get: { $ref: '#/components/pathItems/BlockList/get' }
+  /experiences/{slug}:
+    get: { $ref: '#/components/pathItems/BlockItem/get' }
+  /lifecycle:
+    get: { $ref: '#/components/pathItems/BlockList/get' }
+  /lifecycle/{slug}:
+    get: { $ref: '#/components/pathItems/BlockItem/get' }
+  /conversations:
+    get:
+      operationId: listConversations
+      tags: [Media]
+      summary: List / search conversations
+      parameters:
+        - $ref: '#/components/parameters/Q'
+        - $ref: '#/components/parameters/Tags'
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: Recorded conversations with guest and media metadata.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/PagedEnvelope' }
+  /conversations/{slug}:
+    get:
+      operationId: getConversation
+      tags: [Media]
+      summary: One conversation
+      parameters:
+        - $ref: '#/components/parameters/Slug'
+        - $ref: '#/components/parameters/Include'
+      responses:
+        '200':
+          description: The conversation with YouTube/SoundCloud links.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Doc' }
+        '404': { $ref: '#/components/responses/NotFound' }
+  /papers:
+    get:
+      operationId: listPapers
+      tags: [Media]
+      summary: List white papers
+      parameters:
+        - $ref: '#/components/parameters/Q'
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: Papers with outlines and landing URLs.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/PagedEnvelope' }
+  /papers/{slug}:
+    get:
+      operationId: getPaper
+      tags: [Media]
+      summary: One paper
+      parameters:
+        - $ref: '#/components/parameters/Slug'
+      responses:
+        '200':
+          description: The paper.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Doc' }
+        '404': { $ref: '#/components/responses/NotFound' }
+  /newsletters:
+    get:
+      operationId: listNewsletters
+      tags: [Media]
+      summary: List newsletters
+      parameters:
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: Weekly newsletter editions.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/PagedEnvelope' }
+  /services:
+    get:
+      operationId: listServices
+      tags: [Services]
+      summary: List / search services
+      description: >
+        `party=first` returns API Evangelist's own offerings — the front door to working with
+        Kin Lane on API strategy, governance, and discovery. `party=third` returns the vendor
+        registry.
+      parameters:
+        - $ref: '#/components/parameters/Q'
+        - name: party
+          in: query
+          schema: { type: string, enum: [first, third] }
+        - $ref: '#/components/parameters/Tags'
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: Services.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/PagedEnvelope' }
+  /services/{slug}:
+    get:
+      operationId: getService
+      tags: [Services]
+      summary: One service
+      parameters:
+        - $ref: '#/components/parameters/Slug'
+        - $ref: '#/components/parameters/Include'
+      responses:
+        '200':
+          description: The service; first-party entries include a contact.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Doc' }
+        '404': { $ref: '#/components/responses/NotFound' }
+  /vocabulary:
+    get:
+      operationId: listVocabulary
+      tags: [Reference]
+      summary: List / search the API vocabulary
+      parameters:
+        - $ref: '#/components/parameters/Q'
+        - name: category
+          in: query
+          schema: { type: string, enum: [resources, actions, personas, domains, schemas, tags] }
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: Vocabulary terms.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/PagedEnvelope' }
+  /vocabulary/{category}:
+    get:
+      operationId: listVocabularyCategory
+      tags: [Reference]
+      summary: One vocabulary category
+      parameters:
+        - name: category
+          in: path
+          required: true
+          schema: { type: string, enum: [resources, actions, personas, domains, schemas, tags] }
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: Terms in the category.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/PagedEnvelope' }
+  /feeds:
+    get:
+      operationId: listFeeds
+      tags: [Reference]
+      summary: The static machine-readable feeds
+      description: The zero-auth JSON feeds every network site publishes — the no-key alternative to this API.
+      responses:
+        '200':
+          description: Feed registry.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/PagedEnvelope' }
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: Optional — raises rate limits above the keyless free tier.
+  parameters:
+    Q:
+      name: q
+      in: query
+      description: Free-text query over title, summary, tags, and body.
+      schema: { type: string }
+    Tags:
+      name: tags
+      in: query
+      description: Comma-separated tag slugs.
+      schema: { type: string }
+    Match:
+      name: match
+      in: query
+      description: Tag match mode.
+      schema: { type: string, enum: [any, all], default: any }
+    Sort:
+      name: sort
+      in: query
+      schema: { type: string, enum: [default, title, date] }
+    Fields:
+      name: fields
+      in: query
+      description: Comma-separated sparse field projection.
+      schema: { type: string, example: 'slug,title,url' }
+    Page:
+      name: page
+      in: query
+      schema: { type: integer, minimum: 1, default: 1 }
+    Limit:
+      name: limit
+      in: query
+      schema: { type: integer, minimum: 1, maximum: 100, default: 25 }
+    Slug:
+      name: slug
+      in: path
+      required: true
+      schema: { type: string }
+    Include:
+      name: include
+      in: query
+      description: Set to `content` to inline the full markdown body (up to 200 KB).
+      schema: { type: string, enum: [content] }
+  pathItems:
+    BlockList:
+      get:
+        tags: [Building Blocks]
+        summary: List / search this building-block collection
+        parameters:
+          - $ref: '#/components/parameters/Q'
+          - $ref: '#/components/parameters/Tags'
+          - $ref: '#/components/parameters/Match'
+          - $ref: '#/components/parameters/Fields'
+          - $ref: '#/components/parameters/Page'
+          - $ref: '#/components/parameters/Limit'
+        responses:
+          '200':
+            description: Paged building blocks.
+            content:
+              application/json:
+                schema: { $ref: '#/components/schemas/PagedEnvelope' }
+    BlockItem:
+      get:
+        tags: [Building Blocks]
+        summary: One building block
+        parameters:
+          - $ref: '#/components/parameters/Slug'
+          - $ref: '#/components/parameters/Include'
+        responses:
+          '200':
+            description: The building block; `include=content` adds the full body.
+            content:
+              application/json:
+                schema: { $ref: '#/components/schemas/Doc' }
+          '404': { $ref: '#/components/responses/NotFound' }
+  responses:
+    NotFound:
+      description: No such resource.
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/Error' }
+  schemas:
+    Doc:
+      type: object
+      description: One network resource. Extra type-specific fields (guest, outline, party, …) appear per type.
+      properties:
+        type: { type: string }
+        slug: { type: string }
+        title: { type: string }
+        summary: { type: string }
+        url: { type: string, format: uri }
+        tags:
+          type: array
+          items: { type: string }
+        date: { type: string }
+        content: { type: string, description: 'Full markdown body when include=content.' }
+      additionalProperties: true
+    Area:
+      allOf:
+        - $ref: '#/components/schemas/Doc'
+        - type: object
+          properties:
+            related:
+              type: array
+              items:
+                type: object
+                properties:
+                  slug: { type: string }
+                  title: { type: string }
+                  url: { type: string, format: uri }
+                  summary: { type: string }
+    PagedEnvelope:
+      type: object
+      properties:
+        meta:
+          type: object
+          properties:
+            total: { type: integer }
+            page: { type: integer }
+            limit: { type: integer }
+            pages: { type: integer }
+            query: { type: object, additionalProperties: true }
+        data:
+          type: array
+          items: { $ref: '#/components/schemas/Doc' }
+    SearchEnvelope:
+      allOf:
+        - $ref: '#/components/schemas/PagedEnvelope'
+        - type: object
+          properties:
+            meta:
+              type: object
+              properties:
+                facets:
+                  type: object
+                  properties:
+                    types:
+                      type: object
+                      additionalProperties: { type: integer }
+    Engage:
+      type: object
+      properties:
+        email: { type: string, format: email }
+        services_url: { type: string, format: uri }
+        newsletter: { type: string, format: uri }
+    Error:
+      type: object
+      properties:
+        error: { type: string }
+        detail: { type: string }
