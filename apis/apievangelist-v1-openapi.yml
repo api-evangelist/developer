@@ -44,7 +44,7 @@ tags:
   - name: Media
     description: Conversations, papers, and newsletters.
   - name: Services
-    description: API Evangelist's first-party offerings and the third-party vendor registry.
+    description: API Evangelist's first-party offerings and the third-party solutions registry.
   - name: Reference
     description: Vocabulary and static feeds.
 paths:
@@ -88,7 +88,7 @@ paths:
         - name: types
           in: query
           description: Comma-separated resource types to include (default all).
-          schema: { type: string, example: 'posts,guidance,rules' }
+          schema: { type: string, example: 'posts,guidance,solutions' }
         - $ref: '#/components/parameters/Tags'
         - $ref: '#/components/parameters/Match'
         - $ref: '#/components/parameters/Sort'
@@ -584,14 +584,11 @@ paths:
       tags: [Services]
       summary: Search services
       description: >
-        `party=first` returns API Evangelist's own offerings — the front door to working with
-        Kin Lane on API strategy, governance, and discovery. `party=third` returns the vendor
-        registry.
+        API Evangelist's own offerings — the front door to working with Kin Lane on API
+        strategy, governance, and discovery. (The third-party vendor registry lives at
+        `/solutions`.)
       parameters:
         - $ref: '#/components/parameters/Q'
-        - name: party
-          in: query
-          schema: { type: string, enum: [first, third] }
         - $ref: '#/components/parameters/Tags'
         - $ref: '#/components/parameters/Page'
         - $ref: '#/components/parameters/Limit'
@@ -601,6 +598,40 @@ paths:
           content:
             application/json:
               schema: { $ref: '#/components/schemas/PagedEnvelope' }
+  /solutions:
+    get:
+      operationId: listSolutions
+      tags: [Services]
+      summary: Search solutions (742)
+      description: >
+        The solutions registry — third-party API services and tools (gateways, portals,
+        testing, monitoring, …) ranked by adoption across the companies API Evangelist
+        tracks. Browse the site at https://solutions.apievangelist.com.
+      parameters:
+        - $ref: '#/components/parameters/Q'
+        - $ref: '#/components/parameters/Tags'
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: Solutions.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/PagedEnvelope' }
+  /solutions/{slug}:
+    get:
+      operationId: getSolution
+      tags: [Services]
+      summary: One solution
+      parameters:
+        - $ref: '#/components/parameters/Slug'
+      responses:
+        '200':
+          description: The solution, with website and adoption count.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Doc' }
+        '404': { $ref: '#/components/responses/NotFound' }
   /services/{slug}:
     get:
       operationId: getService
