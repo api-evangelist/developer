@@ -11,11 +11,11 @@ const config: ZudokuConfig = {
     logo: {
       src: {
         light:
-          "https://kinlane-images.s3.amazonaws.com/shared/api-evangelist-logos/api-evangelist-logo-butterfly-transparent.png",
-        dark: "https://kinlane-images.s3.amazonaws.com/shared/api-evangelist-logos/api-evangelist-logo-butterfly-transparent.png",
+          "https://kinlane-images.s3.amazonaws.com/shared/api-evangelist-logos/api-evangelist-logo-butterfly-trimmed.png",
+        dark: "https://kinlane-images.s3.amazonaws.com/shared/api-evangelist-logos/api-evangelist-logo-butterfly-trimmed.png",
       },
       alt: "API Evangelist",
-      width: "88px",
+      width: "280px",
     },
   },
 
@@ -61,9 +61,9 @@ const config: ZudokuConfig = {
     // Brand blue #3098d8 (light) / #38a0e0 (dark) expressed as HSL triplets.
     light: { primary: "203 68% 52%", primaryForeground: "0 0% 100%" },
     dark: { primary: "203 73% 55%", primaryForeground: "0 0% 100%" },
-    // Taller header so the butterfly logo renders at a visible size (default 65px
-    // caps the logo via max-h; the logo is near-square so height is the constraint).
-    customCss: ":root { --top-header-height: 92px; }",
+    // The logo is a wide banner (905x166 trimmed) — width drives its size. Keep the
+    // header compact; the 280px logo renders ~51px tall inside the 64px bar.
+    customCss: ":root { --top-header-height: 64px; }",
   },
 };
 
