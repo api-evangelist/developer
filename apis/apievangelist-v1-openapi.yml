@@ -124,7 +124,7 @@ paths:
     get:
       operationId: listPosts
       tags: [Stories]
-      summary: List / search stories
+      summary: Search stories
       parameters:
         - $ref: '#/components/parameters/Q'
         - name: year
@@ -162,7 +162,7 @@ paths:
     get:
       operationId: listAreas
       tags: [Areas]
-      summary: List / search topic areas
+      summary: Search topic areas
       parameters:
         - $ref: '#/components/parameters/Q'
         - $ref: '#/components/parameters/Tags'
@@ -193,7 +193,7 @@ paths:
     get:
       operationId: listGuidance
       tags: [Building Blocks]
-      summary: List / search guidance (177)
+      summary: Search guidance (177)
       description: 'Search or browse the guidance collection — editorial guidance for API producers and consumers.'
       parameters:
         - $ref: '#/components/parameters/Q'
@@ -228,7 +228,7 @@ paths:
     get:
       operationId: listRules
       tags: [Building Blocks]
-      summary: List / search rules (617)
+      summary: Search rules (617)
       description: 'Search or browse the rules collection — machine-readable API governance rules.'
       parameters:
         - $ref: '#/components/parameters/Q'
@@ -263,7 +263,7 @@ paths:
     get:
       operationId: listPolicies
       tags: [Building Blocks]
-      summary: List / search policies (283)
+      summary: Search policies (283)
       description: 'Search or browse the policies collection — API policies for enterprise operations.'
       parameters:
         - $ref: '#/components/parameters/Q'
@@ -298,7 +298,7 @@ paths:
     get:
       operationId: listStandards
       tags: [Building Blocks]
-      summary: List / search standards (432)
+      summary: Search standards (432)
       description: 'Search or browse the standards collection — the API standards landscape.'
       parameters:
         - $ref: '#/components/parameters/Q'
@@ -333,7 +333,7 @@ paths:
     get:
       operationId: listStrategies
       tags: [Building Blocks]
-      summary: List / search strategies (75)
+      summary: Search strategies (75)
       description: 'Search or browse the strategies collection — API strategy patterns.'
       parameters:
         - $ref: '#/components/parameters/Q'
@@ -368,7 +368,7 @@ paths:
     get:
       operationId: listSchema
       tags: [Building Blocks]
-      summary: List / search schema (11)
+      summary: Search schema (11)
       description: 'Search or browse the schema collection — schema definitions and patterns.'
       parameters:
         - $ref: '#/components/parameters/Q'
@@ -403,7 +403,7 @@ paths:
     get:
       operationId: listProperties
       tags: [Building Blocks]
-      summary: List / search properties (790)
+      summary: Search properties (790)
       description: 'Search or browse the properties collection — API property patterns.'
       parameters:
         - $ref: '#/components/parameters/Q'
@@ -438,7 +438,7 @@ paths:
     get:
       operationId: listExperiences
       tags: [Building Blocks]
-      summary: List / search experiences (46)
+      summary: Search experiences (46)
       description: 'Search or browse the experiences collection — API producer and consumer experience patterns.'
       parameters:
         - $ref: '#/components/parameters/Q'
@@ -473,7 +473,7 @@ paths:
     get:
       operationId: listLifecycle
       tags: [Building Blocks]
-      summary: List / search lifecycle (29)
+      summary: Search lifecycle (29)
       description: 'Search or browse the lifecycle collection — stops along the API lifecycle.'
       parameters:
         - $ref: '#/components/parameters/Q'
@@ -508,7 +508,7 @@ paths:
     get:
       operationId: listConversations
       tags: [Media]
-      summary: List / search conversations
+      summary: Search conversations
       parameters:
         - $ref: '#/components/parameters/Q'
         - $ref: '#/components/parameters/Tags'
@@ -582,7 +582,7 @@ paths:
     get:
       operationId: listServices
       tags: [Services]
-      summary: List / search services
+      summary: Search services
       description: >
         `party=first` returns API Evangelist's own offerings — the front door to working with
         Kin Lane on API strategy, governance, and discovery. `party=third` returns the vendor
@@ -620,7 +620,7 @@ paths:
     get:
       operationId: listVocabulary
       tags: [Reference]
-      summary: List / search the API vocabulary
+      summary: Search the API vocabulary
       parameters:
         - $ref: '#/components/parameters/Q'
         - name: category
