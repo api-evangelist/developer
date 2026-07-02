@@ -15,7 +15,7 @@ const config: ZudokuConfig = {
         dark: "https://kinlane-images.s3.amazonaws.com/shared/api-evangelist-logos/api-evangelist-logo-butterfly-transparent.png",
       },
       alt: "API Evangelist",
-      width: "42px",
+      width: "64px",
     },
   },
 
