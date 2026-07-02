@@ -190,41 +190,320 @@ paths:
               schema: { $ref: '#/components/schemas/Area' }
         '404': { $ref: '#/components/responses/NotFound' }
   /guidance:
-    get: { $ref: '#/components/pathItems/BlockList/get' }
+    get:
+      operationId: listGuidance
+      tags: [Building Blocks]
+      summary: List / search guidance (177)
+      description: 'Search or browse the guidance collection — editorial guidance for API producers and consumers.'
+      parameters:
+        - $ref: '#/components/parameters/Q'
+        - $ref: '#/components/parameters/Tags'
+        - $ref: '#/components/parameters/Match'
+        - $ref: '#/components/parameters/Fields'
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: Paged guidance.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/PagedEnvelope' }
   /guidance/{slug}:
-    get: { $ref: '#/components/pathItems/BlockItem/get' }
+    get:
+      operationId: getGuidanceItem
+      tags: [Building Blocks]
+      summary: One guidance entry
+      description: 'One entry from the guidance collection; `include=content` adds the full body.'
+      parameters:
+        - $ref: '#/components/parameters/Slug'
+        - $ref: '#/components/parameters/Include'
+      responses:
+        '200':
+          description: The entry.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Doc' }
+        '404': { $ref: '#/components/responses/NotFound' }
   /rules:
-    get: { $ref: '#/components/pathItems/BlockList/get' }
+    get:
+      operationId: listRules
+      tags: [Building Blocks]
+      summary: List / search rules (617)
+      description: 'Search or browse the rules collection — machine-readable API governance rules.'
+      parameters:
+        - $ref: '#/components/parameters/Q'
+        - $ref: '#/components/parameters/Tags'
+        - $ref: '#/components/parameters/Match'
+        - $ref: '#/components/parameters/Fields'
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: Paged rules.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/PagedEnvelope' }
   /rules/{slug}:
-    get: { $ref: '#/components/pathItems/BlockItem/get' }
+    get:
+      operationId: getRulesItem
+      tags: [Building Blocks]
+      summary: One rules entry
+      description: 'One entry from the rules collection; `include=content` adds the full body.'
+      parameters:
+        - $ref: '#/components/parameters/Slug'
+        - $ref: '#/components/parameters/Include'
+      responses:
+        '200':
+          description: The entry.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Doc' }
+        '404': { $ref: '#/components/responses/NotFound' }
   /policies:
-    get: { $ref: '#/components/pathItems/BlockList/get' }
+    get:
+      operationId: listPolicies
+      tags: [Building Blocks]
+      summary: List / search policies (283)
+      description: 'Search or browse the policies collection — API policies for enterprise operations.'
+      parameters:
+        - $ref: '#/components/parameters/Q'
+        - $ref: '#/components/parameters/Tags'
+        - $ref: '#/components/parameters/Match'
+        - $ref: '#/components/parameters/Fields'
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: Paged policies.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/PagedEnvelope' }
   /policies/{slug}:
-    get: { $ref: '#/components/pathItems/BlockItem/get' }
+    get:
+      operationId: getPoliciesItem
+      tags: [Building Blocks]
+      summary: One policies entry
+      description: 'One entry from the policies collection; `include=content` adds the full body.'
+      parameters:
+        - $ref: '#/components/parameters/Slug'
+        - $ref: '#/components/parameters/Include'
+      responses:
+        '200':
+          description: The entry.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Doc' }
+        '404': { $ref: '#/components/responses/NotFound' }
   /standards:
-    get: { $ref: '#/components/pathItems/BlockList/get' }
+    get:
+      operationId: listStandards
+      tags: [Building Blocks]
+      summary: List / search standards (432)
+      description: 'Search or browse the standards collection — the API standards landscape.'
+      parameters:
+        - $ref: '#/components/parameters/Q'
+        - $ref: '#/components/parameters/Tags'
+        - $ref: '#/components/parameters/Match'
+        - $ref: '#/components/parameters/Fields'
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: Paged standards.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/PagedEnvelope' }
   /standards/{slug}:
-    get: { $ref: '#/components/pathItems/BlockItem/get' }
+    get:
+      operationId: getStandardsItem
+      tags: [Building Blocks]
+      summary: One standards entry
+      description: 'One entry from the standards collection; `include=content` adds the full body.'
+      parameters:
+        - $ref: '#/components/parameters/Slug'
+        - $ref: '#/components/parameters/Include'
+      responses:
+        '200':
+          description: The entry.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Doc' }
+        '404': { $ref: '#/components/responses/NotFound' }
   /strategies:
-    get: { $ref: '#/components/pathItems/BlockList/get' }
+    get:
+      operationId: listStrategies
+      tags: [Building Blocks]
+      summary: List / search strategies (75)
+      description: 'Search or browse the strategies collection — API strategy patterns.'
+      parameters:
+        - $ref: '#/components/parameters/Q'
+        - $ref: '#/components/parameters/Tags'
+        - $ref: '#/components/parameters/Match'
+        - $ref: '#/components/parameters/Fields'
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: Paged strategies.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/PagedEnvelope' }
   /strategies/{slug}:
-    get: { $ref: '#/components/pathItems/BlockItem/get' }
+    get:
+      operationId: getStrategiesItem
+      tags: [Building Blocks]
+      summary: One strategies entry
+      description: 'One entry from the strategies collection; `include=content` adds the full body.'
+      parameters:
+        - $ref: '#/components/parameters/Slug'
+        - $ref: '#/components/parameters/Include'
+      responses:
+        '200':
+          description: The entry.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Doc' }
+        '404': { $ref: '#/components/responses/NotFound' }
   /schema:
-    get: { $ref: '#/components/pathItems/BlockList/get' }
+    get:
+      operationId: listSchema
+      tags: [Building Blocks]
+      summary: List / search schema (11)
+      description: 'Search or browse the schema collection — schema definitions and patterns.'
+      parameters:
+        - $ref: '#/components/parameters/Q'
+        - $ref: '#/components/parameters/Tags'
+        - $ref: '#/components/parameters/Match'
+        - $ref: '#/components/parameters/Fields'
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: Paged schema.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/PagedEnvelope' }
   /schema/{slug}:
-    get: { $ref: '#/components/pathItems/BlockItem/get' }
+    get:
+      operationId: getSchemaItem
+      tags: [Building Blocks]
+      summary: One schema entry
+      description: 'One entry from the schema collection; `include=content` adds the full body.'
+      parameters:
+        - $ref: '#/components/parameters/Slug'
+        - $ref: '#/components/parameters/Include'
+      responses:
+        '200':
+          description: The entry.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Doc' }
+        '404': { $ref: '#/components/responses/NotFound' }
   /properties:
-    get: { $ref: '#/components/pathItems/BlockList/get' }
+    get:
+      operationId: listProperties
+      tags: [Building Blocks]
+      summary: List / search properties (790)
+      description: 'Search or browse the properties collection — API property patterns.'
+      parameters:
+        - $ref: '#/components/parameters/Q'
+        - $ref: '#/components/parameters/Tags'
+        - $ref: '#/components/parameters/Match'
+        - $ref: '#/components/parameters/Fields'
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: Paged properties.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/PagedEnvelope' }
   /properties/{slug}:
-    get: { $ref: '#/components/pathItems/BlockItem/get' }
+    get:
+      operationId: getPropertiesItem
+      tags: [Building Blocks]
+      summary: One properties entry
+      description: 'One entry from the properties collection; `include=content` adds the full body.'
+      parameters:
+        - $ref: '#/components/parameters/Slug'
+        - $ref: '#/components/parameters/Include'
+      responses:
+        '200':
+          description: The entry.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Doc' }
+        '404': { $ref: '#/components/responses/NotFound' }
   /experiences:
-    get: { $ref: '#/components/pathItems/BlockList/get' }
+    get:
+      operationId: listExperiences
+      tags: [Building Blocks]
+      summary: List / search experiences (46)
+      description: 'Search or browse the experiences collection — API producer and consumer experience patterns.'
+      parameters:
+        - $ref: '#/components/parameters/Q'
+        - $ref: '#/components/parameters/Tags'
+        - $ref: '#/components/parameters/Match'
+        - $ref: '#/components/parameters/Fields'
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: Paged experiences.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/PagedEnvelope' }
   /experiences/{slug}:
-    get: { $ref: '#/components/pathItems/BlockItem/get' }
+    get:
+      operationId: getExperiencesItem
+      tags: [Building Blocks]
+      summary: One experiences entry
+      description: 'One entry from the experiences collection; `include=content` adds the full body.'
+      parameters:
+        - $ref: '#/components/parameters/Slug'
+        - $ref: '#/components/parameters/Include'
+      responses:
+        '200':
+          description: The entry.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Doc' }
+        '404': { $ref: '#/components/responses/NotFound' }
   /lifecycle:
-    get: { $ref: '#/components/pathItems/BlockList/get' }
+    get:
+      operationId: listLifecycle
+      tags: [Building Blocks]
+      summary: List / search lifecycle (29)
+      description: 'Search or browse the lifecycle collection — stops along the API lifecycle.'
+      parameters:
+        - $ref: '#/components/parameters/Q'
+        - $ref: '#/components/parameters/Tags'
+        - $ref: '#/components/parameters/Match'
+        - $ref: '#/components/parameters/Fields'
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: Paged lifecycle.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/PagedEnvelope' }
   /lifecycle/{slug}:
-    get: { $ref: '#/components/pathItems/BlockItem/get' }
+    get:
+      operationId: getLifecycleItem
+      tags: [Building Blocks]
+      summary: One lifecycle entry
+      description: 'One entry from the lifecycle collection; `include=content` adds the full body.'
+      parameters:
+        - $ref: '#/components/parameters/Slug'
+        - $ref: '#/components/parameters/Include'
+      responses:
+        '200':
+          description: The entry.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Doc' }
+        '404': { $ref: '#/components/responses/NotFound' }
   /conversations:
     get:
       operationId: listConversations
@@ -435,38 +714,6 @@ components:
       in: query
       description: Set to `content` to inline the full markdown body (up to 200 KB).
       schema: { type: string, enum: [content] }
-  pathItems:
-    BlockList:
-      get:
-        tags: [Building Blocks]
-        summary: List / search this building-block collection
-        parameters:
-          - $ref: '#/components/parameters/Q'
-          - $ref: '#/components/parameters/Tags'
-          - $ref: '#/components/parameters/Match'
-          - $ref: '#/components/parameters/Fields'
-          - $ref: '#/components/parameters/Page'
-          - $ref: '#/components/parameters/Limit'
-        responses:
-          '200':
-            description: Paged building blocks.
-            content:
-              application/json:
-                schema: { $ref: '#/components/schemas/PagedEnvelope' }
-    BlockItem:
-      get:
-        tags: [Building Blocks]
-        summary: One building block
-        parameters:
-          - $ref: '#/components/parameters/Slug'
-          - $ref: '#/components/parameters/Include'
-        responses:
-          '200':
-            description: The building block; `include=content` adds the full body.
-            content:
-              application/json:
-                schema: { $ref: '#/components/schemas/Doc' }
-          '404': { $ref: '#/components/responses/NotFound' }
   responses:
     NotFound:
       description: No such resource.
