@@ -4,7 +4,20 @@ title: Plans
 
 The API Evangelist API and MCP server are built on sixteen years of independent API research.
 **Discovery is free.** The research *depth* — full content, curated guides, and catalog
-intelligence — is the **Pro** tier.
+intelligence — is **Pro**.
+
+| | Free | Pro | Team | Enterprise |
+| --- | --- | --- | --- | --- |
+| **Price** | $0 | **$29/mo** | **$149/mo** | Contact |
+| **Access** | Discovery — search, browse, tags, related, summaries | Everything, incl. full content, `/guide`, `/stats` | Everything in Pro | Everything + advisory |
+| **Keys** | Keyless | 1 key | Multiple keys | Negotiated |
+| **Rate limit** | 1,000 req/day | 5,000 req/day | 25,000 req/day | Custom |
+| **Support** | Community | Email | Priority email | Kin, directly |
+
+Pro and Team unlock the same capabilities — Team adds multiple keys, higher limits, and priority
+support for a group. Enterprise pairs API access with Kin Lane's
+[advisory engagements](https://apievangelist.com/services/). Prices are introductory; annual billing
+and volume pricing are available on request.
 
 ## Free
 
@@ -32,11 +45,14 @@ The research layer — for teams and agents that need the depth, not just the ma
 Pro also unlocks the paid **MCP prompts** (`research_topic`, `governance_starter_kit`,
 `vendor_landscape`) and the `ae://stats` / `ae://guide/{topic}` MCP resources.
 
-### Getting a Pro key
+### Getting started with Pro
 
-Pro keys are issued per consumer with limits matched to your use case. Email
-[info@apievangelist.com](mailto:info@apievangelist.com) with a short description of what you're
-building, and Kin Lane will set you up. Send your key in the `x-api-key` header:
+To start a **Pro** ($29/mo) or **Team** ($149/mo) plan, email
+[info@apievangelist.com](mailto:info@apievangelist.com) with the plan you want and a short note on
+what you're building — Kin Lane will get you a key and set up billing. (Self-serve checkout is on
+the way; for now every plan starts with a quick email so limits are matched to your use case.)
+
+Send your key in the `x-api-key` header:
 
 ```bash
 curl "https://api.apievangelist.com/v1/guide?topic=api%20governance" \
