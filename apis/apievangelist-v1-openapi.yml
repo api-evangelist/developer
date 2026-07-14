@@ -1,7 +1,7 @@
 openapi: 3.1.0
 info:
   title: API Evangelist Network API
-  version: 1.1.0
+  version: 1.2.0
   summary: Sixteen years of API research as one API.
   description: |
     The API Evangelist network — 5,000+ stories, 77 topic areas, 2,400+ governance building
@@ -27,6 +27,98 @@ info:
   license:
     name: CC BY-SA 4.0
     url: https://creativecommons.org/licenses/by-sa/4.0/
+x-apis-io:
+  # DX/AX experience map for the API Evangelist API — the tier model, and for every operation its
+  # tier, the MCP tool it maps to, and the Agent Skill it belongs to (where one exists). Rendered by
+  # the API Experience tool (experience.apicommons.org) as the API -> MCP -> Agent-Skill journey.
+  # Kept in sync with the deployed gating (lambdas/search GATED set) + MCP tools/prompts/resources.
+  tiers:
+    free:
+      label: Free
+      description: Browse, search, and read summaries across the whole network — stories, areas, guidance, building blocks, papers, tags, related. Keyless.
+    pro:
+      label: Pro
+      description: The research depth — full content (include=content), curated topic guides (/guide), and catalog intelligence (/stats). Requires X-API-Key.
+      plans: https://developer.apievangelist.com/plans/
+  mcp:
+    endpoint: https://mcp.apievangelist.com/mcp
+  agentSkills:
+    index: https://apievangelist.com/.well-known/agent-skills/index.json
+  prompts:
+    - { name: where_can_ae_help,      tier: free, description: "Map a team's API need to the relevant research areas + the services Kin Lane offers.", uses: [search_api_evangelist, find_services] }
+    - { name: catch_up,               tier: free, description: "Catch up on a topic — the most recent stories, newest first.", uses: [find_posts] }
+    - { name: research_topic,         tier: pro,  description: "PRO — Deep-research a topic: the curated guide bundle plus the full research bodies.", uses: [guide_topic, get_post, find_related] }
+    - { name: governance_starter_kit, tier: pro,  description: "PRO — Assemble an API governance starter kit: guidance, rules, policies, standards + services.", uses: [guide_topic, find_building_blocks] }
+    - { name: vendor_landscape,       tier: pro,  description: "PRO — Map the vendor + tooling landscape for a capability, with research context.", uses: [find_solutions, find_tools, guide_topic] }
+  resources:
+    - { uri: "ae://overview",     tier: free, description: "Service root — what the network offers, counts, entry points, how to engage.", operation: getServiceInfo }
+    - { uri: "ae://services",     tier: free, description: "The services Kin Lane offers teams.", operation: listServices }
+    - { uri: "ae://contact",      tier: free, description: "Every way to reach API Evangelist.", operation: getContact }
+    - { uri: "ae://stats",        tier: pro,  description: "PRO — per-type counts, stories-per-year, top tags by reach.", operation: getStats }
+    - { uri: "ae://area/{slug}",  tier: free, description: "One topic area with its related-area graph.", operation: getArea }
+    - { uri: "ae://tag/{slug}",   tier: free, description: "One tag with per-type counts and everything it labels.", operation: getTag }
+    - { uri: "ae://post/{slug}",  tier: free, description: "One story by slug.", operation: getPost }
+    - { uri: "ae://guide/{topic}", tier: pro, description: "PRO — a curated cross-network guide bundle for a topic.", operation: getGuide }
+  operations:
+    getServiceInfo:        { tier: free, mcpTool: get_overview }
+    searchNetwork:         { tier: free, mcpTool: search_api_evangelist, agentSkill: brief-on-topic }
+    listPosts:             { tier: free, mcpTool: find_posts, agentSkill: brief-on-topic }
+    getPost:               { tier: free, mcpTool: get_post }
+    listAreas:             { tier: free, mcpTool: find_areas, agentSkill: brief-on-topic }
+    getArea:               { tier: free, mcpTool: get_area }
+    listGuidanceHistory:   { tier: free, mcpTool: get_guidance_section }
+    listGuidanceTechnology: { tier: free, mcpTool: get_guidance_section }
+    listGuidanceBusiness:  { tier: free, mcpTool: get_guidance_section }
+    listGuidancePolitics:  { tier: free, mcpTool: get_guidance_section }
+    listGuidanceGovernance: { tier: free, mcpTool: get_guidance_section }
+    listGuidanceEvangelism: { tier: free, mcpTool: get_guidance_section }
+    listGuidance:          { tier: free, mcpTool: find_building_blocks, agentSkill: governance-starter-kit }
+    getGuidanceItem:       { tier: free, mcpTool: get_building_block }
+    listPolicies:          { tier: free, mcpTool: find_building_blocks, agentSkill: governance-starter-kit }
+    getPoliciesItem:       { tier: free, mcpTool: get_building_block }
+    listRules:             { tier: free, mcpTool: find_building_blocks, agentSkill: governance-starter-kit }
+    getRulesItem:          { tier: free, mcpTool: get_building_block }
+    listStandards:         { tier: free, mcpTool: find_building_blocks, agentSkill: governance-starter-kit }
+    getStandardsItem:      { tier: free, mcpTool: get_building_block }
+    listSolutions:         { tier: free, mcpTool: find_solutions, agentSkill: map-vendor-landscape }
+    getSolution:           { tier: free, mcpTool: get_solution }
+    listTools:             { tier: free, mcpTool: find_tools, agentSkill: map-vendor-landscape }
+    getTool:               { tier: free, mcpTool: get_tool }
+    listSchema:            { tier: free, mcpTool: find_building_blocks }
+    getSchemaItem:         { tier: free, mcpTool: get_building_block }
+    listProperties:        { tier: free, mcpTool: find_building_blocks }
+    getPropertiesItem:     { tier: free, mcpTool: get_building_block }
+    listStrategies:        { tier: free, mcpTool: find_building_blocks }
+    getStrategiesItem:     { tier: free, mcpTool: get_building_block }
+    listExperiences:       { tier: free, mcpTool: find_building_blocks }
+    getExperiencesItem:    { tier: free, mcpTool: get_building_block }
+    listLifecycle:         { tier: free, mcpTool: find_building_blocks }
+    getLifecycleItem:      { tier: free, mcpTool: get_building_block }
+    listConversations:     { tier: free, mcpTool: find_conversations }
+    getConversation:       { tier: free, mcpTool: get_conversation }
+    listVideos:            { tier: free, mcpTool: find_videos }
+    getVideo:              { tier: free, mcpTool: get_video }
+    listPapers:            { tier: free, mcpTool: find_papers, agentSkill: research-with-api-evangelist }
+    getPaper:              { tier: free, mcpTool: get_paper }
+    listNewsletters:       { tier: free, mcpTool: search_api_evangelist }
+    listVocabulary:        { tier: free, mcpTool: find_vocabulary }
+    listVocabularyCategory: { tier: free, mcpTool: find_vocabulary }
+    listFeeds:             { tier: free, mcpTool: get_feeds }
+    getTimelineApi:        { tier: free, mcpTool: get_timeline }
+    getTimelineResources:  { tier: free, mcpTool: get_timeline }
+    getTimelineIndustries: { tier: free, mcpTool: get_timeline }
+    getTimelinePeople:     { tier: free, mcpTool: get_timeline }
+    listServices:          { tier: free, mcpTool: find_services, agentSkill: find-where-ae-helps }
+    getService:            { tier: free, mcpTool: get_service, agentSkill: find-where-ae-helps }
+    getContact:            { tier: free, mcpTool: get_contact, agentSkill: find-where-ae-helps }
+    listTags:              { tier: free, mcpTool: find_tags, agentSkill: brief-on-topic }
+    getTag:                { tier: free, mcpTool: get_tag, agentSkill: brief-on-topic }
+    getGuide:              { tier: pro, mcpTool: guide_topic, agentSkill: research-with-api-evangelist }
+    getStats:              { tier: pro, mcpTool: get_stats }
+    getPostRelated:        { tier: free, mcpTool: find_related, agentSkill: brief-on-topic }
+    getAreaRelated:        { tier: free, mcpTool: find_related, agentSkill: brief-on-topic }
+    getPaperRelated:       { tier: free, mcpTool: find_related, agentSkill: research-with-api-evangelist }
+    getGuidanceRelated:    { tier: free, mcpTool: find_related, agentSkill: brief-on-topic }
 servers:
   - url: https://api.apievangelist.com/v1
 security:
@@ -994,6 +1086,131 @@ paths:
                   data:
                     type: array
                     items: { $ref: '#/components/schemas/ContactOption' }
+  /tags:
+    get:
+      operationId: listTags
+      x-tier: free
+      x-mcp-tool: find_tags
+      x-agent-skill: brief-on-topic
+      tags: [Tags]
+      summary: Browse and rank the network tag taxonomy.
+      description: Every subject tag across 16k+ docs, ranked by frequency (default) or breadth (how many content types use it). Search with q. The map of what API Evangelist covers.
+      parameters:
+        - { name: q, in: query, schema: { type: string } }
+        - { name: sort, in: query, schema: { type: string, enum: [count, breadth] } }
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200': { description: A page of tags., content: { application/json: { schema: { type: object, additionalProperties: true } } } }
+  /tags/{slug}:
+    get:
+      operationId: getTag
+      x-tier: free
+      x-mcp-tool: get_tag
+      x-agent-skill: brief-on-topic
+      tags: [Tags]
+      summary: One tag with everything it labels across the network.
+      description: The tag's per-type counts plus the docs it labels across every content type. Filter with types.
+      parameters:
+        - { name: slug, in: path, required: true, schema: { type: string } }
+        - { name: types, in: query, description: "Restrict to these content types (comma-separated).", schema: { type: string } }
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200': { description: The tag and its tagged docs., content: { application/json: { schema: { type: object, additionalProperties: true } } }
+        }
+        '404': { $ref: '#/components/responses/NotFound' }
+  /guide:
+    get:
+      operationId: getGuide
+      x-tier: pro
+      x-mcp-tool: guide_topic
+      x-agent-skill: research-with-api-evangelist
+      security: [{ ApiKeyAuth: [] }]
+      tags: [Synthesis]
+      summary: PRO — Curated cross-network guide for a topic.
+      description: PRO — Bundles the matching topic area (with related areas), top guidance, rules, policies, and standards, relevant papers and recent stories, plus the services that can help a team with this topic.
+      parameters:
+        - { name: topic, in: query, required: true, schema: { type: string } }
+      responses:
+        '200': { description: The curated topic guide., content: { application/json: { schema: { type: object, additionalProperties: true } } } }
+        '400': { $ref: '#/components/responses/NotFound' }
+        '403': { $ref: '#/components/responses/NotFound' }
+  /stats:
+    get:
+      operationId: getStats
+      x-tier: pro
+      x-mcp-tool: get_stats
+      security: [{ ApiKeyAuth: [] }]
+      tags: [Synthesis]
+      summary: PRO — Catalog intelligence.
+      description: PRO — Per-type counts, stories-per-year, and the top tags by reach across the network.
+      responses:
+        '200': { description: Catalog statistics., content: { application/json: { schema: { type: object, additionalProperties: true } } } }
+  /posts/{slug}/related:
+    get:
+      operationId: getPostRelated
+      x-tier: free
+      x-mcp-tool: find_related
+      x-agent-skill: brief-on-topic
+      tags: [APIs]
+      summary: Related content across the network.
+      description: Stories, areas, guidance, and papers related to a story. Ranked by shared-tag relevance (rare, specific tags weigh most). Cross-type by default; filter with types.
+      parameters:
+        - { name: slug, in: path, required: true, schema: { type: string } }
+        - { name: types, in: query, description: "Restrict to these content types (comma-separated).", schema: { type: string } }
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200': { description: A page of related content., content: { application/json: { schema: { type: object, additionalProperties: true } } } }
+        '404': { $ref: '#/components/responses/NotFound' }
+  /areas/{slug}/related:
+    get:
+      operationId: getAreaRelated
+      x-tier: free
+      x-mcp-tool: find_related
+      x-agent-skill: brief-on-topic
+      tags: [Areas]
+      summary: Related content across the network.
+      description: Content across the network related to a topic area. Ranked by shared-tag relevance (rare, specific tags weigh most). Cross-type by default; filter with types.
+      parameters:
+        - { name: slug, in: path, required: true, schema: { type: string } }
+        - { name: types, in: query, description: "Restrict to these content types (comma-separated).", schema: { type: string } }
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200': { description: A page of related content., content: { application/json: { schema: { type: object, additionalProperties: true } } } }
+        '404': { $ref: '#/components/responses/NotFound' }
+  /papers/{slug}/related:
+    get:
+      operationId: getPaperRelated
+      x-tier: free
+      x-mcp-tool: find_related
+      x-agent-skill: research-with-api-evangelist
+      tags: [Papers]
+      summary: Related content across the network.
+      description: Content related to a paper. Ranked by shared-tag relevance (rare, specific tags weigh most). Cross-type by default; filter with types.
+      parameters:
+        - { name: slug, in: path, required: true, schema: { type: string } }
+        - { name: types, in: query, description: "Restrict to these content types (comma-separated).", schema: { type: string } }
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200': { description: A page of related content., content: { application/json: { schema: { type: object, additionalProperties: true } } } }
+        '404': { $ref: '#/components/responses/NotFound' }
+  /guidance/{slug}/related:
+    get:
+      operationId: getGuidanceRelated
+      x-tier: free
+      x-mcp-tool: find_related
+      x-agent-skill: brief-on-topic
+      tags: [Building Blocks]
+      summary: Related content across the network.
+      description: Content related to a guidance building block. Ranked by shared-tag relevance (rare, specific tags weigh most). Cross-type by default; filter with types.
+      parameters:
+        - { name: slug, in: path, required: true, schema: { type: string } }
+        - { name: types, in: query, description: "Restrict to these content types (comma-separated).", schema: { type: string } }
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200': { description: A page of related content., content: { application/json: { schema: { type: object, additionalProperties: true } } } }
+        '404': { $ref: '#/components/responses/NotFound' }
 components:
   securitySchemes:
     ApiKeyAuth:

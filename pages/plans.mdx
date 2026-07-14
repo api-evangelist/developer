@@ -1,0 +1,51 @@
+---
+title: Plans
+---
+
+The API Evangelist API and MCP server are built on sixteen years of independent API research.
+**Discovery is free.** The research *depth* — full content, curated guides, and catalog
+intelligence — is the **Pro** tier.
+
+## Free
+
+Everything you need to discover and navigate the network, keyless:
+
+- **Search & browse** every content type — 5,100+ stories, 77 topic areas, 2,500+ governance
+  building blocks, papers, conversations, videos, solutions, tools, and vocabulary.
+- **Summaries & metadata** for every item (title, summary, tags, links).
+- **Tag taxonomy** — `/tags` and `/tags/{slug}`: the map of everything API Evangelist covers.
+- **Related content** — `/{type}/{slug}/related`: the shared-tag relevance graph across the network.
+- **Contact & feeds** — every way to engage, plus the static JSON feeds.
+
+Rate limits: 5 req/s, 1,000 req/day. No key required.
+
+## Pro
+
+The research layer — for teams and agents that need the depth, not just the map:
+
+| Capability | Endpoint / tool | What you get |
+| --- | --- | --- |
+| **Full research content** | `?include=content` on any item | The complete markdown bodies and transcripts — the actual research, ready to quote and synthesize. |
+| **Curated topic guides** | `/guide?topic=` · `guide_topic` | One call bundles the topic area, top guidance/rules/policies/standards, papers, recent stories, and the services that can help. |
+| **Catalog intelligence** | `/stats` · `get_stats` | Per-type counts, stories-per-year, and the top tags by reach across the network. |
+
+Pro also unlocks the paid **MCP prompts** (`research_topic`, `governance_starter_kit`,
+`vendor_landscape`) and the `ae://stats` / `ae://guide/{topic}` MCP resources.
+
+### Getting a Pro key
+
+Pro keys are issued per consumer with limits matched to your use case. Email
+[info@apievangelist.com](mailto:info@apievangelist.com) with a short description of what you're
+building, and Kin Lane will set you up. Send your key in the `x-api-key` header:
+
+```bash
+curl "https://api.apievangelist.com/v1/guide?topic=api%20governance" \
+  -H "x-api-key: YOUR_PRO_KEY"
+```
+
+## Work directly with API Evangelist
+
+The API and MCP are one way to tap the research. The other is working with Kin Lane directly — API
+strategy, governance, discovery, and evangelism engagements drawn from the same sixteen years.
+See [the services](https://apievangelist.com/services/) or email
+[info@apievangelist.com](mailto:info@apievangelist.com).

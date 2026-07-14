@@ -29,7 +29,7 @@ const config: ZudokuConfig = {
     {
       type: "category",
       label: "Documentation",
-      items: ["overview", "getting-started", "authentication", "mcp-server"],
+      items: ["overview", "getting-started", "authentication", "plans", "mcp-server"],
     },
     { type: "link", to: "/api", label: "API Reference" },
     {
