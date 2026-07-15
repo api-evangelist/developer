@@ -169,7 +169,10 @@
           "422": {
             "$ref": "#/components/responses/Unprocessable"
           }
-        }
+        },
+        "operationId": "validate",
+        "x-mcp-tool": "validate_api",
+        "x-agent-skill": "api-governance"
       }
     },
     "/governance/coverage": {
@@ -233,7 +236,10 @@
           "400": {
             "$ref": "#/components/responses/BadRequest"
           }
-        }
+        },
+        "operationId": "coverage",
+        "x-mcp-tool": "api_coverage",
+        "x-agent-skill": "api-governance"
       }
     },
     "/governance/waivers": {
@@ -284,7 +290,10 @@
           "400": {
             "$ref": "#/components/responses/BadRequest"
           }
-        }
+        },
+        "operationId": "waivers",
+        "x-mcp-tool": "reconcile_waivers",
+        "x-agent-skill": "api-governance"
       }
     },
     "/governance/report": {
@@ -359,7 +368,10 @@
           "402": {
             "$ref": "#/components/responses/PaymentRequired"
           }
-        }
+        },
+        "operationId": "report",
+        "x-mcp-tool": "governance_report",
+        "x-agent-skill": "api-governance"
       }
     },
     "/governance/verify": {
@@ -418,7 +430,10 @@
           "400": {
             "$ref": "#/components/responses/BadRequest"
           }
-        }
+        },
+        "operationId": "verify",
+        "x-mcp-tool": "verify_certificate",
+        "x-agent-skill": "api-governance"
       }
     },
     "/governance/classify": {
@@ -473,7 +488,10 @@
           "400": {
             "$ref": "#/components/responses/BadRequest"
           }
-        }
+        },
+        "operationId": "classify",
+        "x-mcp-tool": "classify_api_fields",
+        "x-agent-skill": "agent-readiness"
       }
     },
     "/governance/diff": {
@@ -520,7 +538,10 @@
           "400": {
             "$ref": "#/components/responses/BadRequest"
           }
-        }
+        },
+        "operationId": "diff",
+        "x-mcp-tool": "diff_api_versions",
+        "x-agent-skill": "api-lifecycle"
       }
     },
     "/governance/scorecard": {
@@ -574,7 +595,10 @@
           "400": {
             "$ref": "#/components/responses/BadRequest"
           }
-        }
+        },
+        "operationId": "scorecard",
+        "x-mcp-tool": "api_scorecard",
+        "x-agent-skill": "api-governance"
       }
     },
     "/governance/deprecation": {
@@ -618,7 +642,10 @@
           "400": {
             "$ref": "#/components/responses/BadRequest"
           }
-        }
+        },
+        "operationId": "deprecation",
+        "x-mcp-tool": "deprecation_posture",
+        "x-agent-skill": "api-lifecycle"
       }
     },
     "/governance/mock": {
@@ -675,7 +702,10 @@
           "402": {
             "$ref": "#/components/responses/PaymentRequired"
           }
-        }
+        },
+        "operationId": "mock",
+        "x-mcp-tool": "mock_payloads",
+        "x-agent-skill": "api-experience"
       }
     },
     "/governance/snippets": {
@@ -740,7 +770,10 @@
           "402": {
             "$ref": "#/components/responses/PaymentRequired"
           }
-        }
+        },
+        "operationId": "snippets",
+        "x-mcp-tool": "code_snippets",
+        "x-agent-skill": "api-experience"
       }
     },
     "/governance/rules": {
@@ -792,7 +825,10 @@
               }
             }
           }
-        }
+        },
+        "operationId": "rules",
+        "x-mcp-tool": "find_governance_rules",
+        "x-agent-skill": "api-governance"
       }
     },
     "/governance/rulesets": {
@@ -814,7 +850,10 @@
               }
             }
           }
-        }
+        },
+        "operationId": "rulesets",
+        "x-mcp-tool": "find_rulesets",
+        "x-agent-skill": "api-governance"
       }
     },
     "/governance/certify": {
@@ -891,7 +930,10 @@
           "402": {
             "$ref": "#/components/responses/PaymentRequired"
           }
-        }
+        },
+        "operationId": "certify",
+        "x-mcp-tool": "certify_api",
+        "x-agent-skill": "api-governance"
       }
     },
     "/governance/agent-export": {
@@ -946,7 +988,10 @@
           "402": {
             "$ref": "#/components/responses/PaymentRequired"
           }
-        }
+        },
+        "operationId": "agentExport",
+        "x-mcp-tool": "export_agent_rules",
+        "x-agent-skill": "agent-readiness"
       }
     },
     "/governance/pipeline-audit": {
@@ -1010,7 +1055,10 @@
           "402": {
             "$ref": "#/components/responses/PaymentRequired"
           }
-        }
+        },
+        "operationId": "pipelineAudit",
+        "x-mcp-tool": "audit_pipeline",
+        "x-agent-skill": "api-governance"
       }
     },
     "/governance/toolsmith": {
@@ -1059,7 +1107,10 @@
           "402": {
             "$ref": "#/components/responses/PaymentRequired"
           }
-        }
+        },
+        "operationId": "toolsmith",
+        "x-mcp-tool": "forge_mcp_tools",
+        "x-agent-skill": "agent-readiness"
       }
     },
     "/governance/context-gate": {
@@ -1148,7 +1199,10 @@
           "402": {
             "$ref": "#/components/responses/PaymentRequired"
           }
-        }
+        },
+        "operationId": "contextGate",
+        "x-mcp-tool": "gate_agent_context",
+        "x-agent-skill": "agent-readiness"
       }
     },
     "/governance/overlay": {
@@ -1201,7 +1255,10 @@
           "402": {
             "$ref": "#/components/responses/PaymentRequired"
           }
-        }
+        },
+        "operationId": "overlay",
+        "x-mcp-tool": "apply_overlay",
+        "x-agent-skill": "api-lifecycle"
       }
     },
     "/discovery/reusability": {
@@ -1276,7 +1333,10 @@
           "402": {
             "$ref": "#/components/responses/PaymentRequired"
           }
-        }
+        },
+        "operationId": "reusability",
+        "x-mcp-tool": "score_reusability",
+        "x-agent-skill": "api-discovery"
       }
     },
     "/discovery/onboarding": {
@@ -1319,7 +1379,10 @@
           "400": {
             "$ref": "#/components/responses/BadRequest"
           }
-        }
+        },
+        "operationId": "onboarding",
+        "x-mcp-tool": "validate_onboarding",
+        "x-agent-skill": "api-discovery"
       }
     },
     "/discovery/agent-descriptor": {
@@ -1369,7 +1432,10 @@
           "402": {
             "$ref": "#/components/responses/PaymentRequired"
           }
-        }
+        },
+        "operationId": "agentDescriptor",
+        "x-mcp-tool": "generate_agent_descriptor",
+        "x-agent-skill": "agent-readiness"
       }
     },
     "/discovery/experience": {
@@ -1415,7 +1481,10 @@
           "402": {
             "$ref": "#/components/responses/PaymentRequired"
           }
-        }
+        },
+        "operationId": "experience",
+        "x-mcp-tool": "map_api_experience",
+        "x-agent-skill": "api-experience"
       }
     },
     "/auth/login": {
@@ -1568,6 +1637,127 @@
             }
           }
         }
+      }
+    }
+  },
+  "x-apis-io": {
+    "mcpServer": "https://mcp.apievangelist.com",
+    "agentSkills": "https://apievangelist.com/.well-known/agent-skills/index.json",
+    "operations": {
+      "validate": {
+        "tier": "free",
+        "mcpTool": "validate_api",
+        "agentSkill": "api-governance"
+      },
+      "coverage": {
+        "tier": "free",
+        "mcpTool": "api_coverage",
+        "agentSkill": "api-governance"
+      },
+      "waivers": {
+        "tier": "free",
+        "mcpTool": "reconcile_waivers",
+        "agentSkill": "api-governance"
+      },
+      "report": {
+        "tier": "free",
+        "mcpTool": "governance_report",
+        "agentSkill": "api-governance"
+      },
+      "verify": {
+        "tier": "free",
+        "mcpTool": "verify_certificate",
+        "agentSkill": "api-governance"
+      },
+      "classify": {
+        "tier": "free",
+        "mcpTool": "classify_api_fields",
+        "agentSkill": "agent-readiness"
+      },
+      "diff": {
+        "tier": "free",
+        "mcpTool": "diff_api_versions",
+        "agentSkill": "api-lifecycle"
+      },
+      "scorecard": {
+        "tier": "free",
+        "mcpTool": "api_scorecard",
+        "agentSkill": "api-governance"
+      },
+      "deprecation": {
+        "tier": "free",
+        "mcpTool": "deprecation_posture",
+        "agentSkill": "api-lifecycle"
+      },
+      "mock": {
+        "tier": "pro",
+        "mcpTool": "mock_payloads",
+        "agentSkill": "api-experience"
+      },
+      "snippets": {
+        "tier": "pro",
+        "mcpTool": "code_snippets",
+        "agentSkill": "api-experience"
+      },
+      "rules": {
+        "tier": "free",
+        "mcpTool": "find_governance_rules",
+        "agentSkill": "api-governance"
+      },
+      "rulesets": {
+        "tier": "free",
+        "mcpTool": "find_rulesets",
+        "agentSkill": "api-governance"
+      },
+      "certify": {
+        "tier": "pro",
+        "mcpTool": "certify_api",
+        "agentSkill": "api-governance"
+      },
+      "agentExport": {
+        "tier": "pro",
+        "mcpTool": "export_agent_rules",
+        "agentSkill": "agent-readiness"
+      },
+      "pipelineAudit": {
+        "tier": "pro",
+        "mcpTool": "audit_pipeline",
+        "agentSkill": "api-governance"
+      },
+      "toolsmith": {
+        "tier": "pro",
+        "mcpTool": "forge_mcp_tools",
+        "agentSkill": "agent-readiness"
+      },
+      "contextGate": {
+        "tier": "pro",
+        "mcpTool": "gate_agent_context",
+        "agentSkill": "agent-readiness"
+      },
+      "overlay": {
+        "tier": "pro",
+        "mcpTool": "apply_overlay",
+        "agentSkill": "api-lifecycle"
+      },
+      "reusability": {
+        "tier": "pro",
+        "mcpTool": "score_reusability",
+        "agentSkill": "api-discovery"
+      },
+      "onboarding": {
+        "tier": "free",
+        "mcpTool": "validate_onboarding",
+        "agentSkill": "api-discovery"
+      },
+      "agentDescriptor": {
+        "tier": "pro",
+        "mcpTool": "generate_agent_descriptor",
+        "agentSkill": "agent-readiness"
+      },
+      "experience": {
+        "tier": "pro",
+        "mcpTool": "map_api_experience",
+        "agentSkill": "api-experience"
       }
     }
   }
