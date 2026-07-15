@@ -47,12 +47,36 @@ The research layer — for teams and agents that need the depth, not just the ma
 Pro also unlocks the paid **MCP prompts** (`research_topic`, `governance_starter_kit`,
 `vendor_landscape`) and the `ae://stats` / `ae://guide/{topic}` MCP resources.
 
+## Governance & Discovery API
+
+The [Governance & Discovery API](/governance) — the API Commons tools as a hosted service —
+uses the same Free/Pro line. **Checking an API is free; generating artifacts, certifying,
+auditing repos, and rolling up across many APIs is Pro.**
+
+| Capability | Endpoint | Tier |
+| --- | --- | --- |
+| Lint / validate | `POST /governance/validate` | Free |
+| Coverage · Waivers · HTML report · Verify | `/governance/coverage` · `/waivers` · `/report` · `/verify` | Free |
+| Classify (PII/secret) · Diff (breaking changes) | `/governance/classify` · `/governance/diff` | Free |
+| Scorecard (maturity) · Onboarding (AID validate) | `/governance/scorecard` · `/discovery/onboarding` | Free |
+| Rule catalog · Ruleset registry | `GET /governance/rules` · `/rulesets` | Free |
+| Certify · Agent export · Pipeline audit | `/governance/certify` · `/agent-export` · `/pipeline-audit` | **Pro** |
+| Toolsmith · Context gate · Overlay | `/governance/toolsmith` · `/context-gate` · `/overlay` | **Pro** |
+| Mock · Snippets · Agent descriptor (llms.txt/AGENTS.md) | `/governance/mock` · `/snippets` · `/discovery/agent-descriptor` | **Pro** |
+| Reusability · Experience | `/discovery/reusability` · `/discovery/experience` | **Pro** |
+| SARIF report output · bulk multi-API input | `?format=sarif` · arrays | **Pro** |
+
+Full detail: [Free vs Pro](/governance/free-vs-pro) and the
+[Governance API Reference](/governance-api).
+
 ### Getting started with Pro
 
-To start a **Pro** ($29/mo) or **Team** ($149/mo) plan, email
-[info@apievangelist.com](mailto:info@apievangelist.com) with the plan you want and a short note on
-what you're building — Kin Lane will get you a key and set up billing. (Self-serve checkout is on
-the way; for now every plan starts with a quick email so limits are matched to your use case.)
+Self-serve — no email required:
+
+1. **[Sign in with GitHub](https://api.apievangelist.com/v1/auth/login)** to create your
+   account and a free-tier key.
+2. **[Upgrade to Pro or Team](/account)** via Stripe checkout — your key is moved onto the
+   paid usage plan automatically when checkout completes.
 
 Send your key in the `x-api-key` header:
 
@@ -60,6 +84,9 @@ Send your key in the `x-api-key` header:
 curl "https://api.apievangelist.com/v1/guide?topic=api%20governance" \
   -H "x-api-key: YOUR_PRO_KEY"
 ```
+
+Prefer a hand-set-up account or volume/annual pricing? Email
+[info@apievangelist.com](mailto:info@apievangelist.com) and Kin Lane will sort it out.
 
 ## Work directly with API Evangelist
 

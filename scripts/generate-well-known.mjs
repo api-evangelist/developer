@@ -134,13 +134,16 @@ mkdirSync(wellKnownDir, { recursive: true });
 writeFileSync(join(wellKnownDir, "api-catalog"), catalog);
 writeFileSync(join(wellKnownDir, "api-catalog.json"), catalog);
 
+// Mirror the contracts into public/apis/ so each is served raw from the site root
+// (public/apis/ is gitignored — apis/ is the source of truth, this is the copy).
 const publicApisDir = join(root, "public", "apis");
 mkdirSync(publicApisDir, { recursive: true });
-copyFileSync(
-  join(root, "apis", "apievangelist-v1-openapi.yml"),
-  join(publicApisDir, "apievangelist-v1-openapi.yml")
-);
+const CONTRACTS = [
+  "apievangelist-v1-openapi.yml",
+  "apievangelist-governance-openapi.json",
+];
+for (const f of CONTRACTS) copyFileSync(join(root, "apis", f), join(publicApisDir, f));
 
 console.log(
-  `generate-well-known: wrote api-catalog (+ .json) with ${linkset.length} anchors and copied the OpenAPI contract to public/apis/`
+  `generate-well-known: wrote api-catalog (+ .json) with ${linkset.length} anchors and copied ${CONTRACTS.length} contracts to public/apis/`
 );

@@ -1,0 +1,78 @@
+---
+title: Governance & Discovery API
+---
+
+The API Commons governance and discovery tools — the ones you run in your browser at
+[apicommons.org/tools](https://apicommons.org/tools/) — are also a hosted REST API on the
+API Evangelist stack. Same engines (Spectral, the 769-rule best-of-breed catalog, the
+certification and reusability logic), now callable from CI, an agent, or a script.
+
+**Discovery-grade linting is free. The capabilities that generate artifacts, certify,
+audit repos, or roll up across many APIs are Pro.**
+
+Base URL: `https://api.apievangelist.com/v1`
+
+## Free — keyless
+
+```bash
+curl -X POST https://api.apievangelist.com/v1/governance/validate \
+  -H "content-type: application/json" \
+  -d '{"document":"openapi: 3.0.0\ninfo:\n  title: Widget API\n  version: 1.0.0\npaths: {}"}'
+```
+
+```json
+{
+  "format": "openapi",
+  "ruleCount": 461,
+  "passed": false,
+  "summary": { "error": 2, "warning": 8, "info": 0, "hint": 0, "total": 10 },
+  "diagnostics": [ { "code": "info-contact", "message": "Info object must have \"contact\" object.", "severity": "warning", "path": ["info"] } ]
+}
+```
+
+No key needed. Free tier is 5 req/s, 1,000/day, one document per call.
+
+## The endpoints
+
+| Endpoint | Tier | What it does |
+| --- | --- | --- |
+| `POST /governance/validate` | Free | Lint OpenAPI / AsyncAPI / Arazzo / JSON Schema against the curated ruleset. |
+| `POST /governance/coverage` | Free | How much of a description your governance actually inspects. |
+| `POST /governance/waivers` | Free | Reconcile a waivers file against lint output → the effective failing set. |
+| `POST /governance/report` | Free / **Pro** | Findings → self-contained HTML report. SARIF output is Pro. |
+| `POST /governance/verify` | Free | Re-verify a governance certificate against its API. |
+| `POST /governance/classify` | Free | Inventory PII / secret / sensitive fields an OpenAPI exposes. |
+| `POST /governance/diff` | Free | Breaking-change detection between two OpenAPI versions. |
+| `POST /governance/scorecard` | Free | Composite API maturity score + letter grade across dimensions. |
+| `POST /governance/deprecation` | Free | Deprecation / sunset posture — which deprecated ops announce a sunset. |
+| `GET /governance/rules` | Free | The 769-rule best-of-breed catalog. |
+| `GET /governance/rulesets` | Free | The Ruleset Commons registry of adoptable rulesets. |
+| `POST /governance/certify` | **Pro** | Issue a tamper-evident governance certificate. |
+| `POST /governance/agent-export` | **Pro** | Ruleset → AGENTS.md, system prompt, remediation pack, digest. |
+| `POST /governance/pipeline-audit` | **Pro** | Score a repo's Spectral CI maturity + punch-list. |
+| `POST /governance/toolsmith` | **Pro** | Forge MCP tools + Agent Skills per operation from an OpenAPI. |
+| `POST /governance/context-gate` | **Pro** | Emit a governed Tyk + MCP + ruleset agent surface. |
+| `POST /governance/overlay` | **Pro** | Apply an OpenAPI Overlay (deprecation, governance, migration). |
+| `POST /governance/mock` | **Pro** | Generate example request/response payloads per operation. |
+| `POST /governance/snippets` | **Pro** | Runnable curl / JavaScript / Python samples per operation. |
+| `POST /discovery/onboarding` | Free | Validate an API Onboarding Descriptor (AID) + completeness. |
+| `POST /discovery/agent-descriptor` | **Pro** | Generate an API's `llms.txt` + `AGENTS.md` consumption contract. |
+| `POST /discovery/reusability` | **Pro** | Reuse + duplication scores across a set of APIs. |
+| `POST /discovery/experience` | **Pro** | The API → MCP → Agent-Skill coverage model + SVG. |
+
+See the full [Governance API Reference](/governance-api) for request and response schemas,
+and [Free vs Pro](/governance/free-vs-pro) for exactly where the line falls.
+
+## Using a Pro key
+
+Sign in with GitHub to get a key, then send it as `x-api-key`:
+
+```bash
+curl -X POST https://api.apievangelist.com/v1/governance/certify \
+  -H "x-api-key: YOUR_PRO_KEY" \
+  -H "content-type: application/json" \
+  -d '{"api": { "openapi": "3.0.0" }, "results": [], "profile": "standard"}'
+```
+
+Without a key, Pro endpoints return `402 payment_required` with an upgrade link.
+[Get a key →](/plans)

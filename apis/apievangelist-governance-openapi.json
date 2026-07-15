@@ -1,0 +1,1500 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "API Evangelist Governance & Discovery API",
+    "version": "1.0.0",
+    "description": "The API Commons governance and discovery tools — lint, coverage, waivers, reporting, certification, agent export, pipeline audit, MCP/skill forging, consumer gating, reusability, and experience mapping — as one hosted REST API. Every endpoint runs the same engine the browser tools at apicommons.org/tools run, server-side. Discovery-grade linting is free; the capabilities that generate artifacts, certify, audit repos, or roll up across many APIs are Pro. Free tier is keyless (5 req/s, 1,000/day, one document per call). Send a Pro key in the x-api-key header to unlock the Pro endpoints, SARIF output, and bulk input. Get a key at https://api.apievangelist.com/v1/auth/login.",
+    "contact": {
+      "name": "API Evangelist",
+      "url": "https://apievangelist.com",
+      "email": "info@apievangelist.com"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://api.apievangelist.com/v1",
+      "description": "Production"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Governance",
+      "description": "Lint, coverage, waivers, reporting, certification, agent export, pipeline audit, toolsmith, context gate."
+    },
+    {
+      "name": "Discovery",
+      "description": "Reusability and experience (DX/AX) analysis across a set of APIs."
+    },
+    {
+      "name": "Account",
+      "description": "GitHub sign-in, API key, and Stripe self-serve billing."
+    }
+  ],
+  "security": [
+    {
+      "ApiKey": []
+    },
+    {}
+  ],
+  "paths": {
+    "/governance/validate": {
+      "post": {
+        "tags": [
+          "Governance"
+        ],
+        "summary": "Lint an API artifact (FREE)",
+        "description": "Lint an OpenAPI, AsyncAPI, Arazzo, or JSON Schema document against the curated 769-rule best-of-breed ruleset (Spectral). Pass your own Spectral ruleset to override the catalog.",
+        "x-tier": "free",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "document"
+                ],
+                "properties": {
+                  "document": {
+                    "type": "string",
+                    "description": "The artifact as YAML or JSON text."
+                  },
+                  "format": {
+                    "type": "string",
+                    "description": "Auto-detected when omitted.",
+                    "enum": [
+                      "openapi",
+                      "asyncapi",
+                      "arazzo",
+                      "jsonschema"
+                    ]
+                  },
+                  "ruleset": {
+                    "type": "object",
+                    "description": "An optional full Spectral ruleset definition to run instead of the catalog."
+                  },
+                  "tags": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "Only run catalog rules carrying one of these tags."
+                  }
+                },
+                "example": {
+                  "document": "openapi: 3.0.0\ninfo:\n  title: Widget API\n  version: 1.0.0\npaths: {}",
+                  "format": "openapi"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Lint result.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "format": {
+                      "type": "string"
+                    },
+                    "ruleCount": {
+                      "type": "integer"
+                    },
+                    "passed": {
+                      "type": "boolean"
+                    },
+                    "summary": {
+                      "type": "object",
+                      "properties": {
+                        "error": {
+                          "type": "integer"
+                        },
+                        "warning": {
+                          "type": "integer"
+                        },
+                        "info": {
+                          "type": "integer"
+                        },
+                        "hint": {
+                          "type": "integer"
+                        },
+                        "total": {
+                          "type": "integer"
+                        }
+                      }
+                    },
+                    "diagnostics": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "code": {
+                            "type": "string"
+                          },
+                          "message": {
+                            "type": "string"
+                          },
+                          "severity": {
+                            "type": "string",
+                            "enum": [
+                              "error",
+                              "warning",
+                              "info",
+                              "hint"
+                            ]
+                          },
+                          "path": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          },
+                          "source": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "422": {
+            "$ref": "#/components/responses/Unprocessable"
+          }
+        }
+      }
+    },
+    "/governance/coverage": {
+      "post": {
+        "tags": [
+          "Governance"
+        ],
+        "summary": "Governance coverage of a document (FREE)",
+        "description": "How much of an API description the ruleset actually inspects — coverage by section, dead rules, and each rule reach.",
+        "x-tier": "free",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "document"
+                ],
+                "properties": {
+                  "document": {
+                    "type": "string",
+                    "description": "The API description (YAML or JSON text, or an object)."
+                  },
+                  "format": {
+                    "type": "string",
+                    "enum": [
+                      "openapi",
+                      "asyncapi",
+                      "arazzo",
+                      "jsonschema"
+                    ]
+                  },
+                  "rules": {
+                    "type": "array",
+                    "items": {
+                      "type": "object"
+                    },
+                    "description": "Rule definitions to measure; defaults to the curated catalog for the format."
+                  },
+                  "aliases": {
+                    "type": "object",
+                    "description": "Custom JSONPath alias map."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Coverage report.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          }
+        }
+      }
+    },
+    "/governance/waivers": {
+      "post": {
+        "tags": [
+          "Governance"
+        ],
+        "summary": "Reconcile waivers against lint output (FREE)",
+        "description": "Suppress sanctioned violations and surface expired, stale, and expiring waivers — the effective failing set your build should gate on.",
+        "x-tier": "free",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "waivers",
+                  "violations"
+                ],
+                "properties": {
+                  "waivers": {
+                    "description": "A waivers file (YAML/JSON text) or an array of waiver objects."
+                  },
+                  "violations": {
+                    "type": "array",
+                    "items": {
+                      "type": "object"
+                    },
+                    "description": "Spectral lint -f json results."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Reconciliation result.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          }
+        }
+      }
+    },
+    "/governance/report": {
+      "post": {
+        "tags": [
+          "Governance"
+        ],
+        "summary": "Render a governance report (FREE HTML, Pro SARIF)",
+        "description": "Turn Spectral findings into a self-contained HTML governance report. Pass ?format=sarif for SARIF 2.1.0 output (Pro).",
+        "x-tier": "free",
+        "parameters": [
+          {
+            "name": "format",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "html",
+                "sarif"
+              ]
+            },
+            "description": "sarif requires a Pro key."
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "results"
+                ],
+                "properties": {
+                  "results": {
+                    "type": "array",
+                    "items": {
+                      "type": "object"
+                    }
+                  },
+                  "title": {
+                    "type": "string"
+                  },
+                  "totals": {
+                    "type": "object",
+                    "description": "Positive-rule sidecar for the compliance scoreboard."
+                  },
+                  "dark": {
+                    "type": "boolean"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "HTML report (text/html) or SARIF log (application/json with ?format=sarif).",
+            "content": {
+              "text/html": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "402": {
+            "$ref": "#/components/responses/PaymentRequired"
+          }
+        }
+      }
+    },
+    "/governance/verify": {
+      "post": {
+        "tags": [
+          "Governance"
+        ],
+        "summary": "Verify a governance certificate (FREE)",
+        "description": "Re-verify a tamper-evident API governance certificate against the API it attests to. Consumer-facing trust check.",
+        "x-tier": "free",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "certificate",
+                  "api"
+                ],
+                "properties": {
+                  "certificate": {
+                    "type": "object"
+                  },
+                  "api": {
+                    "description": "The API description object the certificate was issued over."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Verdict.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "verdict": {
+                      "type": "string",
+                      "enum": [
+                        "valid",
+                        "tampered",
+                        "expired",
+                        "not-passed",
+                        "malformed"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          }
+        }
+      }
+    },
+    "/governance/classify": {
+      "post": {
+        "tags": [
+          "Governance"
+        ],
+        "summary": "Classify PII and secret fields (FREE)",
+        "description": "Inventory the PII, secret, and sensitive fields an OpenAPI exposes — across parameters and request/response schemas. Uses the same classifiers as Context Gate.",
+        "x-tier": "free",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "document": {
+                    "type": "string",
+                    "description": "A single OpenAPI (YAML/JSON text)."
+                  },
+                  "apis": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "text": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Sensitive-field inventory.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          }
+        }
+      }
+    },
+    "/governance/diff": {
+      "post": {
+        "tags": [
+          "Governance"
+        ],
+        "summary": "Detect breaking changes between two versions (FREE)",
+        "description": "Compare two OpenAPI versions and classify every change as breaking, non-breaking, or an addition — at path, operation, parameter, request-body, and response granularity.",
+        "x-tier": "free",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "old",
+                  "new"
+                ],
+                "properties": {
+                  "old": {
+                    "description": "The previous OpenAPI (YAML/JSON text or object)."
+                  },
+                  "new": {
+                    "description": "The new OpenAPI (YAML/JSON text or object)."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Diff result with a compatible flag, summary, and changes[].",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          }
+        }
+      }
+    },
+    "/governance/scorecard": {
+      "post": {
+        "tags": [
+          "Governance"
+        ],
+        "summary": "API maturity scorecard (FREE)",
+        "description": "Roll up a 0-100 maturity score with a letter grade across dimensions — design/style (lint), governance coverage, documentation completeness, and (from an apis.json) discoverability, agent-readiness, and operations.",
+        "x-tier": "free",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "document": {
+                    "type": "string",
+                    "description": "An OpenAPI (YAML/JSON text) for the lint/coverage/documentation dimensions."
+                  },
+                  "apisJson": {
+                    "type": "object",
+                    "description": "An APIs.json for the discoverability/agent-readiness/operations dimensions."
+                  },
+                  "format": {
+                    "type": "string",
+                    "enum": [
+                      "openapi",
+                      "asyncapi",
+                      "arazzo",
+                      "jsonschema"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Overall score, grade, and per-dimension breakdown.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          }
+        }
+      }
+    },
+    "/governance/deprecation": {
+      "post": {
+        "tags": [
+          "Governance"
+        ],
+        "summary": "Deprecation / sunset posture (FREE)",
+        "description": "Report every deprecated operation and whether it announces a sunset (x-sunset date or a Sunset/Deprecation response header), plus deprecated schema fields — the honest migration picture.",
+        "x-tier": "free",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "document"
+                ],
+                "properties": {
+                  "document": {
+                    "type": "string",
+                    "description": "An OpenAPI (YAML/JSON text or object)."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Deprecated operations, sunset posture, and deprecated fields.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          }
+        }
+      }
+    },
+    "/governance/mock": {
+      "post": {
+        "tags": [
+          "Governance"
+        ],
+        "summary": "Generate example payloads (PRO)",
+        "description": "Generate an example request and success-response payload for every operation from its OpenAPI schema (author example/default/enum first, else synthesized by type/format).",
+        "x-tier": "pro",
+        "security": [
+          {
+            "ApiKey": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "document"
+                ],
+                "properties": {
+                  "document": {
+                    "type": "string",
+                    "description": "An OpenAPI (YAML/JSON text or object)."
+                  },
+                  "operationId": {
+                    "type": "string",
+                    "description": "Only this operation."
+                  },
+                  "path": {
+                    "type": "string",
+                    "description": "Only this path."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Per-operation example request/response payloads.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "402": {
+            "$ref": "#/components/responses/PaymentRequired"
+          }
+        }
+      }
+    },
+    "/governance/snippets": {
+      "post": {
+        "tags": [
+          "Governance"
+        ],
+        "summary": "Generate code samples (PRO)",
+        "description": "Generate runnable curl / JavaScript (fetch) / Python (requests) samples for every operation, with path params filled in and a realistic request body.",
+        "x-tier": "pro",
+        "security": [
+          {
+            "ApiKey": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "document"
+                ],
+                "properties": {
+                  "document": {
+                    "type": "string",
+                    "description": "An OpenAPI (YAML/JSON text or object)."
+                  },
+                  "baseUrl": {
+                    "type": "string",
+                    "description": "Override the base URL (defaults to servers[0].url)."
+                  },
+                  "authHeader": {
+                    "type": "string",
+                    "description": "Auth header to show, e.g. \"Authorization: Bearer $TOKEN\" or \"x-api-key: $KEY\"."
+                  },
+                  "operationId": {
+                    "type": "string",
+                    "description": "Only this operation."
+                  },
+                  "path": {
+                    "type": "string",
+                    "description": "Only this path."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Per-operation curl/javascript/python snippets.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "402": {
+            "$ref": "#/components/responses/PaymentRequired"
+          }
+        }
+      }
+    },
+    "/governance/certify": {
+      "post": {
+        "tags": [
+          "Governance"
+        ],
+        "summary": "Issue a governance certificate (PRO)",
+        "description": "Issue a tamper-evident certificate attesting an API description passed a named ruleset at a profile threshold. A SHA-256 fingerprint lets anyone re-verify it.",
+        "x-tier": "pro",
+        "security": [
+          {
+            "ApiKey": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "api"
+                ],
+                "properties": {
+                  "api": {
+                    "description": "The API description object."
+                  },
+                  "results": {
+                    "type": "array",
+                    "items": {
+                      "type": "object"
+                    },
+                    "description": "The Spectral findings the certificate attests."
+                  },
+                  "ruleset": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "version": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "profile": {
+                    "type": "string",
+                    "description": "One of the certification profiles (e.g. standard)."
+                  },
+                  "issuer": {
+                    "type": "string"
+                  },
+                  "validMonths": {
+                    "type": "integer",
+                    "nullable": true
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Certificate.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "402": {
+            "$ref": "#/components/responses/PaymentRequired"
+          }
+        }
+      }
+    },
+    "/governance/agent-export": {
+      "post": {
+        "tags": [
+          "Governance"
+        ],
+        "summary": "Export agent-native governance artifacts (PRO)",
+        "description": "Turn a Spectral ruleset into an AGENTS.md governance block, a system-prompt instruction set, a per-rule remediation prompt pack, and a compact rule digest.",
+        "x-tier": "pro",
+        "security": [
+          {
+            "ApiKey": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "ruleset"
+                ],
+                "properties": {
+                  "ruleset": {
+                    "type": "object",
+                    "description": "A Spectral ruleset (with a rules object)."
+                  },
+                  "format": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Agent-native artifacts.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "402": {
+            "$ref": "#/components/responses/PaymentRequired"
+          }
+        }
+      }
+    },
+    "/governance/pipeline-audit": {
+      "post": {
+        "tags": [
+          "Governance"
+        ],
+        "summary": "Audit a repo Spectral CI maturity (PRO)",
+        "description": "Score a repository Spectral governance pipeline against an 8-point maturity rubric and get a prioritized punch-list. Supply files inline, or a public repo (owner/name) to fetch.",
+        "x-tier": "pro",
+        "security": [
+          {
+            "ApiKey": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "repo": {
+                    "type": "string",
+                    "description": "GitHub repo as owner/name (public)."
+                  },
+                  "ref": {
+                    "type": "string",
+                    "description": "Branch or SHA (default HEAD)."
+                  },
+                  "files": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "content": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Maturity score and punchlist.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "402": {
+            "$ref": "#/components/responses/PaymentRequired"
+          }
+        }
+      }
+    },
+    "/governance/toolsmith": {
+      "post": {
+        "tags": [
+          "Governance"
+        ],
+        "summary": "Forge MCP tools and Agent Skills (PRO)",
+        "description": "From an OpenAPI, forge an MCP server design, per-operation tools, Agent Skills, an enriched OpenAPI (x-mcp / x-agent-skills), a server.json, and apis.json properties.",
+        "x-tier": "pro",
+        "security": [
+          {
+            "ApiKey": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "document"
+                ],
+                "properties": {
+                  "document": {
+                    "type": "string",
+                    "description": "The OpenAPI as YAML or JSON text."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Forged MCP and skills artifacts.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "402": {
+            "$ref": "#/components/responses/PaymentRequired"
+          }
+        }
+      }
+    },
+    "/governance/context-gate": {
+      "post": {
+        "tags": [
+          "Governance"
+        ],
+        "summary": "Emit a governed agent surface (PRO)",
+        "description": "Choose which operations and fields your API exposes to agents; emit a governed Tyk OpenAPI, an MCP tool manifest, and a Spectral ruleset with PII/secret checks. Defaults to the whole surface when no selection is supplied.",
+        "x-tier": "pro",
+        "security": [
+          {
+            "ApiKey": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "document": {
+                    "type": "string",
+                    "description": "A single OpenAPI (YAML/JSON text)."
+                  },
+                  "apis": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "text": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  },
+                  "selection": {
+                    "type": "object",
+                    "description": "Per-operation selection (defaults to all selected)."
+                  },
+                  "config": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "upstreamUrl": {
+                        "type": "string"
+                      },
+                      "listenPath": {
+                        "type": "string"
+                      },
+                      "auth": {
+                        "type": "string",
+                        "enum": [
+                          "none",
+                          "apiKey",
+                          "jwt"
+                        ]
+                      },
+                      "rateLimitWrites": {
+                        "type": "boolean"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Tyk OAS, MCP manifest, and ruleset.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "402": {
+            "$ref": "#/components/responses/PaymentRequired"
+          }
+        }
+      }
+    },
+    "/governance/overlay": {
+      "post": {
+        "tags": [
+          "Governance"
+        ],
+        "summary": "Apply an OpenAPI Overlay (PRO)",
+        "description": "Apply an OpenAPI Overlay (spec 1.0.0) to a document — each action resolves a target JSONPath and deep-merges update or removes the match. Returns the transformed OpenAPI plus a per-action report.",
+        "x-tier": "pro",
+        "security": [
+          {
+            "ApiKey": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "document",
+                  "overlay"
+                ],
+                "properties": {
+                  "document": {
+                    "type": "string",
+                    "description": "The OpenAPI to transform (YAML/JSON text or object)."
+                  },
+                  "overlay": {
+                    "description": "An OpenAPI Overlay 1.0.0 document (YAML/JSON text or object)."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Transformed OpenAPI and action report.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "402": {
+            "$ref": "#/components/responses/PaymentRequired"
+          }
+        }
+      }
+    },
+    "/discovery/reusability": {
+      "post": {
+        "tags": [
+          "Discovery"
+        ],
+        "summary": "Reusability and duplication across APIs (PRO)",
+        "description": "Score how reusable a set of APIs is and detect duplication/overlap across them; optionally score apis.json composability and metadata completeness.",
+        "x-tier": "pro",
+        "security": [
+          {
+            "ApiKey": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "apis": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "openapi": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  },
+                  "properties": {
+                    "type": "array",
+                    "items": {
+                      "type": "object"
+                    },
+                    "description": "apis.json properties for composability/metadata scoring."
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "tags": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Reuse and duplication scores.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "402": {
+            "$ref": "#/components/responses/PaymentRequired"
+          }
+        }
+      }
+    },
+    "/discovery/onboarding": {
+      "post": {
+        "tags": [
+          "Discovery"
+        ],
+        "summary": "Validate an API Onboarding Descriptor (FREE)",
+        "description": "Validate an API Onboarding Descriptor (AID) against the api-commons AID JSON Schema, and report which optional sections it fills in (a completeness score).",
+        "x-tier": "free",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "descriptor"
+                ],
+                "properties": {
+                  "descriptor": {
+                    "description": "An API Onboarding Descriptor (object or JSON text)."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Validity, errors[], maturity, and completeness.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          }
+        }
+      }
+    },
+    "/discovery/agent-descriptor": {
+      "post": {
+        "tags": [
+          "Discovery"
+        ],
+        "summary": "Generate llms.txt + AGENTS.md (PRO)",
+        "description": "Generate the agent-facing descriptors for an API: an llms.txt (well-known link summary) and an AGENTS.md consumption contract — base URL, auth, the operation table, deprecated operations to avoid, and usage rules. Reads links from an apis.json when supplied.",
+        "x-tier": "pro",
+        "security": [
+          {
+            "ApiKey": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "document": {
+                    "type": "string",
+                    "description": "An OpenAPI (YAML/JSON text or object)."
+                  },
+                  "apisJson": {
+                    "type": "object",
+                    "description": "An APIs.json whose properties supply the docs/OpenAPI/MCP/pricing links."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "llmsTxt + agentsMd, with operation/deprecation counts.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "402": {
+            "$ref": "#/components/responses/PaymentRequired"
+          }
+        }
+      }
+    },
+    "/discovery/experience": {
+      "post": {
+        "tags": [
+          "Discovery"
+        ],
+        "summary": "DX/AX experience coverage (PRO)",
+        "description": "Map each REST operation to its MCP tool and Agent Skill (the API to MCP to Agent-Skill chain) from an APIs.json, with a free/paid coverage scorecard and an SVG flow map.",
+        "x-tier": "pro",
+        "security": [
+          {
+            "ApiKey": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "apisJson": {
+                    "type": "object",
+                    "description": "An APIs.json document (with an apis array)."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Experience model, coverage, and SVG.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "402": {
+            "$ref": "#/components/responses/PaymentRequired"
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "get": {
+        "tags": [
+          "Account"
+        ],
+        "summary": "Sign in with GitHub",
+        "description": "Start GitHub OAuth. On return you get a session cookie and a personal API key (free tier) attached to your account.",
+        "security": [
+          {}
+        ],
+        "responses": {
+          "302": {
+            "description": "Redirect to GitHub."
+          }
+        }
+      }
+    },
+    "/auth/me": {
+      "get": {
+        "tags": [
+          "Account"
+        ],
+        "summary": "Current account",
+        "description": "Your login, tier, API key, base URLs, and recent usage. Requires the session cookie from sign-in.",
+        "responses": {
+          "200": {
+            "description": "Account.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "login": {
+                      "type": "string"
+                    },
+                    "tier": {
+                      "type": "string"
+                    },
+                    "apiKey": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Not authenticated."
+          }
+        }
+      }
+    },
+    "/billing/checkout": {
+      "post": {
+        "tags": [
+          "Account"
+        ],
+        "summary": "Start a Pro/Team checkout",
+        "description": "Create a Stripe Checkout session for {tier: pro|business, cycle: monthly|annual}. On completion your API key is moved onto the tier usage plan.",
+        "responses": {
+          "200": {
+            "description": "Checkout URL.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "url": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Not authenticated."
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "ApiKey": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "x-api-key",
+        "description": "A Pro or Team key from sign-in. Omit for keyless free-tier access."
+      }
+    },
+    "responses": {
+      "BadRequest": {
+        "description": "Invalid request.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "Unprocessable": {
+        "description": "The document could not be processed.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "PaymentRequired": {
+        "description": "This capability requires a Pro plan.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "example": "payment_required"
+                },
+                "message": {
+                  "type": "string"
+                },
+                "upgrade": {
+                  "type": "string",
+                  "example": "https://developer.apievangelist.com/plans"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

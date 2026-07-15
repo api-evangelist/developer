@@ -1,0 +1,58 @@
+---
+title: Your account
+---
+
+This is where GitHub sign-in and Stripe checkout return you. Your session lives in a
+secure cookie on `apievangelist.com`; your personal API key is minted the first time you
+sign in.
+
+## Get your key
+
+1. **[Sign in with GitHub →](https://api.apievangelist.com/v1/auth/login)** — this creates
+   your account and a free-tier API key.
+2. Fetch your account to see the key:
+
+   ```bash
+   curl -s https://api.apievangelist.com/v1/auth/me --cookie "ae_session=…" | jq
+   ```
+
+   ```json
+   {
+     "login": "your-handle",
+     "tier": "free",
+     "apiKey": "ae_live_…",
+     "baseUrl": "https://api.apievangelist.com/v1",
+     "mcp": "https://mcp.apievangelist.com"
+   }
+   ```
+
+   In the browser, `https://api.apievangelist.com/v1/auth/me` returns the same JSON while
+   your session cookie is set.
+
+3. Send the key as `x-api-key` on any Pro endpoint:
+
+   ```bash
+   curl -X POST https://api.apievangelist.com/v1/governance/toolsmith \
+     -H "x-api-key: ae_live_…" -H "content-type: application/json" \
+     -d '{"document":"openapi: 3.0.0\n..."}'
+   ```
+
+## Upgrade to Pro
+
+Start a subscription — your existing key is moved onto the Pro (or Team) usage plan
+automatically when checkout completes:
+
+```bash
+curl -X POST https://api.apievangelist.com/v1/billing/checkout \
+  --cookie "ae_session=…" -H "content-type: application/json" \
+  -d '{"tier":"pro","cycle":"monthly"}'
+# → { "url": "https://checkout.stripe.com/..." }
+```
+
+Manage or cancel any time via the billing portal:
+
+```bash
+curl -X POST https://api.apievangelist.com/v1/billing/portal --cookie "ae_session=…"
+```
+
+See [the plans](/plans) for what Pro unlocks.

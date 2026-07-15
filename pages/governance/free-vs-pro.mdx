@@ -1,0 +1,61 @@
+---
+title: Free vs Pro
+---
+
+The line is drawn by **capability**, not by rate limit alone. Everything you need to
+*check* an API is free. Everything that *produces an owned artifact*, *certifies*, *audits
+a repository*, or *rolls up across many APIs* is Pro.
+
+## Free — keyless
+
+- **Validate** — lint OpenAPI, AsyncAPI, Arazzo, and JSON Schema against the curated
+  769-rule ruleset (or your own).
+- **Coverage** — how much of a description your governance actually inspects.
+- **Waivers** — reconcile a waivers file against lint output.
+- **Report (HTML)** — a self-contained HTML governance report.
+- **Verify** — re-verify a governance certificate (consumer-facing trust check).
+- **Classify** — inventory the PII / secret / sensitive fields an OpenAPI exposes.
+- **Diff** — breaking-change detection between two OpenAPI versions.
+- **Scorecard** — a composite API maturity score + letter grade.
+- **Onboarding** — validate an API Onboarding Descriptor (AID) + completeness.
+- **Deprecation** — deprecation / sunset posture across operations.
+- **Rules / Rulesets** — browse the catalog and the Ruleset Commons registry.
+
+Limits: 5 req/s, 1,000 requests/day, one document per call, 256 KB body.
+
+## Pro — `$29/mo`
+
+Everything in Free, plus the artifact-generating and estate-wide capabilities:
+
+- **Certify** — issue tamper-evident governance certificates.
+- **Agent export** — AGENTS.md, system prompts, remediation packs, and digests from a ruleset.
+- **Pipeline audit** — score a repository's Spectral CI maturity and get a punch-list.
+- **Toolsmith** — forge MCP tools and Agent Skills per operation.
+- **Context gate** — emit a governed Tyk + MCP + ruleset agent surface.
+- **Overlay** — apply an OpenAPI Overlay (deprecation, governance, migration choreography).
+- **Mock** — generate example request/response payloads per operation.
+- **Snippets** — runnable curl / JavaScript / Python samples per operation.
+- **Agent descriptor** — generate an API's `llms.txt` + `AGENTS.md` consumption contract.
+- **Reusability** — reuse and duplication scores across a set of APIs.
+- **Experience** — the API → MCP → Agent-Skill coverage model and flow map.
+- **SARIF output** on the report endpoint (for GitHub code scanning).
+- **Bulk input** — multi-API arrays in one call.
+
+Limits: 10 req/s, 5,000 requests/day. **Team** ($149/mo) raises this to 25 req/s and
+25,000/day with multiple keys.
+
+## The 402 contract
+
+A free caller hitting a Pro endpoint (or asking for SARIF) gets a clean, machine-readable
+`402`:
+
+```json
+{
+  "error": "payment_required",
+  "message": "/governance/certify is a PRO capability. Upgrade or sign in to continue.",
+  "upgrade": "https://developer.apievangelist.com/plans",
+  "signup": "https://api.apievangelist.com/v1/auth/login"
+}
+```
+
+[See the plans →](/plans)

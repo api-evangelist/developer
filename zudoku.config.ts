@@ -34,6 +34,12 @@ const config: ZudokuConfig = {
     { type: "link", to: "/api", label: "API Reference" },
     {
       type: "category",
+      label: "Governance & Discovery",
+      items: ["governance/index", "governance/free-vs-pro"],
+    },
+    { type: "link", to: "/governance-api", label: "Governance API Reference" },
+    {
+      type: "category",
       label: "Static Feeds",
       items: ["feeds/index"],
     },
@@ -51,11 +57,18 @@ const config: ZudokuConfig = {
     files: "/pages/**/*.{md,mdx}",
   },
 
-  apis: {
-    type: "file",
-    input: "./apis/apievangelist-v1-openapi.yml",
-    path: "/api",
-  },
+  apis: [
+    {
+      type: "file",
+      input: "./apis/apievangelist-v1-openapi.yml",
+      path: "/api",
+    },
+    {
+      type: "file",
+      input: "./apis/apievangelist-governance-openapi.json",
+      path: "/governance-api",
+    },
+  ],
 
   theme: {
     // Brand blue #3098d8 (light) / #38a0e0 (dark) expressed as HSL triplets.
