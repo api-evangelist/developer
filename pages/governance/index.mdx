@@ -4,7 +4,7 @@ title: Governance & Discovery API
 
 The API Commons governance and discovery tools — the ones you run in your browser at
 [apicommons.org/tools](https://apicommons.org/tools/) — are also a hosted REST API on the
-API Evangelist stack. Same engines (Spectral, the 769-rule best-of-breed catalog, the
+API Evangelist stack. Same engines (Spectral, the 574-rule best-of-breed catalog, the
 certification and reusability logic), now callable from CI, an agent, or a script.
 
 **Discovery-grade linting is free. The capabilities that generate artifacts, certify,
@@ -24,11 +24,22 @@ curl -X POST https://api.apievangelist.com/v1/governance/validate \
 {
   "format": "openapi",
   "ruleCount": 461,
-  "passed": false,
-  "summary": { "error": 2, "warning": 8, "info": 0, "hint": 0, "total": 10 },
-  "diagnostics": [ { "code": "info-contact", "message": "Info object must have \"contact\" object.", "severity": "warning", "path": ["info"] } ]
+  "passed": true,
+  "summary": { "error": 0, "warning": 19, "info": 0, "hint": 0, "total": 19 },
+  "diagnostics": [
+    {
+      "code": "document-owasp-api9-server",
+      "message": "API should declare its servers (host/environment inventory).",
+      "severity": "warning",
+      "path": [],
+      "source": "document"
+    }
+  ]
 }
 ```
+
+`passed` reflects errors only — nineteen warnings and it still passes. Tighten the gate with
+`tags` to run a subset, or send your own `ruleset`.
 
 No key needed. Free tier is 5 req/s, 1,000/day, one document per call.
 
@@ -45,7 +56,7 @@ No key needed. Free tier is 5 req/s, 1,000/day, one document per call.
 | `POST /governance/diff` | Free | Breaking-change detection between two OpenAPI versions. |
 | `POST /governance/scorecard` | Free | Composite API maturity score + letter grade across dimensions. |
 | `POST /governance/deprecation` | Free | Deprecation / sunset posture — which deprecated ops announce a sunset. |
-| `GET /governance/rules` | Free | The 769-rule best-of-breed catalog. |
+| `GET /governance/rules` | Free | The 574-rule best-of-breed catalog. |
 | `GET /governance/rulesets` | Free | The Ruleset Commons registry of adoptable rulesets. |
 | `POST /governance/certify` | **Pro** | Issue a tamper-evident governance certificate. |
 | `POST /governance/agent-export` | **Pro** | Ruleset → AGENTS.md, system prompt, remediation pack, digest. |

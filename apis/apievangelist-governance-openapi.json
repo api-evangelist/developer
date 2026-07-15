@@ -43,7 +43,7 @@
           "Governance"
         ],
         "summary": "Lint an API artifact (FREE)",
-        "description": "Lint an OpenAPI, AsyncAPI, Arazzo, or JSON Schema document against the curated 769-rule best-of-breed ruleset (Spectral). Pass your own Spectral ruleset to override the catalog.",
+        "description": "Lint an OpenAPI, AsyncAPI, Arazzo, or JSON Schema document against the curated 574-rule best-of-breed ruleset (Spectral). Pass your own Spectral ruleset to override the catalog.",
         "x-tier": "free",
         "requestBody": {
           "required": true,
