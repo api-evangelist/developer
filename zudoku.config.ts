@@ -40,7 +40,39 @@ const config: ZudokuConfig = {
     { type: "link", to: "https://apievangelist.com", label: "API Evangelist ↗" },
   ],
 
-  redirects: [{ from: "/", to: "/overview" }],
+  // The static JSON feeds and the network site index were retired in favor of the API
+  // and the MCP server. Both were public URLs, so every retired path is redirected
+  // rather than left to 404 anyone still holding a link. Each entry below is
+  // prerendered to a real file — a bare /feeds/* splat would emit a literal "*.html"
+  // that static hosting can never match, so the slugs are enumerated.
+  redirects: [
+    { from: "/", to: "/overview" },
+    { from: "/network", to: "/overview" },
+    { from: "/feeds", to: "/overview" },
+    { from: "/feeds/index", to: "/overview" },
+    // These two documented the API and MCP server themselves — send them to the real docs.
+    { from: "/feeds/api", to: "/api" },
+    { from: "/feeds/mcp", to: "/mcp-server" },
+    ...[
+      "apis",
+      "posts",
+      "conversations",
+      "companies",
+      "experiences",
+      "guidance",
+      "partners",
+      "policies",
+      "properties",
+      "rules",
+      "schema",
+      "standards",
+      "strategies",
+      "utilities",
+      "videos",
+      "vocabularies",
+      "spotlight-rules",
+    ].map((slug) => ({ from: `/feeds/${slug}`, to: "/overview" })),
+  ],
 
   docs: {
     files: "/pages/**/*.{md,mdx}",
