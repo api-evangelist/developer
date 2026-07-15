@@ -46,6 +46,46 @@ Two tools are designed as the entry point — agents should reach for these firs
 | `get_company_insight` · `company_gaps` | **Insights** depth — a company's full 40-dimension profile and its gaps. **Pro.** (The provider-match join lives on the [apis.io MCP](https://apis.io/developer/mcp-server).) |
 | `get_contact` | Every way to reach API Evangelist |
 
+## Governance & Discovery tools
+
+The [Governance & Discovery API](/governance/index) is on the MCP server too — one tool per
+REST operation, so anything you can `curl` an agent can call. Same engine, same rules, same
+line: **checking an API is free and keyless; generating an artifact, certifying, auditing a
+repo, or rolling up across an estate is Pro.**
+
+| Tool | Tier | What it does |
+| --- | --- | --- |
+| `validate_api` | Free | Lint OpenAPI / AsyncAPI / Arazzo / JSON Schema against the curated ruleset — or pass your own `ruleset`. |
+| `api_coverage` | Free | How much of a description your governance actually inspects. |
+| `api_scorecard` | Free | 0–100 maturity score + letter grade across design, coverage, docs, and agent-readiness. |
+| `diff_api_versions` | Free | Breaking-change detection between two OpenAPI versions. |
+| `classify_api_fields` | Free | Inventory the PII and secret fields an API exposes. |
+| `deprecation_posture` | Free | Which deprecated operations actually announce a sunset. |
+| `reconcile_waivers` | Free | Waivers vs lint output → the effective failing set to gate on. |
+| `governance_report` · `verify_certificate` | Free | HTML governance report; re-verify a certificate against its API. |
+| `validate_onboarding` | Free | Validate an API Onboarding Descriptor (AID). |
+| `certify_api` | **Pro** | Issue a tamper-evident governance certificate. |
+| `export_agent_rules` | **Pro** | Ruleset → AGENTS.md, system prompt, remediation pack, digest. |
+| `audit_pipeline` | **Pro** | Score a repo's Spectral CI setup + punch-list. |
+| `forge_mcp_tools` | **Pro** | Forge MCP tools + Agent Skills per operation from an OpenAPI. |
+| `gate_agent_context` | **Pro** | Emit a governed Tyk + MCP + ruleset agent surface. |
+| `apply_overlay` | **Pro** | Apply an OpenAPI Overlay and report what each action matched. |
+| `mock_payloads` · `code_snippets` | **Pro** | Example payloads; runnable curl / JavaScript / Python per operation. |
+| `score_reusability` | **Pro** | Reuse + duplication across a set of APIs. |
+| `map_api_experience` | **Pro** | The API → MCP → Agent-Skill chain, with coverage. |
+| `generate_agent_descriptor` | **Pro** | An API's `llms.txt` + `AGENTS.md` consumption contract. |
+
+Two Agent Skills describe this surface for agents:
+[`api-governance`](https://github.com/api-commons/agent-skills/tree/main/api-governance) (check,
+gate, certify) and
+[`api-agent-readiness`](https://github.com/api-commons/agent-skills/tree/main/api-agent-readiness)
+(make an API consumable by agents).
+
+**A note on rulesets.** The default catalog is a best-of-breed *superset* — run it raw against
+a real API and you get thousands of warnings and no errors, which is how teams learn to ignore
+governance. Pass a `ruleset` you own to `validate_api`, `api_coverage`, and `api_scorecard` and
+gate on that instead.
+
 ## Connect
 
 ### Claude Code
