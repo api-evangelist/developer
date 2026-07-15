@@ -743,6 +743,80 @@
         }
       }
     },
+    "/governance/rules": {
+      "get": {
+        "tags": [
+          "Governance"
+        ],
+        "summary": "The curated rule catalog (FREE)",
+        "x-tier": "free",
+        "description": "Browse the curated best-of-breed rule catalog the validator runs — every rule with its id, format, title, severity, tags, given, and reference. Optionally filter by artifact format.",
+        "parameters": [
+          {
+            "name": "format",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "openapi",
+                "asyncapi",
+                "arazzo",
+                "jsonschema"
+              ]
+            },
+            "description": "Only rules for this artifact format."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The rule catalog.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "format": {
+                      "type": "string"
+                    },
+                    "count": {
+                      "type": "integer"
+                    },
+                    "rules": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/governance/rulesets": {
+      "get": {
+        "tags": [
+          "Governance"
+        ],
+        "summary": "The Ruleset Commons registry (FREE)",
+        "x-tier": "free",
+        "description": "The registry of adoptable, provenanced governance rulesets — national, industry, security, and company rulesets you can extend by reference instead of running the linter defaults.",
+        "responses": {
+          "200": {
+            "description": "The ruleset registry.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/governance/certify": {
       "post": {
         "tags": [
