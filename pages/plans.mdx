@@ -28,6 +28,7 @@ Everything you need to discover and navigate the network, keyless:
 - **Summaries & metadata** for every item (title, summary, tags, links).
 - **Tag taxonomy** — `/tags` and `/tags/{slug}`: the map of everything API Evangelist covers.
 - **Related content** — `/{type}/{slug}/related`: the shared-tag relevance graph across the network.
+- **Insights discovery** — `/insights/dimensions`, `/insights/adoption`, `/insights/companies`: the demand-side view of what ~5,800 companies build, buy, and hire for.
 - **Contact & feeds** — every way to engage, plus the static JSON feeds.
 
 Rate limits: 5 req/s, 1,000 req/day. No key required.
@@ -41,6 +42,7 @@ The research layer — for teams and agents that need the depth, not just the ma
 | **Full research content** | `?include=content` on any item | The complete markdown bodies and transcripts — the actual research, ready to quote and synthesize. |
 | **Curated topic guides** | `/guide?topic=` · `guide_topic` | One call bundles the topic area, top guidance/rules/policies/standards, papers, recent stories, and the services that can help. |
 | **Catalog intelligence** | `/stats` · `get_stats` | Per-type counts, stories-per-year, and the top tags by reach across the network. |
+| **Insights company depth** | `/insights/company/{slug}` · `get_company_insight` · `company_gaps` | The full 40-dimension demand-side profile of a Fortune 1000 / provider company, its adopted stack, and where it's thin. (Discovery — `/insights/dimensions`, `/adoption`, `/companies` — stays free.) |
 
 Pro also unlocks the paid **MCP prompts** (`research_topic`, `governance_starter_kit`,
 `vendor_landscape`) and the `ae://stats` / `ae://guide/{topic}` MCP resources.

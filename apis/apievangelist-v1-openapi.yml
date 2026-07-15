@@ -149,6 +149,8 @@ tags:
     description: API Evangelist's first-party offerings — the front door to working with Kin Lane.
   - name: Contact
     description: Every way to reach API Evangelist.
+  - name: Insights
+    description: Demand-side intelligence — what ~5,800 companies (Fortune 1000 + API providers) build, buy, and hire for around APIs, data, and AI. Discovery is free; per-company depth + gaps are Pro. (The supply↔demand provider match lives on apis.io.)
 paths:
   # ---- Overview ----
   /:
@@ -1211,6 +1213,91 @@ paths:
       responses:
         '200': { description: A page of related content., content: { application/json: { schema: { type: object, additionalProperties: true } } } }
         '404': { $ref: '#/components/responses/NotFound' }
+  # ---- Insights (demand-side) ----
+  /insights:
+    get:
+      operationId: getInsightsSummary
+      x-mcp-tool: find_company_insights
+      tags: [Insights]
+      summary: Insights overview.
+      description: Company/dimension/adoption counts and the top investment dimensions. Free.
+      responses:
+        '200': { description: OK., content: { application/json: { schema: { type: object, additionalProperties: true } } } }
+  /insights/dimensions:
+    get:
+      operationId: listInsightDimensions
+      x-mcp-tool: insights_dimensions
+      tags: [Insights]
+      summary: Rank the 40 investment dimensions by company signal. Free.
+      parameters:
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200': { description: OK., content: { application/json: { schema: { type: object, additionalProperties: true } } } }
+  /insights/adoption:
+    get:
+      operationId: listInsightAdoption
+      x-mcp-tool: insights_adoption
+      tags: [Insights]
+      summary: Services / tools / standards ranked by adoption. Free.
+      parameters:
+        - name: type
+          in: query
+          schema: { type: string, enum: [service, tool, standard], default: service }
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200': { description: OK., content: { application/json: { schema: { type: object, additionalProperties: true } } } }
+  /insights/industries:
+    get:
+      operationId: listInsightIndustries
+      tags: [Insights]
+      summary: Industry rollup. Free.
+      responses:
+        '200': { description: OK., content: { application/json: { schema: { type: object, additionalProperties: true } } } }
+  /insights/companies:
+    get:
+      operationId: listInsightCompanies
+      x-mcp-tool: find_company_insights
+      tags: [Insights]
+      summary: Browse profiled companies by name, ranked by readiness. Free.
+      parameters:
+        - $ref: '#/components/parameters/Q'
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200': { description: OK., content: { application/json: { schema: { type: object, additionalProperties: true } } } }
+  /insights/company/{slug}:
+    get:
+      operationId: getCompanyInsight
+      x-mcp-tool: get_company_insight
+      tags: [Insights]
+      summary: One company's demand-side profile — thin preview (free) or full 40-dimension profile (Pro).
+      parameters:
+        - name: slug
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        '200': { description: OK., content: { application/json: { schema: { type: object, additionalProperties: true } } } }
+        '404': { $ref: '#/components/responses/NotFound' }
+  /insights/company/{slug}/gaps:
+    get:
+      operationId: getCompanyGaps
+      x-tier: pro
+      x-mcp-tool: company_gaps
+      security: [{ ApiKeyAuth: [] }]
+      tags: [Insights]
+      summary: PRO — a company's weakest investment dimensions.
+      parameters:
+        - name: slug
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        '200': { description: OK., content: { application/json: { schema: { type: object, additionalProperties: true } } } }
+        '403': { description: Requires the Pro tier., content: { application/json: { schema: { type: object, additionalProperties: true } } } }
+
 components:
   securitySchemes:
     ApiKeyAuth:
