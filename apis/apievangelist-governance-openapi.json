@@ -491,7 +491,7 @@
         },
         "operationId": "classify",
         "x-mcp-tool": "classify_api_fields",
-        "x-agent-skill": "agent-readiness"
+        "x-agent-skill": "api-agent-readiness"
       }
     },
     "/governance/diff": {
@@ -541,7 +541,7 @@
         },
         "operationId": "diff",
         "x-mcp-tool": "diff_api_versions",
-        "x-agent-skill": "api-lifecycle"
+        "x-agent-skill": "api-governance"
       }
     },
     "/governance/scorecard": {
@@ -645,7 +645,7 @@
         },
         "operationId": "deprecation",
         "x-mcp-tool": "deprecation_posture",
-        "x-agent-skill": "api-lifecycle"
+        "x-agent-skill": "api-governance"
       }
     },
     "/governance/mock": {
@@ -705,7 +705,7 @@
         },
         "operationId": "mock",
         "x-mcp-tool": "mock_payloads",
-        "x-agent-skill": "api-experience"
+        "x-agent-skill": "api-governance"
       }
     },
     "/governance/snippets": {
@@ -773,7 +773,7 @@
         },
         "operationId": "snippets",
         "x-mcp-tool": "code_snippets",
-        "x-agent-skill": "api-experience"
+        "x-agent-skill": "api-governance"
       }
     },
     "/governance/rules": {
@@ -991,7 +991,7 @@
         },
         "operationId": "agentExport",
         "x-mcp-tool": "export_agent_rules",
-        "x-agent-skill": "agent-readiness"
+        "x-agent-skill": "api-governance"
       }
     },
     "/governance/pipeline-audit": {
@@ -1110,7 +1110,7 @@
         },
         "operationId": "toolsmith",
         "x-mcp-tool": "forge_mcp_tools",
-        "x-agent-skill": "agent-readiness"
+        "x-agent-skill": "api-agent-readiness"
       }
     },
     "/governance/context-gate": {
@@ -1202,7 +1202,7 @@
         },
         "operationId": "contextGate",
         "x-mcp-tool": "gate_agent_context",
-        "x-agent-skill": "agent-readiness"
+        "x-agent-skill": "api-agent-readiness"
       }
     },
     "/governance/overlay": {
@@ -1258,7 +1258,7 @@
         },
         "operationId": "overlay",
         "x-mcp-tool": "apply_overlay",
-        "x-agent-skill": "api-lifecycle"
+        "x-agent-skill": "api-governance"
       }
     },
     "/discovery/reusability": {
@@ -1336,7 +1336,7 @@
         },
         "operationId": "reusability",
         "x-mcp-tool": "score_reusability",
-        "x-agent-skill": "api-discovery"
+        "x-agent-skill": "api-governance"
       }
     },
     "/discovery/onboarding": {
@@ -1382,7 +1382,7 @@
         },
         "operationId": "onboarding",
         "x-mcp-tool": "validate_onboarding",
-        "x-agent-skill": "api-discovery"
+        "x-agent-skill": "api-agent-readiness"
       }
     },
     "/discovery/agent-descriptor": {
@@ -1435,7 +1435,7 @@
         },
         "operationId": "agentDescriptor",
         "x-mcp-tool": "generate_agent_descriptor",
-        "x-agent-skill": "agent-readiness"
+        "x-agent-skill": "api-agent-readiness"
       }
     },
     "/discovery/experience": {
@@ -1484,7 +1484,7 @@
         },
         "operationId": "experience",
         "x-mcp-tool": "map_api_experience",
-        "x-agent-skill": "api-experience"
+        "x-agent-skill": "api-agent-readiness"
       }
     },
     "/auth/login": {
@@ -1642,7 +1642,7 @@
   },
   "x-apis-io": {
     "mcpServer": "https://mcp.apievangelist.com",
-    "agentSkills": "https://apievangelist.com/.well-known/agent-skills/index.json",
+    "agentSkills": "https://raw.githubusercontent.com/api-commons/agent-skills/main/",
     "operations": {
       "validate": {
         "tier": "free",
@@ -1672,12 +1672,12 @@
       "classify": {
         "tier": "free",
         "mcpTool": "classify_api_fields",
-        "agentSkill": "agent-readiness"
+        "agentSkill": "api-agent-readiness"
       },
       "diff": {
         "tier": "free",
         "mcpTool": "diff_api_versions",
-        "agentSkill": "api-lifecycle"
+        "agentSkill": "api-governance"
       },
       "scorecard": {
         "tier": "free",
@@ -1687,17 +1687,17 @@
       "deprecation": {
         "tier": "free",
         "mcpTool": "deprecation_posture",
-        "agentSkill": "api-lifecycle"
+        "agentSkill": "api-governance"
       },
       "mock": {
         "tier": "pro",
         "mcpTool": "mock_payloads",
-        "agentSkill": "api-experience"
+        "agentSkill": "api-governance"
       },
       "snippets": {
         "tier": "pro",
         "mcpTool": "code_snippets",
-        "agentSkill": "api-experience"
+        "agentSkill": "api-governance"
       },
       "rules": {
         "tier": "free",
@@ -1717,7 +1717,7 @@
       "agentExport": {
         "tier": "pro",
         "mcpTool": "export_agent_rules",
-        "agentSkill": "agent-readiness"
+        "agentSkill": "api-governance"
       },
       "pipelineAudit": {
         "tier": "pro",
@@ -1727,37 +1727,37 @@
       "toolsmith": {
         "tier": "pro",
         "mcpTool": "forge_mcp_tools",
-        "agentSkill": "agent-readiness"
+        "agentSkill": "api-agent-readiness"
       },
       "contextGate": {
         "tier": "pro",
         "mcpTool": "gate_agent_context",
-        "agentSkill": "agent-readiness"
+        "agentSkill": "api-agent-readiness"
       },
       "overlay": {
         "tier": "pro",
         "mcpTool": "apply_overlay",
-        "agentSkill": "api-lifecycle"
+        "agentSkill": "api-governance"
       },
       "reusability": {
         "tier": "pro",
         "mcpTool": "score_reusability",
-        "agentSkill": "api-discovery"
+        "agentSkill": "api-governance"
       },
       "onboarding": {
         "tier": "free",
         "mcpTool": "validate_onboarding",
-        "agentSkill": "api-discovery"
+        "agentSkill": "api-agent-readiness"
       },
       "agentDescriptor": {
         "tier": "pro",
         "mcpTool": "generate_agent_descriptor",
-        "agentSkill": "agent-readiness"
+        "agentSkill": "api-agent-readiness"
       },
       "experience": {
         "tier": "pro",
         "mcpTool": "map_api_experience",
-        "agentSkill": "api-experience"
+        "agentSkill": "api-agent-readiness"
       }
     }
   }
