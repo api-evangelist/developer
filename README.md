@@ -1,60 +1,36 @@
 # developer.apievangelist.com — Developer Portal
 
-[**developer.apievangelist.com**](https://developer.apievangelist.com) is the developer portal for the [API Evangelist](https://apievangelist.com) network. It aggregates every collection Kin Lane publishes across the network and documents each one as a consumable JSON feed.
+[**developer.apievangelist.com**](https://developer.apievangelist.com) is the developer portal for the [API Evangelist](https://apievangelist.com) network — sixteen years of API research documented as one REST API and one MCP server. Built with [Zudoku](https://zudoku.dev).
 
 **Live site:** [https://developer.apievangelist.com](https://developer.apievangelist.com)
 
 ## What's in this repo
 
-- `_config.yml` — Jekyll site configuration
-- `_data/feeds.yml` — the canonical catalog of every feed surfaced by this portal
-- `_data/apisjson.yml` — the [APIs.json](https://apisjson.org) source for `/apis.json`
-- `_layouts/`, `_includes/`, `assets/` — page templates and styling (matches the [APIs.io developer portal](https://developer.apis.io) look-and-feel)
-- `feeds/` — one Markdown page per feed, each rendered via the `feed` layout
-- `_posts/`, `blog/` — portal blog
-- `index.md`, `about.md`, `network.md` — landing, about, and network overview pages
-- `apis.json`, `atom.xml` — machine-readable indexes
+- `zudoku.config.ts` — site config: navigation, theme, and the OpenAPI contracts that drive the references
+- `apis/` — the source of truth for both OpenAPI contracts (Network API + Governance & Discovery API)
+- `pages/` — the Markdown/MDX documentation pages
+- `scripts/generate-well-known.mjs` — generates the [RFC 9727](https://www.rfc-editor.org/rfc/rfc9727.html) API catalog at `/.well-known/api-catalog` and copies the contracts into `public/apis/`; runs as part of `prebuild`
+- `public/` — static assets served from the site root (generated output here is gitignored)
 
-## The API Evangelist network
+## The surfaces documented here
 
-The feeds documented here are pulled from these collections:
-
-| Site | What it publishes | Repo |
+| Surface | Where | Docs |
 |---|---|---|
-| [apis.apievangelist.com](https://apis.apievangelist.com) | Individual APIs with OpenAPI reviews | [apis](https://github.com/api-evangelist/apis) |
-| [posts.apievangelist.com](https://posts.apievangelist.com) | 4,000+ blog posts since 2010 | [posts](https://github.com/api-evangelist/posts) |
-| [conversations.apievangelist.com](https://conversations.apievangelist.com) | Producer/consumer/provider conversations | [conversations](https://github.com/api-evangelist/conversations) |
-| [providers.apievangelist.com](https://providers.apievangelist.com) | Alphabetical listing of companies across the network | [companies](https://github.com/api-evangelist/companies) |
-| [experiences.apievangelist.com](https://experiences.apievangelist.com) | Developer-experience records | [experiences](https://github.com/api-evangelist/experiences) |
-| [guidance.apievangelist.com](https://guidance.apievangelist.com) | Modular best-practice guidance | [guidance](https://github.com/api-evangelist/guidance) |
-| [partners.apievangelist.com](https://partners.apievangelist.com) | Partner network | [partners](https://github.com/api-evangelist/partners) |
-| [policies.apievangelist.com](https://policies.apievangelist.com) | Governance policies | [policies](https://github.com/api-evangelist/policies) |
-| [properties.apievangelist.com](https://properties.apievangelist.com) | Governable API properties | [properties](https://github.com/api-evangelist/properties) |
-| [rules.apievangelist.com](https://rules.apievangelist.com) | Spectral rules | [rules](https://github.com/api-evangelist/rules) |
-| [schema.apievangelist.com](https://schema.apievangelist.com) | Schema definitions | [schema](https://github.com/api-evangelist/schema) |
-| [standards.apievangelist.com](https://standards.apievangelist.com) | Internet & industry standards | [standards](https://github.com/api-evangelist/standards) |
-| [strategies.apievangelist.com](https://strategies.apievangelist.com) | API operations strategies | [strategies](https://github.com/api-evangelist/strategies) |
-| [utilities.apievangelist.com](https://utilities.apievangelist.com) | Utility APIs | [utilities](https://github.com/api-evangelist/utilities) |
-| [video.apievangelist.com](https://video.apievangelist.com) | Video content | [videos](https://github.com/api-evangelist/videos) |
-| [vocabularies.apievangelist.com](https://vocabularies.apievangelist.com) | Controlled vocabularies | [vocabularies](https://github.com/api-evangelist/vocabularies) |
-| [spotlight-rules.com](https://spotlight-rules.com) | Curated rules spotlight | [spotlight-rules](https://github.com/api-evangelist/spotlight-rules) |
+| Network API | `https://api.apievangelist.com/v1` | `/api` |
+| Governance & Discovery API | `https://api.apievangelist.com/v1/governance` | `/governance-api` |
+| MCP server | `https://mcp.apievangelist.com/mcp` | `/mcp-server` |
 
-## Adding a new feed
-
-1. Add a new entry to `_data/feeds.yml` with `slug`, `name`, `description`, `url`, `feed_url`, `repo_url`, `tags`, and `fields`.
-2. Add a matching entry under `apis:` in `_data/apisjson.yml`.
-3. Create `feeds/<slug>.md` with the `feed` layout pointing at the new slug.
-4. Commit and push — GitHub Pages rebuilds on push.
+The API and MCP server themselves live in [apievangelist-aws](https://github.com/api-evangelist/apievangelist-aws).
 
 ## Local development
 
 ```bash
-bundle install
-bundle exec jekyll serve
+npm install
+npm run dev     # runs prebuild, then zudoku dev
+npm run build   # runs prebuild, then zudoku build → dist/
 ```
 
 ## Related
 
-- [APIs.io developer portal](https://developer.apis.io) — the sibling portal this one mirrors
-- [APIs.json](https://apisjson.org) — the discovery spec the portal publishes
+- [APIs.io developer portal](https://developer.apis.io) — the sibling portal for the API provider catalog
 - [api-evangelist GitHub org](https://github.com/api-evangelist) — the source collections

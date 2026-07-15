@@ -1,6 +1,5 @@
 node_modules/
 dist/
-pages/feeds/
 public/.well-known/api-catalog*
 public/apis/
 .DS_Store

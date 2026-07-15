@@ -13,10 +13,9 @@ APIs.
 API Evangelist has long published its research across a set of focused sites, each one dedicated
 to one dimension of API operations: APIs themselves, plus companies, policies, rules, properties,
 schema, standards, strategies, guidance, conversations, experiences, partners, utilities, videos,
-and vocabularies. Every site renders an HTML browse view, and every site emits a static JSON feed
-of the same data.
+and vocabularies.
 
-This portal documents three ways to consume all of that:
+This portal documents two ways to consume all of that:
 
 - **The [Network API](/api)** — `https://api.apievangelist.com/v1`, one REST API over the whole
   network with unified search, topic areas, and every collection as a resource. Keyless free
@@ -24,17 +23,12 @@ This portal documents three ways to consume all of that:
 - **The [MCP server](./mcp-server)** — `https://mcp.apievangelist.com/mcp`, the same research
   exposed as Model Context Protocol tools for AI agents, including the `get_overview` and
   `guide_topic` concierge tools.
-- **The [static feeds](./feeds/index)** — each collection's JSON file, documented as if it were
-  an API, because for the purposes of integration that's exactly what it is. Pick a feed, fetch
-  the JSON, parse it, integrate it. No API key, no rate limit, no signup.
 
 ## Discovery
 
 The portal publishes an [RFC 9727 API catalog](https://developer.apievangelist.com/.well-known/api-catalog)
-at `/.well-known/api-catalog`, cataloging the API, the MCP server, and every static feed as a
-machine-readable linkset. The feeds themselves follow the
-[APIs.json specification](https://apisjson.org) — the discovery format Kin Lane has been
-championing for over a decade.
+at `/.well-known/api-catalog`, cataloging the API and the MCP server as a machine-readable
+linkset.
 
 ## Open source
 

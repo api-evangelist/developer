@@ -1,8 +1,7 @@
 import type { ZudokuConfig } from "zudoku";
 
 // API Evangelist developer portal, served at the root of https://developer.apievangelist.com/.
-// The live API contract at apis/apievangelist-v1-openapi.yml drives the reference; the legacy
-// static feeds are documented from data/feeds.yml via scripts/generate-feeds-pages.mjs.
+// The live API contract at apis/apievangelist-v1-openapi.yml drives the reference.
 const config: ZudokuConfig = {
   canonicalUrlOrigin: "https://developer.apievangelist.com",
 
@@ -20,16 +19,16 @@ const config: ZudokuConfig = {
   },
 
   metadata: {
-    title: "API Evangelist Developers — API, MCP & Feeds",
+    title: "API Evangelist Developers — API & MCP",
     description:
-      "Developer documentation for the API Evangelist Network API: sixteen years of API research as one REST API, an MCP server for agents, and static JSON feeds.",
+      "Developer documentation for the API Evangelist Network API: sixteen years of API research as one REST API and an MCP server for agents.",
   },
 
   navigation: [
     {
       type: "category",
       label: "Documentation",
-      items: ["overview", "getting-started", "authentication", "plans", "mcp-server"],
+      items: ["overview", "getting-started", "authentication", "plans", "mcp-server", "about"],
     },
     { type: "link", to: "/api", label: "API Reference" },
     {
@@ -38,16 +37,6 @@ const config: ZudokuConfig = {
       items: ["governance/index", "governance/free-vs-pro"],
     },
     { type: "link", to: "/governance-api", label: "Governance API Reference" },
-    {
-      type: "category",
-      label: "Static Feeds",
-      items: ["feeds/index"],
-    },
-    {
-      type: "category",
-      label: "Network",
-      items: ["network", "about"],
-    },
     { type: "link", to: "https://apievangelist.com", label: "API Evangelist ↗" },
   ],
 

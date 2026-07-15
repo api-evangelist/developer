@@ -5,7 +5,7 @@
   "type": "module",
   "description": "API Evangelist developer portal (Zudoku) — served at developer.apievangelist.com",
   "scripts": {
-    "prebuild": "node scripts/generate-feeds-pages.mjs && node scripts/generate-well-known.mjs",
+    "prebuild": "node scripts/generate-well-known.mjs",
     "predev": "npm run prebuild",
     "dev": "zudoku dev",
     "build": "npm run prebuild && zudoku build"
