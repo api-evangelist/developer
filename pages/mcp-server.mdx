@@ -86,6 +86,46 @@ a real API and you get thousands of warnings and no errors, which is how teams l
 governance. Pass a `ruleset` you own to `validate_api`, `api_coverage`, and `api_scorecard` and
 gate on that instead.
 
+## Prompts
+
+Prompts are guided flows — each chains the right tools for a job, so an agent (or you) doesn't have
+to know the tool names. Free prompts run for anyone; **Pro** prompts are listed for everyone and
+upsell on use. Call `prompts/list` for the always-current set, `prompts/get` to run one.
+
+**Research & learn** — `where_can_ae_help`, `catch_up`, `learn_a_topic`, `weekly_digest`,
+`find_the_paper`, `explore_topic_area`, `validate_onboarding_descriptor`; `research_topic` **Pro**,
+`vendor_landscape` **Pro**
+
+**Check an API (free)** — `governance_baseline`, `classify_exposure`, `version_change_review`,
+`waivers_review`, `governance_html_report`
+
+**Make an API agent-ready** — `agent_ready_audit` (free first pass); `make_my_api_agent_ready`
+**Pro**, `forge_mcp_server` **Pro**, `generate_consumption_contract` **Pro**, `mock_and_snippets` **Pro**
+
+**Govern & prove at scale** — `govern_my_estate` **Pro**, `make_internal_apis_agent_safe` **Pro**,
+`pipeline_audit` **Pro**, `certify_and_prove` **Pro**, `apply_governance_overlay` **Pro**,
+`reusability_review` **Pro**, `map_experience` **Pro**, `governance_starter_kit` **Pro**
+
+**Demand-side** — `company_demand_profile` (free preview / Pro full); `where_to_sell` **Pro**
+
+```bash
+# list prompts, then run one
+curl -s https://mcp.apievangelist.com/mcp -H 'content-type: application/json' \
+  -d '{"jsonrpc":"2.0","id":1,"method":"prompts/get","params":{"name":"make_my_api_agent_ready","arguments":{"openapi_url":"https://example.com/openapi.json"}}}'
+```
+
+## Resources
+
+Attachable, readable context an agent can pin into a session. Free unless marked **Pro**.
+
+- `ae://overview`, `ae://services`, `ae://contact` — the network root, Kin's services, and how to reach out
+- `ae://stats` **Pro** — per-type counts, stories-per-year, top tags
+- Templated: `ae://area/{slug}`, `ae://tag/{slug}`, `ae://post/{slug}` (free); `ae://guide/{topic}` **Pro**
+
+Call `resources/list` and `resources/templates/list` for the authoritative set. The
+[`experience.apicommons.org`](https://experience.apicommons.org) tool renders any APIs.json as a
+visual REST → MCP → Agent-Skill map — the same chain `map_experience` reports.
+
 ## Connect
 
 ### Claude Code
@@ -134,7 +174,7 @@ claude mcp add --transport http api-evangelist https://mcp.apievangelist.com/mcp
 
 ## Poke it directly
 
-The server speaks JSON-RPC — `initialize`, `tools/list`, and `tools/call`:
+The server speaks JSON-RPC — `initialize`, `tools/list` / `tools/call`, `prompts/list` / `prompts/get`, and `resources/list` / `resources/read`:
 
 ```bash
 curl -s https://mcp.apievangelist.com/mcp \
