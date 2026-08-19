@@ -1,7 +1,7 @@
 openapi: 3.1.0
 info:
   title: API Evangelist Network API
-  version: 1.3.0
+  version: 1.3.1
   summary: Sixteen years of API research as one API.
   description: |
     The API Evangelist network — 5,000+ stories, 77 topic areas, 2,400+ governance building
@@ -122,6 +122,13 @@ x-apis-io:
     getPaperRelated:       { tier: free, mcpTool: find_related, agentSkill: research-with-api-evangelist }
     getReportRelated:      { tier: free, mcpTool: find_related, agentSkill: research-with-api-evangelist }
     getGuidanceRelated:    { tier: free, mcpTool: find_related, agentSkill: brief-on-topic }
+    getInsightsSummary:    { tier: free, mcpTool: find_company_insights }
+    listInsightDimensions: { tier: free, mcpTool: insights_dimensions }
+    listInsightAdoption:   { tier: free, mcpTool: insights_adoption }
+    listInsightIndustries: { tier: free, mcpTool: insights_dimensions }
+    listInsightCompanies:  { tier: free, mcpTool: find_company_insights }
+    getCompanyInsight:     { tier: free, mcpTool: get_company_insight }
+    getCompanyGaps:        { tier: pro, mcpTool: company_gaps }
 servers:
   - url: https://api.apievangelist.com/v1
 security:
