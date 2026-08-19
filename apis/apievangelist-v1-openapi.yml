@@ -1,7 +1,7 @@
 openapi: 3.1.0
 info:
   title: API Evangelist Network API
-  version: 1.2.0
+  version: 1.3.0
   summary: Sixteen years of API research as one API.
   description: |
     The API Evangelist network — 5,000+ stories, 77 topic areas, 2,400+ governance building
@@ -100,6 +100,8 @@ x-apis-io:
     getVideo:              { tier: free, mcpTool: get_video }
     listPapers:            { tier: free, mcpTool: find_papers, agentSkill: research-with-api-evangelist }
     getPaper:              { tier: free, mcpTool: get_paper }
+    listReports:           { tier: free, mcpTool: find_reports, agentSkill: research-with-api-evangelist }
+    getReport:             { tier: free, mcpTool: get_report }
     listNewsletters:       { tier: free, mcpTool: search_api_evangelist }
     listVocabulary:        { tier: free, mcpTool: find_vocabulary }
     listVocabularyCategory: { tier: free, mcpTool: find_vocabulary }
@@ -118,6 +120,7 @@ x-apis-io:
     getPostRelated:        { tier: free, mcpTool: find_related, agentSkill: brief-on-topic }
     getAreaRelated:        { tier: free, mcpTool: find_related, agentSkill: brief-on-topic }
     getPaperRelated:       { tier: free, mcpTool: find_related, agentSkill: research-with-api-evangelist }
+    getReportRelated:      { tier: free, mcpTool: find_related, agentSkill: research-with-api-evangelist }
     getGuidanceRelated:    { tier: free, mcpTool: find_related, agentSkill: brief-on-topic }
 servers:
   - url: https://api.apievangelist.com/v1
@@ -892,6 +895,46 @@ paths:
             application/json:
               schema: { $ref: '#/components/schemas/Doc' }
         '404': { $ref: '#/components/responses/NotFound' }
+  /reports:
+    get:
+      operationId: listReports
+      tags: [Media]
+      summary: Reports
+      description: |
+        API Evangelist Reports — measured research bundles where every company named is banded on the
+        Kin Score, each shipping a machine-readable data bundle. Four kinds, selected with `report_type`:
+        `trends` (one market — an industry, a country cut, or a technology cohort), `standards` (one
+        standards body, free), `portfolios` (one fund's book), and `profiles` (one company, written for
+        the vendor selling into it). Distinct from `/papers`, which are single-PDF topic deep dives.
+      parameters:
+        - $ref: '#/components/parameters/Q'
+        - name: report_type
+          in: query
+          description: Restrict to one kind of report.
+          schema: { type: string, enum: [trends, standards, portfolios, profiles] }
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: Reports with outlines, pricing, and landing URLs.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/PagedEnvelope' }
+  /reports/{slug}:
+    get:
+      operationId: getReport
+      tags: [Media]
+      summary: Report
+      description: One report with its full outline, price, and landing URL. Standard Reports are free; the rest are paid, and the landing page carries the checkout.
+      parameters:
+        - $ref: '#/components/parameters/Slug'
+      responses:
+        '200':
+          description: The report.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Doc' }
+        '404': { $ref: '#/components/responses/NotFound' }
   /newsletters:
     get:
       operationId: listNewsletters
@@ -1119,8 +1162,7 @@ paths:
         - $ref: '#/components/parameters/Page'
         - $ref: '#/components/parameters/Limit'
       responses:
-        '200': { description: The tag and its tagged docs., content: { application/json: { schema: { type: object, additionalProperties: true } } }
-        }
+        '200': { description: The tag and its tagged docs., content: { application/json: { schema: { type: object, additionalProperties: true } } } }
         '404': { $ref: '#/components/responses/NotFound' }
   /guide:
     get:
@@ -1190,6 +1232,22 @@ paths:
       tags: [Papers]
       summary: Related content across the network.
       description: Content related to a paper. Ranked by shared-tag relevance (rare, specific tags weigh most). Cross-type by default; filter with types.
+      parameters:
+        - { name: slug, in: path, required: true, schema: { type: string } }
+        - { name: types, in: query, description: "Restrict to these content types (comma-separated).", schema: { type: string } }
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200': { description: A page of related content., content: { application/json: { schema: { type: object, additionalProperties: true } } } }
+        '404': { $ref: '#/components/responses/NotFound' }
+  /reports/{slug}/related:
+    get:
+      operationId: getReportRelated
+      x-tier: free
+      x-mcp-tool: find_related
+      x-agent-skill: research-with-api-evangelist
+      tags: [Papers]
+      summary: Related content across the network.
+      description: Content related to a report. Ranked by shared-tag relevance (rare, specific tags weigh most). Cross-type by default; filter with types.
       parameters:
         - { name: slug, in: path, required: true, schema: { type: string } }
         - { name: types, in: query, description: "Restrict to these content types (comma-separated).", schema: { type: string } }
