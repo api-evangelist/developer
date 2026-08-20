@@ -23,12 +23,20 @@ and volume pricing are available on request.
 
 Everything you need to discover and navigate the network, keyless:
 
-- **Search & browse** every content type — 5,100+ stories, 77 topic areas, 2,500+ governance
+- **Search & browse** every content type — 5,250+ stories, 77 topic areas, 2,600+ governance
   building blocks, papers, conversations, videos, solutions, tools, and vocabulary.
 - **Summaries & metadata** for every item (title, summary, tags, links).
 - **Tag taxonomy** — `/tags` and `/tags/{slug}`: the map of everything API Evangelist covers.
 - **Related content** — `/{type}/{slug}/related`: the shared-tag relevance graph across the network.
 - **Insights discovery** — `/insights/dimensions`, `/insights/adoption`, `/insights/companies`: the demand-side view of what ~5,800 companies build, buy, and hire for.
+- **Demand entity catalog** — `/insights/entities`: every service, tool, and standard companies are
+  measured against, ranked by reach. Each response states the corpus, the matcher, and the
+  truncation that bounds it.
+- **Standards measurement** — `/standards/measured` and `/standards/{slug}/adoption`, `/coalition`,
+  `/repositories`: what a standards body actually ships — repositories published, how many graduated,
+  who governs it, which companies pay for membership — for the 13 bodies profiled so far. Free on
+  purpose: a specification is a public good, so an honest read of its adoption should not sit behind
+  a paywall. Every response names what is **not** measured rather than implying zero.
 - **Contact** — every way to engage.
 
 Rate limits: 5 req/s, 1,000 req/day. No key required.
@@ -43,9 +51,16 @@ The research layer — for teams and agents that need the depth, not just the ma
 | **Curated topic guides** | `/guide?topic=` · `guide_topic` | One call bundles the topic area, top guidance/rules/policies/standards, papers, recent stories, and the services that can help. |
 | **Catalog intelligence** | `/stats` · `get_stats` | Per-type counts, stories-per-year, and the top tags by reach across the network. |
 | **Insights company depth** | `/insights/company/{slug}` · `get_company_insight` · `company_gaps` | The full 40-dimension demand-side profile of a Fortune 1000 / provider company, its adopted stack, and where it's thin. (Discovery — `/insights/dimensions`, `/adoption`, `/companies` — stays free.) |
+| **Benchmarked dimensions** | `/insights/company/{slug}/dimensions` · `company_dimensions` | Every dimension read against the measured cohort — median, mean, max, rank, percentile, and an index where 1.0 is exactly typical. A raw score of 26 is unreadable; these are the columns that make it mean something. |
+| **Peers & whitespace** | `/insights/company/{slug}/peers` · `/whitespace` · `/signals` | The companies most comparable to this one, what they run that it does not, and its own stack entity by entity with each entity's reach across the cohort. |
+| **The demand inversion** | `/insights/entity/{kind}/{slug}` · `entity_demand` | Which companies show demand for a given service, tool, or standard, broken down by industry. Every other endpoint runs company → stack; this one runs stack → companies. It is the prospecting query, and it exists in no report or bundle. |
 
 Pro also unlocks the paid **MCP prompts** (`research_topic`, `governance_starter_kit`,
 `vendor_landscape`) and the `ae://stats` / `ae://guide/{topic}` MCP resources.
+
+Every Pro capability above is available as both a REST endpoint and an MCP tool — the MCP is a
+pass-through over the same API, so the two return identical results and there is one paywall, not
+two.
 
 ## Governance & Discovery API
 
@@ -73,8 +88,11 @@ Full detail: [Free vs Pro](/governance/free-vs-pro) and the
 
 Self-serve — no email required:
 
-1. **[Sign in with GitHub](https://api.apievangelist.com/v1/auth/login)** to create your
-   account and a free-tier key.
+1. **Sign in** to create your account and a free-tier key —
+   [GitHub](https://api.apievangelist.com/v1/auth/login?provider=github) ·
+   [Google](https://api.apievangelist.com/v1/auth/login?provider=google) ·
+   [LinkedIn](https://api.apievangelist.com/v1/auth/login?provider=linkedin).
+   A second provider on the same verified email joins the account you already have.
 2. **[Upgrade to Pro or Team](/account)** via Stripe checkout — your key is moved onto the
    paid usage plan automatically when checkout completes.
 

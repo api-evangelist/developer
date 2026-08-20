@@ -2,14 +2,22 @@
 title: Your account
 ---
 
-This is where GitHub sign-in and Stripe checkout return you. Your session lives in a
+This is where sign-in and Stripe checkout return you. Your session lives in a
 secure cookie on `apievangelist.com`; your personal API key is minted the first time you
 sign in.
 
 ## Get your key
 
-1. **[Sign in with GitHub →](https://api.apievangelist.com/v1/auth/login)** — this creates
-   your account and a free-tier API key.
+1. **Sign in** — this creates your account and a free-tier API key. Pick whichever identity
+   you already have:
+
+   - [Sign in with GitHub →](https://api.apievangelist.com/v1/auth/login?provider=github)
+   - [Sign in with Google →](https://api.apievangelist.com/v1/auth/login?provider=google)
+   - [Sign in with LinkedIn →](https://api.apievangelist.com/v1/auth/login?provider=linkedin)
+
+   Signing in with a second provider on the **same verified email address** joins the account
+   you already have — it does not create a second one, so your key and your plan follow you.
+   `GET /v1/auth/providers` lists whichever options are live.
 2. Fetch your account to see the key:
 
    ```bash

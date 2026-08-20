@@ -31,11 +31,11 @@ Two tools are designed as the entry point — agents should reach for these firs
 | `find_services` / `get_service` | API Evangelist services — Kin's own offerings, the front door to an engagement |
 | `find_solutions` / `get_solution` | The solutions registry — 740+ third-party API services and tools ranked by adoption |
 | `search_api_evangelist` | Unified search across every resource type, faceted with `types=` |
-| `find_posts` / `get_post` | 5,100+ blog stories since 2010 |
+| `find_posts` / `get_post` | 5,250+ blog stories since 2010 |
 | `find_areas` / `get_area` | The 77 topic areas and their related-area graph |
 | `find_building_blocks(type)` / `get_building_block(type, slug)` | Guidance, rules, policies, standards, strategies, schema, properties, experiences, lifecycle |
 | `get_guidance_section(section)` | One editorial guidance section — history, technology, business, politics, governance, or evangelism |
-| `find_tools` / `get_tool` | The open-source tooling registry — 400+ tools ranked by adoption, with radar placement |
+| `find_tools` / `get_tool` | The open-source tooling registry — 525+ tools ranked by adoption, with radar placement |
 | `find_conversations` / `get_conversation` | Conversations with API producers, consumers, and vendors |
 | `find_videos` / `get_video` | The video library, searchable by transcript |
 | `find_papers` / `get_paper` | White papers |
@@ -43,8 +43,48 @@ Two tools are designed as the entry point — agents should reach for these firs
 | `find_vocabulary(category)` | The API vocabulary |
 | `get_feeds` | Machine-readable index of the static JSON feeds |
 | `find_company_insights` · `insights_dimensions` · `insights_adoption` | **Insights** (demand-side) — what ~5,800 companies build, buy, and hire for. Free discovery. |
-| `get_company_insight` · `company_gaps` | **Insights** depth — a company's full 40-dimension profile and its gaps. **Pro.** (The provider-match join lives on the [apis.io MCP](https://apis.io/developer/mcp-server).) |
+| `get_company_insight` · `company_gaps` | **Insights** depth — a company's full 40-dimension profile and its gaps. **Pro.** (The provider-match join lives on the [apis.io MCP](https://apis.io/developer/mcp-server/).) |
 | `get_contact` | Every way to reach API Evangelist |
+
+## Demand-side depth and the inversion
+
+The Profile Report bundle, as tools. Discovery stays free; the depth is Pro.
+
+| Tool | Tier | What it does |
+| --- | --- | --- |
+| `find_entities` | Free | The demand-side entity catalog — every service, tool, and standard companies are measured against, ranked by reach |
+| `company_dimensions` | **Pro** | A company's dimensions read against the measured cohort: median, mean, max, rank, percentile, and an index where 1.0 is exactly typical. A raw score of 26 is unreadable without these |
+| `company_peers` | **Pro** | The most comparable companies, by sub-sector where the data supports it and by industry otherwise. The response says which basis it used |
+| `company_whitespace` | **Pro** | What a company's peers run that it does not, ranked by how many peers carry it |
+| `company_signals` | **Pro** | The adopted stack entity by entity, each with its reach across the cohort |
+| `entity_demand` | **Pro** | **The inversion** — which companies show demand for a given service, tool, or standard, by industry. Every other tool runs company → stack; this runs stack → companies |
+
+`entity_demand` returns **two** counts: the authoritative `company_count` and the companies it can
+actually name. They are computed on different bases and disagree in either direction, so every
+response carries a `naming_note` saying which way the gap runs and why, plus the corpus composition.
+Read it before quoting either number.
+
+## Standards measurement
+
+What a standards body actually **ships**, as distinct from `find_building_blocks("standards")`,
+which searches 589 catalog entries describing what a standard *is*. **All free** — a specification
+is a public good, so an honest read of its adoption does not sit behind a paywall.
+
+| Tool | What it does |
+| --- | --- |
+| `find_measured_standards` | The 13 bodies with a measured profile |
+| `standard_adoption` | Repositories published, how many graduated past unclassified and the resulting share, release cadence, contributors |
+| `standard_coalition` | Governing bodies and their membership, working groups, member companies, named people |
+| `standard_repositories` | Every repository the body publishes, with maturity, stars, forks and archived status |
+
+Two things these tools do deliberately. A company count of **zero** carries a note explaining it —
+AsyncAPI is crowdfunded and has no corporate roster, which is a finding, not a gap — so zero and
+"not measured" are returned differently. And every response carries `measurement_gaps` naming what
+is **not** measured, conformance chief among it, so absence reads as absence rather than as zero.
+
+Where our machine-readable source disagrees with a body's own published page, the `caveats` array
+says so — AsyncAPI's rendered TSC roster listed 34 members against 31 in `MAINTAINERS.yaml`, and
+that discrepancy reaches the API rather than being smoothed over.
 
 ## Governance & Discovery tools
 

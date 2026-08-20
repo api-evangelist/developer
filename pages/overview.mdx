@@ -3,8 +3,8 @@ title: Overview
 ---
 
 This is the developer front door to the **[API Evangelist](https://apievangelist.com)** network —
-sixteen years of API research served as **one API and one MCP server**: 5,100+ stories, 77 focused
-topic areas, 2,400+ governance building blocks (guidance, rules, policies, standards, strategies,
+sixteen years of API research served as **one API and one MCP server**: 5,250+ stories, 77 focused
+topic areas, 2,600+ governance building blocks (guidance, rules, policies, standards, strategies,
 schema, properties, experiences, lifecycle), white papers, conversations, videos, tools, research
 timelines, services, and the API vocabulary.
 
@@ -17,12 +17,12 @@ timelines, services, and the API vocabulary.
 
 ## What's inside
 
-- **Stories** — 5,100+ blog posts since 2010 (`/posts`)
+- **Stories** — 5,250+ blog posts since 2010 (`/posts`)
 - **Areas** — 77 focused topic areas and their related-area graph (`/areas`)
 - **Guidance** — editorial guidance, browsable by section: history, technology, business,
   politics, governance, and evangelism (`/guidance`, `/guidance/sections/{section}`)
 - **Governance** — `/policies`, `/rules`
-- **Toolbox** — `/standards`, `/solutions` (740+ third-party services), `/tools` (400+
+- **Toolbox** — `/standards`, `/solutions` (740+ third-party services), `/tools` (525+
   open-source tools), `/schema`, `/properties`
 - **Operations** — `/strategies`, `/experiences`, `/lifecycle`
 - **Media** — `/conversations`, `/videos` (transcript-searchable), `/papers`, `/newsletters`
@@ -30,6 +30,15 @@ timelines, services, and the API vocabulary.
 - **Timelines** — the api, resources, industries, and people research timelines (`/timelines/{timeline}`)
 - **Services** — Kin Lane's first-party offerings (`/services`)
 - **Insights** — demand-side intelligence on ~5,800 companies: what the Fortune 1000 and API providers build, buy, and hire for (`/insights`, `/insights/company/{slug}`)
+- **Demand depth** — a company's dimensions read against the measured cohort, its peers, and its
+  whitespace (`/insights/company/{slug}/dimensions`, `/peers`, `/whitespace`, `/signals`)
+- **The demand inversion** — which companies show demand for a given service, tool, or standard.
+  Every other route runs company → stack; this one runs stack → companies
+  (`/insights/entities`, `/insights/entity/{kind}/{slug}`)
+- **Standards measurement** — what a standards body actually ships, as opposed to what it
+  describes: repositories published, how many graduated, who governs it, which companies pay for
+  membership. Thirteen bodies profiled so far, free
+  (`/standards/measured`, `/standards/{slug}/adoption`, `/coalition`, `/repositories`)
 - **Contact** — every way to reach API Evangelist (`/contact`)
 
 Everything is read-only `GET`, and the free tier needs no key — see

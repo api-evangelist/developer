@@ -3,7 +3,7 @@
   "info": {
     "title": "API Evangelist Governance & Discovery API",
     "version": "1.0.0",
-    "description": "The API Commons governance and discovery tools — lint, coverage, waivers, reporting, certification, agent export, pipeline audit, MCP/skill forging, consumer gating, reusability, and experience mapping — as one hosted REST API. Every endpoint runs the same engine the browser tools at apicommons.org/tools run, server-side. Discovery-grade linting is free; the capabilities that generate artifacts, certify, audit repos, or roll up across many APIs are Pro. Free tier is keyless (5 req/s, 1,000/day, one document per call). Send a Pro key in the x-api-key header to unlock the Pro endpoints, SARIF output, and bulk input. Get a key at https://api.apievangelist.com/v1/auth/login.",
+    "description": "The API Commons governance and discovery tools \u2014 lint, coverage, waivers, reporting, certification, agent export, pipeline audit, MCP/skill forging, consumer gating, reusability, and experience mapping \u2014 as one hosted REST API. Every endpoint runs the same engine the browser tools at apicommons.org/tools run, server-side. Discovery-grade linting is free; the capabilities that generate artifacts, certify, audit repos, or roll up across many APIs are Pro. Free tier is keyless (5 req/s, 1,000/day, one document per call). Send a Pro key in the x-api-key header to unlock the Pro endpoints, SARIF output, and bulk input. Get a key at https://api.apievangelist.com/v1/auth/login.",
     "contact": {
       "name": "API Evangelist",
       "url": "https://apievangelist.com",
@@ -181,7 +181,7 @@
           "Governance"
         ],
         "summary": "Governance coverage of a document (FREE)",
-        "description": "How much of an API description the ruleset actually inspects — coverage by section, dead rules, and each rule reach.",
+        "description": "How much of an API description the ruleset actually inspects \u2014 coverage by section, dead rules, and each rule reach.",
         "x-tier": "free",
         "requestBody": {
           "required": true,
@@ -248,7 +248,7 @@
           "Governance"
         ],
         "summary": "Reconcile waivers against lint output (FREE)",
-        "description": "Suppress sanctioned violations and surface expired, stale, and expiring waivers — the effective failing set your build should gate on.",
+        "description": "Suppress sanctioned violations and surface expired, stale, and expiring waivers \u2014 the effective failing set your build should gate on.",
         "x-tier": "free",
         "requestBody": {
           "required": true,
@@ -442,7 +442,7 @@
           "Governance"
         ],
         "summary": "Classify PII and secret fields (FREE)",
-        "description": "Inventory the PII, secret, and sensitive fields an OpenAPI exposes — across parameters and request/response schemas. Uses the same classifiers as Context Gate.",
+        "description": "Inventory the PII, secret, and sensitive fields an OpenAPI exposes \u2014 across parameters and request/response schemas. Uses the same classifiers as Context Gate.",
         "x-tier": "free",
         "requestBody": {
           "required": true,
@@ -500,7 +500,7 @@
           "Governance"
         ],
         "summary": "Detect breaking changes between two versions (FREE)",
-        "description": "Compare two OpenAPI versions and classify every change as breaking, non-breaking, or an addition — at path, operation, parameter, request-body, and response granularity.",
+        "description": "Compare two OpenAPI versions and classify every change as breaking, non-breaking, or an addition \u2014 at path, operation, parameter, request-body, and response granularity.",
         "x-tier": "free",
         "requestBody": {
           "required": true,
@@ -550,7 +550,7 @@
           "Governance"
         ],
         "summary": "API maturity scorecard (FREE)",
-        "description": "Roll up a 0-100 maturity score with a letter grade across dimensions — design/style (lint), governance coverage, documentation completeness, and (from an apis.json) discoverability, agent-readiness, and operations.",
+        "description": "Roll up a 0-100 maturity score with a letter grade across dimensions \u2014 design/style (lint), governance coverage, documentation completeness, and (from an apis.json) discoverability, agent-readiness, and operations.",
         "x-tier": "free",
         "requestBody": {
           "required": true,
@@ -607,7 +607,7 @@
           "Governance"
         ],
         "summary": "Deprecation / sunset posture (FREE)",
-        "description": "Report every deprecated operation and whether it announces a sunset (x-sunset date or a Sunset/Deprecation response header), plus deprecated schema fields — the honest migration picture.",
+        "description": "Report every deprecated operation and whether it announces a sunset (x-sunset date or a Sunset/Deprecation response header), plus deprecated schema fields \u2014 the honest migration picture.",
         "x-tier": "free",
         "requestBody": {
           "required": true,
@@ -783,7 +783,7 @@
         ],
         "summary": "The curated rule catalog (FREE)",
         "x-tier": "free",
-        "description": "Browse the curated best-of-breed rule catalog the validator runs — every rule with its id, format, title, severity, tags, given, and reference. Optionally filter by artifact format.",
+        "description": "Browse the curated best-of-breed rule catalog the validator runs \u2014 every rule with its id, format, title, severity, tags, given, and reference. Optionally filter by artifact format.",
         "parameters": [
           {
             "name": "format",
@@ -838,7 +838,7 @@
         ],
         "summary": "The Ruleset Commons registry (FREE)",
         "x-tier": "free",
-        "description": "The registry of adoptable, provenanced governance rulesets — national, industry, security, and company rulesets you can extend by reference instead of running the linter defaults.",
+        "description": "The registry of adoptable, provenanced governance rulesets \u2014 national, industry, security, and company rulesets you can extend by reference instead of running the linter defaults.",
         "responses": {
           "200": {
             "description": "The ruleset registry.",
@@ -1211,7 +1211,7 @@
           "Governance"
         ],
         "summary": "Apply an OpenAPI Overlay (PRO)",
-        "description": "Apply an OpenAPI Overlay (spec 1.0.0) to a document — each action resolves a target JSONPath and deep-merges update or removes the match. Returns the transformed OpenAPI plus a per-action report.",
+        "description": "Apply an OpenAPI Overlay (spec 1.0.0) to a document \u2014 each action resolves a target JSONPath and deep-merges update or removes the match. Returns the transformed OpenAPI plus a per-action report.",
         "x-tier": "pro",
         "security": [
           {
@@ -1391,7 +1391,7 @@
           "Discovery"
         ],
         "summary": "Generate llms.txt + AGENTS.md (PRO)",
-        "description": "Generate the agent-facing descriptors for an API: an llms.txt (well-known link summary) and an AGENTS.md consumption contract — base URL, auth, the operation table, deprecated operations to avoid, and usage rules. Reads links from an apis.json when supplied.",
+        "description": "Generate the agent-facing descriptors for an API: an llms.txt (well-known link summary) and an AGENTS.md consumption contract \u2014 base URL, auth, the operation table, deprecated operations to avoid, and usage rules. Reads links from an apis.json when supplied.",
         "x-tier": "pro",
         "security": [
           {
@@ -1501,7 +1501,8 @@
           "302": {
             "description": "Redirect to GitHub."
           }
-        }
+        },
+        "x-tier": "free"
       }
     },
     "/auth/me": {
@@ -1536,7 +1537,8 @@
           "401": {
             "description": "Not authenticated."
           }
-        }
+        },
+        "x-tier": "free"
       }
     },
     "/billing/checkout": {
@@ -1565,7 +1567,8 @@
           "401": {
             "description": "Not authenticated."
           }
-        }
+        },
+        "x-tier": "free"
       }
     }
   },
