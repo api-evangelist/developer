@@ -38,10 +38,20 @@ export const SignInButtons = ({ base }) => {
     fetch(`${base}/auth/providers`)
       .then((r) => (r.ok ? r.json() : null))
       .then((j) => setProviders(j?.providers || []))
-      .catch(() => setProviders([{ id: 'github', label: 'GitHub', login: `${base}/auth/login?provider=github` }]));
+      .catch(() => setProviders('error'));
   }, [base]);
   if (providers === null) return <p>Loading sign-in options…</p>;
-  if (!providers.length) return <p>Sign-in is temporarily unavailable.</p>;
+  // Do NOT fall back to a GitHub-only list. A short list is indistinguishable from a correct one,
+  // so a failed lookup would quietly present fewer ways in than actually exist.
+  if (providers === 'error' || !providers.length) return (
+    <p>
+      Could not load the sign-in options. Go directly to{' '}
+      <a href={`${base}/auth/login?provider=github`}>GitHub</a>,{' '}
+      <a href={`${base}/auth/login?provider=google`}>Google</a> or{' '}
+      <a href={`${base}/auth/login?provider=linkedin`}>LinkedIn</a> — any provider that is not
+      configured will say so rather than failing silently.
+    </p>
+  );
   return (
     <div>
       <div style={{ display: 'flex', gap: '0.6rem', flexWrap: 'wrap', margin: '0.5rem 0 0.75rem' }}>
