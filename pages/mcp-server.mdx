@@ -41,6 +41,10 @@ Two tools are designed as the entry point — agents should reach for these firs
 | `find_papers` / `get_paper` | White papers |
 | `get_timeline(timeline)` | The api, resources, industries, and people research timelines |
 | `find_vocabulary(category)` | The API vocabulary |
+| `find_tags` / `get_tag` | The network tag taxonomy, and everything one tag labels across every content type |
+| `find_related` | The shared-tag relevance graph — related content across the network for any item |
+| `find_reports` / `get_report` | The measured reports: trends, standards, portfolios, profiles. Distinct from `find_papers`, which is the single-PDF deep dives |
+| `get_stats` | **Pro** — catalog intelligence: per-type counts, stories per year, top tags by reach |
 | `get_feeds` | Machine-readable index of the static JSON feeds |
 | `find_company_insights` · `insights_dimensions` · `insights_adoption` | **Insights** (demand-side) — what ~5,800 companies build, buy, and hire for. Free discovery. |
 | `get_company_insight` · `company_gaps` | **Insights** depth — a company's full 40-dimension profile and its gaps. **Pro.** (The provider-match join lives on the [apis.io MCP](https://apis.io/developer/mcp-server/).) |
@@ -111,6 +115,7 @@ repo, or rolling up across an estate is Pro.**
 | `gate_agent_context` | **Pro** | Emit a governed Tyk + MCP + ruleset agent surface. |
 | `apply_overlay` | **Pro** | Apply an OpenAPI Overlay and report what each action matched. |
 | `mock_payloads` · `code_snippets` | **Pro** | Example payloads; runnable curl / JavaScript / Python per operation. |
+| `govern_estate` | **Pro** | Run the core checks across a WHOLE SET of internal APIs and roll them up — per-API score, grade, errors and PII, plus estate aggregates and a worst-first punch-list. |
 | `score_reusability` | **Pro** | Reuse + duplication across a set of APIs. |
 | `map_api_experience` | **Pro** | The API → MCP → Agent-Skill chain, with coverage. |
 | `generate_agent_descriptor` | **Pro** | An API's `llms.txt` + `AGENTS.md` consumption contract. |
