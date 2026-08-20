@@ -1,0 +1,65 @@
+---
+title: Security
+---
+
+# Security & vulnerability disclosure
+
+API Evangelist is a small, independent operation. That is exactly why this page exists: the
+reporting path should be obvious and the response commitments should be ones that can actually
+be met, rather than a boilerplate promise nobody is staffed to keep.
+
+The machine-readable version of this page is at
+[`/.well-known/security.txt`](/.well-known/security.txt) ([RFC 9116](https://www.rfc-editor.org/rfc/rfc9116.html)).
+
+## Reporting a vulnerability
+
+Email **info@apievangelist.com** with `SECURITY` in the subject line.
+
+Please include what you need to make it reproducible: the endpoint or URL, the request, what you
+expected, what happened, and anything about your setup that matters. A proof of concept helps.
+
+## What to expect
+
+| | Commitment |
+| --- | --- |
+| Acknowledgement | Within **3 business days** |
+| Initial assessment | Within **10 business days** |
+| Fix or documented mitigation | Target **90 days**, sooner where the severity warrants it |
+| Credit | Named in the [changelog](/changelog) if you want it, anonymous if you do not |
+
+There is no bug bounty. This is not a funded security programme — it is one person who will read
+your report, take it seriously, and tell you honestly what is being done about it.
+
+## Scope
+
+**In scope**
+
+- `api.apievangelist.com` — the Network API and the Governance & Discovery API
+- `mcp.apievangelist.com` — the MCP server and its OAuth 2.1 authorization server
+- `developer.apievangelist.com` — this portal
+- `apievangelist.com` and the network subdomains
+
+**Out of scope**
+
+- Findings against third-party platforms hosting parts of the network (GitHub, Cloudflare, AWS) —
+  report those to the platform.
+- Volumetric denial of service, and anything requiring physical access or social engineering of
+  the operator.
+- Missing hardening headers, or scanner output, without a demonstrated impact.
+
+## Testing guidance
+
+Test against your own data. The API's free tier is keyless and rate-limited — please stay inside
+those limits while testing rather than treating an authorization question as a load-test.
+
+Do not access, modify, or exfiltrate data belonging to anyone else. If you encounter personal
+data during testing, stop and say so in the report.
+
+Good-faith research under this policy is welcome, and no legal action will be pursued over it.
+
+## Transport and authentication
+
+The whole network is TLS 1.3. The API authenticates with `x-api-key`; the MCP server uses
+OAuth 2.1 with [RFC 9728](https://www.rfc-editor.org/rfc/rfc9728.html) protected-resource
+metadata. Keys and tokens belong in headers — never in a query string, and never in a URL that
+ends up in a log or a referrer.

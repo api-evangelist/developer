@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "API Evangelist developer portal (Zudoku) — served at developer.apievangelist.com",
+  "description": "API Evangelist developer portal (Zudoku) \u2014 served at developer.apievangelist.com",
   "scripts": {
-    "prebuild": "node scripts/generate-well-known.mjs",
+    "prebuild": "node scripts/generate-well-known.mjs && node scripts/mirror-apis-yml.mjs",
     "predev": "npm run prebuild",
     "dev": "zudoku dev",
     "build": "npm run prebuild && zudoku build"

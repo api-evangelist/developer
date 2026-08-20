@@ -3,3 +3,6 @@ dist/
 public/.well-known/api-catalog*
 public/apis/
 .DS_Store
+public/apis.yml
+.cache/
+public/.well-known/security.txt

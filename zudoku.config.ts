@@ -30,6 +30,11 @@ const config: ZudokuConfig = {
       label: "Documentation",
       items: ["overview", "getting-started", "authentication", "plans", "mcp-server", "about"],
     },
+    {
+      type: "category",
+      label: "Operations",
+      items: ["changelog", "deprecation", "security", "roadmap", "catalog-feeds"],
+    },
     { type: "link", to: "/api", label: "API Reference" },
     {
       type: "category",
@@ -53,11 +58,14 @@ const config: ZudokuConfig = {
     // These two documented the API and MCP server themselves — send them to the real docs.
     { from: "/feeds/api", to: "/api" },
     { from: "/feeds/mcp", to: "/mcp-server" },
+    // These two APIs.json indexes are still published — /catalog-feeds documents
+    // them. They were being swept into the generic retirement redirect below,
+    // which sent anyone looking for a live feed to the homepage.
+    { from: "/feeds/apis", to: "/catalog-feeds" },
+    { from: "/feeds/companies", to: "/catalog-feeds" },
     ...[
-      "apis",
       "posts",
       "conversations",
-      "companies",
       "experiences",
       "guidance",
       "partners",

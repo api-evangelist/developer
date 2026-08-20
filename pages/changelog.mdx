@@ -1,0 +1,64 @@
+---
+title: Changelog
+---
+
+# Changelog
+
+Changes to the **API Evangelist Network API** (`https://api.apievangelist.com/v1`), the
+**Governance & Discovery API**, and the **MCP server** at `https://mcp.apievangelist.com/mcp`.
+
+The API is at **v1.2.0**. Entries below are dated by the day the change shipped to production.
+This log starts at 2026-07-02, the point from which changes are recorded deliberately rather than
+reconstructed — earlier history exists in the implementation repository but was never written up,
+and back-filling it from commit messages would dress up a reconstruction as a record.
+
+Breaking changes are called out explicitly and follow the
+[deprecation policy](/deprecation). Nothing in `/v1` has been removed to date.
+
+## 2026-08-20
+
+- **Standards measurement.** `/standards/measured`, `/standards/{slug}/adoption`, `/coalition`
+  and `/repositories` — what a standards body actually ships, for the 13 bodies profiled so far.
+  Free tier, on purpose.
+- **Demand inversion** on the insights endpoints.
+- **Multi-provider sign-in** — GitHub, Google and LinkedIn.
+
+## 2026-08-16
+
+- **Reports split from papers.** Reports are indexed as their own type, with `find_reports` and
+  `get_report` on the MCP server. Search index links updated to match.
+
+## 2026-08-12
+
+- **MCP authorization.** The MCP server now runs its own OAuth 2.1 authorization server and
+  publishes RFC 9728 protected-resource metadata.
+
+## 2026-08-05
+
+- **Fixed:** owner-tier keys were being refused Pro resources.
+- **Fixed:** auth denials returned opaque errors that did not say which tier was required.
+- **Fixed:** an empty `GITHUB_TOKEN` failed silently rather than reporting a configuration error.
+
+## 2026-07-16
+
+- **MCP prompts expanded 5 → 29** — governance and agent-ready guided flows.
+- **`govern_estate`** — run the core governance checks across a whole internal API set.
+- **`get_company_insight` is now freemium**, matching APIs.io.
+- **Fixed:** the governance error contract, and `api_coverage` response bloat.
+- **Bounded** `validate_api` and the multi-artifact generators.
+
+## 2026-07-15
+
+- **The Governance & Discovery API** — lint an OpenAPI against 461 curated rules or your own
+  ruleset, score it, measure rule coverage, classify fields, diff versions, validate onboarding.
+- **21 governance tools** added to the MCP server.
+- **Self-serve Pro billing.**
+
+## 2026-07-14
+
+- **Free/Pro tiers** introduced; API and MCP brought to APIs.io parity.
+
+## 2026-07-02
+
+- **Added** `/tools`, `/videos`, `/timelines`, `/guidance/sections`, and `/contact`.
+- **Split** `/solutions` (the vendor registry) from `/services` (first-party offerings).

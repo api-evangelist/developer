@@ -1,7 +1,7 @@
 openapi: 3.1.0
 info:
   title: API Evangelist Network API
-  version: 1.4.0
+  version: 1.2.0
   summary: Sixteen years of API research as one API.
   description: 'The API Evangelist network — 5,000+ stories, 77 topic areas, 2,400+ governance building
 
@@ -44,12 +44,12 @@ x-apis-io:
   tiers:
     free:
       label: Free
-      description: Browse, search, and read summaries across the whole network — stories, areas, guidance, building
-        blocks, papers, tags, related. Keyless.
+      description: Browse, search, and read summaries across the whole network — stories, areas, guidance,
+        building blocks, papers, tags, related. Keyless.
     pro:
       label: Pro
-      description: The research depth — full content (include=content), curated topic guides (/guide), and catalog
-        intelligence (/stats). Requires X-API-Key.
+      description: The research depth — full content (include=content), curated topic guides (/guide),
+        and catalog intelligence (/stats). Requires X-API-Key.
       plans: https://developer.apievangelist.com/plans/
   mcp:
     endpoint: https://mcp.apievangelist.com/mcp
@@ -76,7 +76,8 @@ x-apis-io:
     - find_related
   - name: governance_starter_kit
     tier: pro
-    description: 'PRO — Assemble an API governance starter kit: guidance, rules, policies, standards + services.'
+    description: 'PRO — Assemble an API governance starter kit: guidance, rules, policies, standards +
+      services.'
     uses:
     - guide_topic
     - find_building_blocks
@@ -251,13 +252,6 @@ x-apis-io:
     getPaper:
       tier: free
       mcpTool: get_paper
-    listReports:
-      tier: free
-      mcpTool: find_reports
-      agentSkill: research-with-api-evangelist
-    getReport:
-      tier: free
-      mcpTool: get_report
     listNewsletters:
       tier: free
       mcpTool: search_api_evangelist
@@ -321,35 +315,10 @@ x-apis-io:
       tier: free
       mcpTool: find_related
       agentSkill: research-with-api-evangelist
-    getReportRelated:
-      tier: free
-      mcpTool: find_related
-      agentSkill: research-with-api-evangelist
     getGuidanceRelated:
       tier: free
       mcpTool: find_related
       agentSkill: brief-on-topic
-    getInsightsSummary:
-      tier: free
-      mcpTool: find_company_insights
-    listInsightDimensions:
-      tier: free
-      mcpTool: insights_dimensions
-    listInsightAdoption:
-      tier: free
-      mcpTool: insights_adoption
-    listInsightIndustries:
-      tier: free
-      mcpTool: insights_dimensions
-    listInsightCompanies:
-      tier: free
-      mcpTool: find_company_insights
-    getCompanyInsight:
-      tier: free
-      mcpTool: get_company_insight
-    getCompanyGaps:
-      tier: pro
-      mcpTool: company_gaps
 servers:
 - url: https://api.apievangelist.com/v1
 security:
@@ -363,8 +332,8 @@ tags:
 - name: Areas
   description: The 77 focused topic areas and their related-area graph.
 - name: Guidance
-  description: Editorial guidance across the history, technology, business, politics, governance, and evangelism
-    of APIs.
+  description: Editorial guidance across the history, technology, business, politics, governance, and
+    evangelism of APIs.
 - name: Governance
   description: The policies and rules that align the business and engineering sides of API operations.
 - name: Toolbox
@@ -382,15 +351,22 @@ tags:
 - name: Contact
   description: Every way to reach API Evangelist.
 - name: Insights
-  description: Demand-side intelligence — what ~5,800 companies (Fortune 1000 + API providers) build, buy, and hire
-    for around APIs, data, and AI. Discovery is free; per-company depth + gaps are Pro. (The supply↔demand provider
-    match lives on apis.io.)
-- name: Standards Measurement
-  description: What a standards body actually ships — repositories, maturity, governance, coalition — as distinct
-    from the catalog entry describing what a standard IS.
-- name: Demand
-  description: 'The demand-side view: what companies build, buy and hire for, and — inverted — which companies show
-    demand for a given service, tool or standard.'
+  description: Demand-side intelligence — what ~5,800 companies (Fortune 1000 + API providers) build,
+    buy, and hire for around APIs, data, and AI. Discovery is free; per-company depth + gaps are Pro.
+    (The supply↔demand provider match lives on apis.io.)
+- name: Tags
+  description: The tag taxonomy across the whole network — the map of everything API Evangelist covers,
+    and the join key behind every /related response.
+- name: Synthesis
+  description: 'Curated synthesis over the network rather than raw retrieval: guides assembled for a topic,
+    and the counts behind the catalog.'
+- name: APIs
+  description: Individual API resources tracked across the network, and the relevance graph between them.
+- name: Papers
+  description: White papers and reports, and the relevance graph between them.
+- name: Building Blocks
+  description: The governance building blocks — guidance, rules, policies, standards, strategies, schema,
+    properties, experiences and lifecycle — and the relevance graph between them.
 paths:
   /:
     get:
@@ -432,15 +408,92 @@ paths:
                     format: uri
                   engage:
                     $ref: '#/components/schemas/Engage'
-      x-tier: free
+              example:
+                service: API Evangelist
+                version: v1
+                description: Sixteen years of API research — stories, topic areas, guidance, rules, policies,
+                  standards, strategies, and more — as one API. Built to help teams navigate the API landscape
+                  and find where API Evangelist can help.
+                counts:
+                  posts: 5267
+                  areas: 77
+                  guidance: 180
+                  rules: 617
+                  policies: 283
+                  standards: 613
+                  strategies: 75
+                  schema: 11
+                  properties: 791
+                  experiences: 46
+                  lifecycle: 29
+                  conversations: 59
+                  papers: 21
+                  reports: 128
+                  services: 25
+                  solutions: 742
+                  tools: 527
+                  videos: 103
+                  timelines: 565
+                  vocabulary: 6988
+                resources:
+                - /v1/posts
+                - /v1/areas
+                - /v1/guidance
+                - /v1/rules
+                - /v1/policies
+                - /v1/standards
+                - /v1/strategies
+                - /v1/schema
+                - /v1/properties
+                - /v1/experiences
+                - /v1/lifecycle
+                - /v1/conversations
+                - /v1/papers
+                - /v1/reports
+                - /v1/services
+                - /v1/solutions
+                - /v1/vocabulary
+                - /v1/newsletters
+                - /v1/feeds
+                - /v1/tools
+                - /v1/videos
+                - /v1/timelines
+                - /v1/tags
+                - /v1/contact
+                synthesis:
+                  guide: /v1/guide?topic= (Pro)
+                  stats: /v1/stats (Pro)
+                  related: /v1/{type}/{slug}/related
+                tiers:
+                  free: Browse, search, and read summaries across the whole network + tags + related.
+                  pro: Full research content (include=content), curated topic guides (/guide), and catalog
+                    intelligence (/stats).
+                  plans: https://developer.apievangelist.com/plans/
+                search: /v1/search?q=
+                documentation: https://developer.apievangelist.com/
+                openapi: https://developer.apievangelist.com/apis/apievangelist-v1-openapi.yml
+                mcp: https://mcp.apievangelist.com/mcp
+                engage:
+                  email: info@apievangelist.com
+                  services_url: https://apievangelist.com/services/
+                  newsletter: https://buttondown.com/apievangelist
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
   /search:
     get:
       operationId: searchNetwork
       tags:
       - Overview
       summary: Search
-      description: 'Search every resource type at once. `meta.facets.types` carries per-type hit counts for the
-        full result set (useful for filter chips); narrow with `types=`.
+      description: 'Search every resource type at once. `meta.facets.types` carries per-type hit counts
+        for the full result set (useful for filter chips); narrow with `types=`.
 
         '
       parameters:
@@ -485,12 +538,21 @@ paths:
                     - type: areas
                       slug: gateway
                       title: Gateway
-                      summary: A collection of services, tooling, and open source solutions for API gateway management…
+                      summary: A collection of services, tooling, and open source solutions for API gateway
+                        management…
                       url: https://gateway.apievangelist.com
                       tags:
                       - API Gateway
                       - Traffic Management
-      x-tier: free
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
   /posts:
     get:
       operationId: listPosts
@@ -519,7 +581,57 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PagedEnvelope'
-      x-tier: free
+              example:
+                meta:
+                  total: 5267
+                  page: 1
+                  limit: 2
+                  pages: 2634
+                  query:
+                    tags: null
+                data:
+                - slug: 2026-09-29-you-cannot-see-your-own-api-from-the-outside
+                  title: You Cannot See Your Own API From The Outside
+                  summary: ''
+                  url: https://apievangelist.com/2026/09/29/you-cannot-see-your-own-api-from-the-outside/
+                  tags:
+                  - Kin Score
+                  - APIs.io
+                  - Discovery
+                  - Agents
+                  - API Governance
+                  - Strategy
+                  - APIs
+                  date: '2026-09-29'
+                  image: ''
+                  has_content: true
+                  type: posts
+                - slug: 2026-09-26-apis-io-provides-discovery-grade-artifacts
+                  title: APIs.io Provides Discovery-Grade Artifacts
+                  summary: ''
+                  url: https://apievangelist.com/2026/09/26/apis-io-provides-discovery-grade-artifacts/
+                  tags:
+                  - Discovery
+                  - APIs.io
+                  - OpenAPI
+                  - Artifacts
+                  - API Discovery
+                  - Kin Score
+                  - Strategy
+                  - APIs
+                  date: '2026-09-26'
+                  image: https://kinlane-images.s3.amazonaws.com/apievangelist/api-evangelist-images/apis-io-provides-discovery-grade-artifacts.png
+                  has_content: true
+                  type: posts
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
   /posts/{slug}:
     get:
       operationId: getPost
@@ -537,9 +649,34 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Doc'
+              example:
+                slug: 2026-09-29-you-cannot-see-your-own-api-from-the-outside
+                title: You Cannot See Your Own API From The Outside
+                summary: ''
+                url: https://apievangelist.com/2026/09/29/you-cannot-see-your-own-api-from-the-outside/
+                tags:
+                - Kin Score
+                - APIs.io
+                - Discovery
+                - Agents
+                - API Governance
+                - Strategy
+                - APIs
+                date: '2026-09-29'
+                image: ''
+                has_content: true
+                type: posts
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '404':
           $ref: '#/components/responses/NotFound'
-      x-tier: free
   /areas:
     get:
       operationId: listAreas
@@ -560,7 +697,68 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PagedEnvelope'
-      x-tier: free
+              example:
+                meta:
+                  total: 77
+                  page: 1
+                  limit: 2
+                  pages: 39
+                  query:
+                    tags: null
+                data:
+                - slug: agents-skills
+                  title: Agent Skills
+                  summary: An index and topic collection covering Agent Skills, the packaged, file-based
+                    capability units that AI coding agents load to extend their behavior. Agent Skills
+                    bundle…
+                  url: https://agents-skills.apievangelist.com
+                  icon: https://agents-skills.apievangelist.com/icon-thumb.png
+                  tags:
+                  - Agent Skills
+                  - Claude Skills
+                  - Capability Packages
+                  - AI Agents
+                  - Developer Tooling
+                  related:
+                  - agents
+                  - ai-automation
+                  - aiops
+                  - portal
+                  - management
+                  - ide
+                  conforming: true
+                  type: areas
+                - slug: agents
+                  title: Agents
+                  summary: An index and topic collection covering AI agents, agent frameworks, and agent
+                    runtimes that enable autonomous reasoning, tool use, and multi-step task execution.
+                    This profile…
+                  url: https://agents.apievangelist.com
+                  icon: https://agents.apievangelist.com/icon-thumb.png
+                  tags:
+                  - AI Agents
+                  - Agent Frameworks
+                  - Agent Orchestration
+                  - Agent Runtimes
+                  - LLM Orchestration
+                  related:
+                  - agents-skills
+                  - ai-automation
+                  - containers
+                  - ipaas
+                  - aiops
+                  - orchestration
+                  conforming: true
+                  type: areas
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
   /areas/{slug}:
     get:
       operationId: getArea
@@ -577,16 +775,77 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Area'
+              example:
+                slug: agents-skills
+                title: Agent Skills
+                summary: An index and topic collection covering Agent Skills, the packaged, file-based
+                  capability units that AI coding agents load to extend their behavior. Agent Skills bundle…
+                url: https://agents-skills.apievangelist.com
+                icon: https://agents-skills.apievangelist.com/icon-thumb.png
+                tags:
+                - Agent Skills
+                - Claude Skills
+                - Capability Packages
+                - AI Agents
+                - Developer Tooling
+                related:
+                - slug: agents
+                  title: Agents
+                  url: https://agents.apievangelist.com
+                  summary: An index and topic collection covering AI agents, agent frameworks, and agent
+                    runtimes that enable autonomous reasoning, tool use, and multi-step task execution.
+                    This profile…
+                - slug: ai-automation
+                  title: AI Automation
+                  url: https://ai-automation.apievangelist.com
+                  summary: AI automation combines artificial intelligence with workflow and process automation
+                    to create intelligent, autonomous systems including AI agent frameworks, autonomous
+                    coding…
+                - slug: aiops
+                  title: AIOps
+                  url: https://aiops.apievangelist.com
+                  summary: AIOps applies artificial intelligence and machine learning to IT operations,
+                    enabling intelligent alerting, anomaly detection, automated root cause analysis, and
+                    predictive…
+                - slug: portal
+                  title: Portal
+                  url: https://portal.apievangelist.com
+                  summary: A curated index of services, tooling, and open source solutions for API developer
+                    portals, API catalogs, API marketplaces, and developer experience platforms. This
+                    collection…
+                - slug: management
+                  title: Management
+                  url: https://management.apievangelist.com
+                  summary: An index and topic collection covering full-stack API management platforms
+                    — solutions that combine an API gateway, developer portal, analytics, monetization,
+                    governance, and…
+                - slug: ide
+                  title: IDE
+                  url: https://ide.apievangelist.com
+                  summary: An index and topic collection covering integrated development environments
+                    (IDEs), code editors, and cloud workspaces with APIs. This topic captures the editors,
+                    IDEs, and…
+                conforming: true
+                type: areas
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '404':
           $ref: '#/components/responses/NotFound'
-      x-tier: free
   /guidance/sections/history:
     get:
       operationId: listGuidanceHistory
       tags:
       - Guidance
       summary: History
-      description: Guidance from the history of APIs — the providers, tooling, and moments that shaped the space.
+      description: Guidance from the history of APIs — the providers, tooling, and moments that shaped
+        the space.
       parameters:
       - $ref: '#/components/parameters/Page'
       - $ref: '#/components/parameters/Limit'
@@ -598,7 +857,42 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PagedEnvelope'
-      x-tier: free
+              example:
+                meta:
+                  total: 27
+                  page: 1
+                  limit: 2
+                  pages: 14
+                  query:
+                    section: history
+                data:
+                - slug: 3scale
+                  title: 3Scale
+                  summary: The freemium-first API management platform that proved the space could be self-service
+                    and sustainable.
+                  url: https://guidance.apievangelist.com/store/3scale/
+                  tags:
+                  - History
+                  - API Management
+                  has_content: true
+                  type: guidance
+                - slug: amazon
+                  title: Amazon
+                  summary: The e-commerce and cloud company that bet its entire platform on APIs
+                  url: https://guidance.apievangelist.com/store/amazon/
+                  tags:
+                  - History
+                  has_content: true
+                  type: guidance
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
   /guidance/sections/technology:
     get:
       operationId: listGuidanceTechnology
@@ -617,7 +911,41 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PagedEnvelope'
-      x-tier: free
+              example:
+                meta:
+                  total: 47
+                  page: 1
+                  limit: 2
+                  pages: 24
+                  query:
+                    section: technology
+                data:
+                - slug: agent-skills
+                  title: Agent Skills
+                  summary: Packaged capability units that AI agents load to execute API operations
+                  url: https://guidance.apievangelist.com/store/agent-skills/
+                  tags:
+                  - Technology
+                  has_content: true
+                  type: guidance
+                - slug: apis-json
+                  title: APIs.json
+                  summary: The machine-readable discovery format I created for indexing APIs and their
+                    operations
+                  url: https://guidance.apievangelist.com/store/apis-json/
+                  tags:
+                  - Technology
+                  has_content: true
+                  type: guidance
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
   /guidance/sections/business:
     get:
       operationId: listGuidanceBusiness
@@ -636,7 +964,40 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PagedEnvelope'
-      x-tier: free
+              example:
+                meta:
+                  total: 24
+                  page: 1
+                  limit: 2
+                  pages: 12
+                  query:
+                    section: business
+                data:
+                - slug: aggregators
+                  title: Aggregators
+                  summary: Services that unify multiple provider APIs behind a single interface
+                  url: https://guidance.apievangelist.com/store/aggregators/
+                  tags:
+                  - Business
+                  has_content: true
+                  type: guidance
+                - slug: communities
+                  title: Communities
+                  summary: Developer communities built around an API platform or ecosystem
+                  url: https://guidance.apievangelist.com/store/communities/
+                  tags:
+                  - Business
+                  has_content: true
+                  type: guidance
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
   /guidance/sections/politics:
     get:
       operationId: listGuidancePolitics
@@ -655,7 +1016,40 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PagedEnvelope'
-      x-tier: free
+              example:
+                meta:
+                  total: 29
+                  page: 1
+                  limit: 2
+                  pages: 15
+                  query:
+                    section: politics
+                data:
+                - slug: access
+                  title: Access
+                  summary: Who gets to call an API and under what terms
+                  url: https://guidance.apievangelist.com/store/access/
+                  tags:
+                  - Politics
+                  has_content: true
+                  type: guidance
+                - slug: accountability
+                  title: Accountability
+                  summary: Mechanisms for holding API providers responsible for their platform decisions
+                  url: https://guidance.apievangelist.com/store/accountability/
+                  tags:
+                  - Politics
+                  has_content: true
+                  type: guidance
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
   /guidance/sections/governance:
     get:
       operationId: listGuidanceGovernance
@@ -674,7 +1068,41 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PagedEnvelope'
-      x-tier: free
+              example:
+                meta:
+                  total: 30
+                  page: 1
+                  limit: 2
+                  pages: 15
+                  query:
+                    section: governance
+                data:
+                - slug: async
+                  title: Async
+                  summary: Governing asynchronous and event-driven API patterns alongside REST
+                  url: https://guidance.apievangelist.com/store/async/
+                  tags:
+                  - Governance
+                  has_content: true
+                  type: guidance
+                - slug: awareness
+                  title: Awareness
+                  summary: The understanding of your infrastructure, applications, and operations that
+                    working with APIs forces into the open
+                  url: https://guidance.apievangelist.com/store/awareness/
+                  tags:
+                  - Governance
+                  has_content: true
+                  type: guidance
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
   /guidance/sections/evangelism:
     get:
       operationId: listGuidanceEvangelism
@@ -693,15 +1121,48 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PagedEnvelope'
-      x-tier: free
+              example:
+                meta:
+                  total: 23
+                  page: 1
+                  limit: 2
+                  pages: 12
+                  query:
+                    section: evangelism
+                data:
+                - slug: advocacy
+                  title: Advocacy
+                  summary: Public or internal championing of APIs and the developers who build on them
+                  url: https://guidance.apievangelist.com/store/advocacy/
+                  tags:
+                  - Evangelism
+                  has_content: true
+                  type: guidance
+                - slug: blogs
+                  title: Blogs
+                  summary: Owned editorial channels for publishing API stories tutorials and opinions
+                  url: https://guidance.apievangelist.com/store/blogs/
+                  tags:
+                  - Evangelism
+                  has_content: true
+                  type: guidance
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
   /guidance:
     get:
       operationId: listGuidance
       tags:
       - Guidance
       summary: Guidance
-      description: Search or browse the full guidance collection (177) — editorial guidance for API producers and
-        consumers.
+      description: Search or browse the full guidance collection (177) — editorial guidance for API producers
+        and consumers.
       parameters:
       - $ref: '#/components/parameters/Q'
       - $ref: '#/components/parameters/Tags'
@@ -716,7 +1177,42 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PagedEnvelope'
-      x-tier: free
+              example:
+                meta:
+                  total: 180
+                  page: 1
+                  limit: 2
+                  pages: 90
+                  query:
+                    tags: null
+                data:
+                - slug: 3scale
+                  title: 3Scale
+                  summary: The freemium-first API management platform that proved the space could be self-service
+                    and sustainable.
+                  url: https://guidance.apievangelist.com/store/3scale/
+                  tags:
+                  - History
+                  - API Management
+                  has_content: true
+                  type: guidance
+                - slug: access
+                  title: Access
+                  summary: Who gets to call an API and under what terms
+                  url: https://guidance.apievangelist.com/store/access/
+                  tags:
+                  - Politics
+                  has_content: true
+                  type: guidance
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
   /guidance/{slug}:
     get:
       operationId: getGuidanceItem
@@ -734,9 +1230,28 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Doc'
+              example:
+                slug: 3scale
+                title: 3Scale
+                summary: The freemium-first API management platform that proved the space could be self-service
+                  and sustainable.
+                url: https://guidance.apievangelist.com/store/3scale/
+                tags:
+                - History
+                - API Management
+                has_content: true
+                type: guidance
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '404':
           $ref: '#/components/responses/NotFound'
-      x-tier: free
   /policies:
     get:
       operationId: listPolicies
@@ -758,7 +1273,60 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PagedEnvelope'
-      x-tier: free
+              example:
+                meta:
+                  total: 283
+                  page: 1
+                  limit: 2
+                  pages: 142
+                  query:
+                    tags: null
+                data:
+                - slug: openapi-operation-response-2xx-examples
+                  title: 2xx Response Examples (OpenAPI)
+                  summary: Require that every successful 2xx response in our OpenAPI definitions includes
+                    at least one realistic example, so a consumer can see exactly what a good answer looks
+                    like without making a live call. I have onboarded to too many APIs where the schema
+                    was technically complete but I still could not picture the actual payload, and examples
+                    are what close that gap. Good examples power interactive documentation, mock servers,
+                    and generated tests, and they set the expectation for what a healthy integration receives.
+                    I treat a missing success example as a documentation gap that we fix before the API
+                    ships.
+                  url: https://policies.apievangelist.com/store/openapi-operation-response-2xx-examples/
+                  tags:
+                  - Design
+                  - Documentation
+                  - Consistency
+                  - Producers
+                  has_content: false
+                  type: policies
+                - slug: openapi-operation-response-2xx-media-types
+                  title: 2xx Response Media Types (OpenAPI)
+                  summary: Require that every 2xx response declares the media types it returns, spelling
+                    out application/json or whatever content it actually serves rather than leaving the
+                    content negotiation a mystery. I have integrated with APIs that promised JSON and
+                    quietly returned HTML on a good day, and that kind of surprise breaks parsers and
+                    erodes trust immediately. When the successful response media types are explicit in
+                    the contract, consumers can set the right Accept headers and deserialize with confidence,
+                    and our tooling can validate that we deliver what we promised. Content type is part
+                    of the contract, and I want it stated plainly for every success path.
+                  url: https://policies.apievangelist.com/store/openapi-operation-response-2xx-media-types/
+                  tags:
+                  - Design
+                  - Documentation
+                  - Interoperability
+                  - Producers
+                  has_content: false
+                  type: policies
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
   /policies/{slug}:
     get:
       operationId: getPoliciesItem
@@ -776,9 +1344,36 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Doc'
+              example:
+                slug: openapi-operation-response-2xx-examples
+                title: 2xx Response Examples (OpenAPI)
+                summary: Require that every successful 2xx response in our OpenAPI definitions includes
+                  at least one realistic example, so a consumer can see exactly what a good answer looks
+                  like without making a live call. I have onboarded to too many APIs where the schema
+                  was technically complete but I still could not picture the actual payload, and examples
+                  are what close that gap. Good examples power interactive documentation, mock servers,
+                  and generated tests, and they set the expectation for what a healthy integration receives.
+                  I treat a missing success example as a documentation gap that we fix before the API
+                  ships.
+                url: https://policies.apievangelist.com/store/openapi-operation-response-2xx-examples/
+                tags:
+                - Design
+                - Documentation
+                - Consistency
+                - Producers
+                has_content: false
+                type: policies
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '404':
           $ref: '#/components/responses/NotFound'
-      x-tier: free
   /rules:
     get:
       operationId: listRules
@@ -800,7 +1395,50 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PagedEnvelope'
-      x-tier: free
+              example:
+                meta:
+                  total: 617
+                  page: 1
+                  limit: 2
+                  pages: 309
+                  query:
+                    tags: null
+                data:
+                - slug: apis-json-agent-agents-md-info
+                  title: APIs.json Agent Agents Md Info
+                  summary: APIs should link an agents.md file so AI agents have documented instructions
+                    and conventions for working with the API. Declaring a property of type AgentsMd in
+                    the APIs.json properties array publishes this artifact as part of the API's discoverable
+                    index.
+                  url: https://rules.apievangelist.com/store/apis-json-agent-agents-md-info/
+                  tags:
+                  - APIs.json
+                  - Agents
+                  - Default
+                  has_content: false
+                  type: rules
+                - slug: apis-json-agent-llms-txt-info
+                  title: APIs.json Agent LLMs Txt Info
+                  summary: APIs should link an llms.txt file so AI agents have a curated, machine-readable
+                    entry point describing the API and how to work with it. Declaring a property of type
+                    LLMsTxt in the APIs.json properties array publishes this artifact as part of the API's
+                    discoverable index.
+                  url: https://rules.apievangelist.com/store/apis-json-agent-llms-txt-info/
+                  tags:
+                  - APIs.json
+                  - Agents
+                  - Default
+                  has_content: false
+                  type: rules
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
   /rules/{slug}:
     get:
       operationId: getRulesItem
@@ -818,9 +1456,31 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Doc'
+              example:
+                slug: apis-json-agent-agents-md-info
+                title: APIs.json Agent Agents Md Info
+                summary: APIs should link an agents.md file so AI agents have documented instructions
+                  and conventions for working with the API. Declaring a property of type AgentsMd in the
+                  APIs.json properties array publishes this artifact as part of the API's discoverable
+                  index.
+                url: https://rules.apievangelist.com/store/apis-json-agent-agents-md-info/
+                tags:
+                - APIs.json
+                - Agents
+                - Default
+                has_content: false
+                type: rules
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '404':
           $ref: '#/components/responses/NotFound'
-      x-tier: free
   /standards:
     get:
       operationId: listStandards
@@ -842,7 +1502,50 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PagedEnvelope'
-      x-tier: free
+              example:
+                meta:
+                  total: 613
+                  page: 1
+                  limit: 2
+                  pages: 307
+                  query:
+                    tags: null
+                data:
+                - slug: aiignore
+                  title: .aiignore
+                  summary: Configuration file specifying files and directories that AI coding agents should
+                    not process or modify, similar to .gitignore but for AI tools. Used by JetBrains Junie
+                    and other AI agents.
+                  url: https://standards.apievangelist.com/store/aiignore/
+                  tags:
+                  - AI Agents
+                  - Configuration
+                  - Security
+                  - Developer Workflow
+                  has_content: true
+                  type: standards
+                - slug: clinerules
+                  title: .clinerules
+                  summary: Configuration file for Cline AI coding assistant providing project-specific
+                    rules, coding conventions, and behavioral instructions.
+                  url: https://standards.apievangelist.com/store/clinerules/
+                  tags:
+                  - AI Agents
+                  - Cline
+                  - Developer Workflow
+                  - Coding Standards
+                  - AI Copilot
+                  has_content: true
+                  type: standards
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
   /standards/{slug}:
     get:
       operationId: getStandardsItem
@@ -860,17 +1563,40 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Doc'
+              example:
+                slug: aiignore
+                title: .aiignore
+                summary: Configuration file specifying files and directories that AI coding agents should
+                  not process or modify, similar to .gitignore but for AI tools. Used by JetBrains Junie
+                  and other AI agents.
+                url: https://standards.apievangelist.com/store/aiignore/
+                tags:
+                - AI Agents
+                - Configuration
+                - Security
+                - Developer Workflow
+                has_content: true
+                type: standards
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '404':
           $ref: '#/components/responses/NotFound'
-      x-tier: free
   /solutions:
     get:
       operationId: listSolutions
       tags:
       - Toolbox
       summary: Solutions
-      description: 'The solutions registry (742) — third-party API services and tools (gateways, portals, testing,
-        monitoring, …) ranked by adoption across the companies API Evangelist tracks. Browse the site at https://solutions.apievangelist.com.
+      description: 'The solutions registry (742) — third-party API services and tools (gateways, portals,
+        testing, monitoring, …) ranked by adoption across the companies API Evangelist tracks. Browse
+        the site at https://solutions.apievangelist.com.
 
         '
       parameters:
@@ -885,7 +1611,47 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PagedEnvelope'
-      x-tier: free
+              example:
+                meta:
+                  total: 742
+                  page: 1
+                  limit: 2
+                  pages: 371
+                  query:
+                    tags: null
+                data:
+                - slug: activepieces
+                  title: Activepieces
+                  summary: An open-source, no-code automation platform that allows users to connect apps
+                    and automate workflows with a visual builder.
+                  url: https://solutions.apievangelist.com/store/activepieces/
+                  tags:
+                  - Workflows
+                  website: https://www.activepieces.com
+                  companyCount: 0
+                  type: solutions
+                - slug: adobe
+                  title: Adobe
+                  summary: A multinational software company known for creative and multimedia software
+                    products including Photoshop, Illustrator, and Acrobat PDF.
+                  url: https://solutions.apievangelist.com/store/adobe/
+                  tags:
+                  - Software
+                  - Design
+                  - Creative Tools
+                  - Adobe
+                  website: https://www.adobe.com
+                  companyCount: 401
+                  type: solutions
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
   /solutions/{slug}:
     get:
       operationId: getSolution
@@ -902,17 +1668,37 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Doc'
+              example:
+                slug: activepieces
+                title: Activepieces
+                summary: An open-source, no-code automation platform that allows users to connect apps
+                  and automate workflows with a visual builder.
+                url: https://solutions.apievangelist.com/store/activepieces/
+                tags:
+                - Workflows
+                website: https://www.activepieces.com
+                companyCount: 0
+                type: solutions
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '404':
           $ref: '#/components/responses/NotFound'
-      x-tier: free
   /tools:
     get:
       operationId: listTools
       tags:
       - Toolbox
       summary: Tools
-      description: 'The open-source tooling registry (405) — the tools in use across the companies API Evangelist
-        tracks, each with adoption counts and technology-radar placement. Browse the site at https://tools.apievangelist.com.
+      description: 'The open-source tooling registry (405) — the tools in use across the companies API
+        Evangelist tracks, each with adoption counts and technology-radar placement. Browse the site at
+        https://tools.apievangelist.com.
 
         '
       parameters:
@@ -927,7 +1713,50 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PagedEnvelope'
-      x-tier: free
+              example:
+                meta:
+                  total: 527
+                  page: 1
+                  limit: 2
+                  pages: 264
+                  query:
+                    tags: null
+                data:
+                - slug: ajv
+                  title: Ajv
+                  summary: The fastest JSON Schema validator for JavaScript — compiles schemas to validation
+                    functions and supports every modern dialect.
+                  url: https://tools.apievangelist.com/store/ajv/
+                  tags:
+                  - JSON Schema
+                  website: https://ajv.js.org
+                  companyCount: 0
+                  radarRing: Initial
+                  type: tools
+                - slug: akri
+                  title: Akri
+                  summary: A Kubernetes resource interface for exposing leaf devices such as IP cameras
+                    and USB devices as resources in a Kubernetes cluster, enabling dynamic discovery and
+                    utilization of IoT edge devices.
+                  url: https://tools.apievangelist.com/store/akri/
+                  tags:
+                  - Kubernetes
+                  - IoT
+                  - Edge Computing
+                  - Device Management
+                  website: https://github.com/project-akri/akri
+                  companyCount: 0
+                  radarRing: Initial
+                  type: tools
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
   /tools/{slug}:
     get:
       operationId: getTool
@@ -944,9 +1773,29 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Doc'
+              example:
+                slug: ajv
+                title: Ajv
+                summary: The fastest JSON Schema validator for JavaScript — compiles schemas to validation
+                  functions and supports every modern dialect.
+                url: https://tools.apievangelist.com/store/ajv/
+                tags:
+                - JSON Schema
+                website: https://ajv.js.org
+                companyCount: 0
+                radarRing: Initial
+                type: tools
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '404':
           $ref: '#/components/responses/NotFound'
-      x-tier: free
   /schema:
     get:
       operationId: listSchema
@@ -968,7 +1817,47 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PagedEnvelope'
-      x-tier: free
+              example:
+                meta:
+                  total: 11
+                  page: 1
+                  limit: 2
+                  pages: 6
+                  query:
+                    tags: null
+                data:
+                - slug: apis-json
+                  title: APIs.json (V0.19)
+                  summary: This is the JSON Schema for V0.19 of the APIs.json specification, which is  used
+                    to valid API contracts, indexes, and other ways in which APIs are being produced,
+                    consumed, and aggregated.
+                  url: https://schema.apievangelist.com/store/apis-json/
+                  tags:
+                  - Discovery
+                  - Contracts
+                  has_content: false
+                  type: schema
+                - slug: arazzo
+                  title: Arazzo (v1.0)
+                  summary: This is the JSON Schema for V1.0 of the Arazzo specification, which is used
+                    to define and validate workflow documents that describe sequences of API calls across
+                    multiple APIs.
+                  url: https://schema.apievangelist.com/store/arazzo/
+                  tags:
+                  - OpenAPI
+                  - Workflows
+                  - Arazzo
+                  has_content: false
+                  type: schema
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
   /schema/{slug}:
     get:
       operationId: getSchemaItem
@@ -986,9 +1875,29 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Doc'
+              example:
+                slug: apis-json
+                title: APIs.json (V0.19)
+                summary: This is the JSON Schema for V0.19 of the APIs.json specification, which is  used
+                  to valid API contracts, indexes, and other ways in which APIs are being produced, consumed,
+                  and aggregated.
+                url: https://schema.apievangelist.com/store/apis-json/
+                tags:
+                - Discovery
+                - Contracts
+                has_content: false
+                type: schema
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '404':
           $ref: '#/components/responses/NotFound'
-      x-tier: free
   /properties:
     get:
       operationId: listProperties
@@ -1010,7 +1919,38 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PagedEnvelope'
-      x-tier: free
+              example:
+                meta:
+                  total: 791
+                  page: 1
+                  limit: 2
+                  pages: 396
+                  query:
+                    tags: null
+                data:
+                - slug: 42crunchaudit
+                  title: 42CrunchAudit
+                  summary: Needs a description.
+                  url: https://properties.apievangelist.com/store/42crunchaudit/
+                  tags: []
+                  has_content: false
+                  type: properties
+                - slug: 42crunchcapture
+                  title: 42CrunchCapture
+                  summary: Needs a description.
+                  url: https://properties.apievangelist.com/store/42crunchcapture/
+                  tags: []
+                  has_content: false
+                  type: properties
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
   /properties/{slug}:
     get:
       operationId: getPropertiesItem
@@ -1028,9 +1968,25 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Doc'
+              example:
+                slug: 42crunchaudit
+                title: 42CrunchAudit
+                summary: Needs a description.
+                url: https://properties.apievangelist.com/store/42crunchaudit/
+                tags: []
+                has_content: false
+                type: properties
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '404':
           $ref: '#/components/responses/NotFound'
-      x-tier: free
   /strategies:
     get:
       operationId: listStrategies
@@ -1052,7 +2008,44 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PagedEnvelope'
-      x-tier: free
+              example:
+                meta:
+                  total: 75
+                  page: 1
+                  limit: 2
+                  pages: 38
+                  query:
+                    tags: null
+                data:
+                - slug: api-authentication-is-standardized
+                  title: API Authentication Is Standardized
+                  summary: All APIs must use standardized authentication mechanisms including OAuth, JWT,
+                    and API keys with properly defined scopes, ensuring that security is consistently
+                    implemented and that consumers have a predictable experience when authenticating across
+                    all APIs.
+                  url: https://strategies.apievangelist.com/store/api-authentication-is-standardized/
+                  tags: []
+                  has_content: false
+                  type: strategies
+                - slug: api-authorization-is-properly-defined-and-enforced
+                  title: API Authorization Is Properly Defined and Enforced
+                  summary: All APIs must have clearly defined authorization models that control what authenticated
+                    consumers can access and perform, using role-based or attribute-based access control
+                    to ensure that permissions are granular, auditable, and consistently enforced across
+                    all API operations.
+                  url: https://strategies.apievangelist.com/store/api-authorization-is-properly-defined-and-enforced/
+                  tags: []
+                  has_content: false
+                  type: strategies
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
   /strategies/{slug}:
     get:
       operationId: getStrategiesItem
@@ -1070,16 +2063,35 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Doc'
+              example:
+                slug: api-authentication-is-standardized
+                title: API Authentication Is Standardized
+                summary: All APIs must use standardized authentication mechanisms including OAuth, JWT,
+                  and API keys with properly defined scopes, ensuring that security is consistently implemented
+                  and that consumers have a predictable experience when authenticating across all APIs.
+                url: https://strategies.apievangelist.com/store/api-authentication-is-standardized/
+                tags: []
+                has_content: false
+                type: strategies
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '404':
           $ref: '#/components/responses/NotFound'
-      x-tier: free
   /experiences:
     get:
       operationId: listExperiences
       tags:
       - Operations
       summary: Experiences
-      description: Search or browse the experiences collection (46) — API producer and consumer experience patterns.
+      description: Search or browse the experiences collection (46) — API producer and consumer experience
+        patterns.
       parameters:
       - $ref: '#/components/parameters/Q'
       - $ref: '#/components/parameters/Tags'
@@ -1094,7 +2106,66 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PagedEnvelope'
-      x-tier: free
+              example:
+                meta:
+                  total: 46
+                  page: 1
+                  limit: 2
+                  pages: 23
+                  query:
+                    tags: null
+                data:
+                - slug: access
+                  title: Access
+                  summary: 'Gaining the necessary access to effectively use an API is often more challenging
+                    than it appears. Intentional and unintentional barriers can create friction in discovering
+                    and onboarding with an API. Issues such as incomplete documentation and complex authentication
+                    processes frequently hinder adoption. These challenges often reflect the business
+                    dynamics and internal politics of making APIs available to teams, partners, and third-party
+                    developers.
+
+                    While API access may seem straightforward to the developers who created it—or to those
+                    accustomed to high-friction onboarding—it often overlooks critical steps that could
+                    simplify the process for others. Improving the API access experience can be as simple
+                    as providing clearer instructions, maintaining regular communication, and adopting
+                    the perspective of an API consumer. By walking through your own APIs or evaluating
+                    competitors’ offerings, you can identify opportunities to streamline access and improve
+                    usability.'
+                  url: https://experiences.apievangelist.com/store/access/
+                  tags:
+                  - Availability
+                  - Discovery
+                  has_content: false
+                  type: experiences
+                - slug: advocacy
+                  title: Advocacy
+                  summary: 'Advocacy is the experience of an API having someone in its corner, speaking
+                    up for its consumers and carrying their needs back into the operation. Developer relations,
+                    evangelism, and outreach are how a provider shows it cares about the people building
+                    on its API rather than just shipping endpoints and walking away. Good advocacy turns
+                    an API from a product into a relationship.
+
+                    I have spent my whole career on the advocacy side of APIs, so I know how much it matters
+                    when someone inside an operation is genuinely fighting for consumers. Advocacy means
+                    writing the content, running the outreach, and closing the loop between what developers
+                    struggle with and what the team builds next. The APIs that invest in advocacy are
+                    the ones that build durable, loyal communities.'
+                  url: https://experiences.apievangelist.com/store/advocacy/
+                  tags:
+                  - Evangelism
+                  - Communication
+                  - Community
+                  has_content: false
+                  type: experiences
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
   /experiences/{slug}:
     get:
       operationId: getExperiencesItem
@@ -1112,9 +2183,38 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Doc'
+              example:
+                slug: access
+                title: Access
+                summary: 'Gaining the necessary access to effectively use an API is often more challenging
+                  than it appears. Intentional and unintentional barriers can create friction in discovering
+                  and onboarding with an API. Issues such as incomplete documentation and complex authentication
+                  processes frequently hinder adoption. These challenges often reflect the business dynamics
+                  and internal politics of making APIs available to teams, partners, and third-party developers.
+
+                  While API access may seem straightforward to the developers who created it—or to those
+                  accustomed to high-friction onboarding—it often overlooks critical steps that could
+                  simplify the process for others. Improving the API access experience can be as simple
+                  as providing clearer instructions, maintaining regular communication, and adopting the
+                  perspective of an API consumer. By walking through your own APIs or evaluating competitors’
+                  offerings, you can identify opportunities to streamline access and improve usability.'
+                url: https://experiences.apievangelist.com/store/access/
+                tags:
+                - Availability
+                - Discovery
+                has_content: false
+                type: experiences
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '404':
           $ref: '#/components/responses/NotFound'
-      x-tier: free
   /lifecycle:
     get:
       operationId: listLifecycle
@@ -1136,7 +2236,49 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PagedEnvelope'
-      x-tier: free
+              example:
+                meta:
+                  total: 29
+                  page: 1
+                  limit: 2
+                  pages: 15
+                  query:
+                    tags: null
+                data:
+                - slug: analytics
+                  title: Analytics
+                  summary: Analytics turns raw API activity into understanding. Who is using what, how
+                    often, and to what end tells me where the value is and where the friction lives. I
+                    use analytics to make product decisions instead of guessing at them.
+                  url: https://lifecycle.apievangelist.com/store/analytics/
+                  tags:
+                  - Analytics
+                  - Observability
+                  - Business
+                  has_content: false
+                  type: lifecycle
+                - slug: authentication
+                  title: Authentication
+                  summary: Authentication is where access begins. Keys, OAuth, JWT, and mTLS each make
+                    sense in different contexts, and I pick the approach that fits the consumer and the
+                    risk. Getting authentication right is what makes an API both usable and defensible
+                    at the same time.
+                  url: https://lifecycle.apievangelist.com/store/authentication/
+                  tags:
+                  - Security
+                  - Authentication
+                  - Access
+                  has_content: false
+                  type: lifecycle
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
   /lifecycle/{slug}:
     get:
       operationId: getLifecycleItem
@@ -1154,16 +2296,38 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Doc'
+              example:
+                slug: analytics
+                title: Analytics
+                summary: Analytics turns raw API activity into understanding. Who is using what, how often,
+                  and to what end tells me where the value is and where the friction lives. I use analytics
+                  to make product decisions instead of guessing at them.
+                url: https://lifecycle.apievangelist.com/store/analytics/
+                tags:
+                - Analytics
+                - Observability
+                - Business
+                has_content: false
+                type: lifecycle
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '404':
           $ref: '#/components/responses/NotFound'
-      x-tier: free
   /conversations:
     get:
       operationId: listConversations
       tags:
       - Media
       summary: Conversations
-      description: Search or browse recorded conversations with API practitioners, with guest and media metadata.
+      description: Search or browse recorded conversations with API practitioners, with guest and media
+        metadata.
       parameters:
       - $ref: '#/components/parameters/Q'
       - $ref: '#/components/parameters/Tags'
@@ -1176,7 +2340,67 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PagedEnvelope'
-      x-tier: free
+              example:
+                meta:
+                  total: 59
+                  page: 1
+                  limit: 2
+                  pages: 30
+                  query:
+                    tags: null
+                data:
+                - slug: 2026-08-18-sebastian-loch
+                  title: API Evangelist Conversation with Sebastian Loch on Verified Nutrition Data, Building
+                    Image Recognition on Top of LLMs, and a 100x Influx of Vibe-Coding Developers
+                  summary: Sebastian Loch on how a twenty-year-old verified nutrition database survived
+                    the AI rush, why LLMs are welcome everywhere except in the data itself, and what a
+                    100x wave of vibe-coding developers does to a bootstrapped API business.
+                  url: https://conversations.apievangelist.com/store/2026-08-18-sebastian-loch.html
+                  tags:
+                  - Nutrition
+                  - Artificial Intelligence
+                  - Data
+                  - Vibe Coding
+                  - Health
+                  date: '2026-08-18 15:00:00'
+                  guest: Sebastian Loch
+                  guest_role: Head of Business Development
+                  guest_company: fatsecret
+                  youtube_id: -ym0WKjZwZ8
+                  soundcloud: https://soundcloud.com/kinlane/api-evangelist-conversation-with-sebastian-loch
+                  duration: 0:36:51
+                  has_content: false
+                  type: conversations
+                - slug: 2026-08-13-phil-leggetter
+                  title: API Evangelist Conversation with Phil Leggetter on Webhooks, Event Destinations,
+                    and Building a Team as a Fleet of Agents
+                  summary: Phil Leggetter on why event-driven architecture is often over-built, the Outpost
+                    open-source story, and scaling a small team with a fleet of role-based agents.
+                  url: https://conversations.apievangelist.com/store/2026-08-13-phil-leggetter.html
+                  tags:
+                  - Webhooks
+                  - Event-Driven Architecture
+                  - Developer Relations
+                  - Open Source
+                  - Artificial Intelligence
+                  date: '2026-08-13 15:00:00'
+                  guest: Phil Leggetter
+                  guest_role: Head of Product-Led Growth and Developer Relations
+                  guest_company: Hookdeck
+                  youtube_id: gwu5saNLmeY
+                  soundcloud: https://soundcloud.com/kinlane/api-evangelist-conversation-with-phil-leggetter
+                  duration: 0:28:43
+                  has_content: false
+                  type: conversations
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
   /conversations/{slug}:
     get:
       operationId: getConversation
@@ -1194,17 +2418,48 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Doc'
+              example:
+                slug: 2026-08-18-sebastian-loch
+                title: API Evangelist Conversation with Sebastian Loch on Verified Nutrition Data, Building
+                  Image Recognition on Top of LLMs, and a 100x Influx of Vibe-Coding Developers
+                summary: Sebastian Loch on how a twenty-year-old verified nutrition database survived
+                  the AI rush, why LLMs are welcome everywhere except in the data itself, and what a 100x
+                  wave of vibe-coding developers does to a bootstrapped API business.
+                url: https://conversations.apievangelist.com/store/2026-08-18-sebastian-loch.html
+                tags:
+                - Nutrition
+                - Artificial Intelligence
+                - Data
+                - Vibe Coding
+                - Health
+                date: '2026-08-18 15:00:00'
+                guest: Sebastian Loch
+                guest_role: Head of Business Development
+                guest_company: fatsecret
+                youtube_id: -ym0WKjZwZ8
+                soundcloud: https://soundcloud.com/kinlane/api-evangelist-conversation-with-sebastian-loch
+                duration: 0:36:51
+                has_content: false
+                type: conversations
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '404':
           $ref: '#/components/responses/NotFound'
-      x-tier: free
   /videos:
     get:
       operationId: listVideos
       tags:
       - Media
       summary: Videos
-      description: 'Search or browse the video library (video.apievangelist.com) — interviews and discussions from
-        across the API space, searchable by transcript.
+      description: 'Search or browse the video library (video.apievangelist.com) — interviews and discussions
+        from across the API space, searchable by transcript.
 
         '
       parameters:
@@ -1219,7 +2474,44 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PagedEnvelope'
-      x-tier: free
+              example:
+                meta:
+                  total: 103
+                  page: 1
+                  limit: 2
+                  pages: 52
+                  query:
+                    tags: null
+                data:
+                - slug: adam-duvander
+                  title: Adam DuVander
+                  summary: ''
+                  url: https://video.apievangelist.com/store/adam-duvander/
+                  tags:
+                  - Website
+                  image: https://i3.ytimg.com/vi/v2u5rfdZCt4/maxresdefault.jpg
+                  youtube_id: v2u5rfdZCt4
+                  has_content: true
+                  type: videos
+                - slug: aleksei-akimov-adyen
+                  title: Aleksei Akimov, Adyen
+                  summary: ''
+                  url: https://video.apievangelist.com/store/aleksei-akimov-adyen/
+                  tags:
+                  - Website
+                  image: https://i3.ytimg.com/vi/l4Xp28MTAQk/maxresdefault.jpg
+                  youtube_id: l4Xp28MTAQk
+                  has_content: true
+                  type: videos
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
   /videos/{slug}:
     get:
       operationId: getVideo
@@ -1237,16 +2529,36 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Doc'
+              example:
+                slug: adam-duvander
+                title: Adam DuVander
+                summary: ''
+                url: https://video.apievangelist.com/store/adam-duvander/
+                tags:
+                - Website
+                image: https://i3.ytimg.com/vi/v2u5rfdZCt4/maxresdefault.jpg
+                youtube_id: v2u5rfdZCt4
+                has_content: true
+                type: videos
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '404':
           $ref: '#/components/responses/NotFound'
-      x-tier: free
   /papers:
     get:
       operationId: listPapers
       tags:
       - Media
       summary: Papers
-      description: API Evangelist white papers — deep dives distilled from sixteen years of research, with outlines.
+      description: API Evangelist white papers — deep dives distilled from sixteen years of research,
+        with outlines.
       parameters:
       - $ref: '#/components/parameters/Q'
       - $ref: '#/components/parameters/Page'
@@ -1258,7 +2570,83 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PagedEnvelope'
-      x-tier: free
+              example:
+                meta:
+                  total: 21
+                  page: 1
+                  limit: 2
+                  pages: 11
+                  query:
+                    tags: null
+                data:
+                - slug: change-on-the-agent-surface
+                  title: Change on the Agent Surface
+                  summary: Everything the industry knows about API change assumes a consumer who reads.
+                    Three layers govern change in MCP, the discipline degrades as it approaches the consumer,
+                    and the tool surface an agent actually binds to is governed by nobody — with the evidence
+                    from a full walk of the public MCP registry, and eight rules for the layer versioning
+                    does not reach.
+                  url: https://papers.apievangelist.com/papers/change-on-the-agent-surface/
+                  tags: []
+                  area: Fundamentals
+                  tagline: Governing versioning, breaking changes, and deprecation for the MCP tools an
+                    agent binds to.
+                  pages: ~16
+                  version: '1.0'
+                  updated: August 2026
+                  outline:
+                  - The three layers, and what governs each
+                  - What the evidence shows
+                  - The description is not documentation, it is input
+                  - Which changes actually break an agent
+                  - The practice — eight rules for the agent surface
+                  - Anti-patterns worth watching for
+                  - Provider self-assessment
+                  - Where this is going
+                  - Appendix A — Evidence and method
+                  - Appendix B — Sources and further reading
+                  cover: /assets/covers/change-on-the-agent-surface.png
+                  type: papers
+                - slug: arazzo-api-integration-page
+                  title: Delivering a Modern API Integration Page with Arazzo
+                  summary: You should not be building integrations anymore — you should be describing
+                    them. An integration is two ends and a wire; both ends already publish OpenAPI, and
+                    Arazzo is the wire. This paper reframes the integrations page from a gallery of connector
+                    apps into a directory of Arazzo workflows anyone can fork and run, walks the anatomy,
+                    rebuilds a real marketplace's popular listings as verified workflows, is honest about
+                    the hard parts, and shows why owning an integration beats renting a connector — plus
+                    a provider self-assessment.
+                  url: https://papers.apievangelist.com/papers/arazzo-api-integration-page/
+                  tags: []
+                  area: Fundamentals
+                  tagline: Turn your integrations page from a gallery of connectors into a directory of
+                    forkable workflows.
+                  pages: ~20
+                  version: '1.0'
+                  updated: July 2026
+                  outline:
+                  - The integration was always two ends and a wire
+                  - From connectors to described behavior — the sixteen-year trap
+                  - What Arazzo is, and what it is not
+                  - From a gallery to a directory — the integrations page reimagined
+                  - The anatomy of an Arazzo-backed integration
+                  - A worked example — rebuilding a marketplace as workflows
+                  - The honest hard parts — auth, rate limits, pagination, async, failure
+                  - What the marketplace becomes — the economics of described integrations
+                  - Anti-patterns worth watching for
+                  - Where this is going — MCP is the wire, Arazzo is the conductor
+                  - Provider self-assessment
+                  cover: /assets/covers/arazzo-api-integration-page.png
+                  type: papers
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
   /papers/{slug}:
     get:
       operationId: getPaper
@@ -1275,68 +2663,46 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Doc'
+              example:
+                slug: change-on-the-agent-surface
+                title: Change on the Agent Surface
+                summary: Everything the industry knows about API change assumes a consumer who reads.
+                  Three layers govern change in MCP, the discipline degrades as it approaches the consumer,
+                  and the tool surface an agent actually binds to is governed by nobody — with the evidence
+                  from a full walk of the public MCP registry, and eight rules for the layer versioning
+                  does not reach.
+                url: https://papers.apievangelist.com/papers/change-on-the-agent-surface/
+                tags: []
+                area: Fundamentals
+                tagline: Governing versioning, breaking changes, and deprecation for the MCP tools an
+                  agent binds to.
+                pages: ~16
+                version: '1.0'
+                updated: August 2026
+                outline:
+                - The three layers, and what governs each
+                - What the evidence shows
+                - The description is not documentation, it is input
+                - Which changes actually break an agent
+                - The practice — eight rules for the agent surface
+                - Anti-patterns worth watching for
+                - Provider self-assessment
+                - Where this is going
+                - Appendix A — Evidence and method
+                - Appendix B — Sources and further reading
+                cover: /assets/covers/change-on-the-agent-surface.png
+                type: papers
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '404':
           $ref: '#/components/responses/NotFound'
-      x-tier: free
-  /reports:
-    get:
-      operationId: listReports
-      tags:
-      - Media
-      summary: Reports
-      description: 'API Evangelist Reports — measured research bundles where every company named is banded on the
-
-        Kin Score, each shipping a machine-readable data bundle. Four kinds, selected with `report_type`:
-
-        `trends` (one market — an industry, a country cut, or a technology cohort), `standards` (one
-
-        standards body, free), `portfolios` (one fund''s book), and `profiles` (one company, written for
-
-        the vendor selling into it). Distinct from `/papers`, which are single-PDF topic deep dives.
-
-        '
-      parameters:
-      - $ref: '#/components/parameters/Q'
-      - name: report_type
-        in: query
-        description: Restrict to one kind of report.
-        schema:
-          type: string
-          enum:
-          - trends
-          - standards
-          - portfolios
-          - profiles
-      - $ref: '#/components/parameters/Page'
-      - $ref: '#/components/parameters/Limit'
-      responses:
-        '200':
-          description: Reports with outlines, pricing, and landing URLs.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PagedEnvelope'
-      x-tier: free
-  /reports/{slug}:
-    get:
-      operationId: getReport
-      tags:
-      - Media
-      summary: Report
-      description: One report with its full outline, price, and landing URL. Standard Reports are free; the rest
-        are paid, and the landing page carries the checkout.
-      parameters:
-      - $ref: '#/components/parameters/Slug'
-      responses:
-        '200':
-          description: The report.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Doc'
-        '404':
-          $ref: '#/components/responses/NotFound'
-      x-tier: free
   /newsletters:
     get:
       operationId: listNewsletters
@@ -1354,14 +2720,32 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PagedEnvelope'
-      x-tier: free
+              example:
+                meta:
+                  total: 0
+                  page: 1
+                  limit: 2
+                  pages: 0
+                  query:
+                    tags: null
+                data: []
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
   /vocabulary:
     get:
       operationId: listVocabulary
       tags:
       - Reference
       summary: Vocabularies
-      description: Search the full API vocabulary — resources, actions, personas, domains, schemas, and tags.
+      description: Search the full API vocabulary — resources, actions, personas, domains, schemas, and
+        tags.
       parameters:
       - $ref: '#/components/parameters/Q'
       - name: category
@@ -1384,7 +2768,38 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PagedEnvelope'
-      x-tier: free
+              example:
+                meta:
+                  total: 6988
+                  page: 1
+                  limit: 2
+                  pages: 3494
+                  query:
+                    tags: null
+                data:
+                - slug: resources-action-allocateaddress
+                  title: ?Action=AllocateAddress
+                  summary: ?Action=AllocateAddress resources
+                  url: https://vocabularies.apievangelist.com/
+                  category: resources
+                  provider: Amazon EC2
+                  type: vocabulary
+                - slug: resources-action-associateaddress
+                  title: ?Action=AssociateAddress
+                  summary: ?Action=AssociateAddress resources
+                  url: https://vocabularies.apievangelist.com/
+                  category: resources
+                  provider: Amazon EC2
+                  type: vocabulary
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
   /vocabulary/{category}:
     get:
       operationId: listVocabularyCategory
@@ -1414,14 +2829,46 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PagedEnvelope'
-      x-tier: free
+              example:
+                meta:
+                  total: 2242
+                  page: 1
+                  limit: 2
+                  pages: 1121
+                  query:
+                    category: resources
+                data:
+                - slug: resources-tokens
+                  title: tokens
+                  summary: ''
+                  url: https://vocabularies.apievangelist.com/
+                  category: resources
+                  provider: 123FormBuilder
+                  type: vocabulary
+                - slug: resources-forms
+                  title: forms
+                  summary: ''
+                  url: https://vocabularies.apievangelist.com/
+                  category: resources
+                  provider: 123FormBuilder
+                  type: vocabulary
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
   /feeds:
     get:
       operationId: listFeeds
       tags:
       - Reference
       summary: Feeds
-      description: The zero-auth JSON feeds every network site publishes — the no-key alternative to this API.
+      description: The zero-auth JSON feeds every network site publishes — the no-key alternative to this
+        API.
       responses:
         '200':
           description: Feed registry.
@@ -1429,15 +2876,32 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PagedEnvelope'
-      x-tier: free
+              example:
+                meta:
+                  total: 0
+                  page: 1
+                  limit: 2
+                  pages: 0
+                  query:
+                    tags: null
+                data: []
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
   /timelines/api:
     get:
       operationId: getTimelineApi
       tags:
       - Timelines
       summary: API
-      description: 'The API timeline — the moments that led to and shaped web APIs, from early communication technology
-        through the modern API economy, in chronological order.
+      description: 'The API timeline — the moments that led to and shaped web APIs, from early communication
+        technology through the modern API economy, in chronological order.
 
         '
       parameters:
@@ -1451,14 +2915,57 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PagedEnvelope'
-      x-tier: free
+              example:
+                meta:
+                  total: 320
+                  page: 1
+                  limit: 2
+                  pages: 160
+                  query:
+                    timeline: api
+                data:
+                - slug: api-drums-are-used-to-communicate
+                  title: Drums Are Used to Communicate
+                  summary: Long before written language, human communities used drums to send messages
+                    across distances too great for the voice to carry, encoding meaning in rhythmic patterns.
+                    Talking drums represent one of the earliest examples of transmitting structured information
+                    over a shared medium, a precursor to every signaling network that followed.
+                  url: https://apievangelist.com/timeline/api/
+                  tags: []
+                  timeline: api
+                  when: Pre-Historic
+                  position: 0
+                  type: timelines
+                - slug: api-pigeons-are-used-to-send-messages
+                  title: Pigeons Are Used to Send Messages
+                  summary: Ancient civilizations including the Persians, Greeks, and Romans used homing
+                    pigeons to carry written messages between distant points, establishing some of the
+                    first organized long-distance messaging systems. Pigeon post demonstrated the value
+                    of reliable message delivery networks centuries before wires and radio made electronic
+                    communication possible.
+                  url: https://apievangelist.com/timeline/api/
+                  tags: []
+                  timeline: api
+                  when: Historic
+                  position: 1
+                  type: timelines
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
   /timelines/resources:
     get:
       operationId: getTimelineResources
       tags:
       - Timelines
       summary: Resources
-      description: The resources timeline — which digital resources became APIs, and when, in chronological order.
+      description: The resources timeline — which digital resources became APIs, and when, in chronological
+        order.
       parameters:
       - $ref: '#/components/parameters/Page'
       - $ref: '#/components/parameters/Limit'
@@ -1470,15 +2977,56 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PagedEnvelope'
-      x-tier: free
+              example:
+                meta:
+                  total: 59
+                  page: 1
+                  limit: 2
+                  pages: 30
+                  query:
+                    timeline: resources
+                data:
+                - slug: resources-contacts-relationships-salesforce
+                  title: Contacts, Relationships (Salesforce)
+                  summary: Salesforce launched as one of the first API-first software companies, exposing
+                    customer contacts, accounts, and relationship data over the web. By making CRM records
+                    programmable, it established that business data could live in the cloud and be integrated
+                    into any other system rather than locked inside desktop software.
+                  url: https://apievangelist.com/timeline/resources/
+                  tags: []
+                  timeline: resources
+                  when: '2000'
+                  position: 0
+                  type: timelines
+                - slug: resources-auctions-products-ebay
+                  title: Auctions, Products (eBay)
+                  summary: eBay released its API in November 2000, giving developers programmatic access
+                    to auction listings, products, and bidding. The move let third-party sellers and tool
+                    makers build applications on top of the marketplace, demonstrating early on that opening
+                    commerce data via API could grow an ecosystem rather than threaten it.
+                  url: https://apievangelist.com/timeline/resources/
+                  tags: []
+                  timeline: resources
+                  when: '2000'
+                  position: 1
+                  type: timelines
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
   /timelines/industries:
     get:
       operationId: getTimelineIndustries
       tags:
       - Timelines
       summary: Industries
-      description: The industries timeline — the industrial history that frames how API infrastructure evolves,
-        in chronological order.
+      description: The industries timeline — the industrial history that frames how API infrastructure
+        evolves, in chronological order.
       parameters:
       - $ref: '#/components/parameters/Page'
       - $ref: '#/components/parameters/Limit'
@@ -1490,7 +3038,54 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PagedEnvelope'
-      x-tier: free
+              example:
+                meta:
+                  total: 40
+                  page: 1
+                  limit: 2
+                  pages: 20
+                  query:
+                    timeline: industries
+                data:
+                - slug: industries-the-pacific-railroad-acts
+                  title: The Pacific Railroad Acts
+                  summary: The Pacific Railroad Acts of 1862 drove the construction of a transcontinental
+                    railroad in the United States through authorizing the issuance of government bonds
+                    and the grants of land to railroad companies. Most of the transcontinentals were heavily
+                    subsidized by all levels of government via sub-market-rate loans, land grants, and
+                    special local privileges on the frontier.
+                  url: https://apievangelist.com/timeline/industry/
+                  tags:
+                  - Railroad
+                  timeline: industries
+                  when: '1862'
+                  position: 0
+                  link: https://en.wikipedia.org/wiki/Pacific_Railroad_Acts
+                  type: timelines
+                - slug: industries-the-pacific-railroad-acts-amendments
+                  title: The Pacific Railroad Acts (Amendments)
+                  summary: AN ACT to establish the gauge of the Pacific railroad and its branches. Be
+                    it enacted by the Senate and House of Representatives of the United States of America
+                    in Congress assembled, That the gauge of the Pacific railroad and its branches throughout
+                    their whole extent, from the Pacific coast to the Missouri river, shall be, and hereby
+                    is, established at four feet eight and one-half inches.
+                  url: https://apievangelist.com/timeline/industry/
+                  tags:
+                  - Railroad
+                  timeline: industries
+                  when: '1862'
+                  position: 1
+                  link: https://en.wikipedia.org/wiki/Pacific_Railroad_Acts
+                  type: timelines
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
   /timelines/people:
     get:
       operationId: getTimelinePeople
@@ -1509,15 +3104,75 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PagedEnvelope'
-      x-tier: free
+              example:
+                meta:
+                  total: 146
+                  page: 1
+                  limit: 2
+                  pages: 73
+                  query:
+                    timeline: people
+                data:
+                - slug: people-ada-lovelace
+                  title: Ada Lovelace
+                  summary: Augusta Ada King, Countess of Lovelace, born Augusta Ada Byron and now commonly
+                    known as Ada Lovelace, was an English mathematician and writer chiefly known for her
+                    work on Charles Babbage's early mechanical general-purpose computer, the Analytical
+                    Engine. Her notes on the engine include what is recognized as the first algorithm
+                    intended to be carried out by a machine. Because of this, she is often described as
+                    the world's first computer programmer.
+                  url: https://apievangelist.com/timeline/people/
+                  tags:
+                  - Women in Tech
+                  - Compute
+                  - Mathematics
+                  - Software
+                  timeline: people
+                  when: 1815–1852
+                  position: 0
+                  link: http://en.wikipedia.org/wiki/Ada_Lovelace
+                  type: timelines
+                - slug: people-adele-goldberg
+                  title: Adele Goldberg
+                  summary: Adele Goldberg is a computer scientist who participated in the development
+                    of the programming language Smalltalk-80 and various concepts related to object-oriented
+                    programming while a researcher at the Xerox Palo Alto Research Center, PARC, in the
+                    1970s. Goldberg began working at PARC in 1973 as a laboratory and research assistant,
+                    and eventually became manager of the System Concepts Laboratory where she, Alan Kay,
+                    and others developed Smalltalk-80, which both developed the object-oriented approach
+                    of Simula 67 and introduced a programming environment of overlapping windows on graphic
+                    display screens. Not only was Smalltalk's innovative format simpler to use, it was
+                    also customizable and objects could be transferred among applications with minimal
+                    effort. Goldberg and Kay also were involved in the development of design templates,
+                    forerunners of the design patterns commonly used in software design.
+                  url: https://apievangelist.com/timeline/people/
+                  tags:
+                  - Women in Tech
+                  - Compute
+                  - Smalltalk
+                  - PARC
+                  timeline: people
+                  when: '1945'
+                  position: 1
+                  link: http://en.wikipedia.org/wiki/Adele_Goldberg_(computer_scientist)
+                  type: timelines
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
   /services:
     get:
       operationId: listServices
       tags:
       - Services
       summary: Services
-      description: 'API Evangelist''s own offerings — the front door to working with Kin Lane on API strategy, governance,
-        and discovery. (The third-party vendor registry lives at `/solutions`.)
+      description: 'API Evangelist''s own offerings — the front door to working with Kin Lane on API strategy,
+        governance, and discovery. (The third-party vendor registry lives at `/solutions`.)
 
         '
       parameters:
@@ -1532,7 +3187,48 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PagedEnvelope'
-      x-tier: free
+              example:
+                meta:
+                  total: 25
+                  page: 1
+                  limit: 2
+                  pages: 13
+                  query:
+                    tags: null
+                data:
+                - slug: governance-agent-readiness
+                  title: Agent-Readiness Assessment
+                  summary: A fixed-scope engagement that turns "are we agent-ready?" into a measured baseline
+                    and a sequenced plan — score your API surface against the open Agent Readiness framework,
+                    map it onto the standards onramp, and walk away with a prioritized roadmap and the
+                    descriptor that proves it.
+                  url: https://apievangelist.com/services/governance/agent-readiness/
+                  tags: []
+                  party: first
+                  area: governance
+                  contact: info@apievangelist.com
+                  has_content: true
+                  type: services
+                - slug: discovery-api-discovery
+                  title: API Discovery
+                  summary: Find the APIs you already run — including the shadow, rogue, and zombie ones
+                    — through traffic analysis, repository scans, and documentation review.
+                  url: https://apievangelist.com/services/discovery/api-discovery/
+                  tags: []
+                  party: first
+                  area: discovery
+                  contact: info@apievangelist.com
+                  has_content: true
+                  type: services
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
   /services/{slug}:
     get:
       operationId: getService
@@ -1550,17 +3246,39 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Doc'
+              example:
+                slug: governance-agent-readiness
+                title: Agent-Readiness Assessment
+                summary: A fixed-scope engagement that turns "are we agent-ready?" into a measured baseline
+                  and a sequenced plan — score your API surface against the open Agent Readiness framework,
+                  map it onto the standards onramp, and walk away with a prioritized roadmap and the descriptor
+                  that proves it.
+                url: https://apievangelist.com/services/governance/agent-readiness/
+                tags: []
+                party: first
+                area: governance
+                contact: info@apievangelist.com
+                has_content: true
+                type: services
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '404':
           $ref: '#/components/responses/NotFound'
-      x-tier: free
   /contact:
     get:
       operationId: getContact
       tags:
       - Contact
       summary: Contact
-      description: Every way to reach API Evangelist — email, contact form, newsletter, GitHub, social channels,
-        and postal mail.
+      description: Every way to reach API Evangelist — email, contact form, newsletter, GitHub, social
+        channels, and postal mail.
       responses:
         '200':
           description: The list of contact options.
@@ -1578,7 +3296,28 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/ContactOption'
-      x-tier: free
+              example:
+                meta:
+                  total: 8
+                data:
+                - channel: email
+                  label: Email
+                  value: info@apievangelist.com
+                  url: mailto:info@apievangelist.com
+                  description: Questions, inquiries, and engagements — the fastest way to reach Kin Lane.
+                - channel: form
+                  label: Contact form
+                  url: https://apievangelist.com/contact/
+                  description: Submit a contact form with questions and inquiries about services.
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
   /tags:
     get:
       operationId: listTags
@@ -1588,8 +3327,8 @@ paths:
       tags:
       - Tags
       summary: Browse and rank the network tag taxonomy.
-      description: Every subject tag across 16k+ docs, ranked by frequency (default) or breadth (how many content
-        types use it). Search with q. The map of what API Evangelist covers.
+      description: Every subject tag across 16k+ docs, ranked by frequency (default) or breadth (how many
+        content types use it). Search with q. The map of what API Evangelist covers.
       parameters:
       - name: q
         in: query
@@ -1612,6 +3351,41 @@ paths:
               schema:
                 type: object
                 additionalProperties: true
+              example:
+                meta:
+                  total: 3308
+                  page: 1
+                  limit: 2
+                  pages: 1654
+                  query: {}
+                data:
+                - slug: api-evangelist
+                  label: API Evangelist
+                  count: 1131
+                  types:
+                    posts: 1131
+                  breadth: 1
+                - slug: apis
+                  label: APIs
+                  count: 962
+                  types:
+                    posts: 853
+                    rules: 89
+                    policies: 5
+                    experiences: 1
+                    conversations: 4
+                    solutions: 1
+                    timelines: 9
+                  breadth: 7
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
   /tags/{slug}:
     get:
       operationId: getTag
@@ -1621,7 +3395,8 @@ paths:
       tags:
       - Tags
       summary: One tag with everything it labels across the network.
-      description: The tag's per-type counts plus the docs it labels across every content type. Filter with types.
+      description: The tag's per-type counts plus the docs it labels across every content type. Filter
+        with types.
       parameters:
       - name: slug
         in: path
@@ -1643,6 +3418,58 @@ paths:
               schema:
                 type: object
                 additionalProperties: true
+              example:
+                meta:
+                  total: 1131
+                  page: 1
+                  limit: 2
+                  pages: 566
+                  query:
+                    tag: api-evangelist
+                    types: null
+                  tag:
+                    slug: api-evangelist
+                    label: API Evangelist
+                    count: 1131
+                    breadth: 1
+                    types:
+                      posts: 1131
+                data:
+                - slug: 2026-06-12-history-of-api-evangelist
+                  title: History of API Evangelist
+                  summary: ''
+                  url: https://apievangelist.com/2026/06/12/history-of-api-evangelist/
+                  tags:
+                  - API Evangelist
+                  - History
+                  - Origin
+                  - Storytelling
+                  date: '2026-06-12'
+                  image: https://kinlane-images.s3.amazonaws.com/apievangelist/1778714877409.jpeg
+                  has_content: true
+                  type: posts
+                - slug: 2026-03-31-not-a-single-api-evangelist-post-in-march
+                  title: Not a Single API Evangelist Post in March
+                  summary: ''
+                  url: https://apievangelist.com/2026/03/31/not-a-single-api-evangelist-post-in-march/
+                  tags:
+                  - AI
+                  - Artificial Intelligence
+                  - Storytelling
+                  - API Evangelist
+                  date: '2026-03-31'
+                  image: https://kinlane-images.s3.amazonaws.com/shared/john-wayne-the-searchers-camel-in-desert.jpg
+                  has_content: true
+                  type: posts
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '404':
           $ref: '#/components/responses/NotFound'
   /guide:
@@ -1656,14 +3483,17 @@ paths:
       tags:
       - Synthesis
       summary: PRO — Curated cross-network guide for a topic.
-      description: PRO — Bundles the matching topic area (with related areas), top guidance, rules, policies, and
-        standards, relevant papers and recent stories, plus the services that can help a team with this topic.
+      description: PRO — Bundles the matching topic area (with related areas), top guidance, rules, policies,
+        and standards, relevant papers and recent stories, plus the services that can help a team with
+        this topic.
       parameters:
       - name: topic
         in: query
         required: true
         schema:
           type: string
+        description: The topic to build a guide for — any tag or area slug from /tags or /areas.
+        example: api-governance
       responses:
         '200':
           description: The curated topic guide.
@@ -1672,6 +3502,15 @@ paths:
               schema:
                 type: object
                 additionalProperties: true
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '400':
           $ref: '#/components/responses/NotFound'
         '403':
@@ -1695,6 +3534,15 @@ paths:
               schema:
                 type: object
                 additionalProperties: true
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
   /posts/{slug}/related:
     get:
       operationId: getPostRelated
@@ -1704,7 +3552,239 @@ paths:
       tags:
       - APIs
       summary: Related content across the network.
-      description: Stories, areas, guidance, and papers related to a story. Ranked by shared-tag relevance (rare,
+      description: Stories, areas, guidance, and papers related to a story. Ranked by shared-tag relevance
+        (rare, specific tags weigh most). Cross-type by default; filter with types.
+      parameters:
+      - name: slug
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: types
+        in: query
+        description: Restrict to these content types (comma-separated).
+        schema:
+          type: string
+      - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: A page of related content.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+              example:
+                meta:
+                  total: 1413
+                  page: 1
+                  limit: 2
+                  pages: 707
+                  query:
+                    related_to: posts:2026-09-29-you-cannot-see-your-own-api-from-the-outside
+                    types: null
+                data:
+                - slug: 2026-09-26-apis-io-provides-discovery-grade-artifacts
+                  title: APIs.io Provides Discovery-Grade Artifacts
+                  summary: ''
+                  url: https://apievangelist.com/2026/09/26/apis-io-provides-discovery-grade-artifacts/
+                  tags:
+                  - Discovery
+                  - APIs.io
+                  - OpenAPI
+                  - Artifacts
+                  - API Discovery
+                  - Kin Score
+                  - Strategy
+                  - APIs
+                  date: '2026-09-26'
+                  image: https://kinlane-images.s3.amazonaws.com/apievangelist/api-evangelist-images/apis-io-provides-discovery-grade-artifacts.png
+                  has_content: true
+                  type: posts
+                  shared_tags: 5
+                  relevance: 25.147
+                - slug: 2026-08-19-where-i-am-at-with-forking-spectral
+                  title: Where I Am At With Forking Spectral
+                  summary: ''
+                  url: https://apievangelist.com/2026/08/19/where-i-am-at-with-forking-spectral/
+                  tags:
+                  - Spectral
+                  - API Governance
+                  - Governance
+                  - Open Source
+                  - OpenAPI
+                  - Rulesets
+                  - Standards
+                  - APIs.io
+                  - Kin Score
+                  - APIs
+                  date: '2026-08-19'
+                  image: https://kinlane-images.s3.amazonaws.com/apievangelist/api-evangelist-images/where-i-am-at-with-forking-spectral.png
+                  has_content: true
+                  type: posts
+                  shared_tags: 4
+                  relevance: 21.452
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /areas/{slug}/related:
+    get:
+      operationId: getAreaRelated
+      x-tier: free
+      x-mcp-tool: find_related
+      x-agent-skill: brief-on-topic
+      tags:
+      - Areas
+      summary: Related content across the network.
+      description: Content across the network related to a topic area. Ranked by shared-tag relevance
+        (rare, specific tags weigh most). Cross-type by default; filter with types.
+      parameters:
+      - name: slug
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: types
+        in: query
+        description: Restrict to these content types (comma-separated).
+        schema:
+          type: string
+      - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: A page of related content.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+              example:
+                meta:
+                  total: 42
+                  page: 1
+                  limit: 2
+                  pages: 21
+                  query:
+                    related_to: areas:agents-skills
+                    types: null
+                data:
+                - slug: 2026-09-10-agent-skills-new-value-new-problems
+                  title: 'Agent Skills: New Value, New Problems'
+                  summary: ''
+                  url: https://apievangelist.com/2026/09/10/agent-skills-new-value-new-problems/
+                  tags:
+                  - Agent Skills
+                  - Agents
+                  - AI
+                  - Governance
+                  - MCP
+                  - Capabilities
+                  - Security
+                  date: '2026-09-10'
+                  image: https://kinlane-images.s3.amazonaws.com/apievangelist/api-evangelist-images/agent-skills-new-value-new-problems.png
+                  has_content: true
+                  type: posts
+                  shared_tags: 1
+                  relevance: 6.916
+                - slug: 2026-08-17-your-internal-docs-need-the-same-scoring-discipline-as-your-public-apis
+                  title: Your Internal Docs Need the Same Scoring Discipline as Your Public APIs
+                  summary: ''
+                  url: https://apievangelist.com/2026/08/17/your-internal-docs-need-the-same-scoring-discipline-as-your-public-apis/
+                  tags:
+                  - Agent Skills
+                  - Documentation
+                  - Governance
+                  - Information Architecture
+                  - Metadata
+                  - Enterprise
+                  - Taxonomy
+                  date: '2026-08-17'
+                  image: https://kinlane-images.s3.amazonaws.com/apievangelist/api-evangelist-images/your-internal-docs-need-the-same-scoring-discipline-as-your-public-apis.png
+                  has_content: true
+                  type: posts
+                  shared_tags: 1
+                  relevance: 6.916
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /papers/{slug}/related:
+    get:
+      operationId: getPaperRelated
+      x-tier: free
+      x-mcp-tool: find_related
+      x-agent-skill: research-with-api-evangelist
+      tags:
+      - Papers
+      summary: Related content across the network.
+      description: Content related to a paper. Ranked by shared-tag relevance (rare, specific tags weigh
+        most). Cross-type by default; filter with types.
+      parameters:
+      - name: slug
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: types
+        in: query
+        description: Restrict to these content types (comma-separated).
+        schema:
+          type: string
+      - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: A page of related content.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+              example:
+                meta:
+                  total: 0
+                  page: 1
+                  limit: 2
+                  pages: 0
+                  query:
+                    related_to: papers:change-on-the-agent-surface
+                    types: null
+                data: []
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /guidance/{slug}/related:
+    get:
+      operationId: getGuidanceRelated
+      x-tier: free
+      x-mcp-tool: find_related
+      x-agent-skill: brief-on-topic
+      tags:
+      - Building Blocks
+      summary: Related content across the network.
+      description: Content related to a guidance building block. Ranked by shared-tag relevance (rare,
         specific tags weigh most). Cross-type by default; filter with types.
       parameters:
       - name: slug
@@ -1726,138 +3806,59 @@ paths:
               schema:
                 type: object
                 additionalProperties: true
-        '404':
-          $ref: '#/components/responses/NotFound'
-  /areas/{slug}/related:
-    get:
-      operationId: getAreaRelated
-      x-tier: free
-      x-mcp-tool: find_related
-      x-agent-skill: brief-on-topic
-      tags:
-      - Areas
-      summary: Related content across the network.
-      description: Content across the network related to a topic area. Ranked by shared-tag relevance (rare, specific
-        tags weigh most). Cross-type by default; filter with types.
-      parameters:
-      - name: slug
-        in: path
-        required: true
-        schema:
-          type: string
-      - name: types
-        in: query
-        description: Restrict to these content types (comma-separated).
-        schema:
-          type: string
-      - $ref: '#/components/parameters/Limit'
-      responses:
-        '200':
-          description: A page of related content.
-          content:
-            application/json:
-              schema:
-                type: object
-                additionalProperties: true
-        '404':
-          $ref: '#/components/responses/NotFound'
-  /papers/{slug}/related:
-    get:
-      operationId: getPaperRelated
-      x-tier: free
-      x-mcp-tool: find_related
-      x-agent-skill: research-with-api-evangelist
-      tags:
-      - Papers
-      summary: Related content across the network.
-      description: Content related to a paper. Ranked by shared-tag relevance (rare, specific tags weigh most).
-        Cross-type by default; filter with types.
-      parameters:
-      - name: slug
-        in: path
-        required: true
-        schema:
-          type: string
-      - name: types
-        in: query
-        description: Restrict to these content types (comma-separated).
-        schema:
-          type: string
-      - $ref: '#/components/parameters/Limit'
-      responses:
-        '200':
-          description: A page of related content.
-          content:
-            application/json:
-              schema:
-                type: object
-                additionalProperties: true
-        '404':
-          $ref: '#/components/responses/NotFound'
-  /reports/{slug}/related:
-    get:
-      operationId: getReportRelated
-      x-tier: free
-      x-mcp-tool: find_related
-      x-agent-skill: research-with-api-evangelist
-      tags:
-      - Papers
-      summary: Related content across the network.
-      description: Content related to a report. Ranked by shared-tag relevance (rare, specific tags weigh most).
-        Cross-type by default; filter with types.
-      parameters:
-      - name: slug
-        in: path
-        required: true
-        schema:
-          type: string
-      - name: types
-        in: query
-        description: Restrict to these content types (comma-separated).
-        schema:
-          type: string
-      - $ref: '#/components/parameters/Limit'
-      responses:
-        '200':
-          description: A page of related content.
-          content:
-            application/json:
-              schema:
-                type: object
-                additionalProperties: true
-        '404':
-          $ref: '#/components/responses/NotFound'
-  /guidance/{slug}/related:
-    get:
-      operationId: getGuidanceRelated
-      x-tier: free
-      x-mcp-tool: find_related
-      x-agent-skill: brief-on-topic
-      tags:
-      - Building Blocks
-      summary: Related content across the network.
-      description: Content related to a guidance building block. Ranked by shared-tag relevance (rare, specific
-        tags weigh most). Cross-type by default; filter with types.
-      parameters:
-      - name: slug
-        in: path
-        required: true
-        schema:
-          type: string
-      - name: types
-        in: query
-        description: Restrict to these content types (comma-separated).
-        schema:
-          type: string
-      - $ref: '#/components/parameters/Limit'
-      responses:
-        '200':
-          description: A page of related content.
-          content:
-            application/json:
-              schema:
-                type: object
-                additionalProperties: true
+              example:
+                meta:
+                  total: 104
+                  page: 1
+                  limit: 2
+                  pages: 52
+                  query:
+                    related_to: guidance:3scale
+                    types: null
+                data:
+                - slug: 2026-08-10-does-your-sales-team-know-how-your-api-management-platform-ranks
+                  title: Does Your Sales Team Know How Your API Management Platform Ranks?
+                  summary: ''
+                  url: https://apievangelist.com/2026/08/10/does-your-sales-team-know-how-your-api-management-platform-ranks/
+                  tags:
+                  - API Management
+                  - Kin Score
+                  - Ratings
+                  - Agent Readiness
+                  - Sales
+                  - Marketing
+                  - Competition
+                  date: '2026-08-10'
+                  image: https://kinlane-images.s3.amazonaws.com/apievangelist/api-evangelist-images/does-your-sales-team-know-how-your-api-management-platform-ranks.png
+                  has_content: true
+                  type: posts
+                  shared_tags: 1
+                  relevance: 5.779
+                - slug: 2026-08-08-openapi-overlays-for-monetization-and-plan-tiering
+                  title: OpenAPI Overlays for Monetization and Plan Tiering From One Spec
+                  summary: ''
+                  url: https://apievangelist.com/2026/08/08/openapi-overlays-for-monetization-and-plan-tiering/
+                  tags:
+                  - OpenAPI
+                  - Overlays
+                  - Monetization
+                  - API Management
+                  - APIs
+                  date: '2026-08-08'
+                  image: https://kinlane-images.s3.amazonaws.com/apievangelist/api-evangelist-images/openapi-overlays-for-monetization-and-plan-tiering.png
+                  has_content: true
+                  type: posts
+                  shared_tags: 1
+                  relevance: 5.779
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '404':
           $ref: '#/components/responses/NotFound'
   /insights:
@@ -1876,7 +3877,77 @@ paths:
               schema:
                 type: object
                 additionalProperties: true
-      x-tier: free
+              example:
+                meta:
+                  generated_note: stamp date at deploy — Date.now() unavailable in this harness
+                  quarters:
+                  - q1-2026
+                  - q2-2026
+                  primary_quarter: q2-2026
+                  companies: 5804
+                  companies_f1000: 947
+                  companies_from_blogs: 4857
+                  companies_with_q1: 295
+                  q1_note: Q1 partial (~316 cos) + method-drifted vs Q2; served flagged, NOT diffed. See
+                    time-series.md.
+                  sources: jobs + press (F1000). Provider/blog corpus extraction pending — see ingestion-evaluation.md.
+                  matcher: hardened (word-boundary + stoplist, re-extracted from job corpus)
+                  adoption_basis: recomputed company counts from cleaned stacks
+                  corpus_audit:
+                    date: '2026-08-06'
+                    withheld_companies: 113
+                    reason: Attribution audit of all 879 job corpora found these accounts holding another
+                      company's job board — the pull matched on company NAME and followed a vendor or
+                      partner's board. Per-company demand figures for them are withheld.
+                    caveat: Aggregate figures below — dimensions, adoption and provider_demand — were
+                      computed before this audit and still include the withheld corpora. They are being
+                      rebuilt.
+                    reference: https://github.com/api-evangelist/roadmap/issues/17
+                top_dimensions:
+                - dimension: data
+                  total_signal: 40111
+                  companies_with_signal: 817
+                - dimension: operations
+                  total_signal: 27084
+                  companies_with_signal: 840
+                - dimension: cloud
+                  total_signal: 24024
+                  companies_with_signal: 807
+                - dimension: roiBusinessMetrics
+                  total_signal: 22814
+                  companies_with_signal: 780
+                - dimension: governance
+                  total_signal: 22153
+                  companies_with_signal: 827
+                - dimension: automation
+                  total_signal: 21341
+                  companies_with_signal: 790
+                - dimension: code
+                  total_signal: 19564
+                  companies_with_signal: 832
+                - dimension: security
+                  total_signal: 18463
+                  companies_with_signal: 930
+                - dimension: ai
+                  total_signal: 15834
+                  companies_with_signal: 775
+                - dimension: services
+                  total_signal: 13682
+                  companies_with_signal: 833
+                counts:
+                  companies: 5804
+                  services: 566
+                  tools: 286
+                  industries: 50
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
   /insights/dimensions:
     get:
       operationId: listInsightDimensions
@@ -1895,7 +3966,32 @@ paths:
               schema:
                 type: object
                 additionalProperties: true
-      x-tier: free
+              example:
+                meta:
+                  total: 42
+                  page: 1
+                  limit: 2
+                  pages: 21
+                  query:
+                    quarter: q2-2026
+                data:
+                - dimension: data
+                  total_signal: 40111
+                  companies_with_signal: 817
+                - dimension: operations
+                  total_signal: 27084
+                  companies_with_signal: 840
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
+      description: Rank the 40 investment dimensions by how much company signal sits behind each one —
+        the demand-side view of where organisations are actually putting effort. Free tier.
   /insights/adoption:
     get:
       operationId: listInsightAdoption
@@ -1923,7 +4019,34 @@ paths:
               schema:
                 type: object
                 additionalProperties: true
-      x-tier: free
+              example:
+                meta:
+                  total: 566
+                  page: 1
+                  limit: 2
+                  pages: 283
+                  query:
+                    type: services
+                data:
+                - name: Microsoft Office
+                  slug: microsoft-office
+                  companyCount: 731
+                  radarRing: Optimizing
+                - name: Microsoft Teams
+                  slug: microsoft-teams
+                  companyCount: 715
+                  radarRing: Optimizing
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
+      description: Services, tools and standards ranked by adoption across the profiled company set. Each
+        response names the corpus and the matcher it was measured with. Free tier.
   /insights/industries:
     get:
       operationId: listInsightIndustries
@@ -1938,7 +4061,29 @@ paths:
               schema:
                 type: object
                 additionalProperties: true
-      x-tier: free
+              example:
+                meta:
+                  total: 50
+                  page: 1
+                  limit: 2
+                  pages: 25
+                  query: {}
+                data:
+                - name: Industrial
+                  company_count: 138
+                - name: Technology
+                  company_count: 135
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
+      description: The same adoption picture rolled up by industry, so a dimension can be read against
+        the sector it shows up in. Free tier.
   /insights/companies:
     get:
       operationId: listInsightCompanies
@@ -1958,7 +4103,35 @@ paths:
               schema:
                 type: object
                 additionalProperties: true
-      x-tier: free
+              example:
+                meta:
+                  total: 5804
+                  page: 1
+                  limit: 2
+                  pages: 2902
+                  query: {}
+                data:
+                - slug: goldman-sachs
+                  name: Goldman Sachs
+                  industry: Financial Technology
+                  sub_sector: Payment Processing
+                  readiness_total: 1756
+                - slug: leidos
+                  name: Leidos
+                  industry: Enterprise Software
+                  sub_sector: IT Service Management
+                  readiness_total: 1749
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
+      description: Browse the profiled companies by name, ranked by readiness total. The index behind
+        the per-company profiles. Free tier.
   /insights/company/{slug}:
     get:
       operationId: getCompanyInsight
@@ -1980,9 +4153,42 @@ paths:
               schema:
                 type: object
                 additionalProperties: true
+              example:
+                slug: goldman-sachs
+                name: Goldman Sachs
+                industry: Financial Technology
+                sub_sector: Payment Processing
+                source: jobs
+                confidence: high
+                readiness_total: 1756
+                top_dimensions:
+                - key: data
+                  score: 193
+                - key: cloud
+                  score: 119
+                - key: operations
+                  score: 112
+                sample_gap:
+                  dimension: domainSpecialization
+                  score: 2
+                quarters:
+                - q2-2026
+                - q1-2026
+                upgrade: Preview is deliberately thin. Pro unlocks the full 40-dimension profile, adoption
+                  stack, per-quarter history, gaps, and provider matches. https://apis.io/developer/plans/
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '404':
           $ref: '#/components/responses/NotFound'
-      x-tier: free
+      description: One company's demand-side profile. The free tier returns a thin preview; Pro returns
+        the full 40-dimension profile with the evidence behind each dimension.
   /insights/company/{slug}/gaps:
     get:
       operationId: getCompanyGaps
@@ -2007,6 +4213,15 @@ paths:
               schema:
                 type: object
                 additionalProperties: true
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '403':
           description: Requires the Pro tier.
           content:
@@ -2014,310 +4229,8 @@ paths:
               schema:
                 type: object
                 additionalProperties: true
-  /standards/measured:
-    get:
-      operationId: listMeasuredStandards
-      x-tier: free
-      x-mcp-tool: find_measured_standards
-      security: []
-      tags:
-      - Standards Measurement
-      summary: Standards bodies with a measured profile.
-      description: 'The bodies API Evangelist has actually profiled — repository counts, maturity, governance and
-        coalition. Distinct from /standards, which lists catalog entries describing what a standard IS. Free: a
-        specification is a public good, and so is an honest read of its adoption.'
-      parameters:
-      - &id003
-        name: page
-        in: query
-        schema:
-          type: integer
-      - &id004
-        name: limit
-        in: query
-        schema:
-          type: integer
-      responses:
-        '200':
-          description: Standards bodies with a measured profile.
-          content:
-            application/json:
-              schema:
-                type: object
-        '400': &id006
-          description: Bad request.
-  /standards/{slug}/measurement:
-    get:
-      operationId: getStandardMeasurement
-      x-tier: free
-      x-mcp-tool: find_measured_standards
-      security: []
-      tags:
-      - Standards Measurement
-      summary: The measured profile of one body.
-      description: Summary counts across every measured part, the provenance behind each, and the caveats where
-        our machine-readable source disagrees with the body's own published surface. Also states what is NOT measured,
-        so absence reads as absence rather than as zero.
-      parameters:
-      - &id001
-        name: slug
-        in: path
-        required: true
-        schema: &id007
-          type: string
-      responses:
-        '200':
-          description: The measured profile of one body.
-          content:
-            application/json:
-              schema:
-                type: object
-        '404': &id002
-          $ref: '#/components/responses/NotFound'
-  /standards/{slug}/adoption:
-    get:
-      operationId: getStandardAdoption
-      x-tier: free
-      x-mcp-tool: standard_adoption
-      x-agent-skill: standards-from-paper
-      security: []
-      tags:
-      - Standards Measurement
-      summary: How far adoption actually got.
-      description: Repositories published, how many graduated past unclassified and the resulting share, release
-        cadence and contributor count — the question a Standard Report is written to answer.
-      parameters:
-      - *id001
-      responses:
-        '200':
-          description: How far adoption actually got.
-          content:
-            application/json:
-              schema:
-                type: object
-        '404': *id002
-  /standards/{slug}/coalition:
-    get:
-      operationId: getStandardCoalition
-      x-tier: free
-      x-mcp-tool: standard_coalition
-      security: []
-      tags:
-      - Standards Measurement
-      summary: Who is actually behind the standard.
-      description: Governing bodies and their membership, working groups, member companies and named people. A company
-        count of zero carries a note explaining it (AsyncAPI is crowdfunded and has no corporate roster) — zero
-        and "not measured" are different claims and are returned differently.
-      parameters:
-      - *id001
-      responses:
-        '200':
-          description: Who is actually behind the standard.
-          content:
-            application/json:
-              schema:
-                type: object
-        '404': *id002
-  /standards/{slug}/repositories:
-    get:
-      operationId: getStandardRepositories
-      x-tier: free
-      x-mcp-tool: standard_repositories
-      security: []
-      tags:
-      - Standards Measurement
-      summary: Every repository the body publishes.
-      description: Name, description, maturity, stars, forks, open issues and archived status for each repository.
-      parameters:
-      - *id001
-      - *id003
-      - *id004
-      responses:
-        '200':
-          description: Every repository the body publishes.
-          content:
-            application/json:
-              schema:
-                type: object
-        '404': *id002
-  /insights/company/{slug}/dimensions:
-    get:
-      operationId: getCompanyDimensions
-      x-tier: pro
-      x-mcp-tool: company_dimensions
-      security: []
-      tags:
-      - Demand
-      summary: Dimensions with benchmark columns (Pro).
-      description: 'Each dimension read against the measured cohort: median, mean and max, this company''s rank
-        and percentile, and an index where 1.0 is exactly typical. A company with no dimension scores returns 422
-        rather than a fabricated zero — stack-only records sourced from blogs are not measured on this axis.'
-      parameters:
-      - *id001
-      responses:
-        '200':
-          description: Dimensions with benchmark columns (Pro).
-          content:
-            application/json:
-              schema:
-                type: object
-        '403': &id005
-          description: Requires the Pro tier.
-        '404': *id002
-        '422':
-          description: The company carries no dimension scores — it is a stack-only record, not a measured one.
-  /insights/company/{slug}/peers:
-    get:
-      operationId: getCompanyPeers
-      x-tier: pro
-      x-mcp-tool: company_peers
-      security: []
-      tags:
-      - Demand
-      summary: Comparable companies (Pro).
-      description: Peers by sub-sector where the data supports it and by industry otherwise, each with signal totals
-        and top dimensions. The response states which basis it used.
-      parameters:
-      - *id001
-      - *id004
-      responses:
-        '200':
-          description: Comparable companies (Pro).
-          content:
-            application/json:
-              schema:
-                type: object
-        '403': *id005
-        '404': *id002
-  /insights/company/{slug}/whitespace:
-    get:
-      operationId: getCompanyWhitespace
-      x-tier: pro
-      x-mcp-tool: company_whitespace
-      security: []
-      tags:
-      - Demand
-      summary: What peers run that this company does not (Pro).
-      description: Ranked by how many peers carry each entity, with the peer share and the cohort-wide count so
-        a peer-group artifact is visible as one.
-      parameters:
-      - *id001
-      - *id004
-      responses:
-        '200':
-          description: What peers run that this company does not (Pro).
-          content:
-            application/json:
-              schema:
-                type: object
-        '403': *id005
-        '404': *id002
-  /insights/company/{slug}/signals:
-    get:
-      operationId: getCompanySignals
-      x-tier: pro
-      x-mcp-tool: company_signals
-      security: []
-      tags:
-      - Demand
-      summary: The adopted stack, entity by entity (Pro).
-      description: Every service, tool and standard on the company's stack, each with how many companies across
-        the cohort carry it and its radar ring.
-      parameters:
-      - *id001
-      responses:
-        '200':
-          description: The adopted stack, entity by entity (Pro).
-          content:
-            application/json:
-              schema:
-                type: object
-        '403': *id005
-        '404': *id002
-  /insights/entities:
-    get:
-      operationId: findEntities
-      x-tier: free
-      x-mcp-tool: find_entities
-      security: []
-      tags:
-      - Demand
-      summary: The demand-side entity catalog.
-      description: Every service, tool and standard companies are measured against, ranked by reach. Free — this
-        is the left-hand side of the inversion. Every response carries a `basis` block disclosing the corpus, the
-        matcher, and the top-25 truncation that bounds what can be named.
-      parameters:
-      - name: kind
-        in: query
-        schema:
-          type: string
-          enum:
-          - service
-          - tool
-          - standard
-      - name: q
-        in: query
-        schema:
-          type: string
-      - name: min_companies
-        in: query
-        schema:
-          type: integer
-      - *id003
-      - *id004
-      responses:
-        '200':
-          description: The demand-side entity catalog.
-          content:
-            application/json:
-              schema:
-                type: object
-        '400': *id006
-  /insights/entity/{kind}/{slug}:
-    get:
-      operationId: getEntityDemand
-      x-tier: pro
-      x-mcp-tool: entity_demand
-      security: []
-      tags:
-      - Demand
-      summary: Which companies show demand for this (Pro).
-      description: THE INVERSION. Every other insights route runs company -> stack; this one runs stack -> companies,
-        broken down by industry — the prospecting query, and one that exists in no report, bundle or page. Returns
-        BOTH the authoritative company count and the companies it can actually name. The two are measured on different
-        bases and routinely disagree in either direction; `naming_note` explains which way and why, and `named_by_source`
-        gives the corpus composition.
-      parameters:
-      - name: kind
-        in: path
-        required: true
-        schema:
-          type: string
-          enum:
-          - service
-          - tool
-          - standard
-      - name: slug
-        in: path
-        required: true
-        schema: *id007
-        description: Entity slug or display name — either resolves.
-      - name: industry
-        in: query
-        schema:
-          type: string
-      - *id004
-      responses:
-        '200':
-          description: Which companies show demand for this (Pro).
-          content:
-            application/json:
-              schema:
-                type: object
-        '400':
-          description: Bad request.
-        '403': *id005
-        '404': *id002
+      description: A company's weakest investment dimensions — where the signal is thinnest relative to
+        its peers. Pro only.
 components:
   securitySchemes:
     ApiKeyAuth:
@@ -2403,7 +4316,8 @@ components:
   schemas:
     Doc:
       type: object
-      description: One network resource. Extra type-specific fields (guest, outline, party, …) appear per type.
+      description: One network resource. Extra type-specific fields (guest, outline, party, …) appear
+        per type.
       properties:
         type:
           type: string
@@ -2498,8 +4412,8 @@ components:
       properties:
         channel:
           type: string
-          description: Machine-readable channel key (email, form, newsletter, github, linkedin, bluesky, youtube,
-            mail).
+          description: Machine-readable channel key (email, form, newsletter, github, linkedin, bluesky,
+            youtube, mail).
         label:
           type: string
         value:
@@ -2516,3 +4430,33 @@ components:
           type: string
         detail:
           type: string
+  headers:
+    RateLimitPolicy:
+      description: 'The rate-limit policy in force for the tier that served this response, in RFC 9331
+        quota-policy syntax: `"quota";q=1000;w=86400, "burst";q=5;w=1` — a daily quota and a per-second
+        burst. This is the POLICY, not a live counter: `RateLimit-Remaining` and `RateLimit-Reset` are
+        deliberately not sent, because the quota is enforced by the gateway and there is no per-key usage
+        accounting to read. Pace against the policy, and treat a 429 as authoritative.'
+      schema:
+        type: string
+        examples:
+        - '"quota";q=1000;w=86400, "burst";q=5;w=1'
+    XRateLimitLimit:
+      description: The daily request quota for the tier that served this response.
+      schema:
+        type: integer
+        examples:
+        - 1000
+    XRateLimitWindow:
+      description: The quota window in seconds. Always 86400 (one day).
+      schema:
+        type: integer
+        examples:
+        - 86400
+    XRateLimitTier:
+      description: The tier this request was served on — `free`, `pro`, `business`, `internal` or `owner`.
+        Keyless requests are `free`; requests from an apievangelist.com origin are `internal`.
+      schema:
+        type: string
+        examples:
+        - free

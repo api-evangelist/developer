@@ -1,0 +1,61 @@
+---
+title: Deprecation & Versioning
+---
+
+# Deprecation & versioning
+
+## Versioning
+
+The API is versioned in the path: `https://api.apievangelist.com/v1`. The version changes only
+for a **breaking** change. Everything else — new endpoints, new response fields, new optional
+query parameters, new tiers — ships into `/v1` without a version bump, so clients should ignore
+response fields they do not recognise rather than failing on them.
+
+The contract's `info.version` (currently **1.2.0**) tracks the *contract*, not the path. It moves
+on every published change; the path does not.
+
+### What counts as breaking
+
+- Removing an endpoint, or a field from a response.
+- Renaming a field, or changing its type.
+- Making an optional request parameter required.
+- Narrowing an enum, or changing the meaning of an existing value.
+- Changing the default page size, or the shape of the paging envelope.
+
+Adding a field, adding an endpoint, adding an optional parameter, widening an enum, or improving
+a description is **not** breaking.
+
+## Deprecation
+
+When something is going away:
+
+1. **It is marked in the contract.** The operation or field carries `deprecated: true` in the
+   OpenAPI, which is the machine-readable signal — an agent or generated client can see it
+   without reading this page.
+2. **It is announced in the [changelog](/changelog)** with the date it was deprecated and the
+   date it will be removed.
+3. **Responses carry the `Deprecation` and `Sunset` headers** ([RFC 9745](https://www.rfc-editor.org/rfc/rfc9745.html)
+   and [RFC 8594](https://www.rfc-editor.org/rfc/rfc8594.html)), plus a `Link` header with
+   `rel="deprecation"` pointing at this page.
+4. **The replacement is named** in the deprecation notice. Nothing is deprecated without
+   somewhere to go.
+
+## Notice period
+
+| Change | Minimum notice |
+| --- | --- |
+| Deprecating an endpoint or field in `/v1` | **6 months** before removal |
+| Retiring an entire API version | **12 months**, with `/v1` and `/v2` served in parallel |
+| Security-forced removal | As much as is safe — announced immediately, with the reason |
+
+The only change made without notice is one required to close a security or privacy problem, and
+that is announced the moment it ships rather than before it.
+
+## Retired surfaces
+
+The static per-collection JSON feeds (`apis.json`, `posts.json`, and siblings, once documented
+at `/feeds/*`) were retired in favour of this API and the MCP server. The paths redirect rather
+than 404 so nothing holding an old link breaks. The two remaining machine-readable catalog
+indexes are documented at [catalog feeds](/catalog-feeds).
+
+Questions about a deprecation: **info@apievangelist.com**.

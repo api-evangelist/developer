@@ -80,6 +80,30 @@ const CONTRACTS = [
 ];
 for (const f of CONTRACTS) copyFileSync(join(root, "apis", f), join(publicApisDir, f));
 
+// RFC 9116 security.txt. Generated rather than committed because `Expires` is
+// mandatory and a security.txt whose Expires has passed is, per the RFC, one
+// consumers SHOULD ignore -- a committed file quietly stops counting on a date
+// nobody is watching. Regenerating on every build keeps it valid by construction.
+const expires = new Date();
+expires.setUTCMonth(expires.getUTCMonth() + 6);
+expires.setUTCMilliseconds(0);
+
+const securityTxt = [
+  "# API Evangelist -- vulnerability disclosure. Full policy: " + `${SITE}/security`,
+  "# Generated on every portal build so Expires never lapses (RFC 9116 s2.5.5).",
+  "",
+  "Contact: mailto:info@apievangelist.com",
+  `Expires: ${expires.toISOString().replace(/\.\d{3}Z$/, "Z")}`,
+  "Preferred-Languages: en",
+  `Canonical: ${SITE}/.well-known/security.txt`,
+  `Policy: ${SITE}/security`,
+  "",
+].join("\n");
+
+writeFileSync(join(wellKnownDir, "security.txt"), securityTxt);
+
 console.log(
-  `generate-well-known: wrote api-catalog (+ .json) with ${linkset.length} anchors and copied ${CONTRACTS.length} contracts to public/apis/`
+  `generate-well-known: wrote api-catalog (+ .json) with ${linkset.length} anchors, ` +
+    `security.txt (expires ${expires.toISOString().slice(0, 10)}), ` +
+    `and copied ${CONTRACTS.length} contracts to public/apis/`
 );
