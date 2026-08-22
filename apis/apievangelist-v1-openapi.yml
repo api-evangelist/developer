@@ -362,7 +362,7 @@ tags:
 - name: APIs
   description: Individual API resources tracked across the network, and the relevance graph between them.
 - name: Papers
-  description: White papers and reports, and the relevance graph between them.
+  description: White papers, and the relevance graph between them.
 - name: Building Blocks
   description: The governance building blocks — guidance, rules, policies, standards, strategies, schema, properties,
     experiences and lifecycle — and the relevance graph between them.
@@ -433,13 +433,12 @@ paths:
                   lifecycle: 29
                   conversations: 59
                   papers: 21
-                  reports: 128
                   services: 25
                   solutions: 742
                   tools: 527
                   videos: 103
                   timelines: 565
-                  vocabulary: 6988
+                  vocabulary: 9776
                 resources:
                 - /v1/posts
                 - /v1/areas
@@ -454,7 +453,6 @@ paths:
                 - /v1/lifecycle
                 - /v1/conversations
                 - /v1/papers
-                - /v1/reports
                 - /v1/services
                 - /v1/solutions
                 - /v1/vocabulary
@@ -4247,98 +4245,6 @@ paths:
                 additionalProperties: true
       description: A company's weakest investment dimensions — where the signal is thinnest relative to its peers.
         Pro only.
-  /reports:
-    get:
-      operationId: listReports
-      tags:
-      - Media
-      summary: Reports
-      description: 'API Evangelist Reports — measured research bundles where every company named is banded on the
-
-        Kin Score, each shipping a machine-readable data bundle. Four kinds, selected with `report_type`:
-
-        `trends` (one market — an industry, a country cut, or a technology cohort), `standards` (one
-
-        standards body, free), `portfolios` (one fund''s book), and `profiles` (one company, written for
-
-        the vendor selling into it). Distinct from `/papers`, which are single-PDF topic deep dives.
-
-        '
-      parameters:
-      - $ref: '#/components/parameters/Q'
-      - name: report_type
-        in: query
-        description: Restrict to one kind of report.
-        schema:
-          type: string
-          enum:
-          - trends
-          - standards
-          - portfolios
-          - profiles
-      - $ref: '#/components/parameters/Page'
-      - $ref: '#/components/parameters/Limit'
-      responses:
-        '200':
-          description: Reports with outlines, pricing, and landing URLs.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PagedEnvelope'
-      x-tier: free
-  /reports/{slug}:
-    get:
-      operationId: getReport
-      tags:
-      - Media
-      summary: Report
-      description: One report with its full outline, price, and landing URL. Standard Reports are free; the rest
-        are paid, and the landing page carries the checkout.
-      parameters:
-      - $ref: '#/components/parameters/Slug'
-      responses:
-        '200':
-          description: The report.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Doc'
-        '404':
-          $ref: '#/components/responses/NotFound'
-      x-tier: free
-  /reports/{slug}/related:
-    get:
-      operationId: getReportRelated
-      x-tier: free
-      x-mcp-tool: find_related
-      x-agent-skill: research-with-api-evangelist
-      tags:
-      - Papers
-      summary: Related content across the network.
-      description: Content related to a report. Ranked by shared-tag relevance (rare, specific tags weigh most).
-        Cross-type by default; filter with types.
-      parameters:
-      - name: slug
-        in: path
-        required: true
-        schema:
-          type: string
-      - name: types
-        in: query
-        description: Restrict to these content types (comma-separated).
-        schema:
-          type: string
-      - $ref: '#/components/parameters/Limit'
-      responses:
-        '200':
-          description: A page of related content.
-          content:
-            application/json:
-              schema:
-                type: object
-                additionalProperties: true
-        '404':
-          $ref: '#/components/responses/NotFound'
   /standards/measured:
     get:
       operationId: listMeasuredStandards
