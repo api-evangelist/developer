@@ -350,7 +350,7 @@ tags:
 - name: Contact
   description: Every way to reach API Evangelist.
 - name: Insights
-  description: Demand-side intelligence — what ~5,800 companies (Fortune 1000 + API providers) build, buy, and hire
+  description: Demand-side intelligence — what 6,572 companies (Fortune 1000 + API providers) build, buy, and hire
     for around APIs, data, and AI. Discovery is free; per-company depth + gaps are Pro. (The supply↔demand provider
     match lives on apis.io.)
 - name: Tags
@@ -3889,63 +3889,53 @@ paths:
                 additionalProperties: true
               example:
                 meta:
-                  generated_note: stamp date at deploy — Date.now() unavailable in this harness
+                  generated: '2026-09-25'
                   quarters:
                   - q1-2026
-                  - q2-2026
-                  primary_quarter: q2-2026
-                  companies: 5804
-                  companies_f1000: 947
-                  companies_from_blogs: 4857
-                  companies_with_q1: 295
-                  q1_note: Q1 partial (~316 cos) + method-drifted vs Q2; served flagged, NOT diffed. See time-series.md.
-                  sources: jobs + press (F1000). Provider/blog corpus extraction pending — see ingestion-evaluation.md.
+                  - q3-2026
+                  primary_quarter: q3-2026
+                  companies: 6572
+                  companies_f1000: 1362
+                  companies_from_blogs: 5210
+                  companies_with_q1: 259
+                  q1_note: Q1 partial (~316 cos), pre-hardening; served flagged, NOT diffed. q1 and q2 were retired as baselines
+                    2026-08-07 — Q3 is the first point in the series and Q4 the first reportable delta.
                   matcher: hardened (word-boundary + stoplist, re-extracted from job corpus)
-                  adoption_basis: recomputed company counts from cleaned stacks
-                  corpus_audit:
-                    date: '2026-08-06'
-                    withheld_companies: 113
-                    reason: Attribution audit of all 879 job corpora found these accounts holding another company's
-                      job board — the pull matched on company NAME and followed a vendor or partner's board. Per-company
-                      demand figures for them are withheld.
-                    caveat: Aggregate figures below — dimensions, adoption and provider_demand — were computed before
-                      this audit and still include the withheld corpora. They are being rebuilt.
-                    reference: https://github.com/api-evangelist/roadmap/issues/17
                 top_dimensions:
                 - dimension: data
-                  total_signal: 40111
-                  companies_with_signal: 817
+                  total_signal: 50041
+                  companies_with_signal: 1233
                 - dimension: operations
-                  total_signal: 27084
-                  companies_with_signal: 840
+                  total_signal: 35013
+                  companies_with_signal: 1231
                 - dimension: cloud
-                  total_signal: 24024
-                  companies_with_signal: 807
+                  total_signal: 30002
+                  companies_with_signal: 1160
                 - dimension: roiBusinessMetrics
-                  total_signal: 22814
-                  companies_with_signal: 780
-                - dimension: governance
-                  total_signal: 22153
-                  companies_with_signal: 827
+                  total_signal: 28955
+                  companies_with_signal: 1155
                 - dimension: automation
-                  total_signal: 21341
-                  companies_with_signal: 790
+                  total_signal: 27766
+                  companies_with_signal: 1190
+                - dimension: governance
+                  total_signal: 27320
+                  companies_with_signal: 1191
                 - dimension: code
-                  total_signal: 19564
-                  companies_with_signal: 832
+                  total_signal: 26443
+                  companies_with_signal: 1270
                 - dimension: security
-                  total_signal: 18463
-                  companies_with_signal: 930
+                  total_signal: 22633
+                  companies_with_signal: 1189
                 - dimension: ai
-                  total_signal: 15834
-                  companies_with_signal: 775
-                - dimension: services
-                  total_signal: 13682
-                  companies_with_signal: 833
+                  total_signal: 21497
+                  companies_with_signal: 1170
+                - dimension: observability
+                  total_signal: 17917
+                  companies_with_signal: 1152
                 counts:
-                  companies: 5804
-                  services: 566
-                  tools: 286
+                  companies: 6572
+                  services: 658
+                  tools: 397
                   industries: 50
           headers:
             RateLimit-Policy:
@@ -3977,19 +3967,19 @@ paths:
                 additionalProperties: true
               example:
                 meta:
-                  total: 42
+                  total: 41
                   page: 1
                   limit: 2
                   pages: 21
                   query:
-                    quarter: q2-2026
+                    quarter: q3-2026
                 data:
                 - dimension: data
-                  total_signal: 40111
-                  companies_with_signal: 817
+                  total_signal: 50041
+                  companies_with_signal: 1233
                 - dimension: operations
-                  total_signal: 27084
-                  companies_with_signal: 840
+                  total_signal: 35013
+                  companies_with_signal: 1231
           headers:
             RateLimit-Policy:
               $ref: '#/components/headers/RateLimitPolicy'
@@ -4117,22 +4107,22 @@ paths:
                 additionalProperties: true
               example:
                 meta:
-                  total: 5804
+                  total: 6572
                   page: 1
                   limit: 2
-                  pages: 2902
+                  pages: 3286
                   query: {}
                 data:
-                - slug: goldman-sachs
-                  name: Goldman Sachs
-                  industry: Financial Technology
-                  sub_sector: Payment Processing
-                  readiness_total: 1756
-                - slug: leidos
-                  name: Leidos
-                  industry: Enterprise Software
-                  sub_sector: IT Service Management
-                  readiness_total: 1749
+                - slug: jp-morgan-chase
+                  name: JP Morgan Chase
+                  industry: Financial Services
+                  sub_sector: Banking
+                  readiness_total: 2656
+                - slug: unitedhealth-group
+                  name: UnitedHealth Group
+                  industry: Healthcare
+                  sub_sector: Managed Care
+                  readiness_total: 2179
           headers:
             RateLimit-Policy:
               $ref: '#/components/headers/RateLimitPolicy'
@@ -4167,28 +4157,27 @@ paths:
                 type: object
                 additionalProperties: true
               example:
-                slug: goldman-sachs
-                name: Goldman Sachs
-                industry: Financial Technology
-                sub_sector: Payment Processing
-                source: jobs
+                slug: goldman-sachs-group
+                name: Goldman Sachs Group
+                industry: Financial Services
+                sub_sector: Investment Banking
+                source: jobs+blogs
                 confidence: high
-                readiness_total: 1756
+                readiness_total: 189
                 top_dimensions:
-                - key: data
-                  score: 193
-                - key: cloud
-                  score: 119
                 - key: operations
-                  score: 112
+                  score: 24
+                - key: data
+                  score: 18
+                - key: governance
+                  score: 17
                 sample_gap:
-                  dimension: domainSpecialization
-                  score: 2
+                  dimension: finOps
+                  score: 0
                 quarters:
-                - q2-2026
-                - q1-2026
-                upgrade: Preview is deliberately thin. Pro unlocks the full 40-dimension profile, adoption stack,
-                  per-quarter history, gaps, and provider matches. https://apis.io/developer/plans/
+                - q3-2026
+                upgrade: Preview is deliberately thin. Pro unlocks the full 40-dimension profile, adoption stack, per-quarter history,
+                  gaps, and provider matches. https://apis.io/developer/plans/
           headers:
             RateLimit-Policy:
               $ref: '#/components/headers/RateLimitPolicy'
