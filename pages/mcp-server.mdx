@@ -43,9 +43,8 @@ Two tools are designed as the entry point — agents should reach for these firs
 | `find_vocabulary(category)` | The API vocabulary |
 | `find_tags` / `get_tag` | The network tag taxonomy, and everything one tag labels across every content type |
 | `find_related` | The shared-tag relevance graph — related content across the network for any item |
-| `find_reports` / `get_report` | The measured reports: trends, standards, portfolios, profiles. Distinct from `find_papers`, which is the single-PDF deep dives |
 | `get_stats` | **Pro** — catalog intelligence: per-type counts, stories per year, top tags by reach |
-| `get_feeds` | Machine-readable index of the static JSON feeds |
+| `get_feeds` | The index of static JSON feeds — now empty: the feeds were retired in favour of this server and the API (see [catalog feeds](/catalog-feeds)) |
 | `find_company_insights` · `insights_dimensions` · `insights_adoption` | **Insights** (demand-side) — what 6,572 companies build, buy, and hire for. Free discovery. |
 | `get_company_insight` · `company_gaps` | **Insights** depth — a company's full 40-dimension profile and its gaps. **Pro.** (The provider-match join lives on the [apis.io MCP](https://apis.io/developer/mcp-server/).) |
 | `get_contact` | Every way to reach API Evangelist |
@@ -71,12 +70,12 @@ Read it before quoting either number.
 ## Standards measurement
 
 What a standards body actually **ships**, as distinct from `find_building_blocks("standards")`,
-which searches 589 catalog entries describing what a standard *is*. **All free** — a specification
+which searches 624 catalog entries describing what a standard *is*. **All free** — a specification
 is a public good, so an honest read of its adoption does not sit behind a paywall.
 
 | Tool | What it does |
 | --- | --- |
-| `find_measured_standards` | The 13 bodies with a measured profile |
+| `find_measured_standards` | The 14 bodies with a measured profile |
 | `standard_adoption` | Repositories published, how many graduated past unclassified and the resulting share, release cadence, contributors |
 | `standard_coalition` | Governing bodies and their membership, working groups, member companies, named people |
 | `standard_repositories` | Every repository the body publishes, with maturity, stars, forks and archived status |
@@ -131,12 +130,6 @@ repo, or rolling up across an estate is Pro.**
 | `fix_diagnostics` | **Pro** | A reviewable Overlay that fixes the findings, proven by a re-lint. |
 | `ruleset_from_style_guide` | **Pro** | Prose style guide → owned, validated ruleset. |
 | `get_org_ruleset` · `set_org_ruleset` | **Pro** | Your org default ruleset, applied to every call without its own. |
-
-Two Agent Skills describe this surface for agents:
-[`api-governance`](https://github.com/api-commons/agent-skills/tree/main/api-governance) (check,
-gate, certify) and
-[`api-agent-readiness`](https://github.com/api-commons/agent-skills/tree/main/api-agent-readiness)
-(make an API consumable by agents).
 
 **A note on rulesets.** The default catalog is a best-of-breed *superset* — run it raw against
 a real API and you get thousands of warnings and no errors, which is how teams learn to ignore
@@ -243,5 +236,5 @@ curl -s https://mcp.apievangelist.com/mcp \
   -d '{"jsonrpc":"2.0","id":1,"method":"tools/list"}'
 ```
 
-The same [tiers and limits](./authentication) apply as the REST API — keyless free tier, with
-higher limits by request.
+The same [tiers and limits](./authentication) apply as the REST API — a keyless free tier, and
+Pro tools reached by signing in over OAuth 2.1.

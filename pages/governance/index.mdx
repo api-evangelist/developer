@@ -24,22 +24,22 @@ curl -X POST https://api.apievangelist.com/v1/governance/validate \
 ```json
 {
   "format": "openapi",
-  "ruleCount": 461,
+  "ruleset": "catalog",
+  "ruleCount": 469,
   "passed": true,
-  "summary": { "error": 0, "warning": 19, "info": 0, "hint": 0, "total": 19 },
+  "summary": { "error": 0, "warning": 3, "info": 16, "hint": 0, "total": 19 },
   "diagnostics": [
     {
       "code": "document-owasp-api9-server",
       "message": "API should declare its servers (host/environment inventory).",
-      "severity": "warning",
-      "path": [],
-      "source": "document"
+      "severity": "info",
+      "path": []
     }
   ]
 }
 ```
 
-`passed` reflects errors only — nineteen warnings and it still passes. Tighten the gate with
+`passed` reflects errors only — nineteen findings and it still passes. Tighten the gate with
 `tags` to run a subset, send your own `ruleset`, or name a curated `profile` — `owasp`,
 `problem-details`, `fhir`, `api-authorization`. The response's `ruleset` field says which ran.
 

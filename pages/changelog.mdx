@@ -7,13 +7,32 @@ title: Changelog
 Changes to the **API Evangelist Network API** (`https://api.apievangelist.com/v1`), the
 **Governance & Discovery API**, and the **MCP server** at `https://mcp.apievangelist.com/mcp`.
 
-The API is at **v1.2.0**. Entries below are dated by the day the change shipped to production.
+The Network API contract is at **v1.5.0**; the Governance & Discovery API contract at **v1.1.0**. Entries below are dated by the day the change shipped to production.
 This log starts at 2026-07-02, the point from which changes are recorded deliberately rather than
 reconstructed — earlier history exists in the implementation repository but was never written up,
 and back-filling it from commit messages would dress up a reconstruction as a record.
 
 Breaking changes are called out explicitly and follow the
-[deprecation policy](/deprecation). Nothing in `/v1` has been removed to date.
+[deprecation policy](/deprecation). One removal from `/v1` to date: `/reports`, on 2026-08-21.
+
+## 2026-10-29
+
+- **The governance engine is now [OpenLint](https://openlint.org)**, the community-governed
+  successor to Spectral. Rulesets that ran on Spectral run unchanged.
+- **Fixed:** `/discovery/onboarding` and `/discovery/experience` answered a body that wasn't
+  JSON with a `500`; they now return `400`.
+
+## 2026-10-05
+
+- **Insights moved to the Q3 index** — 6,572 companies.
+
+## 2026-08-21
+
+- **Reports retired.** `/reports`, `find_reports` and `get_report` were removed, and the report
+  pages on apievangelist.com answer `410 Gone`. White papers (`/papers`) are unaffected. This
+  removal shipped without the notice period the [deprecation policy](/deprecation) promises.
+- **Contract v1.5.0** — restored 14 paths an earlier edit had dropped from the published contract.
+  The API itself never stopped serving them.
 
 ## 2026-08-20
 

@@ -14,6 +14,7 @@ timelines, services, and the API vocabulary.
 | --- | --- | --- |
 | **REST API** | `https://api.apievangelist.com/v1` — [API Reference](/api) | Search, browse, and integrate any resource type |
 | **MCP server** | `https://mcp.apievangelist.com/mcp` — [MCP Server](./mcp-server) | AI agents; start with `get_overview` and `guide_topic` |
+| **Governance & Discovery API** | `https://api.apievangelist.com/v1/governance` — [Governance](/governance/index) | Lint, score, test and fix API descriptions and the rules that govern them |
 
 ## What's inside
 
@@ -37,12 +38,12 @@ timelines, services, and the API vocabulary.
   (`/insights/entities`, `/insights/entity/{kind}/{slug}`)
 - **Standards measurement** — what a standards body actually ships, as opposed to what it
   describes: repositories published, how many graduated, who governs it, which companies pay for
-  membership. Thirteen bodies profiled so far, free
+  membership. Fourteen bodies profiled so far, free
   (`/standards/measured`, `/standards/{slug}/adoption`, `/coalition`, `/repositories`)
 - **Contact** — every way to reach API Evangelist (`/contact`)
 
-Everything is read-only `GET`, and the free tier needs no key — see
-[Authentication](./authentication).
+The Network API is read-only `GET`; the Governance API takes `POST` bodies. Both have a keyless
+free tier — see [Authentication](./authentication).
 
 ## Start here
 

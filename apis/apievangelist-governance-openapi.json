@@ -2,7 +2,7 @@
   "openapi": "3.1.0",
   "info": {
     "title": "API Evangelist Governance & Discovery API",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "description": "The API Commons governance and discovery tools — lint, rule authoring (validate, test and explain rulesets), coverage, waivers, reporting, certification, agent export, pipeline audit, MCP/skill forging, consumer gating, reusability, and experience mapping, plus estate adoption (baselines, federation, code-first, fixes, style guide to ruleset, org default ruleset) — as one hosted REST API. Every endpoint runs the same engine the browser tools at apicommons.org/tools run, server-side. Discovery-grade linting is free; the capabilities that generate artifacts, certify, audit repos, or roll up across many APIs are Pro. Free tier is keyless (5 req/s, 1,000/day, one document per call). Send a Pro key in the x-api-key header to unlock the Pro endpoints, SARIF output, and bulk input. Get a key at https://api.apievangelist.com/v1/auth/login.",
     "contact": {
       "name": "API Evangelist",

@@ -11,7 +11,7 @@ intelligence — is **Pro**.
 | **Price** | $0 | **$29/mo** | **$149/mo** | Contact |
 | **Access** | Discovery — search, browse, tags, related, summaries | Everything, incl. full content, `/guide`, `/stats` | Everything in Pro | Everything + advisory |
 | **Keys** | Keyless | 1 key | Multiple keys | Negotiated |
-| **Rate limit** | 1,000 req/day | 5,000 req/day | 25,000 req/day | Custom |
+| **Rate limit** | 5 req/s · 1,000/day | 10 req/s · 5,000/day | 25 req/s · 25,000/day | Custom |
 | **Support** | Community | Email | Priority email | Kin, directly |
 
 Pro and Team unlock the same capabilities — Team adds multiple keys, higher limits, and priority
@@ -34,7 +34,7 @@ Everything you need to discover and navigate the network, keyless:
   truncation that bounds it.
 - **Standards measurement** — `/standards/measured` and `/standards/{slug}/adoption`, `/coalition`,
   `/repositories`: what a standards body actually ships — repositories published, how many graduated,
-  who governs it, which companies pay for membership — for the 13 bodies profiled so far. Free on
+  who governs it, which companies pay for membership — for the 14 bodies profiled so far. Free on
   purpose: a specification is a public good, so an honest read of its adoption should not sit behind
   a paywall. Every response names what is **not** measured rather than implying zero.
 - **Contact** — every way to engage.
@@ -55,8 +55,9 @@ The research layer — for teams and agents that need the depth, not just the ma
 | **Peers & whitespace** | `/insights/company/{slug}/peers` · `/whitespace` · `/signals` | The companies most comparable to this one, what they run that it does not, and its own stack entity by entity with each entity's reach across the cohort. |
 | **The demand inversion** | `/insights/entity/{kind}/{slug}` · `entity_demand` | Which companies show demand for a given service, tool, or standard, broken down by industry. Every other endpoint runs company → stack; this one runs stack → companies. It is the prospecting query, and it exists in no report or bundle. |
 
-Pro also unlocks the paid **MCP prompts** (`research_topic`, `governance_starter_kit`,
-`vendor_landscape`) and the `ae://stats` / `ae://guide/{topic}` MCP resources.
+Pro also unlocks the paid **MCP prompts** — every prompt marked Pro in `prompts/list`, from
+`research_topic` to `fix_these_diagnostics` — and the `ae://stats` / `ae://guide/{topic}` MCP
+resources.
 
 Every Pro capability above is available as both a REST endpoint and an MCP tool — the MCP is a
 pass-through over the same API, so the two return identical results and there is one paywall, not
@@ -74,11 +75,15 @@ auditing repos, and rolling up across many APIs is Pro.**
 | Coverage · Waivers · HTML report · Verify | `/governance/coverage` · `/waivers` · `/report` · `/verify` | Free |
 | Classify (PII/secret) · Diff (breaking changes) | `/governance/classify` · `/governance/diff` | Free |
 | Scorecard (maturity) · Onboarding (AID validate) | `/governance/scorecard` · `/discovery/onboarding` | Free |
-| Rule catalog · Ruleset registry | `GET /governance/rules` · `/rulesets` | Free |
+| Rule catalog · Ruleset registry and profiles | `GET /governance/rules` · `/rulesets` | Free |
+| Rule authoring — validate, test, explain rulesets; JSONPath; describe a rule | `/governance/validate-ruleset` · `/test-ruleset` · `/explain` · `/jsonpath` · `/describe-rule` | Free |
+| Detect format · Lint an agent skill · Document a ruleset | `/governance/detect-format` · `/lint-skill` · `/ruleset-docs` | Free |
 | Certify · Agent export · Pipeline audit | `/governance/certify` · `/agent-export` · `/pipeline-audit` | **Pro** |
 | Toolsmith · Context gate · Overlay | `/governance/toolsmith` · `/context-gate` · `/overlay` | **Pro** |
 | Mock · Snippets · Agent descriptor (llms.txt/AGENTS.md) | `/governance/mock` · `/snippets` · `/discovery/agent-descriptor` | **Pro** |
 | Reusability · Experience | `/discovery/reusability` · `/discovery/experience` | **Pro** |
+| Estate rollup · Baseline · Federation · Code-first | `/governance/estate` · `/baseline` · `/federate` · `/codefirst` | **Pro** |
+| Fix findings · Style guide to ruleset · Org default ruleset | `/governance/fix` · `/ruleset-from-guide` · `/org-ruleset` | **Pro** |
 | SARIF report output · bulk multi-API input | `?format=sarif` · arrays | **Pro** |
 
 Full detail: [Free vs Pro](/governance/free-vs-pro) and the

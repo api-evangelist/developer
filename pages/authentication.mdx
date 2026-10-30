@@ -2,21 +2,30 @@
 title: Authentication
 ---
 
-The API is read-only, and the free tier works with **no key at all**. Keys raise limits and unlock
-the **Pro** research layer (full content, curated guides, and catalog intelligence) — see
-[Plans](./plans).
+The free tier works with **no key at all**. A key raises your limits and unlocks **Pro**: the
+research layer (full content, curated guides, catalog intelligence) and the Pro governance
+capabilities — see [Plans](./plans).
 
 ## Tiers
 
-| Tier | Who | How | Unlocks |
+| Tier | Who | How | Limits |
 | --- | --- | --- | --- |
-| **Free** | Everyone | No key — just call the API | Search, browse, summaries, tags, related. 5 req/s, 1,000 req/day |
-| **Pro** | Teams & agents needing depth | By key — see [Plans](./plans) | Full content (`include=content`), `/guide`, `/stats`. Negotiated limits |
-| **Internal** | API Evangelist network sites | Automatic — requests from `*.apievangelist.com` origins are recognized | Elevated + Pro capabilities |
+| **Free** | Everyone | No key — just call the API | 5 req/s, 1,000 req/day |
+| **Pro** — $29/mo | Individuals and agents needing depth | [Sign in](/account) and upgrade; send your key | 10 req/s, 5,000 req/day |
+| **Team** — $149/mo | Groups | [Sign in](/account) and upgrade; multiple keys | 25 req/s, 25,000 req/day |
+| **Internal** | API Evangelist's own sites and MCP server | A shared secret held by the network's own services | — |
+
+Every response carries the policy for the tier that served it, in the `RateLimit-Policy` and
+`X-RateLimit-*` headers.
+
+## Getting a key
+
+[Sign in](/account) with GitHub, Google or LinkedIn and you get a free-tier key straight away.
+Upgrading to Pro or Team moves that key onto the paid plan when checkout completes.
 
 ## Using an API key
 
-If you've been issued a key, send it in the `x-api-key` header:
+Send it in the `x-api-key` header:
 
 ```bash
 curl "https://api.apievangelist.com/v1/search?q=governance" \
@@ -29,14 +38,13 @@ const res = await fetch("https://api.apievangelist.com/v1/posts?limit=50", {
 });
 ```
 
-## Internal tier
+## The MCP server
 
-Browser requests originating from apievangelist.com network sites (any `*.apievangelist.com`
-origin) get the internal tier automatically — no key or configuration needed. This is how the
-network's own sites consume the API.
+The [MCP server](./mcp-server) uses OAuth 2.1: an MCP client that supports it is sent to sign in
+the first time it calls a Pro tool, and the same account and plan apply.
 
-## Requesting higher limits
+## Higher limits
 
-If the free tier's 1,000 requests/day doesn't cover your use case, email
-[info@apievangelist.com](mailto:info@apievangelist.com) with a short description of what you're
-building. Keys are issued per consumer with limits matched to the use case.
+Team covers most groups. For anything beyond it — volume, annual billing, an enterprise
+arrangement — email [info@apievangelist.com](mailto:info@apievangelist.com) with a short
+description of what you're building.

@@ -20,7 +20,7 @@
 | Governance & Discovery API | `https://api.apievangelist.com/v1/governance` | `/governance-api` |
 | MCP server | `https://mcp.apievangelist.com/mcp` | `/mcp-server` |
 
-The API and MCP server themselves live in [apievangelist-aws](https://github.com/api-evangelist/apievangelist-aws).
+The API and MCP server implementation is not public; the contracts in `apis/` are the interface.
 
 ## Local development
 

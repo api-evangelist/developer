@@ -8,8 +8,9 @@ a repository*, or *rolls up across many APIs* is Pro.
 
 ## Free — keyless
 
-- **Validate** — lint OpenAPI, AsyncAPI, Arazzo, and JSON Schema against the curated
-  574-rule ruleset (or your own).
+- **Validate** — lint OpenAPI, AsyncAPI, Arazzo, JSON Schema, APIs.json, MCP, agent skills and
+  more with [OpenLint](https://openlint.org) against the 776-rule curated catalog, your own
+  ruleset, or a named profile (OWASP, Problem Details, FHIR, API Authorization).
 - **Coverage** — how much of a description your governance actually inspects.
 - **Waivers** — reconcile a waivers file against lint output.
 - **Report (HTML)** — a self-contained HTML governance report.
@@ -19,7 +20,11 @@ a repository*, or *rolls up across many APIs* is Pro.
 - **Scorecard** — a composite API maturity score + letter grade.
 - **Onboarding** — validate an API Onboarding Descriptor (AID) + completeness.
 - **Deprecation** — deprecation / sunset posture across operations.
-- **Rules / Rulesets** — browse the catalog and the Ruleset Commons registry.
+- **Rules / Rulesets** — browse the catalog, the Ruleset Commons registry, and the profiles.
+- **Rule authoring** — validate a ruleset, see what a JSONPath matches, test rules against
+  fixtures, explain why a rule did or didn't fire, and look up a rule's remediation.
+- **Detect format · Lint skill · Ruleset docs** — identify a document, lint an agent SKILL.md,
+  and generate Markdown docs for a ruleset.
 
 Limits: 5 req/s, 1,000 requests/day, one document per call, 256 KB body.
 
@@ -38,6 +43,13 @@ Everything in Free, plus the artifact-generating and estate-wide capabilities:
 - **Agent descriptor** — generate an API's `llms.txt` + `AGENTS.md` consumption contract.
 - **Reusability** — reuse and duplication scores across a set of APIs.
 - **Experience** — the API → MCP → Agent-Skill coverage model and flow map.
+- **Estate** — run the core checks across a whole set of APIs and roll them up, worst first.
+- **Baseline** — snapshot today's violations, then fail only on new ones.
+- **Federate** — a central baseline and the domains that adopt it, as divergence and drift.
+- **Code-first** — which generator made the spec, and which findings to fix in code.
+- **Fix** — a reviewable OpenAPI Overlay that fixes the findings, proven by a re-lint.
+- **Style guide → ruleset** — turn prose rules into an owned, validated ruleset.
+- **Org ruleset** — store your ruleset once; every call that passes none uses it.
 - **SARIF output** on the report endpoint (for GitHub code scanning).
 - **Bulk input** — multi-API arrays in one call.
 
