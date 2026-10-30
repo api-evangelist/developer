@@ -1,0 +1,4003 @@
+{
+  "item": [
+    {
+      "id": "d0965e04-60f0-48d5-968d-01b95d51551a",
+      "name": "Governance",
+      "description": {
+        "content": "Lint, coverage, waivers, reporting, certification, agent export, pipeline audit, toolsmith, context gate.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "5f46288a-43c5-491b-8a22-589baaa244ee",
+          "name": "Lint an API artifact (FREE)",
+          "request": {
+            "name": "Lint an API artifact (FREE)",
+            "description": {
+              "content": "Lint an OpenAPI, AsyncAPI, Arazzo, or JSON Schema document against the curated 574-rule best-of-breed ruleset (Spectral). Pass your own Spectral ruleset to override the catalog.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "governance",
+                "validate"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"document\": \"<string>\",\n  \"format\": \"<string>\",\n  \"ruleset\": \"<object>\",\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "30d9d7b7-b66d-40e3-9fb8-2ec5fdea6577",
+              "name": "Lint result.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "governance",
+                    "validate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"document\": \"openapi: 3.0.0\\ninfo:\\n  title: Widget API\\n  version: 1.0.0\\npaths: {}\",\n  \"format\": \"openapi\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"format\": \"string\",\n  \"ruleCount\": 856,\n  \"passed\": false,\n  \"summary\": {\n    \"error\": 9552,\n    \"warning\": 4384,\n    \"info\": 7232,\n    \"hint\": 4492,\n    \"total\": 8175\n  },\n  \"diagnostics\": [\n    {\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"severity\": \"hint\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ],\n      \"source\": \"string\"\n    },\n    {\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"severity\": \"error\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ],\n      \"source\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "efbacc62-b398-4bf2-b8e5-18c3218a968c",
+              "name": "Invalid request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "governance",
+                    "validate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"document\": \"openapi: 3.0.0\\ninfo:\\n  title: Widget API\\n  version: 1.0.0\\npaths: {}\",\n  \"format\": \"openapi\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "39f7bb53-5275-4ac6-8c71-f62c510108a7",
+              "name": "The document could not be processed.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "governance",
+                    "validate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"document\": \"openapi: 3.0.0\\ninfo:\\n  title: Widget API\\n  version: 1.0.0\\npaths: {}\",\n  \"format\": \"openapi\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "486ad87f-c92e-4867-b2d6-d4e1bf77a95d",
+          "name": "Governance coverage of a document (FREE)",
+          "request": {
+            "name": "Governance coverage of a document (FREE)",
+            "description": {
+              "content": "How much of an API description the ruleset actually inspects — coverage by section, dead rules, and each rule reach.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "governance",
+                "coverage"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"document\": \"<string>\",\n  \"format\": \"<string>\",\n  \"rules\": [\n    \"<object>\",\n    \"<object>\"\n  ],\n  \"aliases\": \"<object>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "76241821-a21d-4d5f-8eae-8bfe0ff20b44",
+              "name": "Coverage report.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "governance",
+                    "coverage"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"document\": \"<string>\",\n  \"format\": \"<string>\",\n  \"rules\": [\n    \"<object>\",\n    \"<object>\"\n  ],\n  \"aliases\": \"<object>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "39d2119d-4a2c-467f-a591-ebbddabcbb7f",
+              "name": "Invalid request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "governance",
+                    "coverage"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"document\": \"<string>\",\n  \"format\": \"<string>\",\n  \"rules\": [\n    \"<object>\",\n    \"<object>\"\n  ],\n  \"aliases\": \"<object>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "71c8a5e5-75b4-4634-9196-146d83a5d4dd",
+          "name": "Reconcile waivers against lint output (FREE)",
+          "request": {
+            "name": "Reconcile waivers against lint output (FREE)",
+            "description": {
+              "content": "Suppress sanctioned violations and surface expired, stale, and expiring waivers — the effective failing set your build should gate on.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "governance",
+                "waivers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"waivers\": {},\n  \"violations\": [\n    \"<object>\",\n    \"<object>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "540ac97d-a975-4c26-8708-8248182d6e6d",
+              "name": "Reconciliation result.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "governance",
+                    "waivers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"waivers\": {},\n  \"violations\": [\n    \"<object>\",\n    \"<object>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "643654b2-eac9-41f4-9d50-0e34ceb5be6e",
+              "name": "Invalid request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "governance",
+                    "waivers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"waivers\": {},\n  \"violations\": [\n    \"<object>\",\n    \"<object>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "debe76c3-9acf-4d34-8f35-d61a1145dc4d",
+          "name": "Render a governance report (FREE HTML, Pro SARIF)",
+          "request": {
+            "name": "Render a governance report (FREE HTML, Pro SARIF)",
+            "description": {
+              "content": "Turn Spectral findings into a self-contained HTML governance report. Pass ?format=sarif for SARIF 2.1.0 output (Pro).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "governance",
+                "report"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "format",
+                  "value": "<string>",
+                  "description": "sarif requires a Pro key."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "text/html"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"results\": [\n    \"<object>\",\n    \"<object>\"\n  ],\n  \"title\": \"<string>\",\n  \"totals\": \"<object>\",\n  \"dark\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "c53e2357-bb45-4d11-bcfe-8ec04e26be2a",
+              "name": "HTML report (text/html) or SARIF log (application/json with ?format=sarif).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "governance",
+                    "report"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "format",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "text/html"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"results\": [\n    \"<object>\",\n    \"<object>\"\n  ],\n  \"title\": \"<string>\",\n  \"totals\": \"<object>\",\n  \"dark\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cb432d1f-139a-46cc-a482-8ea3c6cd9659",
+              "name": "This capability requires a Pro plan.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "governance",
+                    "report"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "format",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"results\": [\n    \"<object>\",\n    \"<object>\"\n  ],\n  \"title\": \"<string>\",\n  \"totals\": \"<object>\",\n  \"dark\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Payment Required",
+              "code": 402,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"payment_required\",\n  \"message\": \"string\",\n  \"upgrade\": \"https://developer.apievangelist.com/plans\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "bf75e259-e532-4657-b108-b9001e774bf9",
+          "name": "Verify a governance certificate (FREE)",
+          "request": {
+            "name": "Verify a governance certificate (FREE)",
+            "description": {
+              "content": "Re-verify a tamper-evident API governance certificate against the API it attests to. Consumer-facing trust check.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "governance",
+                "verify"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"certificate\": \"<object>\",\n  \"api\": {}\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "57ef8542-9c66-455e-a946-b5ea8693cbac",
+              "name": "Verdict.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "governance",
+                    "verify"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"certificate\": \"<object>\",\n  \"api\": {}\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"verdict\": \"tampered\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "08d500ce-1f53-4043-84ab-0ee6e322d500",
+              "name": "Invalid request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "governance",
+                    "verify"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"certificate\": \"<object>\",\n  \"api\": {}\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "fb230ab8-acbb-4517-9de0-8b2e2be304b1",
+          "name": "Classify PII and secret fields (FREE)",
+          "request": {
+            "name": "Classify PII and secret fields (FREE)",
+            "description": {
+              "content": "Inventory the PII, secret, and sensitive fields an OpenAPI exposes — across parameters and request/response schemas. Uses the same classifiers as Context Gate.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "governance",
+                "classify"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"document\": \"<string>\",\n  \"apis\": [\n    {\n      \"id\": \"<string>\",\n      \"text\": \"<string>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"text\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "5681158c-d8dd-4087-82e9-ef3e7f40f0bd",
+              "name": "Sensitive-field inventory.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "governance",
+                    "classify"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"document\": \"<string>\",\n  \"apis\": [\n    {\n      \"id\": \"<string>\",\n      \"text\": \"<string>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"text\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6a4fe71a-9c44-4d35-8370-e25ac6a20389",
+              "name": "Invalid request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "governance",
+                    "classify"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"document\": \"<string>\",\n  \"apis\": [\n    {\n      \"id\": \"<string>\",\n      \"text\": \"<string>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"text\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "41cd00e2-7f6b-4389-b83b-b7a12ce91ea7",
+          "name": "Detect breaking changes between two versions (FREE)",
+          "request": {
+            "name": "Detect breaking changes between two versions (FREE)",
+            "description": {
+              "content": "Compare two OpenAPI versions and classify every change as breaking, non-breaking, or an addition — at path, operation, parameter, request-body, and response granularity.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "governance",
+                "diff"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"old\": {},\n  \"new\": {}\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "b363c1a4-a3f8-477b-86b2-6fdbdc48efe3",
+              "name": "Diff result with a compatible flag, summary, and changes[].",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "governance",
+                    "diff"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"old\": {},\n  \"new\": {}\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0711d6c9-b121-49c4-b0d3-92cef343aeec",
+              "name": "Invalid request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "governance",
+                    "diff"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"old\": {},\n  \"new\": {}\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b829b74c-f6e5-4894-9d97-650b94fef440",
+          "name": "API maturity scorecard (FREE)",
+          "request": {
+            "name": "API maturity scorecard (FREE)",
+            "description": {
+              "content": "Roll up a 0-100 maturity score with a letter grade across dimensions — design/style (lint), governance coverage, documentation completeness, and (from an apis.json) discoverability, agent-readiness, and operations.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "governance",
+                "scorecard"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"document\": \"<string>\",\n  \"apisJson\": \"<object>\",\n  \"format\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "c710ac8b-2372-45c0-a62d-3ae1eff47fce",
+              "name": "Overall score, grade, and per-dimension breakdown.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "governance",
+                    "scorecard"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"document\": \"<string>\",\n  \"apisJson\": \"<object>\",\n  \"format\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "82afc4ad-9f84-41c6-97c8-b3121ff60062",
+              "name": "Invalid request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "governance",
+                    "scorecard"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"document\": \"<string>\",\n  \"apisJson\": \"<object>\",\n  \"format\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "66776b8b-5aa6-4ae9-86cd-1089b9227b8c",
+          "name": "Deprecation / sunset posture (FREE)",
+          "request": {
+            "name": "Deprecation / sunset posture (FREE)",
+            "description": {
+              "content": "Report every deprecated operation and whether it announces a sunset (x-sunset date or a Sunset/Deprecation response header), plus deprecated schema fields — the honest migration picture.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "governance",
+                "deprecation"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"document\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "7cd0138f-2e57-4f06-8590-6d0f90d51f79",
+              "name": "Deprecated operations, sunset posture, and deprecated fields.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "governance",
+                    "deprecation"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"document\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1a8afd62-40b2-4b31-9a44-948a285c22fd",
+              "name": "Invalid request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "governance",
+                    "deprecation"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"document\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "85b6ffd7-0f4b-486d-9c62-7fd4b94d4acf",
+          "name": "Generate example payloads (PRO)",
+          "request": {
+            "name": "Generate example payloads (PRO)",
+            "description": {
+              "content": "Generate an example request and success-response payload for every operation from its OpenAPI schema (author example/default/enum first, else synthesized by type/format).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "governance",
+                "mock"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "x-api-key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"document\": \"<string>\",\n  \"operationId\": \"<string>\",\n  \"path\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "3fa3a4b4-faf0-4fbc-b6e3-f107f9c5d67b",
+              "name": "Per-operation example request/response payloads.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "governance",
+                    "mock"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"document\": \"<string>\",\n  \"operationId\": \"<string>\",\n  \"path\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2d687af4-39ef-4db4-81fc-4b5fb332ffdf",
+              "name": "This capability requires a Pro plan.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "governance",
+                    "mock"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"document\": \"<string>\",\n  \"operationId\": \"<string>\",\n  \"path\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Payment Required",
+              "code": 402,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"payment_required\",\n  \"message\": \"string\",\n  \"upgrade\": \"https://developer.apievangelist.com/plans\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "18513382-2e4b-4d47-bd54-c499bd1f01b6",
+          "name": "Generate code samples (PRO)",
+          "request": {
+            "name": "Generate code samples (PRO)",
+            "description": {
+              "content": "Generate runnable curl / JavaScript (fetch) / Python (requests) samples for every operation, with path params filled in and a realistic request body.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "governance",
+                "snippets"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "x-api-key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"document\": \"<string>\",\n  \"baseUrl\": \"<string>\",\n  \"authHeader\": \"<string>\",\n  \"operationId\": \"<string>\",\n  \"path\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "fb4c7c10-cac7-45a5-9c82-5a543c1fb08e",
+              "name": "Per-operation curl/javascript/python snippets.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "governance",
+                    "snippets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"document\": \"<string>\",\n  \"baseUrl\": \"<string>\",\n  \"authHeader\": \"<string>\",\n  \"operationId\": \"<string>\",\n  \"path\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fe39516b-c7fc-48bb-939d-dd6edfa46d7c",
+              "name": "This capability requires a Pro plan.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "governance",
+                    "snippets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"document\": \"<string>\",\n  \"baseUrl\": \"<string>\",\n  \"authHeader\": \"<string>\",\n  \"operationId\": \"<string>\",\n  \"path\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Payment Required",
+              "code": 402,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"payment_required\",\n  \"message\": \"string\",\n  \"upgrade\": \"https://developer.apievangelist.com/plans\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "36294b9d-307f-4c85-a4d4-78021ae16a4f",
+          "name": "The curated rule catalog (FREE)",
+          "request": {
+            "name": "The curated rule catalog (FREE)",
+            "description": {
+              "content": "Browse the curated best-of-breed rule catalog the validator runs — every rule with its id, format, title, severity, tags, given, and reference. Optionally filter by artifact format.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "governance",
+                "rules"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "format",
+                  "value": "<string>",
+                  "description": "Only rules for this artifact format."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7e2ed848-8f21-44a2-9ef8-20589187b587",
+              "name": "The rule catalog.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "governance",
+                    "rules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "format",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"format\": \"string\",\n  \"count\": 6541\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8f760149-7f57-40ee-9d49-628230ce4f64",
+          "name": "The Ruleset Commons registry (FREE)",
+          "request": {
+            "name": "The Ruleset Commons registry (FREE)",
+            "description": {
+              "content": "The registry of adoptable, provenanced governance rulesets — national, industry, security, and company rulesets you can extend by reference instead of running the linter defaults.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "governance",
+                "rulesets"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "70b48fdf-35a3-4f37-abaf-456b87cecf88",
+              "name": "The ruleset registry.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "governance",
+                    "rulesets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8384e3b8-b1ef-444a-99a8-c80bb92cf640",
+          "name": "Issue a governance certificate (PRO)",
+          "request": {
+            "name": "Issue a governance certificate (PRO)",
+            "description": {
+              "content": "Issue a tamper-evident certificate attesting an API description passed a named ruleset at a profile threshold. A SHA-256 fingerprint lets anyone re-verify it.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "governance",
+                "certify"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "x-api-key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"api\": {},\n  \"results\": [\n    \"<object>\",\n    \"<object>\"\n  ],\n  \"ruleset\": {\n    \"id\": \"<string>\",\n    \"version\": \"<string>\"\n  },\n  \"profile\": \"<string>\",\n  \"issuer\": \"<string>\",\n  \"validMonths\": \"<integer>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "3ebc7a8b-39c6-447c-a659-3ce6715f0b60",
+              "name": "Certificate.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "governance",
+                    "certify"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"api\": {},\n  \"results\": [\n    \"<object>\",\n    \"<object>\"\n  ],\n  \"ruleset\": {\n    \"id\": \"<string>\",\n    \"version\": \"<string>\"\n  },\n  \"profile\": \"<string>\",\n  \"issuer\": \"<string>\",\n  \"validMonths\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "61300351-81a2-4e63-b045-5e5a29c7b9e8",
+              "name": "This capability requires a Pro plan.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "governance",
+                    "certify"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"api\": {},\n  \"results\": [\n    \"<object>\",\n    \"<object>\"\n  ],\n  \"ruleset\": {\n    \"id\": \"<string>\",\n    \"version\": \"<string>\"\n  },\n  \"profile\": \"<string>\",\n  \"issuer\": \"<string>\",\n  \"validMonths\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Payment Required",
+              "code": 402,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"payment_required\",\n  \"message\": \"string\",\n  \"upgrade\": \"https://developer.apievangelist.com/plans\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "749d0362-3984-4084-bad6-7e8fa71c60a9",
+          "name": "Export agent-native governance artifacts (PRO)",
+          "request": {
+            "name": "Export agent-native governance artifacts (PRO)",
+            "description": {
+              "content": "Turn a Spectral ruleset into an AGENTS.md governance block, a system-prompt instruction set, a per-rule remediation prompt pack, and a compact rule digest.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "governance",
+                "agent-export"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "x-api-key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"ruleset\": \"<object>\",\n  \"format\": \"<string>\",\n  \"name\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "1e9ddb67-7432-499b-af8a-d84f7a827227",
+              "name": "Agent-native artifacts.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "governance",
+                    "agent-export"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ruleset\": \"<object>\",\n  \"format\": \"<string>\",\n  \"name\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "726aad0c-5229-47c4-9447-fa66c569c07e",
+              "name": "This capability requires a Pro plan.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "governance",
+                    "agent-export"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ruleset\": \"<object>\",\n  \"format\": \"<string>\",\n  \"name\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Payment Required",
+              "code": 402,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"payment_required\",\n  \"message\": \"string\",\n  \"upgrade\": \"https://developer.apievangelist.com/plans\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b1a95fc9-7d12-42bf-b9d8-03dcee20c275",
+          "name": "Audit a repo Spectral CI maturity (PRO)",
+          "request": {
+            "name": "Audit a repo Spectral CI maturity (PRO)",
+            "description": {
+              "content": "Score a repository Spectral governance pipeline against an 8-point maturity rubric and get a prioritized punch-list. Supply files inline, or a public repo (owner/name) to fetch.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "governance",
+                "pipeline-audit"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "x-api-key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"repo\": \"<string>\",\n  \"ref\": \"<string>\",\n  \"files\": [\n    {\n      \"name\": \"<string>\",\n      \"content\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"content\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "07f80c4a-c0ce-47bc-bd3a-8bc3f8a79f9f",
+              "name": "Maturity score and punchlist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "governance",
+                    "pipeline-audit"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"repo\": \"<string>\",\n  \"ref\": \"<string>\",\n  \"files\": [\n    {\n      \"name\": \"<string>\",\n      \"content\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"content\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ac7144e3-6aa6-43ca-8f70-2ed5649a5fb2",
+              "name": "This capability requires a Pro plan.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "governance",
+                    "pipeline-audit"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"repo\": \"<string>\",\n  \"ref\": \"<string>\",\n  \"files\": [\n    {\n      \"name\": \"<string>\",\n      \"content\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"content\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Payment Required",
+              "code": 402,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"payment_required\",\n  \"message\": \"string\",\n  \"upgrade\": \"https://developer.apievangelist.com/plans\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "23f30bda-8d51-4ad6-b6ba-f3d1cc9a4083",
+          "name": "Forge MCP tools and Agent Skills (PRO)",
+          "request": {
+            "name": "Forge MCP tools and Agent Skills (PRO)",
+            "description": {
+              "content": "From an OpenAPI, forge an MCP server design, per-operation tools, Agent Skills, an enriched OpenAPI (x-mcp / x-agent-skills), a server.json, and apis.json properties.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "governance",
+                "toolsmith"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "x-api-key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"document\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "2f938504-c35f-477e-8c86-53f351b757e9",
+              "name": "Forged MCP and skills artifacts.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "governance",
+                    "toolsmith"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"document\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "85b263b9-d4f5-49e2-bb09-c386b2b84a59",
+              "name": "This capability requires a Pro plan.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "governance",
+                    "toolsmith"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"document\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Payment Required",
+              "code": 402,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"payment_required\",\n  \"message\": \"string\",\n  \"upgrade\": \"https://developer.apievangelist.com/plans\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "50cec717-7062-4ef7-8920-0370736b41e0",
+          "name": "Emit a governed agent surface (PRO)",
+          "request": {
+            "name": "Emit a governed agent surface (PRO)",
+            "description": {
+              "content": "Choose which operations and fields your API exposes to agents; emit a governed Tyk OpenAPI, an MCP tool manifest, and a Spectral ruleset with PII/secret checks. Defaults to the whole surface when no selection is supplied.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "governance",
+                "context-gate"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "x-api-key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"document\": \"<string>\",\n  \"apis\": [\n    {\n      \"id\": \"<string>\",\n      \"text\": \"<string>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"text\": \"<string>\"\n    }\n  ],\n  \"selection\": \"<object>\",\n  \"config\": {\n    \"name\": \"<string>\",\n    \"upstreamUrl\": \"<string>\",\n    \"listenPath\": \"<string>\",\n    \"auth\": \"<string>\",\n    \"rateLimitWrites\": \"<boolean>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "e772d1c2-b88c-4cb7-8557-45fe0c57c1ad",
+              "name": "Tyk OAS, MCP manifest, and ruleset.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "governance",
+                    "context-gate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"document\": \"<string>\",\n  \"apis\": [\n    {\n      \"id\": \"<string>\",\n      \"text\": \"<string>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"text\": \"<string>\"\n    }\n  ],\n  \"selection\": \"<object>\",\n  \"config\": {\n    \"name\": \"<string>\",\n    \"upstreamUrl\": \"<string>\",\n    \"listenPath\": \"<string>\",\n    \"auth\": \"<string>\",\n    \"rateLimitWrites\": \"<boolean>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "99e47e41-a6fb-403f-964c-8c037cefe5ec",
+              "name": "This capability requires a Pro plan.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "governance",
+                    "context-gate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"document\": \"<string>\",\n  \"apis\": [\n    {\n      \"id\": \"<string>\",\n      \"text\": \"<string>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"text\": \"<string>\"\n    }\n  ],\n  \"selection\": \"<object>\",\n  \"config\": {\n    \"name\": \"<string>\",\n    \"upstreamUrl\": \"<string>\",\n    \"listenPath\": \"<string>\",\n    \"auth\": \"<string>\",\n    \"rateLimitWrites\": \"<boolean>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Payment Required",
+              "code": 402,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"payment_required\",\n  \"message\": \"string\",\n  \"upgrade\": \"https://developer.apievangelist.com/plans\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6f50846c-6c9e-47d9-aa9f-6fcd25fea25a",
+          "name": "Apply an OpenAPI Overlay (PRO)",
+          "request": {
+            "name": "Apply an OpenAPI Overlay (PRO)",
+            "description": {
+              "content": "Apply an OpenAPI Overlay (spec 1.0.0) to a document — each action resolves a target JSONPath and deep-merges update or removes the match. Returns the transformed OpenAPI plus a per-action report.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "governance",
+                "overlay"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "x-api-key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"document\": \"<string>\",\n  \"overlay\": {}\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "e0f6f12d-6c5f-41cf-8c74-245e7b961397",
+              "name": "Transformed OpenAPI and action report.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "governance",
+                    "overlay"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"document\": \"<string>\",\n  \"overlay\": {}\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b3140c87-eb15-46ec-b5fc-90b6641c8808",
+              "name": "This capability requires a Pro plan.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "governance",
+                    "overlay"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"document\": \"<string>\",\n  \"overlay\": {}\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Payment Required",
+              "code": 402,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"payment_required\",\n  \"message\": \"string\",\n  \"upgrade\": \"https://developer.apievangelist.com/plans\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "6e2691a7-c871-4d1f-81b8-2a58c8125ba9",
+      "name": "Discovery",
+      "description": {
+        "content": "Reusability and experience (DX/AX) analysis across a set of APIs.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "04cc4cb5-dff7-4c34-b923-88f66469095a",
+          "name": "Reusability and duplication across APIs (PRO)",
+          "request": {
+            "name": "Reusability and duplication across APIs (PRO)",
+            "description": {
+              "content": "Score how reusable a set of APIs is and detect duplication/overlap across them; optionally score apis.json composability and metadata completeness.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "discovery",
+                "reusability"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "x-api-key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"apis\": [\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"openapi\": \"<string>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"openapi\": \"<string>\"\n    }\n  ],\n  \"properties\": [\n    \"<object>\",\n    \"<object>\"\n  ],\n  \"description\": \"<string>\",\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "85730e49-fea2-44ab-8644-3a66f33d5cb5",
+              "name": "Reuse and duplication scores.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "discovery",
+                    "reusability"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"apis\": [\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"openapi\": \"<string>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"openapi\": \"<string>\"\n    }\n  ],\n  \"properties\": [\n    \"<object>\",\n    \"<object>\"\n  ],\n  \"description\": \"<string>\",\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "780bc66d-740e-441d-99ca-ee2bec6d89ac",
+              "name": "This capability requires a Pro plan.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "discovery",
+                    "reusability"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"apis\": [\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"openapi\": \"<string>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"openapi\": \"<string>\"\n    }\n  ],\n  \"properties\": [\n    \"<object>\",\n    \"<object>\"\n  ],\n  \"description\": \"<string>\",\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Payment Required",
+              "code": 402,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"payment_required\",\n  \"message\": \"string\",\n  \"upgrade\": \"https://developer.apievangelist.com/plans\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "db211715-44b9-4629-b655-4243c4c67988",
+          "name": "Validate an API Onboarding Descriptor (FREE)",
+          "request": {
+            "name": "Validate an API Onboarding Descriptor (FREE)",
+            "description": {
+              "content": "Validate an API Onboarding Descriptor (AID) against the api-commons AID JSON Schema, and report which optional sections it fills in (a completeness score).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "discovery",
+                "onboarding"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"descriptor\": {}\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "014f2fd7-8996-4ae0-997f-8bbc1d7e9d0a",
+              "name": "Validity, errors[], maturity, and completeness.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "discovery",
+                    "onboarding"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"descriptor\": {}\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7a2e8c2f-fed2-4b82-b2bd-eefa8602cda7",
+              "name": "Invalid request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "discovery",
+                    "onboarding"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"descriptor\": {}\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a2648098-7e0a-4680-9bcd-2c015f1cecf0",
+          "name": "Generate llms.txt + AGENTS.md (PRO)",
+          "request": {
+            "name": "Generate llms.txt + AGENTS.md (PRO)",
+            "description": {
+              "content": "Generate the agent-facing descriptors for an API: an llms.txt (well-known link summary) and an AGENTS.md consumption contract — base URL, auth, the operation table, deprecated operations to avoid, and usage rules. Reads links from an apis.json when supplied.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "discovery",
+                "agent-descriptor"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "x-api-key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"document\": \"<string>\",\n  \"apisJson\": \"<object>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "ffd91ed9-b687-428b-8933-ada1061e152e",
+              "name": "llmsTxt + agentsMd, with operation/deprecation counts.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "discovery",
+                    "agent-descriptor"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"document\": \"<string>\",\n  \"apisJson\": \"<object>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "985d6787-6b87-4632-9a48-8fac875e5b24",
+              "name": "This capability requires a Pro plan.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "discovery",
+                    "agent-descriptor"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"document\": \"<string>\",\n  \"apisJson\": \"<object>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Payment Required",
+              "code": 402,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"payment_required\",\n  \"message\": \"string\",\n  \"upgrade\": \"https://developer.apievangelist.com/plans\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a9d977b7-f7c8-4740-910e-863fbb4bb1bb",
+          "name": "DX/AX experience coverage (PRO)",
+          "request": {
+            "name": "DX/AX experience coverage (PRO)",
+            "description": {
+              "content": "Map each REST operation to its MCP tool and Agent Skill (the API to MCP to Agent-Skill chain) from an APIs.json, with a free/paid coverage scorecard and an SVG flow map.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "discovery",
+                "experience"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "x-api-key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"apisJson\": \"<object>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "461ac2b4-d3a6-4e5a-b311-fa297dad61ea",
+              "name": "Experience model, coverage, and SVG.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "discovery",
+                    "experience"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"apisJson\": \"<object>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b19eeb86-295e-44a9-9a25-2ace2e0dc996",
+              "name": "This capability requires a Pro plan.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "discovery",
+                    "experience"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"apisJson\": \"<object>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Payment Required",
+              "code": 402,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"payment_required\",\n  \"message\": \"string\",\n  \"upgrade\": \"https://developer.apievangelist.com/plans\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "e75b0f8f-54d9-4427-bbac-efe2bfe5531e",
+      "name": "Account",
+      "description": {
+        "content": "GitHub sign-in, API key, and Stripe self-serve billing.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "1922120b-2fba-4949-9036-e708b006214e",
+          "name": "Sign in with GitHub",
+          "request": {
+            "name": "Sign in with GitHub",
+            "description": {
+              "content": "Start GitHub OAuth. On return you get a session cookie and a personal API key (free tier) attached to your account.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "auth",
+                "login"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "GET",
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "response": [
+            {
+              "id": "52b56fbe-fc11-4d1a-9dd2-aedd3dc296c9",
+              "name": "Redirect to GitHub.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "auth",
+                    "login"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Found",
+              "code": 302,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0c9a5365-98e2-4600-b68e-ac10bfb92aba",
+          "name": "Current account",
+          "request": {
+            "name": "Current account",
+            "description": {
+              "content": "Your login, tier, API key, base URLs, and recent usage. Requires the session cookie from sign-in.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "auth",
+                "me"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "5969ae6f-38ee-4c95-a721-ca4dee5fec54",
+              "name": "Account.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "auth",
+                    "me"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"login\": \"string\",\n  \"tier\": \"string\",\n  \"apiKey\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c9a82d8b-c0ba-44b5-a4b3-736cd5b5491b",
+              "name": "Not authenticated.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "auth",
+                    "me"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "82f80baf-df63-480a-aa7e-94feeeffabc9",
+          "name": "Start a Pro/Team checkout",
+          "request": {
+            "name": "Start a Pro/Team checkout",
+            "description": {
+              "content": "Create a Stripe Checkout session for {tier: pro|business, cycle: monthly|annual}. On completion your API key is moved onto the tier usage plan.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "billing",
+                "checkout"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a24497ec-f4c2-4df4-b5d6-de0e7c693efa",
+              "name": "Checkout URL.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "billing",
+                    "checkout"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"url\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bdba6d83-6a07-46e7-8317-067a86b99156",
+              "name": "Not authenticated.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "billing",
+                    "checkout"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.apievangelist.com/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "x-api-key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "184085a4-d977-4ca8-9a30-4c6c98ecef62",
+    "name": "API Evangelist Governance & Discovery API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The API Commons governance and discovery tools — lint, coverage, waivers, reporting, certification, agent export, pipeline audit, MCP/skill forging, consumer gating, reusability, and experience mapping — as one hosted REST API. Every endpoint runs the same engine the browser tools at apicommons.org/tools run, server-side. Discovery-grade linting is free; the capabilities that generate artifacts, certify, audit repos, or roll up across many APIs are Pro. Free tier is keyless (5 req/s, 1,000/day, one document per call). Send a Pro key in the x-api-key header to unlock the Pro endpoints, SARIF output, and bulk input. Get a key at https://api.apievangelist.com/v1/auth/login.\n\nContact Support:\n Name: API Evangelist\n Email: info@apievangelist.com",
+      "type": "text/plain"
+    }
+  }
+}

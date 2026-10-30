@@ -1,0 +1,27 @@
+slug: api-evangelist
+provider: API Evangelist
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 1
+edges:
+- tag: Governance
+  spec_file: api-evangelist-governance-api-openapi.yml
+  capability_id: BC-4270.10
+  capability_id_l1: BC-4270
+  capability_name: Public API Lifecycle Management
+  confidence: 0.8
+  evidence: POST /governance/diff "Detect breaking changes between two versions"; POST /governance/deprecation
+    "Deprecation / sunset posture"; POST /governance/scorecard "API maturity scorecard"; GET /governance/rules
+    "The curated rule catalog"
+  reason: Linting, breaking-change diffing, deprecation/sunset posture and maturity scoring of API artifacts
+    is squarely the specification, versioning and deprecation discipline of public API lifecycle management.
+    Note this is API governance, not corporate/compliance governance.

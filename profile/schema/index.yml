@@ -1,0 +1,18 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: https://raw.githubusercontent.com/api-evangelist/api-evangelist/refs/heads/main/schema/index.yml
+title: api-evangelist data model
+$defs:
+  Area:
+    $ref: Area.yml
+  ContactOption:
+    $ref: ContactOption.yml
+  Doc:
+    $ref: Doc.yml
+  Engage:
+    $ref: Engage.yml
+  Error:
+    $ref: Error.yml
+  PagedEnvelope:
+    $ref: PagedEnvelope.yml
+  SearchEnvelope:
+    $ref: SearchEnvelope.yml

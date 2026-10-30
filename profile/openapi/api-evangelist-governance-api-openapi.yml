@@ -1,0 +1,1598 @@
+openapi: 3.2.0
+info:
+  title: Evangelist Governance API
+  contact:
+    name: API Evangelist
+    url: https://apievangelist.com
+    email: info@apievangelist.com
+  version: '1.0'
+  description: 'Operations tagged Governance across 2 of this provider''s published API definitions: apievangelist-governance-openapi.json, apievangelist-v1-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.apievangelist.com/v1
+  description: Production
+tags:
+- name: Governance
+  description: Lint, coverage, waivers, reporting, certification, agent export, pipeline audit, toolsmith, context gate.
+paths:
+  /governance/validate:
+    post:
+      tags:
+      - Governance
+      summary: Lint an API artifact (FREE)
+      description: Lint an OpenAPI, AsyncAPI, Arazzo, or JSON Schema document against the curated 574-rule best-of-breed ruleset (Spectral). Pass your own Spectral ruleset to override the catalog.
+      x-tier: free
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - document
+              properties:
+                document:
+                  type: string
+                  description: The artifact as YAML or JSON text.
+                format:
+                  type: string
+                  description: Auto-detected when omitted.
+                  enum:
+                  - openapi
+                  - asyncapi
+                  - arazzo
+                  - jsonschema
+                ruleset:
+                  type: object
+                  description: An optional full Spectral ruleset definition to run instead of the catalog.
+                tags:
+                  type: array
+                  items:
+                    type: string
+                  description: Only run catalog rules carrying one of these tags.
+              example:
+                document: "openapi: 3.0.0\ninfo:\n  title: Widget API\n  version: 1.0.0\npaths: {}"
+                format: openapi
+      responses:
+        '200':
+          description: Lint result.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  format:
+                    type: string
+                  ruleCount:
+                    type: integer
+                  passed:
+                    type: boolean
+                  summary:
+                    type: object
+                    properties:
+                      error:
+                        type: integer
+                      warning:
+                        type: integer
+                      info:
+                        type: integer
+                      hint:
+                        type: integer
+                      total:
+                        type: integer
+                  diagnostics:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        code:
+                          type: string
+                        message:
+                          type: string
+                        severity:
+                          type: string
+                          enum:
+                          - error
+                          - warning
+                          - info
+                          - hint
+                        path:
+                          type: array
+                          items:
+                            type: string
+                        source:
+                          type: string
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '422':
+          $ref: '#/components/responses/Unprocessable'
+      operationId: validate
+      x-mcp-tool: validate_api
+      x-agent-skill: api-governance
+      security:
+      - ApiKey: []
+      - {}
+    servers:
+    - url: https://api.apievangelist.com/v1
+      description: Production
+  /governance/coverage:
+    post:
+      tags:
+      - Governance
+      summary: Governance coverage of a document (FREE)
+      description: How much of an API description the ruleset actually inspects — coverage by section, dead rules, and each rule reach.
+      x-tier: free
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - document
+              properties:
+                document:
+                  type: string
+                  description: The API description (YAML or JSON text, or an object).
+                format:
+                  type: string
+                  enum:
+                  - openapi
+                  - asyncapi
+                  - arazzo
+                  - jsonschema
+                rules:
+                  type: array
+                  items:
+                    type: object
+                  description: Rule definitions to measure; defaults to the curated catalog for the format.
+                aliases:
+                  type: object
+                  description: Custom JSONPath alias map.
+      responses:
+        '200':
+          description: Coverage report.
+          content:
+            application/json:
+              schema:
+                type: object
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+      operationId: coverage
+      x-mcp-tool: api_coverage
+      x-agent-skill: api-governance
+      security:
+      - ApiKey: []
+      - {}
+    servers:
+    - url: https://api.apievangelist.com/v1
+      description: Production
+  /governance/waivers:
+    post:
+      tags:
+      - Governance
+      summary: Reconcile waivers against lint output (FREE)
+      description: Suppress sanctioned violations and surface expired, stale, and expiring waivers — the effective failing set your build should gate on.
+      x-tier: free
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - waivers
+              - violations
+              properties:
+                waivers:
+                  description: A waivers file (YAML/JSON text) or an array of waiver objects.
+                violations:
+                  type: array
+                  items:
+                    type: object
+                  description: Spectral lint -f json results.
+      responses:
+        '200':
+          description: Reconciliation result.
+          content:
+            application/json:
+              schema:
+                type: object
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+      operationId: waivers
+      x-mcp-tool: reconcile_waivers
+      x-agent-skill: api-governance
+      security:
+      - ApiKey: []
+      - {}
+    servers:
+    - url: https://api.apievangelist.com/v1
+      description: Production
+  /governance/report:
+    post:
+      tags:
+      - Governance
+      summary: Render a governance report (FREE HTML, Pro SARIF)
+      description: Turn Spectral findings into a self-contained HTML governance report. Pass ?format=sarif for SARIF 2.1.0 output (Pro).
+      x-tier: free
+      parameters:
+      - name: format
+        in: query
+        schema:
+          type: string
+          enum:
+          - html
+          - sarif
+        description: sarif requires a Pro key.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - results
+              properties:
+                results:
+                  type: array
+                  items:
+                    type: object
+                title:
+                  type: string
+                totals:
+                  type: object
+                  description: Positive-rule sidecar for the compliance scoreboard.
+                dark:
+                  type: boolean
+      responses:
+        '200':
+          description: HTML report (text/html) or SARIF log (application/json with ?format=sarif).
+          content:
+            text/html:
+              schema:
+                type: string
+            application/json:
+              schema:
+                type: object
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
+        '402':
+          $ref: '#/components/responses/PaymentRequired'
+      operationId: report
+      x-mcp-tool: governance_report
+      x-agent-skill: api-governance
+      security:
+      - ApiKey: []
+      - {}
+    servers:
+    - url: https://api.apievangelist.com/v1
+      description: Production
+  /governance/verify:
+    post:
+      tags:
+      - Governance
+      summary: Verify a governance certificate (FREE)
+      description: Re-verify a tamper-evident API governance certificate against the API it attests to. Consumer-facing trust check.
+      x-tier: free
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - certificate
+              - api
+              properties:
+                certificate:
+                  type: object
+                api:
+                  description: The API description object the certificate was issued over.
+      responses:
+        '200':
+          description: Verdict.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  verdict:
+                    type: string
+                    enum:
+                    - valid
+                    - tampered
+                    - expired
+                    - not-passed
+                    - malformed
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+      operationId: verify
+      x-mcp-tool: verify_certificate
+      x-agent-skill: api-governance
+      security:
+      - ApiKey: []
+      - {}
+    servers:
+    - url: https://api.apievangelist.com/v1
+      description: Production
+  /governance/classify:
+    post:
+      tags:
+      - Governance
+      summary: Classify PII and secret fields (FREE)
+      description: Inventory the PII, secret, and sensitive fields an OpenAPI exposes — across parameters and request/response schemas. Uses the same classifiers as Context Gate.
+      x-tier: free
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                document:
+                  type: string
+                  description: A single OpenAPI (YAML/JSON text).
+                apis:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      text:
+                        type: string
+      responses:
+        '200':
+          description: Sensitive-field inventory.
+          content:
+            application/json:
+              schema:
+                type: object
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+      operationId: classify
+      x-mcp-tool: classify_api_fields
+      x-agent-skill: api-agent-readiness
+      security:
+      - ApiKey: []
+      - {}
+    servers:
+    - url: https://api.apievangelist.com/v1
+      description: Production
+  /governance/diff:
+    post:
+      tags:
+      - Governance
+      summary: Detect breaking changes between two versions (FREE)
+      description: Compare two OpenAPI versions and classify every change as breaking, non-breaking, or an addition — at path, operation, parameter, request-body, and response granularity.
+      x-tier: free
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - old
+              - new
+              properties:
+                old:
+                  description: The previous OpenAPI (YAML/JSON text or object).
+                new:
+                  description: The new OpenAPI (YAML/JSON text or object).
+      responses:
+        '200':
+          description: Diff result with a compatible flag, summary, and changes[].
+          content:
+            application/json:
+              schema:
+                type: object
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+      operationId: diff
+      x-mcp-tool: diff_api_versions
+      x-agent-skill: api-governance
+      security:
+      - ApiKey: []
+      - {}
+    servers:
+    - url: https://api.apievangelist.com/v1
+      description: Production
+  /governance/scorecard:
+    post:
+      tags:
+      - Governance
+      summary: API maturity scorecard (FREE)
+      description: Roll up a 0-100 maturity score with a letter grade across dimensions — design/style (lint), governance coverage, documentation completeness, and (from an apis.json) discoverability, agent-readiness, and operations.
+      x-tier: free
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                document:
+                  type: string
+                  description: An OpenAPI (YAML/JSON text) for the lint/coverage/documentation dimensions.
+                apisJson:
+                  type: object
+                  description: An APIs.json for the discoverability/agent-readiness/operations dimensions.
+                format:
+                  type: string
+                  enum:
+                  - openapi
+                  - asyncapi
+                  - arazzo
+                  - jsonschema
+      responses:
+        '200':
+          description: Overall score, grade, and per-dimension breakdown.
+          content:
+            application/json:
+              schema:
+                type: object
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+      operationId: scorecard
+      x-mcp-tool: api_scorecard
+      x-agent-skill: api-governance
+      security:
+      - ApiKey: []
+      - {}
+    servers:
+    - url: https://api.apievangelist.com/v1
+      description: Production
+  /governance/deprecation:
+    post:
+      tags:
+      - Governance
+      summary: Deprecation / sunset posture (FREE)
+      description: Report every deprecated operation and whether it announces a sunset (x-sunset date or a Sunset/Deprecation response header), plus deprecated schema fields — the honest migration picture.
+      x-tier: free
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - document
+              properties:
+                document:
+                  type: string
+                  description: An OpenAPI (YAML/JSON text or object).
+      responses:
+        '200':
+          description: Deprecated operations, sunset posture, and deprecated fields.
+          content:
+            application/json:
+              schema:
+                type: object
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+      operationId: deprecation
+      x-mcp-tool: deprecation_posture
+      x-agent-skill: api-governance
+      security:
+      - ApiKey: []
+      - {}
+    servers:
+    - url: https://api.apievangelist.com/v1
+      description: Production
+  /governance/mock:
+    post:
+      tags:
+      - Governance
+      summary: Generate example payloads (PRO)
+      description: Generate an example request and success-response payload for every operation from its OpenAPI schema (author example/default/enum first, else synthesized by type/format).
+      x-tier: pro
+      security:
+      - ApiKey: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - document
+              properties:
+                document:
+                  type: string
+                  description: An OpenAPI (YAML/JSON text or object).
+                operationId:
+                  type: string
+                  description: Only this operation.
+                path:
+                  type: string
+                  description: Only this path.
+      responses:
+        '200':
+          description: Per-operation example request/response payloads.
+          content:
+            application/json:
+              schema:
+                type: object
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
+        '402':
+          $ref: '#/components/responses/PaymentRequired'
+      operationId: mock
+      x-mcp-tool: mock_payloads
+      x-agent-skill: api-governance
+    servers:
+    - url: https://api.apievangelist.com/v1
+      description: Production
+  /governance/snippets:
+    post:
+      tags:
+      - Governance
+      summary: Generate code samples (PRO)
+      description: Generate runnable curl / JavaScript (fetch) / Python (requests) samples for every operation, with path params filled in and a realistic request body.
+      x-tier: pro
+      security:
+      - ApiKey: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - document
+              properties:
+                document:
+                  type: string
+                  description: An OpenAPI (YAML/JSON text or object).
+                baseUrl:
+                  type: string
+                  description: Override the base URL (defaults to servers[0].url).
+                authHeader:
+                  type: string
+                  description: 'Auth header to show, e.g. "Authorization: Bearer $TOKEN" or "x-api-key: $KEY".'
+                operationId:
+                  type: string
+                  description: Only this operation.
+                path:
+                  type: string
+                  description: Only this path.
+      responses:
+        '200':
+          description: Per-operation curl/javascript/python snippets.
+          content:
+            application/json:
+              schema:
+                type: object
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
+        '402':
+          $ref: '#/components/responses/PaymentRequired'
+      operationId: snippets
+      x-mcp-tool: code_snippets
+      x-agent-skill: api-governance
+    servers:
+    - url: https://api.apievangelist.com/v1
+      description: Production
+  /governance/rules:
+    get:
+      tags:
+      - Governance
+      summary: The curated rule catalog (FREE)
+      x-tier: free
+      description: Browse the curated best-of-breed rule catalog the validator runs — every rule with its id, format, title, severity, tags, given, and reference. Optionally filter by artifact format.
+      parameters:
+      - name: format
+        in: query
+        schema:
+          type: string
+          enum:
+          - openapi
+          - asyncapi
+          - arazzo
+          - jsonschema
+        description: Only rules for this artifact format.
+      responses:
+        '200':
+          description: The rule catalog.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  format:
+                    type: string
+                  count:
+                    type: integer
+                  rules:
+                    type: array
+                    items:
+                      type: object
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
+      operationId: rules
+      x-mcp-tool: find_governance_rules
+      x-agent-skill: api-governance
+      security:
+      - ApiKey: []
+      - {}
+    servers:
+    - url: https://api.apievangelist.com/v1
+      description: Production
+  /governance/rulesets:
+    get:
+      tags:
+      - Governance
+      summary: The Ruleset Commons registry (FREE)
+      x-tier: free
+      description: The registry of adoptable, provenanced governance rulesets — national, industry, security, and company rulesets you can extend by reference instead of running the linter defaults.
+      responses:
+        '200':
+          description: The ruleset registry.
+          content:
+            application/json:
+              schema:
+                type: object
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
+      operationId: rulesets
+      x-mcp-tool: find_rulesets
+      x-agent-skill: api-governance
+      security:
+      - ApiKey: []
+      - {}
+    servers:
+    - url: https://api.apievangelist.com/v1
+      description: Production
+  /governance/certify:
+    post:
+      tags:
+      - Governance
+      summary: Issue a governance certificate (PRO)
+      description: Issue a tamper-evident certificate attesting an API description passed a named ruleset at a profile threshold. A SHA-256 fingerprint lets anyone re-verify it.
+      x-tier: pro
+      security:
+      - ApiKey: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - api
+              properties:
+                api:
+                  description: The API description object.
+                results:
+                  type: array
+                  items:
+                    type: object
+                  description: The Spectral findings the certificate attests.
+                ruleset:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    version:
+                      type: string
+                profile:
+                  type: string
+                  description: One of the certification profiles (e.g. standard).
+                issuer:
+                  type: string
+                validMonths:
+                  type: integer
+                  nullable: true
+      responses:
+        '200':
+          description: Certificate.
+          content:
+            application/json:
+              schema:
+                type: object
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
+        '402':
+          $ref: '#/components/responses/PaymentRequired'
+      operationId: certify
+      x-mcp-tool: certify_api
+      x-agent-skill: api-governance
+    servers:
+    - url: https://api.apievangelist.com/v1
+      description: Production
+  /governance/agent-export:
+    post:
+      tags:
+      - Governance
+      summary: Export agent-native governance artifacts (PRO)
+      description: Turn a Spectral ruleset into an AGENTS.md governance block, a system-prompt instruction set, a per-rule remediation prompt pack, and a compact rule digest.
+      x-tier: pro
+      security:
+      - ApiKey: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - ruleset
+              properties:
+                ruleset:
+                  type: object
+                  description: A Spectral ruleset (with a rules object).
+                format:
+                  type: string
+                name:
+                  type: string
+      responses:
+        '200':
+          description: Agent-native artifacts.
+          content:
+            application/json:
+              schema:
+                type: object
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
+        '402':
+          $ref: '#/components/responses/PaymentRequired'
+      operationId: agentExport
+      x-mcp-tool: export_agent_rules
+      x-agent-skill: api-governance
+    servers:
+    - url: https://api.apievangelist.com/v1
+      description: Production
+  /governance/pipeline-audit:
+    post:
+      tags:
+      - Governance
+      summary: Audit a repo Spectral CI maturity (PRO)
+      description: Score a repository Spectral governance pipeline against an 8-point maturity rubric and get a prioritized punch-list. Supply files inline, or a public repo (owner/name) to fetch.
+      x-tier: pro
+      security:
+      - ApiKey: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                repo:
+                  type: string
+                  description: GitHub repo as owner/name (public).
+                ref:
+                  type: string
+                  description: Branch or SHA (default HEAD).
+                files:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      content:
+                        type: string
+      responses:
+        '200':
+          description: Maturity score and punchlist.
+          content:
+            application/json:
+              schema:
+                type: object
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
+        '402':
+          $ref: '#/components/responses/PaymentRequired'
+      operationId: pipelineAudit
+      x-mcp-tool: audit_pipeline
+      x-agent-skill: api-governance
+    servers:
+    - url: https://api.apievangelist.com/v1
+      description: Production
+  /governance/toolsmith:
+    post:
+      tags:
+      - Governance
+      summary: Forge MCP tools and Agent Skills (PRO)
+      description: From an OpenAPI, forge an MCP server design, per-operation tools, Agent Skills, an enriched OpenAPI (x-mcp / x-agent-skills), a server.json, and apis.json properties.
+      x-tier: pro
+      security:
+      - ApiKey: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - document
+              properties:
+                document:
+                  type: string
+                  description: The OpenAPI as YAML or JSON text.
+      responses:
+        '200':
+          description: Forged MCP and skills artifacts.
+          content:
+            application/json:
+              schema:
+                type: object
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
+        '402':
+          $ref: '#/components/responses/PaymentRequired'
+      operationId: toolsmith
+      x-mcp-tool: forge_mcp_tools
+      x-agent-skill: api-agent-readiness
+    servers:
+    - url: https://api.apievangelist.com/v1
+      description: Production
+  /governance/context-gate:
+    post:
+      tags:
+      - Governance
+      summary: Emit a governed agent surface (PRO)
+      description: Choose which operations and fields your API exposes to agents; emit a governed Tyk OpenAPI, an MCP tool manifest, and a Spectral ruleset with PII/secret checks. Defaults to the whole surface when no selection is supplied.
+      x-tier: pro
+      security:
+      - ApiKey: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                document:
+                  type: string
+                  description: A single OpenAPI (YAML/JSON text).
+                apis:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      text:
+                        type: string
+                selection:
+                  type: object
+                  description: Per-operation selection (defaults to all selected).
+                config:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    upstreamUrl:
+                      type: string
+                    listenPath:
+                      type: string
+                    auth:
+                      type: string
+                      enum:
+                      - none
+                      - apiKey
+                      - jwt
+                    rateLimitWrites:
+                      type: boolean
+      responses:
+        '200':
+          description: Tyk OAS, MCP manifest, and ruleset.
+          content:
+            application/json:
+              schema:
+                type: object
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
+        '402':
+          $ref: '#/components/responses/PaymentRequired'
+      operationId: contextGate
+      x-mcp-tool: gate_agent_context
+      x-agent-skill: api-agent-readiness
+    servers:
+    - url: https://api.apievangelist.com/v1
+      description: Production
+  /governance/overlay:
+    post:
+      tags:
+      - Governance
+      summary: Apply an OpenAPI Overlay (PRO)
+      description: Apply an OpenAPI Overlay (spec 1.0.0) to a document — each action resolves a target JSONPath and deep-merges update or removes the match. Returns the transformed OpenAPI plus a per-action report.
+      x-tier: pro
+      security:
+      - ApiKey: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - document
+              - overlay
+              properties:
+                document:
+                  type: string
+                  description: The OpenAPI to transform (YAML/JSON text or object).
+                overlay:
+                  description: An OpenAPI Overlay 1.0.0 document (YAML/JSON text or object).
+      responses:
+        '200':
+          description: Transformed OpenAPI and action report.
+          content:
+            application/json:
+              schema:
+                type: object
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
+        '402':
+          $ref: '#/components/responses/PaymentRequired'
+      operationId: overlay
+      x-mcp-tool: apply_overlay
+      x-agent-skill: api-governance
+    servers:
+    - url: https://api.apievangelist.com/v1
+      description: Production
+  /policies:
+    get:
+      operationId: listPolicies
+      tags:
+      - Governance
+      summary: Policies
+      description: Search or browse the policies collection (283) — API policies for enterprise operations.
+      parameters:
+      - $ref: '#/components/parameters/Q'
+      - $ref: '#/components/parameters/Tags'
+      - $ref: '#/components/parameters/Match'
+      - $ref: '#/components/parameters/Fields'
+      - $ref: '#/components/parameters/Page'
+      - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: Paged policies.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedEnvelope'
+              example:
+                meta:
+                  total: 283
+                  page: 1
+                  limit: 2
+                  pages: 142
+                  query:
+                    tags: null
+                data:
+                - slug: openapi-operation-response-2xx-examples
+                  title: 2xx Response Examples (OpenAPI)
+                  summary: Require that every successful 2xx response in our OpenAPI definitions includes at least one realistic example, so a consumer can see exactly what a good answer looks like without making a live call. I have onboarded to too many APIs where the schema was technically complete but I still could not picture the actual payload, and examples are what close that gap. Good examples power interactive documentation, mock servers, and generated tests, and they set the expectation for what a healthy integration receives. I treat a missing success example as a documentation gap that we fix before the API ships.
+                  url: https://policies.apievangelist.com/store/openapi-operation-response-2xx-examples/
+                  tags:
+                  - Design
+                  - Documentation
+                  - Consistency
+                  - Producers
+                  has_content: false
+                  type: policies
+                - slug: openapi-operation-response-2xx-media-types
+                  title: 2xx Response Media Types (OpenAPI)
+                  summary: Require that every 2xx response declares the media types it returns, spelling out application/json or whatever content it actually serves rather than leaving the content negotiation a mystery. I have integrated with APIs that promised JSON and quietly returned HTML on a good day, and that kind of surprise breaks parsers and erodes trust immediately. When the successful response media types are explicit in the contract, consumers can set the right Accept headers and deserialize with confidence, and our tooling can validate that we deliver what we promised. Content type is part of the contract, and I want it stated plainly for every success path.
+                  url: https://policies.apievangelist.com/store/openapi-operation-response-2xx-media-types/
+                  tags:
+                  - Design
+                  - Documentation
+                  - Interoperability
+                  - Producers
+                  has_content: false
+                  type: policies
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
+      security:
+      - {}
+      - ApiKeyAuth: []
+    servers:
+    - url: https://api.apievangelist.com/v1
+  /policies/{slug}:
+    get:
+      operationId: getPoliciesItem
+      tags:
+      - Governance
+      summary: Policy
+      description: One entry from the policies collection; `include=content` adds the full body.
+      parameters:
+      - $ref: '#/components/parameters/Slug'
+      - $ref: '#/components/parameters/Include'
+      responses:
+        '200':
+          description: The entry.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Doc'
+              example:
+                slug: openapi-operation-response-2xx-examples
+                title: 2xx Response Examples (OpenAPI)
+                summary: Require that every successful 2xx response in our OpenAPI definitions includes at least one realistic example, so a consumer can see exactly what a good answer looks like without making a live call. I have onboarded to too many APIs where the schema was technically complete but I still could not picture the actual payload, and examples are what close that gap. Good examples power interactive documentation, mock servers, and generated tests, and they set the expectation for what a healthy integration receives. I treat a missing success example as a documentation gap that we fix before the API ships.
+                url: https://policies.apievangelist.com/store/openapi-operation-response-2xx-examples/
+                tags:
+                - Design
+                - Documentation
+                - Consistency
+                - Producers
+                has_content: false
+                type: policies
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+      - {}
+      - ApiKeyAuth: []
+    servers:
+    - url: https://api.apievangelist.com/v1
+  /rules:
+    get:
+      operationId: listRules
+      tags:
+      - Governance
+      summary: Rules
+      description: Search or browse the rules collection (617) — machine-readable API governance rules.
+      parameters:
+      - $ref: '#/components/parameters/Q'
+      - $ref: '#/components/parameters/Tags'
+      - $ref: '#/components/parameters/Match'
+      - $ref: '#/components/parameters/Fields'
+      - $ref: '#/components/parameters/Page'
+      - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: Paged rules.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedEnvelope'
+              example:
+                meta:
+                  total: 617
+                  page: 1
+                  limit: 2
+                  pages: 309
+                  query:
+                    tags: null
+                data:
+                - slug: apis-json-agent-agents-md-info
+                  title: APIs.json Agent Agents Md Info
+                  summary: APIs should link an agents.md file so AI agents have documented instructions and conventions for working with the API. Declaring a property of type AgentsMd in the APIs.json properties array publishes this artifact as part of the API's discoverable index.
+                  url: https://rules.apievangelist.com/store/apis-json-agent-agents-md-info/
+                  tags:
+                  - APIs.json
+                  - Agents
+                  - Default
+                  has_content: false
+                  type: rules
+                - slug: apis-json-agent-llms-txt-info
+                  title: APIs.json Agent LLMs Txt Info
+                  summary: APIs should link an llms.txt file so AI agents have a curated, machine-readable entry point describing the API and how to work with it. Declaring a property of type LLMsTxt in the APIs.json properties array publishes this artifact as part of the API's discoverable index.
+                  url: https://rules.apievangelist.com/store/apis-json-agent-llms-txt-info/
+                  tags:
+                  - APIs.json
+                  - Agents
+                  - Default
+                  has_content: false
+                  type: rules
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
+      security:
+      - {}
+      - ApiKeyAuth: []
+    servers:
+    - url: https://api.apievangelist.com/v1
+  /rules/{slug}:
+    get:
+      operationId: getRulesItem
+      tags:
+      - Governance
+      summary: Rule
+      description: One entry from the rules collection; `include=content` adds the full body.
+      parameters:
+      - $ref: '#/components/parameters/Slug'
+      - $ref: '#/components/parameters/Include'
+      responses:
+        '200':
+          description: The entry.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Doc'
+              example:
+                slug: apis-json-agent-agents-md-info
+                title: APIs.json Agent Agents Md Info
+                summary: APIs should link an agents.md file so AI agents have documented instructions and conventions for working with the API. Declaring a property of type AgentsMd in the APIs.json properties array publishes this artifact as part of the API's discoverable index.
+                url: https://rules.apievangelist.com/store/apis-json-agent-agents-md-info/
+                tags:
+                - APIs.json
+                - Agents
+                - Default
+                has_content: false
+                type: rules
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+      - {}
+      - ApiKeyAuth: []
+    servers:
+    - url: https://api.apievangelist.com/v1
+components:
+  responses:
+    Unprocessable:
+      description: The document could not be processed.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+              message:
+                type: string
+    PaymentRequired:
+      description: This capability requires a Pro plan.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                example: payment_required
+              message:
+                type: string
+              upgrade:
+                type: string
+                example: https://developer.apievangelist.com/plans
+    BadRequest:
+      description: Invalid request.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+              message:
+                type: string
+    NotFound:
+      description: No such resource.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  headers:
+    XRateLimitWindow:
+      description: The quota window in seconds. Always 86400 (one day).
+      schema:
+        type: integer
+        examples:
+        - 86400
+    XRateLimitLimit:
+      description: The daily request quota for the tier that served this response.
+      schema:
+        type: integer
+        examples:
+        - 1000
+    RateLimitPolicy:
+      description: 'The rate-limit policy in force for the tier that served this response, in RFC 9331 quota-policy syntax: `"quota";q=1000;w=86400, "burst";q=5;w=1` — a daily quota and a per-second burst. This is the POLICY, not a live counter: `RateLimit-Remaining` and `RateLimit-Reset` are deliberately not sent, because the quota is enforced by the gateway and there is no per-key usage accounting to read. Pace against the policy, and treat a 429 as authoritative.'
+      schema:
+        type: string
+        examples:
+        - '"quota";q=1000;w=86400, "burst";q=5;w=1'
+    XRateLimitTier:
+      description: The tier this request was served on — `free`, `pro`, `business`, `internal` or `owner`. Keyless requests are `free`; requests from an apievangelist.com origin are `internal`.
+      schema:
+        type: string
+        examples:
+        - free
+  parameters:
+    Fields:
+      name: fields
+      in: query
+      description: Comma-separated sparse field projection.
+      schema:
+        type: string
+        example: slug,title,url
+    Match:
+      name: match
+      in: query
+      description: Tag match mode.
+      schema:
+        type: string
+        enum:
+        - any
+        - all
+        default: any
+    Include:
+      name: include
+      in: query
+      description: Set to `content` to inline the full markdown body (up to 200 KB).
+      schema:
+        type: string
+        enum:
+        - content
+    Tags:
+      name: tags
+      in: query
+      description: Comma-separated tag slugs.
+      schema:
+        type: string
+    Page:
+      name: page
+      in: query
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
+    Limit:
+      name: limit
+      in: query
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 25
+    Q:
+      name: q
+      in: query
+      description: Free-text query over title, summary, tags, and body.
+      schema:
+        type: string
+    Slug:
+      name: slug
+      in: path
+      required: true
+      schema:
+        type: string
+  schemas:
+    PagedEnvelope:
+      type: object
+      properties:
+        meta:
+          type: object
+          properties:
+            total:
+              type: integer
+            page:
+              type: integer
+            limit:
+              type: integer
+            pages:
+              type: integer
+            query:
+              type: object
+              additionalProperties: true
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Doc'
+    Doc:
+      type: object
+      description: One network resource. Extra type-specific fields (guest, outline, party, …) appear per type.
+      properties:
+        type:
+          type: string
+        slug:
+          type: string
+        title:
+          type: string
+        summary:
+          type: string
+        url:
+          type: string
+          format: uri
+        tags:
+          type: array
+          items:
+            type: string
+        date:
+          type: string
+        content:
+          type: string
+          description: Full markdown body when include=content.
+      additionalProperties: true
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+        detail:
+          type: string
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: A Pro or Team key from sign-in. Omit for keyless free-tier access.
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: Optional — raises rate limits above the keyless free tier.
+x-refined-from:
+- apievangelist-governance-openapi.json
+- apievangelist-v1-openapi.yml
+x-apis-io:
+  mcpServer: https://mcp.apievangelist.com
+  agentSkills: https://raw.githubusercontent.com/api-commons/agent-skills/main/
+  operations:
+    validate:
+      tier: free
+      mcpTool: validate_api
+      agentSkill: api-governance
+    coverage:
+      tier: free
+      mcpTool: api_coverage
+      agentSkill: api-governance
+    waivers:
+      tier: free
+      mcpTool: reconcile_waivers
+      agentSkill: api-governance
+    report:
+      tier: free
+      mcpTool: governance_report
+      agentSkill: api-governance
+    verify:
+      tier: free
+      mcpTool: verify_certificate
+      agentSkill: api-governance
+    classify:
+      tier: free
+      mcpTool: classify_api_fields
+      agentSkill: api-agent-readiness
+    diff:
+      tier: free
+      mcpTool: diff_api_versions
+      agentSkill: api-governance
+    scorecard:
+      tier: free
+      mcpTool: api_scorecard
+      agentSkill: api-governance
+    deprecation:
+      tier: free
+      mcpTool: deprecation_posture
+      agentSkill: api-governance
+    mock:
+      tier: pro
+      mcpTool: mock_payloads
+      agentSkill: api-governance
+    snippets:
+      tier: pro
+      mcpTool: code_snippets
+      agentSkill: api-governance
+    rules:
+      tier: free
+      mcpTool: find_governance_rules
+      agentSkill: api-governance
+    rulesets:
+      tier: free
+      mcpTool: find_rulesets
+      agentSkill: api-governance
+    certify:
+      tier: pro
+      mcpTool: certify_api
+      agentSkill: api-governance
+    agentExport:
+      tier: pro
+      mcpTool: export_agent_rules
+      agentSkill: api-governance
+    pipelineAudit:
+      tier: pro
+      mcpTool: audit_pipeline
+      agentSkill: api-governance
+    toolsmith:
+      tier: pro
+      mcpTool: forge_mcp_tools
+      agentSkill: api-agent-readiness
+    contextGate:
+      tier: pro
+      mcpTool: gate_agent_context
+      agentSkill: api-agent-readiness
+    overlay:
+      tier: pro
+      mcpTool: apply_overlay
+      agentSkill: api-governance
+    reusability:
+      tier: pro
+      mcpTool: score_reusability
+      agentSkill: api-governance
+    onboarding:
+      tier: free
+      mcpTool: validate_onboarding
+      agentSkill: api-agent-readiness
+    agentDescriptor:
+      tier: pro
+      mcpTool: generate_agent_descriptor
+      agentSkill: api-agent-readiness
+    experience:
+      tier: pro
+      mcpTool: map_api_experience
+      agentSkill: api-agent-readiness

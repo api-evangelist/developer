@@ -1,0 +1,160 @@
+generated: '2026-08-10'
+method: searched
+source: https://developer.apievangelist.com/getting-started
+docs:
+- https://developer.apievangelist.com/getting-started
+- https://developer.apievangelist.com/authentication
+- https://developer.apievangelist.com/api
+derived_from:
+- openapi/apievangelist-v1-openapi.yml
+- openapi/apievangelist-governance-openapi.json
+- live requests against https://api.apievangelist.com/v1
+
+authentication:
+  style: api-key-header
+  header: x-api-key
+  required: false
+  note: >-
+    Keyless by default. The free tier needs no signup and no key; a key raises rate limits and
+    unlocks the Pro operations. Both specs declare `security: [{}, {ApiKey: []}]` — the empty
+    requirement first, which is the machine-readable statement that anonymous access is supported.
+  detail: authentication/api-evangelist-authentication.yml
+
+versioning:
+  scheme: uri-path
+  current: v1
+  base_url: https://api.apievangelist.com/v1
+  contract_versions:
+    network_api: 1.2.0
+    governance_api: 1.0.0
+  note: The major version is in the path; contract versions move in info.version only.
+
+pagination:
+  style: page-number
+  params:
+    page: 1-based page number
+    limit: page size, maximum 100
+  response_fields:
+    envelope: meta
+    fields: [meta.total, meta.page, meta.limit, meta.pages, meta.query]
+  schema: openapi/apievangelist-v1-openapi.yml#/components/schemas/PagedEnvelope
+  cursor: false
+
+sparse_fields:
+  supported: true
+  param: fields
+  form: comma-delimited property names
+  example: fields=name,slug,tags
+
+field_expansion:
+  supported: true
+  param: include
+  values: [content]
+  note: >-
+    List responses return summaries. include=content inlines the full markdown body of each
+    document. On several collections include=content is a Pro capability.
+
+filtering:
+  tags:
+    param: tags
+    form: comma-delimited
+    modifier: match=any|all
+  types:
+    param: types
+    note: restricts a cross-network search to named resource types
+  free_text:
+    param: q
+  sort:
+    param: sort
+  year:
+    param: year
+    scope: /posts
+
+search_facets:
+  field: meta.facets.types
+  note: per-type hit counts for the full result set, not just the current page
+  schema: openapi/apievangelist-v1-openapi.yml#/components/schemas/SearchEnvelope
+
+error_envelope:
+  format: custom-json
+  rfc9457: false
+  content_type: application/json
+  shape:
+    network_api: {error: machine-readable slug, detail: human-readable string}
+    governance_api: {error: machine-readable slug, message: human-readable string}
+  note: >-
+    Two different envelopes ship behind one base URL — the network API uses `detail`, the
+    governance API uses `message`. Neither is application/problem+json, and neither carries a
+    `type` URI, so an agent cannot dereference an error class.
+  catalog: errors/api-evangelist-problem-types.yml
+
+idempotency:
+  supported: false
+  header: null
+  note: >-
+    No idempotency contract is published or implemented. The network API is read-only (all 66
+    operations are GET). The governance API's 23 POST operations are stateless compute over a
+    document supplied in the request body — they create no server-side resource — with the
+    exception of POST /governance/certify, which issues a certificate and has no idempotency key.
+    Recorded as absent rather than assumed: this file deliberately does NOT carry an Idempotency
+    pointer in apis.yml.
+
+rate_limits:
+  free_tier: 5 requests/second, 1,000 requests/day, keyless
+  keyed_tier: higher limits via x-api-key
+  signaling:
+    headers: none
+    observed: >-
+      No RateLimit / X-RateLimit / Retry-After headers were returned on a live 200 from
+      GET /v1/posts on 2026-08-10. The limit is documented in prose only, so a client cannot
+      read its remaining budget from the response.
+  docs: https://developer.apievangelist.com/plans/
+
+request_tracing:
+  request_id_header: null
+  observed_headers: [x-amzn-requestid, x-amzn-trace-id, x-amz-cf-id]
+  note: >-
+    AWS API Gateway and CloudFront infrastructure identifiers are echoed, but no first-party,
+    documented correlation id is published for support.
+
+caching:
+  response_header: 'cache-control: public, max-age=300'
+  cdn: CloudFront (x-cache, x-amz-cf-pop)
+  conditional_requests:
+    etag: false
+    last_modified: false
+
+cors:
+  enabled: true
+  allow_origin: '*'
+  allow_headers: [content-type, x-api-key]
+  allow_methods: [GET, OPTIONS]
+
+tiering:
+  model: free / pro
+  declared_in: openapi/apievangelist-v1-openapi.yml#/x-apis-io/tiers
+  enforcement:
+    network_api: HTTP 403 {"error":"upgrade_required","tier":"pro"}
+    governance_api: HTTP 402 {"error":"payment_required"}
+  note: >-
+    The two halves of the same base URL disagree on the status code for the same condition —
+    /v1/stats returns 403 while /v1/governance/certify returns 402. The governance OpenAPI
+    documents 402; the network OpenAPI documents 403 on the gated operations.
+  plans: https://developer.apievangelist.com/plans/
+
+cross_links:
+  errors: errors/api-evangelist-problem-types.yml
+  lifecycle: lifecycle/api-evangelist-lifecycle.yml
+  authentication: authentication/api-evangelist-authentication.yml
+  data_model: data-model/api-evangelist-data-model.yml
+  mcp: mcp/api-evangelist-mcp.yml
+
+x-evidence:
+  fetched: '2026-08-10'
+  requests:
+  - {url: 'https://api.apievangelist.com/v1/posts?limit=1', status: 200}
+  - {url: 'https://api.apievangelist.com/v1/posts/does-not-exist-xyz', status: 404}
+  - {url: 'https://api.apievangelist.com/v1/stats', status: 403}
+  - {url: 'https://api.apievangelist.com/v1/governance/validate', status: 400}
+  - {url: 'https://api.apievangelist.com/v1/governance/certify', status: 402}
+  - {url: 'https://developer.apievangelist.com/getting-started', status: 200}

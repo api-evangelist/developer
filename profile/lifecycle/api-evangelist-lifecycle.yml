@@ -1,0 +1,59 @@
+generated: '2026-08-10'
+method: searched
+source: >-
+  https://developer.apievangelist.com/ (portal nav), the two published OpenAPI contracts, and
+  live probes of the changelog / status / roadmap paths
+versioning:
+  scheme: uri-path
+  current: v1
+  base_url: https://api.apievangelist.com/v1
+  contract_versions:
+    network_api: 1.2.0
+    governance_api: 1.0.0
+  docs: https://developer.apievangelist.com/getting-started
+  policy_published: false
+  note: >-
+    The major version is pinned in the path. No written policy states what constitutes a breaking
+    change or how long a major version is supported.
+deprecation:
+  policy_url: null
+  policy_published: false
+  sunset_header: false
+  deprecation_header: false
+  note: >-
+    No deprecation policy page and no RFC 8594 Sunset / Deprecation header support is documented
+    or observed. Notably, the API itself ships a `deprecation_posture` capability
+    (POST /v1/governance/deprecation) that reports whether *other* APIs announce a sunset.
+sla:
+  url: null
+  uptime_target: null
+status_page:
+  url: null
+  probed:
+  - {url: 'https://status.apievangelist.com', status: 0, result: DNS does not resolve}
+  - {url: 'https://developer.apievangelist.com/status', status: 404}
+changelog:
+  url: null
+  probed:
+  - {url: 'https://developer.apievangelist.com/changelog', status: 404}
+  - {url: 'https://apievangelist.com/changelog', status: 404}
+  note: >-
+    No dated API changelog. The developer portal footer stamps a per-page "Last modified" date
+    (Getting Started: July 16, 2026) but that is a docs mtime, not a release record.
+roadmap:
+  url: null
+  probed:
+  - {url: 'https://developer.apievangelist.com/roadmap', status: 404}
+  - {url: 'https://apievangelist.com/roadmap', status: 404}
+deprecated_operations: []
+deprecated_operation_count: 0
+note_on_deprecated_operations: >-
+  No operation in either spec carries `deprecated: true`.
+gaps:
+- No status page, so consumers have no incident channel.
+- No deprecation policy and no Sunset/Deprecation header support.
+- No dated changelog for either contract.
+- No published SLA or uptime target.
+x-evidence:
+  checked: '2026-08-10'
+  method: HTTP GET (following redirects) against each candidate URL; status recorded as returned

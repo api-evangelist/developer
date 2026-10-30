@@ -1,0 +1,1247 @@
+aid: api-evangelist
+deliveryModel:
+  model: saas
+  license_evidence:
+    not_product:
+    - api-evangelist/posts
+  open_source: unknown
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: low
+  source:
+  - openapi
+  - pricing
+  - repository-not-product
+  generated: '2026-09-25'
+  method: derived
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Freemium · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  - rate-limits
+  - security
+  generated: '2026-09-03'
+  method: derived
+specificationVersion: '0.23'
+type: Index
+name: API Evangelist
+description: The index of everything available via the API Evangelist developer portal at developer.apievangelist.com
+  — sixteen years of API research served as one REST API, an MCP server for agents, and the static JSON
+  feeds behind each network collection.
+image: https://kinlane-images.s3.amazonaws.com/shared/api-evangelist-logos/api-evangelist-butterfly-vertical.png
+tags:
+- API-Evangelist
+- Developer Portal
+- API Research
+- API Governance
+- API Discovery
+- MCP
+- Agents
+- API Standards
+- API Vocabulary
+- A2A
+tags_raw:
+- APIs
+- API Evangelist
+- Developer Portal
+- API Research
+- API Governance
+- API Discovery
+- MCP
+- Agents
+- API Standards
+- API Vocabulary
+- A2A
+created: '2024-10-14'
+modified: '2026-08-10'
+url: https://raw.githubusercontent.com/api-evangelist/api-evangelist/refs/heads/main/apis.yml
+x-self-hosted-profile: https://developer.apievangelist.com/apis.yml
+apis:
+- aid: api-evangelist:api-evangelist-mcp
+  name: API Evangelist MCP Server
+  description: >-
+    Model Context Protocol server over the same network — concierge tools (get_overview, guide_topic)
+    plus find/get tools for every resource type, served over Streamable HTTP for AI agents.
+  image: >-
+    https://kinlane-images.s3.amazonaws.com/shared/api-evangelist-logos/api-evangelist-butterfly-vertical.png
+  humanURL: https://developer.apievangelist.com/mcp-server
+  baseURL: https://mcp.apievangelist.com/mcp
+  tags:
+  - MCP
+  - Agents
+  properties:
+  - type: Documentation
+    url: https://developer.apievangelist.com/mcp-server
+  - type: MCP
+    url: https://mcp.apievangelist.com/mcp
+  - type: MCPServer
+    url: mcp/api-evangelist-mcp.yml
+  - type: ToolCrosswalk
+    url: mcp/api-evangelist-tool-crosswalk.yml
+  - type: MCPServerCard
+    url: https://apievangelist.com/.well-known/mcp/server-card.json
+  - type: AgentSkills
+    url: https://apievangelist.com/skills/
+  - type: AgentSkill
+    url: skills/_index.yml
+  - type: LLMsTxt
+    url: https://apievangelist.com/llms.txt
+  contact:
+  - FN: Kin Lane
+    email: info@apievangelist.com
+- aid: api-evangelist:api-evangelist-apis
+  name: API Evangelist APIs
+  description: >-
+    Individual API resources tracked across the API Evangelist network, drawn from many providers and
+    business sectors and accompanied by OpenAPI reviews.
+  image: >-
+    https://kinlane-images.s3.amazonaws.com/shared/api-evangelist-logos/api-evangelist-butterfly-vertical.png
+  humanURL: https://apis.apievangelist.com
+  baseURL: https://apis.apievangelist.com
+  tags:
+  - Discovery
+  tags_raw:
+  - APIs
+  - Discovery
+  properties:
+  - type: Documentation
+    url: https://developer.apievangelist.com/catalog-feeds
+  - type: APIsJSON
+    url: https://apis.apievangelist.com/apis.json
+  contact:
+  - FN: Kin Lane
+    email: info@apievangelist.com
+- aid: api-evangelist:api-evangelist-posts
+  name: API Evangelist Posts
+  description: >-
+    Over 4,000 stories on the API Evangelist blog since 2010 — the technology, business, and politics
+    of how APIs are changing the way we live and work.
+  image: >-
+    https://kinlane-images.s3.amazonaws.com/shared/api-evangelist-logos/api-evangelist-butterfly-vertical.png
+  humanURL: https://apievangelist.com
+  baseURL: https://api.apievangelist.com/v1/posts
+  tags:
+  - Posts
+  - Stories
+  - Blog
+  properties:
+  - type: Documentation
+    url: https://developer.apievangelist.com/api
+  - type: GitHubRepository
+    url: https://github.com/api-evangelist/posts
+  contact:
+  - FN: Kin Lane
+    email: info@apievangelist.com
+- aid: api-evangelist:api-evangelist-conversations
+  name: API Evangelist Conversations
+  description: >-
+    Regular conversations with API producers, consumers, and service providers about how they see APIs
+    and what their biggest challenges are.
+  image: >-
+    https://kinlane-images.s3.amazonaws.com/shared/api-evangelist-logos/api-evangelist-butterfly-vertical.png
+  humanURL: https://conversations.apievangelist.com
+  baseURL: https://api.apievangelist.com/v1/conversations
+  tags:
+  - Conversations
+  - Interviews
+  properties:
+  - type: Documentation
+    url: https://developer.apievangelist.com/api
+  - type: JSONFeed
+    url: https://conversations.apievangelist.com/conversations.json
+  contact:
+  - FN: Kin Lane
+    email: info@apievangelist.com
+- aid: api-evangelist:api-evangelist-companies
+  name: API Evangelist Companies
+  description: >-
+    An alphabetical listing of every company tracked across the API Evangelist network, operating in almost
+    every business sector.
+  image: >-
+    https://kinlane-images.s3.amazonaws.com/shared/api-evangelist-logos/api-evangelist-butterfly-vertical.png
+  humanURL: https://providers.apievangelist.com
+  baseURL: https://providers.apievangelist.com
+  tags:
+  - Companies
+  - APIs.json
+  tags_raw:
+  - Companies
+  - APIs.json
+  properties:
+  - type: Documentation
+    url: https://developer.apievangelist.com/catalog-feeds
+  - type: APIsJSON
+    url: https://providers.apievangelist.com/apis.json
+  contact:
+  - FN: Kin Lane
+    email: info@apievangelist.com
+- aid: api-evangelist:api-evangelist-experiences
+  name: API Evangelist Experiences
+  description: >-
+    The real-world human experience across teams producing APIs and the consumers who are applying and
+    integrating them as part of business.
+  image: >-
+    https://kinlane-images.s3.amazonaws.com/shared/api-evangelist-logos/api-evangelist-butterfly-vertical.png
+  humanURL: https://experiences.apievangelist.com
+  baseURL: https://api.apievangelist.com/v1/experiences
+  tags:
+  - Experience
+  - Developer Experience
+  tags_raw:
+  - Experiences
+  - Developer Experience
+  properties:
+  - type: Documentation
+    url: https://developer.apievangelist.com/api
+  - type: JSONFeed
+    url: https://experiences.apievangelist.com/experiences.json
+  contact:
+  - FN: Kin Lane
+    email: info@apievangelist.com
+- aid: api-evangelist:api-evangelist-guidance
+  name: API Evangelist Guidance
+  description: >-
+    Modular guidance for teams producing and consuming APIs — snackable real-time guidance for keeping
+    API operations moving forward.
+  image: >-
+    https://kinlane-images.s3.amazonaws.com/shared/api-evangelist-logos/api-evangelist-butterfly-vertical.png
+  humanURL: https://guidance.apievangelist.com
+  baseURL: https://api.apievangelist.com/v1/guidance
+  tags:
+  - Guidance
+  - Best Practices
+  properties:
+  - type: Documentation
+    url: https://developer.apievangelist.com/api
+  - type: JSONFeed
+    url: https://guidance.apievangelist.com/guidance.json
+  contact:
+  - FN: Kin Lane
+    email: info@apievangelist.com
+- aid: api-evangelist:api-evangelist-policies
+  name: API Evangelist Policies
+  description: >-
+    The business reasons behind why we govern API operations — aligning the engineering side of operations
+    with the business side of things.
+  image: >-
+    https://kinlane-images.s3.amazonaws.com/shared/api-evangelist-logos/api-evangelist-butterfly-vertical.png
+  humanURL: https://policies.apievangelist.com
+  baseURL: https://api.apievangelist.com/v1/policies
+  tags:
+  - Policies
+  - Governance
+  properties:
+  - type: Documentation
+    url: https://developer.apievangelist.com/api
+  - type: JSONFeed
+    url: https://policies.apievangelist.com/policies.json
+  contact:
+  - FN: Kin Lane
+    email: info@apievangelist.com
+- aid: api-evangelist:api-evangelist-properties
+  name: API Evangelist Properties
+  description: >-
+    Individual properties of API operations that can be linked to strategy, experience, and policies —
+    and then governed to standardize how things work.
+  image: >-
+    https://kinlane-images.s3.amazonaws.com/shared/api-evangelist-logos/api-evangelist-butterfly-vertical.png
+  humanURL: https://properties.apievangelist.com
+  baseURL: https://api.apievangelist.com/v1/properties
+  tags:
+  - Properties
+  - Governance
+  properties:
+  - type: Documentation
+    url: https://developer.apievangelist.com/api
+  - type: JSONFeed
+    url: https://properties.apievangelist.com/properties.json
+  contact:
+  - FN: Kin Lane
+    email: info@apievangelist.com
+- aid: api-evangelist:api-evangelist-rules
+  name: API Evangelist Rules
+  description: >-
+    Technical details of API operations that can be automated and enforced, used to align policies with
+    strategy to deliver the desired experience.
+  image: >-
+    https://kinlane-images.s3.amazonaws.com/shared/api-evangelist-logos/api-evangelist-butterfly-vertical.png
+  humanURL: https://rules.apievangelist.com
+  baseURL: https://api.apievangelist.com/v1/rules
+  tags:
+  - Rules
+  - Spectral
+  - Governance
+  properties:
+  - type: Documentation
+    url: https://developer.apievangelist.com/api
+  - type: JSONFeed
+    url: https://rules.apievangelist.com/rules.json
+  contact:
+  - FN: Kin Lane
+    email: info@apievangelist.com
+- aid: api-evangelist:api-evangelist-schema
+  name: API Evangelist Schema
+  description: >-
+    The naming and structure of the digital objects we pass back and forth via APIs within the business
+    and personal applications we use.
+  image: >-
+    https://kinlane-images.s3.amazonaws.com/shared/api-evangelist-logos/api-evangelist-butterfly-vertical.png
+  humanURL: https://schema.apievangelist.com
+  baseURL: https://api.apievangelist.com/v1/schema
+  tags:
+  - Schema
+  - JSON Schema
+  - Data Models
+  tags_raw:
+  - Schema
+  - JSON Schema
+  - Data Models
+  - JSON-Schema
+  properties:
+  - type: Documentation
+    url: https://developer.apievangelist.com/api
+  - type: APIsJSON
+    url: https://schema.apievangelist.com/apis.json
+  contact:
+  - FN: Kin Lane
+    email: info@apievangelist.com
+- aid: api-evangelist:api-evangelist-standards
+  name: API Evangelist Standards
+  description: >-
+    Common Internet or industry standards used to consistently define API operations and keep the API
+    factory floor well-defined and interoperable.
+  image: >-
+    https://kinlane-images.s3.amazonaws.com/shared/api-evangelist-logos/api-evangelist-butterfly-vertical.png
+  humanURL: https://standards.apievangelist.com
+  baseURL: https://api.apievangelist.com/v1/standards
+  tags:
+  - Standards
+  - Interoperability
+  properties:
+  - type: Documentation
+    url: https://developer.apievangelist.com/api
+  - type: APIsJSON
+    url: https://standards.apievangelist.com/apis.json
+  contact:
+  - FN: Kin Lane
+    email: info@apievangelist.com
+- aid: api-evangelist:api-evangelist-strategies
+  name: API Evangelist Strategies
+  description: >-
+    High-level approaches to shifting the direction of API operations — aligning policies and experiences
+    across the platform.
+  image: >-
+    https://kinlane-images.s3.amazonaws.com/shared/api-evangelist-logos/api-evangelist-butterfly-vertical.png
+  humanURL: https://strategies.apievangelist.com
+  baseURL: https://api.apievangelist.com/v1/strategies
+  tags:
+  - Strategies
+  - API Strategy
+  properties:
+  - type: Documentation
+    url: https://developer.apievangelist.com/api
+  - type: JSONFeed
+    url: https://strategies.apievangelist.com/strategies.json
+  contact:
+  - FN: Kin Lane
+    email: info@apievangelist.com
+- aid: api-evangelist:api-evangelist-videos
+  name: API Evangelist Videos
+  description: >-
+    Video content covering API topics, interviews, and walkthroughs of API concepts and technologies.
+  image: >-
+    https://kinlane-images.s3.amazonaws.com/shared/api-evangelist-logos/api-evangelist-butterfly-vertical.png
+  humanURL: https://video.apievangelist.com
+  baseURL: https://api.apievangelist.com/v1/videos
+  tags:
+  - Video
+  - Media
+  tags_raw:
+  - Videos
+  - Media
+  properties:
+  - type: Documentation
+    url: https://developer.apievangelist.com/api
+  contact:
+  - FN: Kin Lane
+    email: info@apievangelist.com
+- aid: api-evangelist:api-evangelist-vocabularies
+  name: API Evangelist Vocabularies
+  description: >-
+    Organizing the words we use to describe API resources and capabilities — controlled vocabularies that
+    help us get on the same page.
+  image: >-
+    https://kinlane-images.s3.amazonaws.com/shared/api-evangelist-logos/api-evangelist-butterfly-vertical.png
+  humanURL: https://vocabularies.apievangelist.com
+  baseURL: https://api.apievangelist.com/v1/vocabulary
+  tags:
+  - Vocabularies
+  - Taxonomy
+  properties:
+  - type: Documentation
+    url: https://developer.apievangelist.com/api
+  - type: JSONFeed
+    url: https://vocabularies.apievangelist.com/vocabularies.json
+  contact:
+  - FN: Kin Lane
+    email: info@apievangelist.com
+- aid: api-evangelist:api-evangelist-account-api
+  name: API Evangelist Account API
+  description: GitHub sign-in, API key, and Stripe self-serve billing.
+  humanURL: https://developer.apievangelist.com
+  baseURL: https://api.apievangelist.com/v1
+  tags:
+  - Account
+  properties:
+  - type: OpenAPI
+    url: openapi/api-evangelist-account-api-openapi.yml
+  - type: Documentation
+    url: https://developer.apievangelist.com
+  - type: APIReference
+    url: https://developer.apievangelist.com/api
+  - type: Pricing
+    url: https://developer.apievangelist.com/plans/
+  - type: RateLimits
+    url: https://developer.apievangelist.com/plans/
+  - type: JSONSchema
+    url: schema/index.yml
+  - type: JSONSchema
+    url: schema/Doc.yml
+  - type: JSONSchema
+    url: schema/Area.yml
+  - type: JSONSchema
+    url: schema/PagedEnvelope.yml
+  - type: JSONSchema
+    url: schema/SearchEnvelope.yml
+  - type: JSONSchema
+    url: schema/Engage.yml
+  - type: JSONSchema
+    url: schema/ContactOption.yml
+  - type: JSONSchema
+    url: schema/Error.yml
+  - type: APIReference
+    url: https://developer.apievangelist.com/governance-api
+- aid: api-evangelist:api-evangelist-areas-api
+  name: API Evangelist Areas API
+  description: The 77 focused topic areas and their related-area graph.
+  humanURL: https://developer.apievangelist.com
+  baseURL: https://api.apievangelist.com/v1
+  tags:
+  - Areas
+  properties:
+  - type: OpenAPI
+    url: openapi/api-evangelist-areas-api-openapi.yml
+  - type: Documentation
+    url: https://developer.apievangelist.com
+  - type: APIReference
+    url: https://developer.apievangelist.com/api
+  - type: Pricing
+    url: https://developer.apievangelist.com/plans/
+  - type: RateLimits
+    url: https://developer.apievangelist.com/plans/
+  - type: JSONSchema
+    url: schema/index.yml
+  - type: JSONSchema
+    url: schema/Doc.yml
+  - type: JSONSchema
+    url: schema/Area.yml
+  - type: JSONSchema
+    url: schema/PagedEnvelope.yml
+  - type: JSONSchema
+    url: schema/SearchEnvelope.yml
+  - type: JSONSchema
+    url: schema/Engage.yml
+  - type: JSONSchema
+    url: schema/ContactOption.yml
+  - type: JSONSchema
+    url: schema/Error.yml
+  - type: APIReference
+    url: https://developer.apievangelist.com/governance-api
+- aid: api-evangelist:api-evangelist-building-blocks-api
+  name: API Evangelist Building Blocks API
+  description: >-
+    The governance building blocks — guidance, rules, policies, standards, strategies, schema, properties,
+    experiences and lifecycle — and the relevance graph between them.
+  humanURL: https://developer.apievangelist.com
+  baseURL: https://api.apievangelist.com/v1
+  tags:
+  - Building Blocks
+  properties:
+  - type: OpenAPI
+    url: openapi/api-evangelist-building-blocks-api-openapi.yml
+  - type: Documentation
+    url: https://developer.apievangelist.com
+  - type: APIReference
+    url: https://developer.apievangelist.com/api
+  - type: Pricing
+    url: https://developer.apievangelist.com/plans/
+  - type: RateLimits
+    url: https://developer.apievangelist.com/plans/
+  - type: JSONSchema
+    url: schema/index.yml
+  - type: JSONSchema
+    url: schema/Doc.yml
+  - type: JSONSchema
+    url: schema/Area.yml
+  - type: JSONSchema
+    url: schema/PagedEnvelope.yml
+  - type: JSONSchema
+    url: schema/SearchEnvelope.yml
+  - type: JSONSchema
+    url: schema/Engage.yml
+  - type: JSONSchema
+    url: schema/ContactOption.yml
+  - type: JSONSchema
+    url: schema/Error.yml
+  - type: APIReference
+    url: https://developer.apievangelist.com/governance-api
+- aid: api-evangelist:api-evangelist-contact-api
+  name: API Evangelist Contact API
+  description: Every way to reach API Evangelist.
+  humanURL: https://developer.apievangelist.com
+  baseURL: https://api.apievangelist.com/v1
+  tags:
+  - Contact
+  properties:
+  - type: OpenAPI
+    url: openapi/api-evangelist-contact-api-openapi.yml
+  - type: Documentation
+    url: https://developer.apievangelist.com
+  - type: APIReference
+    url: https://developer.apievangelist.com/api
+  - type: Pricing
+    url: https://developer.apievangelist.com/plans/
+  - type: RateLimits
+    url: https://developer.apievangelist.com/plans/
+  - type: JSONSchema
+    url: schema/index.yml
+  - type: JSONSchema
+    url: schema/Doc.yml
+  - type: JSONSchema
+    url: schema/Area.yml
+  - type: JSONSchema
+    url: schema/PagedEnvelope.yml
+  - type: JSONSchema
+    url: schema/SearchEnvelope.yml
+  - type: JSONSchema
+    url: schema/Engage.yml
+  - type: JSONSchema
+    url: schema/ContactOption.yml
+  - type: JSONSchema
+    url: schema/Error.yml
+  - type: APIReference
+    url: https://developer.apievangelist.com/governance-api
+- aid: api-evangelist:api-evangelist-discovery-api
+  name: API Evangelist Discovery API
+  description: Reusability and experience (DX/AX) analysis across a set of APIs.
+  humanURL: https://developer.apievangelist.com
+  baseURL: https://api.apievangelist.com/v1
+  tags:
+  - Discovery
+  properties:
+  - type: OpenAPI
+    url: openapi/api-evangelist-discovery-api-openapi.yml
+  - type: Documentation
+    url: https://developer.apievangelist.com
+  - type: APIReference
+    url: https://developer.apievangelist.com/api
+  - type: Pricing
+    url: https://developer.apievangelist.com/plans/
+  - type: RateLimits
+    url: https://developer.apievangelist.com/plans/
+  - type: JSONSchema
+    url: schema/index.yml
+  - type: JSONSchema
+    url: schema/Doc.yml
+  - type: JSONSchema
+    url: schema/Area.yml
+  - type: JSONSchema
+    url: schema/PagedEnvelope.yml
+  - type: JSONSchema
+    url: schema/SearchEnvelope.yml
+  - type: JSONSchema
+    url: schema/Engage.yml
+  - type: JSONSchema
+    url: schema/ContactOption.yml
+  - type: JSONSchema
+    url: schema/Error.yml
+  - type: APIReference
+    url: https://developer.apievangelist.com/governance-api
+- aid: api-evangelist:api-evangelist-governance-api
+  name: API Evangelist Governance API
+  description: >-
+    Lint, coverage, waivers, reporting, certification, agent export, pipeline audit, toolsmith, context
+    gate.
+  humanURL: https://developer.apievangelist.com
+  baseURL: https://api.apievangelist.com/v1
+  tags:
+  - Governance
+  properties:
+  - type: OpenAPI
+    url: openapi/api-evangelist-governance-api-openapi.yml
+  - type: Documentation
+    url: https://developer.apievangelist.com
+  - type: APIReference
+    url: https://developer.apievangelist.com/api
+  - type: Pricing
+    url: https://developer.apievangelist.com/plans/
+  - type: RateLimits
+    url: https://developer.apievangelist.com/plans/
+  - type: JSONSchema
+    url: schema/index.yml
+  - type: JSONSchema
+    url: schema/Doc.yml
+  - type: JSONSchema
+    url: schema/Area.yml
+  - type: JSONSchema
+    url: schema/PagedEnvelope.yml
+  - type: JSONSchema
+    url: schema/SearchEnvelope.yml
+  - type: JSONSchema
+    url: schema/Engage.yml
+  - type: JSONSchema
+    url: schema/ContactOption.yml
+  - type: JSONSchema
+    url: schema/Error.yml
+  - type: APIReference
+    url: https://developer.apievangelist.com/governance-api
+- aid: api-evangelist:api-evangelist-guidance-api
+  name: API Evangelist Guidance API
+  description: >-
+    Editorial guidance across the history, technology, business, politics, governance, and evangelism
+    of APIs.
+  humanURL: https://developer.apievangelist.com
+  baseURL: https://api.apievangelist.com/v1
+  tags:
+  - Guidance
+  properties:
+  - type: OpenAPI
+    url: openapi/api-evangelist-guidance-api-openapi.yml
+  - type: Documentation
+    url: https://developer.apievangelist.com
+  - type: APIReference
+    url: https://developer.apievangelist.com/api
+  - type: Pricing
+    url: https://developer.apievangelist.com/plans/
+  - type: RateLimits
+    url: https://developer.apievangelist.com/plans/
+  - type: JSONSchema
+    url: schema/index.yml
+  - type: JSONSchema
+    url: schema/Doc.yml
+  - type: JSONSchema
+    url: schema/Area.yml
+  - type: JSONSchema
+    url: schema/PagedEnvelope.yml
+  - type: JSONSchema
+    url: schema/SearchEnvelope.yml
+  - type: JSONSchema
+    url: schema/Engage.yml
+  - type: JSONSchema
+    url: schema/ContactOption.yml
+  - type: JSONSchema
+    url: schema/Error.yml
+  - type: APIReference
+    url: https://developer.apievangelist.com/governance-api
+- aid: api-evangelist:api-evangelist-insights-api
+  name: API Evangelist Insights API
+  description: >-
+    Demand-side intelligence — what ~5,800 companies (Fortune 1000 + API providers) build, buy, and hire
+    for around APIs, data, and AI. Discovery is free; per-company depth + gaps are Pro. (The supply↔demand
+    provider match lives on apis.io.)
+  humanURL: https://developer.apievangelist.com
+  baseURL: https://api.apievangelist.com/v1
+  tags:
+  - Insights
+  properties:
+  - type: OpenAPI
+    url: openapi/api-evangelist-insights-api-openapi.yml
+  - type: Documentation
+    url: https://developer.apievangelist.com
+  - type: APIReference
+    url: https://developer.apievangelist.com/api
+  - type: Pricing
+    url: https://developer.apievangelist.com/plans/
+  - type: RateLimits
+    url: https://developer.apievangelist.com/plans/
+  - type: JSONSchema
+    url: schema/index.yml
+  - type: JSONSchema
+    url: schema/Doc.yml
+  - type: JSONSchema
+    url: schema/Area.yml
+  - type: JSONSchema
+    url: schema/PagedEnvelope.yml
+  - type: JSONSchema
+    url: schema/SearchEnvelope.yml
+  - type: JSONSchema
+    url: schema/Engage.yml
+  - type: JSONSchema
+    url: schema/ContactOption.yml
+  - type: JSONSchema
+    url: schema/Error.yml
+  - type: APIReference
+    url: https://developer.apievangelist.com/governance-api
+- aid: api-evangelist:api-evangelist-media-api
+  name: API Evangelist Media API
+  description: Conversations, videos, white papers, and the newsletter.
+  humanURL: https://developer.apievangelist.com
+  baseURL: https://api.apievangelist.com/v1
+  tags:
+  - Media
+  properties:
+  - type: OpenAPI
+    url: openapi/api-evangelist-media-api-openapi.yml
+  - type: Documentation
+    url: https://developer.apievangelist.com
+  - type: APIReference
+    url: https://developer.apievangelist.com/api
+  - type: Pricing
+    url: https://developer.apievangelist.com/plans/
+  - type: RateLimits
+    url: https://developer.apievangelist.com/plans/
+  - type: JSONSchema
+    url: schema/index.yml
+  - type: JSONSchema
+    url: schema/Doc.yml
+  - type: JSONSchema
+    url: schema/Area.yml
+  - type: JSONSchema
+    url: schema/PagedEnvelope.yml
+  - type: JSONSchema
+    url: schema/SearchEnvelope.yml
+  - type: JSONSchema
+    url: schema/Engage.yml
+  - type: JSONSchema
+    url: schema/ContactOption.yml
+  - type: JSONSchema
+    url: schema/Error.yml
+  - type: APIReference
+    url: https://developer.apievangelist.com/governance-api
+- aid: api-evangelist:api-evangelist-operations-api
+  name: API Evangelist Operations API
+  description: Strategies, experiences, and the stops along the API lifecycle.
+  humanURL: https://developer.apievangelist.com
+  baseURL: https://api.apievangelist.com/v1
+  tags: []
+  tags_raw:
+  - Operations
+  properties:
+  - type: OpenAPI
+    url: openapi/api-evangelist-operations-api-openapi.yml
+  - type: Documentation
+    url: https://developer.apievangelist.com
+  - type: APIReference
+    url: https://developer.apievangelist.com/api
+  - type: Pricing
+    url: https://developer.apievangelist.com/plans/
+  - type: RateLimits
+    url: https://developer.apievangelist.com/plans/
+  - type: JSONSchema
+    url: schema/index.yml
+  - type: JSONSchema
+    url: schema/Doc.yml
+  - type: JSONSchema
+    url: schema/Area.yml
+  - type: JSONSchema
+    url: schema/PagedEnvelope.yml
+  - type: JSONSchema
+    url: schema/SearchEnvelope.yml
+  - type: JSONSchema
+    url: schema/Engage.yml
+  - type: JSONSchema
+    url: schema/ContactOption.yml
+  - type: JSONSchema
+    url: schema/Error.yml
+  - type: APIReference
+    url: https://developer.apievangelist.com/governance-api
+- aid: api-evangelist:api-evangelist-overview-api
+  name: API Evangelist Overview API
+  description: Service info and unified search across the whole network.
+  humanURL: https://developer.apievangelist.com
+  baseURL: https://api.apievangelist.com/v1
+  tags:
+  - Overview
+  properties:
+  - type: OpenAPI
+    url: openapi/api-evangelist-overview-api-openapi.yml
+  - type: Documentation
+    url: https://developer.apievangelist.com
+  - type: APIReference
+    url: https://developer.apievangelist.com/api
+  - type: Pricing
+    url: https://developer.apievangelist.com/plans/
+  - type: RateLimits
+    url: https://developer.apievangelist.com/plans/
+  - type: JSONSchema
+    url: schema/index.yml
+  - type: JSONSchema
+    url: schema/Doc.yml
+  - type: JSONSchema
+    url: schema/Area.yml
+  - type: JSONSchema
+    url: schema/PagedEnvelope.yml
+  - type: JSONSchema
+    url: schema/SearchEnvelope.yml
+  - type: JSONSchema
+    url: schema/Engage.yml
+  - type: JSONSchema
+    url: schema/ContactOption.yml
+  - type: JSONSchema
+    url: schema/Error.yml
+  - type: APIReference
+    url: https://developer.apievangelist.com/governance-api
+- aid: api-evangelist:api-evangelist-papers-api
+  name: API Evangelist Papers API
+  description: White papers and reports, and the relevance graph between them.
+  humanURL: https://developer.apievangelist.com
+  baseURL: https://api.apievangelist.com/v1
+  tags:
+  - Paper
+  tags_raw:
+  - Papers
+  properties:
+  - type: OpenAPI
+    url: openapi/api-evangelist-papers-api-openapi.yml
+  - type: Documentation
+    url: https://developer.apievangelist.com
+  - type: APIReference
+    url: https://developer.apievangelist.com/api
+  - type: Pricing
+    url: https://developer.apievangelist.com/plans/
+  - type: RateLimits
+    url: https://developer.apievangelist.com/plans/
+  - type: JSONSchema
+    url: schema/index.yml
+  - type: JSONSchema
+    url: schema/Doc.yml
+  - type: JSONSchema
+    url: schema/Area.yml
+  - type: JSONSchema
+    url: schema/PagedEnvelope.yml
+  - type: JSONSchema
+    url: schema/SearchEnvelope.yml
+  - type: JSONSchema
+    url: schema/Engage.yml
+  - type: JSONSchema
+    url: schema/ContactOption.yml
+  - type: JSONSchema
+    url: schema/Error.yml
+  - type: APIReference
+    url: https://developer.apievangelist.com/governance-api
+- aid: api-evangelist:api-evangelist-reference-api
+  name: API Evangelist Reference API
+  description: The API vocabulary and the static machine-readable feeds.
+  humanURL: https://developer.apievangelist.com
+  baseURL: https://api.apievangelist.com/v1
+  tags:
+  - Reference
+  properties:
+  - type: OpenAPI
+    url: openapi/api-evangelist-reference-api-openapi.yml
+  - type: Documentation
+    url: https://developer.apievangelist.com
+  - type: APIReference
+    url: https://developer.apievangelist.com/api
+  - type: Pricing
+    url: https://developer.apievangelist.com/plans/
+  - type: RateLimits
+    url: https://developer.apievangelist.com/plans/
+  - type: JSONSchema
+    url: schema/index.yml
+  - type: JSONSchema
+    url: schema/Doc.yml
+  - type: JSONSchema
+    url: schema/Area.yml
+  - type: JSONSchema
+    url: schema/PagedEnvelope.yml
+  - type: JSONSchema
+    url: schema/SearchEnvelope.yml
+  - type: JSONSchema
+    url: schema/Engage.yml
+  - type: JSONSchema
+    url: schema/ContactOption.yml
+  - type: JSONSchema
+    url: schema/Error.yml
+  - type: APIReference
+    url: https://developer.apievangelist.com/governance-api
+- aid: api-evangelist:api-evangelist-services-api
+  name: API Evangelist Services API
+  description: API Evangelist's first-party offerings — the front door to working with Kin Lane.
+  humanURL: https://developer.apievangelist.com
+  baseURL: https://api.apievangelist.com/v1
+  tags:
+  - Services
+  properties:
+  - type: OpenAPI
+    url: openapi/api-evangelist-services-api-openapi.yml
+  - type: Documentation
+    url: https://developer.apievangelist.com
+  - type: APIReference
+    url: https://developer.apievangelist.com/api
+  - type: Pricing
+    url: https://developer.apievangelist.com/plans/
+  - type: RateLimits
+    url: https://developer.apievangelist.com/plans/
+  - type: JSONSchema
+    url: schema/index.yml
+  - type: JSONSchema
+    url: schema/Doc.yml
+  - type: JSONSchema
+    url: schema/Area.yml
+  - type: JSONSchema
+    url: schema/PagedEnvelope.yml
+  - type: JSONSchema
+    url: schema/SearchEnvelope.yml
+  - type: JSONSchema
+    url: schema/Engage.yml
+  - type: JSONSchema
+    url: schema/ContactOption.yml
+  - type: JSONSchema
+    url: schema/Error.yml
+  - type: APIReference
+    url: https://developer.apievangelist.com/governance-api
+- aid: api-evangelist:api-evangelist-stories-api
+  name: API Evangelist Stories API
+  description: The API Evangelist blog — 5,000+ posts since 2010.
+  humanURL: https://developer.apievangelist.com
+  baseURL: https://api.apievangelist.com/v1
+  tags:
+  - Stories
+  properties:
+  - type: OpenAPI
+    url: openapi/api-evangelist-stories-api-openapi.yml
+  - type: Documentation
+    url: https://developer.apievangelist.com
+  - type: APIReference
+    url: https://developer.apievangelist.com/api
+  - type: Pricing
+    url: https://developer.apievangelist.com/plans/
+  - type: RateLimits
+    url: https://developer.apievangelist.com/plans/
+  - type: JSONSchema
+    url: schema/index.yml
+  - type: JSONSchema
+    url: schema/Doc.yml
+  - type: JSONSchema
+    url: schema/Area.yml
+  - type: JSONSchema
+    url: schema/PagedEnvelope.yml
+  - type: JSONSchema
+    url: schema/SearchEnvelope.yml
+  - type: JSONSchema
+    url: schema/Engage.yml
+  - type: JSONSchema
+    url: schema/ContactOption.yml
+  - type: JSONSchema
+    url: schema/Error.yml
+  - type: APIReference
+    url: https://developer.apievangelist.com/governance-api
+- aid: api-evangelist:api-evangelist-synthesis-api
+  name: API Evangelist Synthesis API
+  description: >-
+    Curated synthesis over the network rather than raw retrieval: guides assembled for a topic, and the
+    counts behind the catalog.
+  humanURL: https://developer.apievangelist.com
+  baseURL: https://api.apievangelist.com/v1
+  tags:
+  - Synthesis
+  properties:
+  - type: OpenAPI
+    url: openapi/api-evangelist-synthesis-api-openapi.yml
+  - type: Documentation
+    url: https://developer.apievangelist.com
+  - type: APIReference
+    url: https://developer.apievangelist.com/api
+  - type: Pricing
+    url: https://developer.apievangelist.com/plans/
+  - type: RateLimits
+    url: https://developer.apievangelist.com/plans/
+  - type: JSONSchema
+    url: schema/index.yml
+  - type: JSONSchema
+    url: schema/Doc.yml
+  - type: JSONSchema
+    url: schema/Area.yml
+  - type: JSONSchema
+    url: schema/PagedEnvelope.yml
+  - type: JSONSchema
+    url: schema/SearchEnvelope.yml
+  - type: JSONSchema
+    url: schema/Engage.yml
+  - type: JSONSchema
+    url: schema/ContactOption.yml
+  - type: JSONSchema
+    url: schema/Error.yml
+  - type: APIReference
+    url: https://developer.apievangelist.com/governance-api
+- aid: api-evangelist:api-evangelist-tags-api
+  name: API Evangelist Tags API
+  description: >-
+    The tag taxonomy across the whole network — the map of everything API Evangelist covers, and the join
+    key behind every /related response.
+  humanURL: https://developer.apievangelist.com
+  baseURL: https://api.apievangelist.com/v1
+  tags:
+  - Tags
+  properties:
+  - type: OpenAPI
+    url: openapi/api-evangelist-tags-api-openapi.yml
+  - type: Documentation
+    url: https://developer.apievangelist.com
+  - type: APIReference
+    url: https://developer.apievangelist.com/api
+  - type: Pricing
+    url: https://developer.apievangelist.com/plans/
+  - type: RateLimits
+    url: https://developer.apievangelist.com/plans/
+  - type: JSONSchema
+    url: schema/index.yml
+  - type: JSONSchema
+    url: schema/Doc.yml
+  - type: JSONSchema
+    url: schema/Area.yml
+  - type: JSONSchema
+    url: schema/PagedEnvelope.yml
+  - type: JSONSchema
+    url: schema/SearchEnvelope.yml
+  - type: JSONSchema
+    url: schema/Engage.yml
+  - type: JSONSchema
+    url: schema/ContactOption.yml
+  - type: JSONSchema
+    url: schema/Error.yml
+  - type: APIReference
+    url: https://developer.apievangelist.com/governance-api
+- aid: api-evangelist:api-evangelist-timelines-api
+  name: API Evangelist Timelines API
+  description: The API, resource, industry, and people timelines behind sixteen years of research.
+  humanURL: https://developer.apievangelist.com
+  baseURL: https://api.apievangelist.com/v1
+  tags:
+  - Timelines
+  properties:
+  - type: OpenAPI
+    url: openapi/api-evangelist-timelines-api-openapi.yml
+  - type: Documentation
+    url: https://developer.apievangelist.com
+  - type: APIReference
+    url: https://developer.apievangelist.com/api
+  - type: Pricing
+    url: https://developer.apievangelist.com/plans/
+  - type: RateLimits
+    url: https://developer.apievangelist.com/plans/
+  - type: JSONSchema
+    url: schema/index.yml
+  - type: JSONSchema
+    url: schema/Doc.yml
+  - type: JSONSchema
+    url: schema/Area.yml
+  - type: JSONSchema
+    url: schema/PagedEnvelope.yml
+  - type: JSONSchema
+    url: schema/SearchEnvelope.yml
+  - type: JSONSchema
+    url: schema/Engage.yml
+  - type: JSONSchema
+    url: schema/ContactOption.yml
+  - type: JSONSchema
+    url: schema/Error.yml
+  - type: APIReference
+    url: https://developer.apievangelist.com/governance-api
+- aid: api-evangelist:api-evangelist-toolbox-api
+  name: API Evangelist Toolbox API
+  description: >-
+    Standards, solutions, tools, schema, and properties — the raw materials of API operations.
+  humanURL: https://developer.apievangelist.com
+  baseURL: https://api.apievangelist.com/v1
+  tags:
+  - Toolbox
+  properties:
+  - type: OpenAPI
+    url: openapi/api-evangelist-toolbox-api-openapi.yml
+  - type: Documentation
+    url: https://developer.apievangelist.com
+  - type: APIReference
+    url: https://developer.apievangelist.com/api
+  - type: Pricing
+    url: https://developer.apievangelist.com/plans/
+  - type: RateLimits
+    url: https://developer.apievangelist.com/plans/
+  - type: JSONSchema
+    url: schema/index.yml
+  - type: JSONSchema
+    url: schema/Doc.yml
+  - type: JSONSchema
+    url: schema/Area.yml
+  - type: JSONSchema
+    url: schema/PagedEnvelope.yml
+  - type: JSONSchema
+    url: schema/SearchEnvelope.yml
+  - type: JSONSchema
+    url: schema/Engage.yml
+  - type: JSONSchema
+    url: schema/ContactOption.yml
+  - type: JSONSchema
+    url: schema/Error.yml
+  - type: APIReference
+    url: https://developer.apievangelist.com/governance-api
+- aid: api-evangelist:api-evangelist-apis-api
+  name: API Evangelist APIs API
+  description: >-
+    Individual API resources tracked across the network, and the relevance graph between them.
+  humanURL: https://developer.apievangelist.com/mcp-server
+  baseURL: https://mcp.apievangelist.com/mcp
+  tags: []
+  tags_raw:
+  - APIs
+  properties:
+  - type: OpenAPI
+    url: openapi/api-evangelist-apis-api-openapi.yml
+  - type: Documentation
+    url: https://developer.apievangelist.com
+  - type: APIReference
+    url: https://developer.apievangelist.com/api
+  - type: Pricing
+    url: https://developer.apievangelist.com/plans/
+  - type: RateLimits
+    url: https://developer.apievangelist.com/plans/
+  - type: JSONSchema
+    url: schema/index.yml
+  - type: JSONSchema
+    url: schema/Doc.yml
+  - type: JSONSchema
+    url: schema/Area.yml
+  - type: JSONSchema
+    url: schema/PagedEnvelope.yml
+  - type: JSONSchema
+    url: schema/SearchEnvelope.yml
+  - type: JSONSchema
+    url: schema/Engage.yml
+  - type: JSONSchema
+    url: schema/ContactOption.yml
+  - type: JSONSchema
+    url: schema/Error.yml
+  - type: APIReference
+    url: https://developer.apievangelist.com/governance-api
+common:
+- type: CapabilityMap
+  url: capabilities/api-evangelist-capability-edges.yml
+  name: API Evangelist Business Capability Map
+- type: Overlay
+  url: overlays/api-evangelist-v1-overlay.yaml
+- type: Overlay
+  url: overlays/api-evangelist-governance-overlay.yaml
+- type: IssueTracker
+  url: https://github.com/api-evangelist/posts/issues
+- type: AgenticAccess
+  url: agentic-access/api-evangelist-agentic-access.yml
+- type: AgentCard
+  url: a2a/api-evangelist-a2a.yml
+- type: DomainSecurity
+  url: security/api-evangelist-domain-security.yml
+- type: Authentication
+  url: authentication/api-evangelist-authentication.yml
+- type: DeveloperPortal
+  url: https://developer.apievangelist.com
+- type: Documentation
+  url: https://developer.apievangelist.com
+- type: Blog
+  url: https://apievangelist.com
+- type: BlogRSS
+  url: https://apievangelist.com/atom.xml
+- type: GitHubOrganization
+  url: https://github.com/api-evangelist
+- type: MCPServer
+  url: https://mcp.apievangelist.com/mcp
+- type: MCPServerCard
+  url: https://apievangelist.com/.well-known/mcp/server-card.json
+- type: APIReference
+  url: https://developer.apievangelist.com/api
+- type: GettingStarted
+  url: https://developer.apievangelist.com/getting-started
+- type: Support
+  url: https://apievangelist.com/contact
+- type: Pricing
+  url: https://developer.apievangelist.com/plans/
+- type: SignUp
+  url: https://api.apievangelist.com/v1/auth/login
+- type: TermsOfService
+  url: https://apievangelist.com/terms
+- type: PrivacyPolicy
+  url: https://apievangelist.com/privacy
+- type: WellKnown
+  url: well-known/api-evangelist-well-known.yml
+- type: APICatalog
+  url: https://developer.apievangelist.com/.well-known/api-catalog
+- type: LLMsTxt
+  url: llms/api-evangelist-llms.txt
+- type: MCPServer
+  url: mcp/api-evangelist-mcp.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: Conventions
+  url: conventions/api-evangelist-conventions.yml
+- type: ErrorCatalog
+  url: errors/api-evangelist-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/api-evangelist-lifecycle.yml
+- type: Conformance
+  url: conformance/api-evangelist-conformance.yml
+- type: DataModel
+  url: data-model/api-evangelist-data-model.yml
+- type: SpectralRules
+  url: rules/api-evangelist-spectral-rules.yml
+- type: Vocabulary
+  url: https://vocabularies.apievangelist.com
+- type: Plans
+  url: plans/api-evangelist-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/api-evangelist-rate-limits.yml
+- type: Postman
+  url: collections/apievangelist-v1.postman_collection.json
+- type: Postman
+  url: collections/apievangelist-governance.postman_collection.json
+- type: OpenCollection
+  url: collections/apievangelist-governance.opencollection.json
+- type: ChangeLog
+  url: https://developer.apievangelist.com/changelog
+- type: Deprecation
+  url: https://developer.apievangelist.com/deprecation
+- type: Security
+  url: https://developer.apievangelist.com/security
+- type: SecurityTxt
+  url: https://developer.apievangelist.com/.well-known/security.txt
+- type: RoadMap
+  url: https://developer.apievangelist.com/roadmap
+maintainers:
+- FN: Kin Lane
+  email: info@apievangelist.com
+  X-github: kinlane
+x-evidence:
+  checked: '2026-08-10'
+  method: HTTP HEAD/GET against every pointer in the profile
+  note: 'Pointers that did not resolve were removed rather than carried forward. Dead at check time: posts.apievangelist.com
+    and videos.apievangelist.com (NXDOMAIN), partners/utilities apis.json and spotlight-rules.com/rules.json
+    (404), policies+properties openapi.yml (404). GitHubRepository pointers to private api-evangelist
+    repos were dropped — anonymous fetchers get a 404.'
+x-enrichment:
+  date: '2026-08-10'
+  status: enriched
+  artifacts_added: 26
+  pass: local-v1
+x-a2a:
+  verified: true
+  probed: '2026-09-26'
+  url: "https://apievangelist.com/.well-known/agent-card.json"
+  grade: "conformant"
+  protocol_version: "0.3"
+  control: 404

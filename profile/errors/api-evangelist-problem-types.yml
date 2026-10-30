@@ -1,0 +1,105 @@
+generated: '2026-08-10'
+method: derived
+source: openapi/apievangelist-v1-openapi.yml, openapi/apievangelist-governance-openapi.json
+verified_by: live requests against https://api.apievangelist.com/v1 on 2026-08-10
+format: custom-json
+rfc9457: false
+note: >-
+  Neither API emits application/problem+json and neither error carries a dereferenceable `type`
+  URI, so the codes below are the machine-readable contract in full. Two envelopes ship behind one
+  base URL: the network API uses {error, detail}; the governance API uses {error, message}.
+
+envelopes:
+- api: API Evangelist Network API
+  spec: openapi/apievangelist-v1-openapi.yml
+  schema: '#/components/schemas/Error'
+  shape: {error: string, detail: string}
+  content_type: application/json
+- api: API Evangelist Governance & Discovery API
+  spec: openapi/apievangelist-governance-openapi.json
+  shape: {error: string, message: string}
+  content_type: application/json
+  extra_fields_observed: [upgrade, signup, tier, plans, engage]
+
+problems:
+- status: 404
+  code: not_found
+  title: Resource not found
+  api: network
+  spec: openapi/apievangelist-v1-openapi.yml
+  operations_declaring_it: 23
+  example_operations: [getPost, getArea, getGuidanceItem, getPoliciesItem, getTag]
+  observed_body: '{"error":"not_found","detail":"posts does-not-exist-xyz"}'
+  observed_at: 'https://api.apievangelist.com/v1/posts/does-not-exist-xyz'
+  remediation: >-
+    The slug does not exist in that collection. Post slugs are YYYY-MM-DD-slug. List the
+    collection first and read `data[].slug`.
+- status: 403
+  code: upgrade_required
+  title: Requires the Pro tier
+  api: network
+  spec: openapi/apievangelist-v1-openapi.yml
+  operations_declaring_it: 2
+  example_operations: [getGuide, getCompanyGaps]
+  observed_body: >-
+    {"error":"upgrade_required","tier":"pro","detail":"The /v1/stats endpoint requires the Pro
+    tier.","plans":"https://developer.apievangelist.com/plans/","engage":"..."}
+  observed_at: 'https://api.apievangelist.com/v1/stats'
+  remediation: Send a Pro key in x-api-key. Plans at https://developer.apievangelist.com/plans/.
+  divergence: >-
+    Returned for getStats too, which does not declare a 403 in the spec — the spec understates
+    where the Pro wall sits.
+- status: 400
+  code: bad_request
+  title: Malformed or missing parameter
+  api: network
+  spec: openapi/apievangelist-v1-openapi.yml
+  operations_declaring_it: 1
+  example_operations: [getGuide]
+  remediation: Supply the required query parameter (e.g. topic on /guide).
+- status: 400
+  code: bad_request
+  title: Missing required field
+  api: governance
+  spec: openapi/apievangelist-governance-openapi.json
+  operations_declaring_it: 9
+  example_operations: [validate, coverage, waivers, verify]
+  observed_body: '{"error":"bad_request","message":"Missing required field: document."}'
+  observed_at: 'POST https://api.apievangelist.com/v1/governance/validate'
+  remediation: Send the API description in the `document` field of the JSON request body.
+- status: 402
+  code: payment_required
+  title: Pro capability
+  api: governance
+  spec: openapi/apievangelist-governance-openapi.json
+  operations_declaring_it: 12
+  example_operations: [report, mock, snippets, certify, agentExport, pipelineAudit]
+  observed_body: >-
+    {"error":"payment_required","message":"governance/certify is a PRO capability. Upgrade or
+    sign in to continue.","upgrade":"https://developer.apievangelist.com/plans","signup":"https://api.apievangelist.com/v1/auth/login"}
+  observed_at: 'POST https://api.apievangelist.com/v1/governance/certify'
+  remediation: Send a Pro key in x-api-key, or sign in at /v1/auth/login.
+- status: 401
+  code: unauthenticated
+  title: Not authenticated
+  api: governance
+  spec: openapi/apievangelist-governance-openapi.json
+  operations_declaring_it: 2
+  example_operations: [GET /auth/me, POST /billing/checkout]
+  remediation: Sign in at GET /v1/auth/login and send the resulting key.
+- status: 422
+  code: unprocessable
+  title: Document could not be parsed
+  api: governance
+  spec: openapi/apievangelist-governance-openapi.json
+  operations_declaring_it: 1
+  example_operations: [validate]
+  remediation: The supplied document is not valid OpenAPI/AsyncAPI/Arazzo/JSON Schema.
+
+gaps:
+- 429 is not declared on any operation in either spec, although a 5 req/s and 1,000 req/day limit
+  is documented in prose — an agent has no contract for the throttled case.
+- 5xx is not declared on any operation in either spec.
+- No error `type` URI and no application/problem+json, so error classes are not dereferenceable.
+- The two APIs behind one base URL use different envelope field names (`detail` vs `message`) and
+  different status codes for the same Pro wall (403 vs 402).

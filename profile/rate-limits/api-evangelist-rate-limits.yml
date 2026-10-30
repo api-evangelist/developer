@@ -1,0 +1,82 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+provider: API Evangelist
+providerId: api-evangelist
+method: harvested
+source: https://developer.apievangelist.com/plans
+created: '2026-08-11'
+modified: '2026-08-11'
+reconciled: true
+tags:
+  - Rate Limiting
+  - API Research
+  - Governance
+  - Quota
+note: >-
+  API Evangelist operates this catalog and is also a provider listed in it. This
+  artifact is first-party: every limit below is transcribed from API Evangelist's
+  own published plans and authentication pages rather than researched about a
+  third party, and is disclosed rather than assumed.
+description: >-
+  The API Evangelist Network API and Governance & Discovery API are read-only and
+  meter per API key, with the free tier metered without a key. Free is throttled
+  both per second and per day; the paid tiers are published as daily request
+  ceilings. Enterprise limits are negotiated. Rate limits are documented on the
+  plans page rather than returned as response headers today — a consumer should
+  treat the published daily ceiling as the contract and request higher limits by
+  email rather than relying on a header to discover the remaining budget.
+sources:
+  - https://developer.apievangelist.com/plans
+  - https://developer.apievangelist.com/authentication
+limits:
+  - name: Free tier burst
+    scope: ip
+    metric: requests_per_second
+    limit: 5
+    timeFrame: second
+    notes: Applies to keyless free-tier access.
+  - name: Free tier daily quota
+    scope: ip
+    metric: requests_per_day
+    limit: 1000
+    timeFrame: day
+    notes: No key required. Discovery operations only; Pro capabilities are gated by key.
+  - name: Pro daily quota
+    scope: key
+    metric: requests_per_day
+    limit: 5000
+    timeFrame: day
+    notes: Single key issued per Pro account. Sent in the x-api-key header.
+  - name: Team daily quota
+    scope: key
+    metric: requests_per_day
+    limit: 25000
+    timeFrame: day
+    notes: Multiple keys per Team account, metered against the shared daily ceiling.
+  - name: Enterprise daily quota
+    scope: key
+    metric: requests_per_day
+    limit: -1
+    timeFrame: day
+    notes: Custom and negotiated. Contact info@apievangelist.com.
+  - name: Pagination ceiling
+    scope: request
+    metric: records_per_request
+    limit: 100
+    timeFrame: request
+    notes: >-
+      The page + limit pair caps at limit=100 on every collection endpoint. A
+      structural ceiling rather than a plan-tier throttle, recorded because it
+      bounds how fast a consumer can drain a collection within its daily quota.
+raising_limits: >-
+  Keys are issued per consumer with limits matched to the use case. Pro and Team
+  are self-serve through Stripe checkout at https://developer.apievangelist.com/account;
+  higher or custom limits are arranged by emailing info@apievangelist.com.
+gaps:
+  - >-
+    No RateLimit response headers are served today, so a consumer cannot read the
+    remaining budget from a response. Recorded as a known gap rather than omitted.
+  - >-
+    No documented 429 throttling response or Retry-After contract. Consumers
+    should back off on any non-2xx and consult the published daily ceiling.

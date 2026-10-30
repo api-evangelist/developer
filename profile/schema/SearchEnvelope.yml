@@ -1,0 +1,17 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: https://raw.githubusercontent.com/api-evangelist/api-evangelist/refs/heads/main/schema/SearchEnvelope.yml
+title: SearchEnvelope
+allOf:
+- $ref: PagedEnvelope.yml
+- type: object
+  properties:
+    meta:
+      type: object
+      properties:
+        facets:
+          type: object
+          properties:
+            types:
+              type: object
+              additionalProperties:
+                type: integer

@@ -1,0 +1,14 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: https://raw.githubusercontent.com/api-evangelist/api-evangelist/refs/heads/main/schema/Engage.yml
+title: Engage
+type: object
+properties:
+  email:
+    type: string
+    format: email
+  services_url:
+    type: string
+    format: uri
+  newsletter:
+    type: string
+    format: uri

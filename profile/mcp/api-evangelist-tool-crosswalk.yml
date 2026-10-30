@@ -1,0 +1,540 @@
+generated: '2026-08-10'
+method: derived
+source: mcp/api-evangelist-mcp-tools.json (live tools/list) + openapi/apievangelist-v1-openapi.yml (x-apis-io.operations)
+  + openapi/apievangelist-governance-openapi.json
+description: Binds every published MCP tool to the OpenAPI operation(s) that back it, so each tool inherits a real
+  inputSchema from the contract instead of a guessed one.
+surfaces:
+  openapi:
+  - file: openapi/apievangelist-v1-openapi.yml
+    operations: 66
+    server: https://api.apievangelist.com/v1
+  - file: openapi/apievangelist-governance-openapi.json
+    operations: 23
+    server: https://api.apievangelist.com/v1
+    unnamed_operations: 3
+  graphql: null
+  mcp:
+    url: https://mcp.apievangelist.com/mcp
+    transport: streamable-http
+    tools_list_gated: false
+    tools: 57
+coverage:
+  tools_named: 57
+  tools_bound: 56
+  mcp_only: 1
+  rest_operations_total: 89
+  rest_operations_with_a_tool: 85
+  rest_only: 4
+  operations_without_an_operationId: 3
+crosswalk:
+- tool: get_overview
+  category: network-research
+  spec: openapi/apievangelist-v1-openapi.yml
+  rest:
+  - getServiceInfo
+  binding: rest
+  confidence: high
+  note: bound by the first-party x-apis-io.operations map published in the OpenAPI
+- tool: guide_topic
+  category: network-research
+  spec: openapi/apievangelist-v1-openapi.yml
+  rest:
+  - getGuide
+  binding: rest
+  confidence: high
+  note: bound by the first-party x-apis-io.operations map published in the OpenAPI
+- tool: find_services
+  category: network-research
+  spec: openapi/apievangelist-v1-openapi.yml
+  rest:
+  - listServices
+  binding: rest
+  confidence: high
+  note: bound by the first-party x-apis-io.operations map published in the OpenAPI
+- tool: get_service
+  category: network-research
+  spec: openapi/apievangelist-v1-openapi.yml
+  rest:
+  - getService
+  binding: rest
+  confidence: high
+  note: bound by the first-party x-apis-io.operations map published in the OpenAPI
+- tool: find_solutions
+  category: network-research
+  spec: openapi/apievangelist-v1-openapi.yml
+  rest:
+  - listSolutions
+  binding: rest
+  confidence: high
+  note: bound by the first-party x-apis-io.operations map published in the OpenAPI
+- tool: get_solution
+  category: network-research
+  spec: openapi/apievangelist-v1-openapi.yml
+  rest:
+  - getSolution
+  binding: rest
+  confidence: high
+  note: bound by the first-party x-apis-io.operations map published in the OpenAPI
+- tool: find_tools
+  category: network-research
+  spec: openapi/apievangelist-v1-openapi.yml
+  rest:
+  - listTools
+  binding: rest
+  confidence: high
+  note: bound by the first-party x-apis-io.operations map published in the OpenAPI
+- tool: get_tool
+  category: network-research
+  spec: openapi/apievangelist-v1-openapi.yml
+  rest:
+  - getTool
+  binding: rest
+  confidence: high
+  note: bound by the first-party x-apis-io.operations map published in the OpenAPI
+- tool: get_contact
+  category: network-research
+  spec: openapi/apievangelist-v1-openapi.yml
+  rest:
+  - getContact
+  binding: rest
+  confidence: high
+  note: bound by the first-party x-apis-io.operations map published in the OpenAPI
+- tool: search_api_evangelist
+  category: network-research
+  spec: openapi/apievangelist-v1-openapi.yml
+  rest:
+  - listNewsletters
+  - searchNetwork
+  binding: rest
+  confidence: high
+  note: bound by the first-party x-apis-io.operations map published in the OpenAPI (one tool fans out across 2 operations)
+- tool: find_posts
+  category: network-research
+  spec: openapi/apievangelist-v1-openapi.yml
+  rest:
+  - listPosts
+  binding: rest
+  confidence: high
+  note: bound by the first-party x-apis-io.operations map published in the OpenAPI
+- tool: get_post
+  category: network-research
+  spec: openapi/apievangelist-v1-openapi.yml
+  rest:
+  - getPost
+  binding: rest
+  confidence: high
+  note: bound by the first-party x-apis-io.operations map published in the OpenAPI
+- tool: find_areas
+  category: network-research
+  spec: openapi/apievangelist-v1-openapi.yml
+  rest:
+  - listAreas
+  binding: rest
+  confidence: high
+  note: bound by the first-party x-apis-io.operations map published in the OpenAPI
+- tool: get_area
+  category: network-research
+  spec: openapi/apievangelist-v1-openapi.yml
+  rest:
+  - getArea
+  binding: rest
+  confidence: high
+  note: bound by the first-party x-apis-io.operations map published in the OpenAPI
+- tool: find_building_blocks
+  category: network-research
+  spec: openapi/apievangelist-v1-openapi.yml
+  rest:
+  - listExperiences
+  - listGuidance
+  - listLifecycle
+  - listPolicies
+  - listProperties
+  - listRules
+  - listSchema
+  - listStandards
+  - listStrategies
+  binding: rest
+  confidence: high
+  note: bound by the first-party x-apis-io.operations map published in the OpenAPI (one tool fans out across 9 operations)
+- tool: get_building_block
+  category: network-research
+  spec: openapi/apievangelist-v1-openapi.yml
+  rest:
+  - getExperiencesItem
+  - getGuidanceItem
+  - getLifecycleItem
+  - getPoliciesItem
+  - getPropertiesItem
+  - getRulesItem
+  - getSchemaItem
+  - getStandardsItem
+  - getStrategiesItem
+  binding: rest
+  confidence: high
+  note: bound by the first-party x-apis-io.operations map published in the OpenAPI (one tool fans out across 9 operations)
+- tool: find_conversations
+  category: network-research
+  spec: openapi/apievangelist-v1-openapi.yml
+  rest:
+  - listConversations
+  binding: rest
+  confidence: high
+  note: bound by the first-party x-apis-io.operations map published in the OpenAPI
+- tool: get_conversation
+  category: network-research
+  spec: openapi/apievangelist-v1-openapi.yml
+  rest:
+  - getConversation
+  binding: rest
+  confidence: high
+  note: bound by the first-party x-apis-io.operations map published in the OpenAPI
+- tool: find_papers
+  category: network-research
+  spec: openapi/apievangelist-v1-openapi.yml
+  rest:
+  - listPapers
+  binding: rest
+  confidence: high
+  note: bound by the first-party x-apis-io.operations map published in the OpenAPI
+- tool: get_paper
+  category: network-research
+  spec: openapi/apievangelist-v1-openapi.yml
+  rest:
+  - getPaper
+  binding: rest
+  confidence: high
+  note: bound by the first-party x-apis-io.operations map published in the OpenAPI
+- tool: find_videos
+  category: network-research
+  spec: openapi/apievangelist-v1-openapi.yml
+  rest:
+  - listVideos
+  binding: rest
+  confidence: high
+  note: bound by the first-party x-apis-io.operations map published in the OpenAPI
+- tool: get_video
+  category: network-research
+  spec: openapi/apievangelist-v1-openapi.yml
+  rest:
+  - getVideo
+  binding: rest
+  confidence: high
+  note: bound by the first-party x-apis-io.operations map published in the OpenAPI
+- tool: get_timeline
+  category: network-research
+  spec: openapi/apievangelist-v1-openapi.yml
+  rest:
+  - getTimelineApi
+  - getTimelineIndustries
+  - getTimelinePeople
+  - getTimelineResources
+  binding: rest
+  confidence: high
+  note: bound by the first-party x-apis-io.operations map published in the OpenAPI (one tool fans out across 4 operations)
+- tool: get_guidance_section
+  category: network-research
+  spec: openapi/apievangelist-v1-openapi.yml
+  rest:
+  - listGuidanceBusiness
+  - listGuidanceEvangelism
+  - listGuidanceGovernance
+  - listGuidanceHistory
+  - listGuidancePolitics
+  - listGuidanceTechnology
+  binding: rest
+  confidence: high
+  note: bound by the first-party x-apis-io.operations map published in the OpenAPI (one tool fans out across 6 operations)
+- tool: find_vocabulary
+  category: network-research
+  spec: openapi/apievangelist-v1-openapi.yml
+  rest:
+  - listVocabulary
+  - listVocabularyCategory
+  binding: rest
+  confidence: high
+  note: bound by the first-party x-apis-io.operations map published in the OpenAPI (one tool fans out across 2 operations)
+- tool: get_feeds
+  category: network-research
+  spec: openapi/apievangelist-v1-openapi.yml
+  rest:
+  - listFeeds
+  binding: rest
+  confidence: high
+  note: bound by the first-party x-apis-io.operations map published in the OpenAPI
+- tool: find_tags
+  category: network-research
+  spec: openapi/apievangelist-v1-openapi.yml
+  rest:
+  - listTags
+  binding: rest
+  confidence: high
+  note: bound by the first-party x-apis-io.operations map published in the OpenAPI
+- tool: get_tag
+  category: network-research
+  spec: openapi/apievangelist-v1-openapi.yml
+  rest:
+  - getTag
+  binding: rest
+  confidence: high
+  note: bound by the first-party x-apis-io.operations map published in the OpenAPI
+- tool: find_related
+  category: network-research
+  spec: openapi/apievangelist-v1-openapi.yml
+  rest:
+  - getAreaRelated
+  - getGuidanceRelated
+  - getPaperRelated
+  - getPostRelated
+  binding: rest
+  confidence: high
+  note: bound by the first-party x-apis-io.operations map published in the OpenAPI (one tool fans out across 4 operations)
+- tool: get_stats
+  category: network-research
+  spec: openapi/apievangelist-v1-openapi.yml
+  rest:
+  - getStats
+  binding: rest
+  confidence: high
+  note: bound by the first-party x-apis-io.operations map published in the OpenAPI
+- tool: find_company_insights
+  category: insights
+  spec: openapi/apievangelist-v1-openapi.yml
+  rest:
+  - listInsightCompanies
+  binding: rest
+  confidence: high
+  note: 1:1 by path/name; the Insights operations are absent from x-apis-io.operations
+- tool: insights_dimensions
+  category: insights
+  spec: openapi/apievangelist-v1-openapi.yml
+  rest:
+  - listInsightDimensions
+  binding: rest
+  confidence: high
+  note: 1:1 by path/name; the Insights operations are absent from x-apis-io.operations
+- tool: insights_adoption
+  category: insights
+  spec: openapi/apievangelist-v1-openapi.yml
+  rest:
+  - listInsightAdoption
+  binding: rest
+  confidence: high
+  note: 1:1 by path/name; the Insights operations are absent from x-apis-io.operations
+- tool: get_company_insight
+  category: insights
+  spec: openapi/apievangelist-v1-openapi.yml
+  rest:
+  - getCompanyInsight
+  binding: rest
+  confidence: high
+  note: 1:1 by path/name; the Insights operations are absent from x-apis-io.operations
+- tool: company_gaps
+  category: insights
+  spec: openapi/apievangelist-v1-openapi.yml
+  rest:
+  - getCompanyGaps
+  binding: rest
+  confidence: high
+  note: 1:1 by path/name; the Insights operations are absent from x-apis-io.operations
+- tool: validate_api
+  category: governance-compute
+  spec: openapi/apievangelist-governance-openapi.json
+  rest:
+  - validate
+  binding: rest
+  confidence: high
+  note: 1:1 with the governance operation of the same capability
+- tool: api_coverage
+  category: governance-compute
+  spec: openapi/apievangelist-governance-openapi.json
+  rest:
+  - coverage
+  binding: rest
+  confidence: high
+  note: 1:1 with the governance operation of the same capability
+- tool: reconcile_waivers
+  category: governance-compute
+  spec: openapi/apievangelist-governance-openapi.json
+  rest:
+  - waivers
+  binding: rest
+  confidence: high
+  note: 1:1 with the governance operation of the same capability
+- tool: governance_report
+  category: governance-compute
+  spec: openapi/apievangelist-governance-openapi.json
+  rest:
+  - report
+  binding: rest
+  confidence: high
+  note: 1:1 with the governance operation of the same capability
+- tool: verify_certificate
+  category: governance-compute
+  spec: openapi/apievangelist-governance-openapi.json
+  rest:
+  - verify
+  binding: rest
+  confidence: high
+  note: 1:1 with the governance operation of the same capability
+- tool: classify_api_fields
+  category: governance-compute
+  spec: openapi/apievangelist-governance-openapi.json
+  rest:
+  - classify
+  binding: rest
+  confidence: high
+  note: 1:1 with the governance operation of the same capability
+- tool: diff_api_versions
+  category: governance-compute
+  spec: openapi/apievangelist-governance-openapi.json
+  rest:
+  - diff
+  binding: rest
+  confidence: high
+  note: 1:1 with the governance operation of the same capability
+- tool: api_scorecard
+  category: governance-compute
+  spec: openapi/apievangelist-governance-openapi.json
+  rest:
+  - scorecard
+  binding: rest
+  confidence: high
+  note: 1:1 with the governance operation of the same capability
+- tool: deprecation_posture
+  category: governance-compute
+  spec: openapi/apievangelist-governance-openapi.json
+  rest:
+  - deprecation
+  binding: rest
+  confidence: high
+  note: 1:1 with the governance operation of the same capability
+- tool: validate_onboarding
+  category: governance-compute
+  spec: openapi/apievangelist-governance-openapi.json
+  rest:
+  - onboarding
+  binding: rest
+  confidence: high
+  note: 1:1 with the governance operation of the same capability
+- tool: certify_api
+  category: governance-compute
+  spec: openapi/apievangelist-governance-openapi.json
+  rest:
+  - certify
+  binding: rest
+  confidence: high
+  note: 1:1 with the governance operation of the same capability
+- tool: export_agent_rules
+  category: governance-compute
+  spec: openapi/apievangelist-governance-openapi.json
+  rest:
+  - agentExport
+  binding: rest
+  confidence: high
+  note: 1:1 with the governance operation of the same capability
+- tool: audit_pipeline
+  category: governance-compute
+  spec: openapi/apievangelist-governance-openapi.json
+  rest:
+  - pipelineAudit
+  binding: rest
+  confidence: high
+  note: 1:1 with the governance operation of the same capability
+- tool: forge_mcp_tools
+  category: governance-compute
+  spec: openapi/apievangelist-governance-openapi.json
+  rest:
+  - toolsmith
+  binding: rest
+  confidence: high
+  note: 1:1 with the governance operation of the same capability
+- tool: gate_agent_context
+  category: governance-compute
+  spec: openapi/apievangelist-governance-openapi.json
+  rest:
+  - contextGate
+  binding: rest
+  confidence: high
+  note: 1:1 with the governance operation of the same capability
+- tool: apply_overlay
+  category: governance-compute
+  spec: openapi/apievangelist-governance-openapi.json
+  rest:
+  - overlay
+  binding: rest
+  confidence: high
+  note: 1:1 with the governance operation of the same capability
+- tool: mock_payloads
+  category: governance-compute
+  spec: openapi/apievangelist-governance-openapi.json
+  rest:
+  - mock
+  binding: rest
+  confidence: high
+  note: 1:1 with the governance operation of the same capability
+- tool: code_snippets
+  category: governance-compute
+  spec: openapi/apievangelist-governance-openapi.json
+  rest:
+  - snippets
+  binding: rest
+  confidence: high
+  note: 1:1 with the governance operation of the same capability
+- tool: score_reusability
+  category: governance-compute
+  spec: openapi/apievangelist-governance-openapi.json
+  rest:
+  - reusability
+  binding: rest
+  confidence: high
+  note: 1:1 with the governance operation of the same capability
+- tool: map_api_experience
+  category: governance-compute
+  spec: openapi/apievangelist-governance-openapi.json
+  rest:
+  - experience
+  binding: rest
+  confidence: high
+  note: 1:1 with the governance operation of the same capability
+- tool: generate_agent_descriptor
+  category: governance-compute
+  spec: openapi/apievangelist-governance-openapi.json
+  rest:
+  - agentDescriptor
+  binding: rest
+  confidence: high
+  note: 1:1 with the governance operation of the same capability
+mcp_only:
+- tool: govern_estate
+  reason: no single public REST operation — server-side rollup across a set of APIs; the governance spec exposes
+    the per-document checks only
+rest_only:
+- operationId: getInsightsSummary
+  method: GET
+  path: /insights
+  spec: openapi/apievangelist-v1-openapi.yml
+  group: Insights
+- operationId: listInsightIndustries
+  method: GET
+  path: /insights/industries
+  spec: openapi/apievangelist-v1-openapi.yml
+  group: Insights
+- operationId: rules
+  method: GET
+  path: /governance/rules
+  spec: openapi/apievangelist-governance-openapi.json
+  group: Governance
+- operationId: rulesets
+  method: GET
+  path: /governance/rulesets
+  spec: openapi/apievangelist-governance-openapi.json
+  group: Governance
+notes:
+- The v1 spec publishes x-apis-io.operations — a first-party operationId -> mcpTool -> agentSkill map. Every "high"
+  confidence row for the network API comes from that map, not from name matching.
+- The Insights operations (getInsightsSummary, listInsightDimensions, listInsightAdoption, listInsightIndustries,
+  listInsightCompanies, getCompanyInsight, getCompanyGaps) are live in the spec and five of them have MCP tools,
+  but they are missing from x-apis-io.operations — the published experience map is behind the spec.
+- Three governance operations (GET /auth/login, GET /auth/me, POST /billing/checkout) carry no operationId in the
+  spec, so they cannot be referenced by a tool binding.

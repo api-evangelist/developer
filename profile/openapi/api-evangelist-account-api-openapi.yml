@@ -1,0 +1,219 @@
+openapi: 3.2.0
+info:
+  title: Evangelist Governance & Discovery Account API
+  version: 1.0.0
+  description: The API Commons governance and discovery tools — lint, coverage, waivers, reporting, certification, agent export, pipeline audit, MCP/skill forging, consumer gating, reusability, and experience mapping — as one hosted REST API.
+  contact:
+    name: API Evangelist
+    url: https://apievangelist.com
+    email: info@apievangelist.com
+servers:
+- url: https://api.apievangelist.com/v1
+  description: Production
+security:
+- ApiKey: []
+- {}
+tags:
+- name: Account
+  description: GitHub sign-in, API key, and Stripe self-serve billing.
+paths:
+  /auth/login:
+    get:
+      tags:
+      - Account
+      summary: Sign in with GitHub
+      description: Start GitHub OAuth. On return you get a session cookie and a personal API key (free tier) attached to your account.
+      security:
+      - {}
+      responses:
+        '302':
+          description: Redirect to GitHub.
+      operationId: authLogin
+  /auth/me:
+    get:
+      tags:
+      - Account
+      summary: Current account
+      description: Your login, tier, API key, base URLs, and recent usage. Requires the session cookie from sign-in.
+      responses:
+        '200':
+          description: Account.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  login:
+                    type: string
+                  tier:
+                    type: string
+                  apiKey:
+                    type: string
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
+        '401':
+          description: Not authenticated.
+      operationId: authMe
+  /billing/checkout:
+    post:
+      tags:
+      - Account
+      summary: Start a Pro/Team checkout
+      description: 'Create a Stripe Checkout session for {tier: pro|business, cycle: monthly|annual}. On completion your API key is moved onto the tier usage plan.'
+      responses:
+        '200':
+          description: Checkout URL.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  url:
+                    type: string
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
+        '401':
+          description: Not authenticated.
+      operationId: billingCheckout
+components:
+  headers:
+    XRateLimitWindow:
+      description: The quota window in seconds. Always 86400 (one day).
+      schema:
+        type: integer
+        examples:
+        - 86400
+    RateLimitPolicy:
+      description: 'The rate-limit policy in force for the tier that served this response, in RFC 9331 quota-policy syntax: `"quota";q=1000;w=86400, "burst";q=5;w=1` — a daily quota and a per-second burst. This is the POLICY, not a live counter: `RateLimit-Remaining` and `RateLimit-Reset` are deliberately not sent, because the quota is enforced by the gateway and there is no per-key usage accounting to read. Pace against the policy, and treat a 429 as authoritative.'
+      schema:
+        type: string
+        examples:
+        - '"quota";q=1000;w=86400, "burst";q=5;w=1'
+    XRateLimitLimit:
+      description: The daily request quota for the tier that served this response.
+      schema:
+        type: integer
+        examples:
+        - 1000
+    XRateLimitTier:
+      description: The tier this request was served on — `free`, `pro`, `business`, `internal` or `owner`. Keyless requests are `free`; requests from an apievangelist.com origin are `internal`.
+      schema:
+        type: string
+        examples:
+        - free
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: A Pro or Team key from sign-in. Omit for keyless free-tier access.
+x-apis-io:
+  mcpServer: https://mcp.apievangelist.com
+  agentSkills: https://raw.githubusercontent.com/api-commons/agent-skills/main/
+  operations:
+    validate:
+      tier: free
+      mcpTool: validate_api
+      agentSkill: api-governance
+    coverage:
+      tier: free
+      mcpTool: api_coverage
+      agentSkill: api-governance
+    waivers:
+      tier: free
+      mcpTool: reconcile_waivers
+      agentSkill: api-governance
+    report:
+      tier: free
+      mcpTool: governance_report
+      agentSkill: api-governance
+    verify:
+      tier: free
+      mcpTool: verify_certificate
+      agentSkill: api-governance
+    classify:
+      tier: free
+      mcpTool: classify_api_fields
+      agentSkill: api-agent-readiness
+    diff:
+      tier: free
+      mcpTool: diff_api_versions
+      agentSkill: api-governance
+    scorecard:
+      tier: free
+      mcpTool: api_scorecard
+      agentSkill: api-governance
+    deprecation:
+      tier: free
+      mcpTool: deprecation_posture
+      agentSkill: api-governance
+    mock:
+      tier: pro
+      mcpTool: mock_payloads
+      agentSkill: api-governance
+    snippets:
+      tier: pro
+      mcpTool: code_snippets
+      agentSkill: api-governance
+    rules:
+      tier: free
+      mcpTool: find_governance_rules
+      agentSkill: api-governance
+    rulesets:
+      tier: free
+      mcpTool: find_rulesets
+      agentSkill: api-governance
+    certify:
+      tier: pro
+      mcpTool: certify_api
+      agentSkill: api-governance
+    agentExport:
+      tier: pro
+      mcpTool: export_agent_rules
+      agentSkill: api-governance
+    pipelineAudit:
+      tier: pro
+      mcpTool: audit_pipeline
+      agentSkill: api-governance
+    toolsmith:
+      tier: pro
+      mcpTool: forge_mcp_tools
+      agentSkill: api-agent-readiness
+    contextGate:
+      tier: pro
+      mcpTool: gate_agent_context
+      agentSkill: api-agent-readiness
+    overlay:
+      tier: pro
+      mcpTool: apply_overlay
+      agentSkill: api-governance
+    reusability:
+      tier: pro
+      mcpTool: score_reusability
+      agentSkill: api-governance
+    onboarding:
+      tier: free
+      mcpTool: validate_onboarding
+      agentSkill: api-agent-readiness
+    agentDescriptor:
+      tier: pro
+      mcpTool: generate_agent_descriptor
+      agentSkill: api-agent-readiness
+    experience:
+      tier: pro
+      mcpTool: map_api_experience
+      agentSkill: api-agent-readiness

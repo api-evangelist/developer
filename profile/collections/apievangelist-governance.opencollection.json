@@ -1,0 +1,494 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "API Evangelist Governance & Discovery API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "x-api-key",
+      "value": "{{x-api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Governance",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Lint an API artifact (FREE)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.apievangelist.com/v1/governance/validate",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Lint an OpenAPI, AsyncAPI, Arazzo, or JSON Schema document against the curated 574-rule best-of-breed ruleset (Spectral). Pass your own Spectral ruleset to override the catalog."
+        },
+        {
+          "info": {
+            "name": "Governance coverage of a document (FREE)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.apievangelist.com/v1/governance/coverage",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "How much of an API description the ruleset actually inspects — coverage by section, dead rules, and each rule reach."
+        },
+        {
+          "info": {
+            "name": "Reconcile waivers against lint output (FREE)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.apievangelist.com/v1/governance/waivers",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Suppress sanctioned violations and surface expired, stale, and expiring waivers — the effective failing set your build should gate on."
+        },
+        {
+          "info": {
+            "name": "Render a governance report (FREE HTML, Pro SARIF)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.apievangelist.com/v1/governance/report",
+            "params": [
+              {
+                "name": "format",
+                "value": "",
+                "type": "query",
+                "description": "sarif requires a Pro key."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Turn Spectral findings into a self-contained HTML governance report. Pass ?format=sarif for SARIF 2.1.0 output (Pro)."
+        },
+        {
+          "info": {
+            "name": "Verify a governance certificate (FREE)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.apievangelist.com/v1/governance/verify",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Re-verify a tamper-evident API governance certificate against the API it attests to. Consumer-facing trust check."
+        },
+        {
+          "info": {
+            "name": "Classify PII and secret fields (FREE)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.apievangelist.com/v1/governance/classify",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Inventory the PII, secret, and sensitive fields an OpenAPI exposes — across parameters and request/response schemas. Uses the same classifiers as Context Gate."
+        },
+        {
+          "info": {
+            "name": "Detect breaking changes between two versions (FREE)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.apievangelist.com/v1/governance/diff",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Compare two OpenAPI versions and classify every change as breaking, non-breaking, or an addition — at path, operation, parameter, request-body, and response granularity."
+        },
+        {
+          "info": {
+            "name": "API maturity scorecard (FREE)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.apievangelist.com/v1/governance/scorecard",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Roll up a 0-100 maturity score with a letter grade across dimensions — design/style (lint), governance coverage, documentation completeness, and (from an apis.json) discoverability, agent-readiness, and operations."
+        },
+        {
+          "info": {
+            "name": "Deprecation / sunset posture (FREE)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.apievangelist.com/v1/governance/deprecation",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Report every deprecated operation and whether it announces a sunset (x-sunset date or a Sunset/Deprecation response header), plus deprecated schema fields — the honest migration picture."
+        },
+        {
+          "info": {
+            "name": "Generate example payloads (PRO)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.apievangelist.com/v1/governance/mock",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Generate an example request and success-response payload for every operation from its OpenAPI schema (author example/default/enum first, else synthesized by type/format)."
+        },
+        {
+          "info": {
+            "name": "Generate code samples (PRO)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.apievangelist.com/v1/governance/snippets",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Generate runnable curl / JavaScript (fetch) / Python (requests) samples for every operation, with path params filled in and a realistic request body."
+        },
+        {
+          "info": {
+            "name": "The curated rule catalog (FREE)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.apievangelist.com/v1/governance/rules",
+            "params": [
+              {
+                "name": "format",
+                "value": "",
+                "type": "query",
+                "description": "Only rules for this artifact format."
+              }
+            ]
+          },
+          "docs": "Browse the curated best-of-breed rule catalog the validator runs — every rule with its id, format, title, severity, tags, given, and reference. Optionally filter by artifact format."
+        },
+        {
+          "info": {
+            "name": "The Ruleset Commons registry (FREE)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.apievangelist.com/v1/governance/rulesets"
+          },
+          "docs": "The registry of adoptable, provenanced governance rulesets — national, industry, security, and company rulesets you can extend by reference instead of running the linter defaults."
+        },
+        {
+          "info": {
+            "name": "Issue a governance certificate (PRO)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.apievangelist.com/v1/governance/certify",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Issue a tamper-evident certificate attesting an API description passed a named ruleset at a profile threshold. A SHA-256 fingerprint lets anyone re-verify it."
+        },
+        {
+          "info": {
+            "name": "Export agent-native governance artifacts (PRO)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.apievangelist.com/v1/governance/agent-export",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Turn a Spectral ruleset into an AGENTS.md governance block, a system-prompt instruction set, a per-rule remediation prompt pack, and a compact rule digest."
+        },
+        {
+          "info": {
+            "name": "Audit a repo Spectral CI maturity (PRO)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.apievangelist.com/v1/governance/pipeline-audit",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Score a repository Spectral governance pipeline against an 8-point maturity rubric and get a prioritized punch-list. Supply files inline, or a public repo (owner/name) to fetch."
+        },
+        {
+          "info": {
+            "name": "Forge MCP tools and Agent Skills (PRO)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.apievangelist.com/v1/governance/toolsmith",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "From an OpenAPI, forge an MCP server design, per-operation tools, Agent Skills, an enriched OpenAPI (x-mcp / x-agent-skills), a server.json, and apis.json properties."
+        },
+        {
+          "info": {
+            "name": "Emit a governed agent surface (PRO)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.apievangelist.com/v1/governance/context-gate",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Choose which operations and fields your API exposes to agents; emit a governed Tyk OpenAPI, an MCP tool manifest, and a Spectral ruleset with PII/secret checks. Defaults to the whole surface when no selection is supplied."
+        },
+        {
+          "info": {
+            "name": "Apply an OpenAPI Overlay (PRO)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.apievangelist.com/v1/governance/overlay",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Apply an OpenAPI Overlay (spec 1.0.0) to a document — each action resolves a target JSONPath and deep-merges update or removes the match. Returns the transformed OpenAPI plus a per-action report."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Discovery",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Reusability and duplication across APIs (PRO)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.apievangelist.com/v1/discovery/reusability",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Score how reusable a set of APIs is and detect duplication/overlap across them; optionally score apis.json composability and metadata completeness."
+        },
+        {
+          "info": {
+            "name": "Validate an API Onboarding Descriptor (FREE)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.apievangelist.com/v1/discovery/onboarding",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Validate an API Onboarding Descriptor (AID) against the api-commons AID JSON Schema, and report which optional sections it fills in (a completeness score)."
+        },
+        {
+          "info": {
+            "name": "Generate llms.txt + AGENTS.md (PRO)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.apievangelist.com/v1/discovery/agent-descriptor",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Generate the agent-facing descriptors for an API: an llms.txt (well-known link summary) and an AGENTS.md consumption contract — base URL, auth, the operation table, deprecated operations to avoid, and usage rules. Reads links from an apis.json when supplied."
+        },
+        {
+          "info": {
+            "name": "DX/AX experience coverage (PRO)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.apievangelist.com/v1/discovery/experience",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Map each REST operation to its MCP tool and Agent Skill (the API to MCP to Agent-Skill chain) from an APIs.json, with a free/paid coverage scorecard and an SVG flow map."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Account",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Sign in with GitHub",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.apievangelist.com/v1/auth/login"
+          },
+          "docs": "Start GitHub OAuth. On return you get a session cookie and a personal API key (free tier) attached to your account."
+        },
+        {
+          "info": {
+            "name": "Current account",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.apievangelist.com/v1/auth/me"
+          },
+          "docs": "Your login, tier, API key, base URLs, and recent usage. Requires the session cookie from sign-in."
+        },
+        {
+          "info": {
+            "name": "Start a Pro/Team checkout",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.apievangelist.com/v1/billing/checkout"
+          },
+          "docs": "Create a Stripe Checkout session for {tier: pro|business, cycle: monthly|annual}. On completion your API key is moved onto the tier usage plan."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

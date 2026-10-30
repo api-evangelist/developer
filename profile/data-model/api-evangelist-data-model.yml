@@ -1,0 +1,151 @@
+generated: '2026-08-10'
+method: derived
+source: openapi/apievangelist-v1-openapi.yml, openapi/apievangelist-governance-openapi.json
+note: >-
+  The network API is a single-entity content graph, not a relational resource tree. One polymorphic
+  `Doc` schema carries every resource type; the collection path (/posts, /guidance, /rules …) is
+  what disambiguates, and `Doc.type` echoes it back. `additionalProperties: true` means each
+  collection adds its own fields (guest, outline, party …) that the contract does not enumerate.
+
+entities:
+- name: Doc
+  schema: openapi/apievangelist-v1-openapi.yml#/components/schemas/Doc
+  description: One network resource of any type.
+  identifier: slug
+  fields: [type, slug, title, summary, url, tags, date, content]
+  open: true
+  materializes_as:
+    posts:
+      path: '/posts'
+      item: '/posts/{slug}'
+    areas:
+      path: '/areas'
+      item: '/areas/{slug}'
+    guidance:
+      path: '/guidance'
+      item: '/guidance/{slug}'
+    policies:
+      path: '/policies'
+      item: '/policies/{slug}'
+    rules:
+      path: '/rules'
+      item: '/rules/{slug}'
+    standards:
+      path: '/standards'
+      item: '/standards/{slug}'
+    strategies:
+      path: '/strategies'
+      item: '/strategies/{slug}'
+    schema:
+      path: '/schema'
+      item: '/schema/{slug}'
+    properties:
+      path: '/properties'
+      item: '/properties/{slug}'
+    experiences:
+      path: '/experiences'
+      item: '/experiences/{slug}'
+    lifecycle:
+      path: '/lifecycle'
+      item: '/lifecycle/{slug}'
+    solutions:
+      path: '/solutions'
+      item: '/solutions/{slug}'
+    tools:
+      path: '/tools'
+      item: '/tools/{slug}'
+    conversations:
+      path: '/conversations'
+      item: '/conversations/{slug}'
+    videos:
+      path: '/videos'
+      item: '/videos/{slug}'
+    papers:
+      path: '/papers'
+      item: '/papers/{slug}'
+    services:
+      path: '/services'
+      item: '/services/{slug}'
+    newsletters:
+      path: '/newsletters'
+    vocabulary:
+      path: '/vocabulary'
+      item: '/vocabulary/{category}'
+- name: Area
+  schema: openapi/apievangelist-v1-openapi.yml#/components/schemas/Area
+  description: One of 77 topic areas, with a resolved related-area graph.
+  identifier: slug
+- name: PagedEnvelope
+  schema: openapi/apievangelist-v1-openapi.yml#/components/schemas/PagedEnvelope
+  kind: envelope
+  fields: [meta.total, meta.page, meta.limit, meta.pages, meta.query, 'data[]']
+- name: SearchEnvelope
+  schema: openapi/apievangelist-v1-openapi.yml#/components/schemas/SearchEnvelope
+  kind: envelope
+  extends: PagedEnvelope
+  adds: [meta.facets.types]
+- name: Engage
+  schema: openapi/apievangelist-v1-openapi.yml#/components/schemas/Engage
+  description: How to engage API Evangelist, returned on the service root.
+- name: ContactOption
+  schema: openapi/apievangelist-v1-openapi.yml#/components/schemas/ContactOption
+  description: One channel on GET /contact.
+- name: Error
+  schema: openapi/apievangelist-v1-openapi.yml#/components/schemas/Error
+  kind: error
+  fields: [error, detail]
+
+relationships:
+- from: PagedEnvelope
+  to: Doc
+  kind: has_many
+  via: data
+  evidence: '$ref #/components/schemas/Doc in PagedEnvelope.data.items'
+- from: SearchEnvelope
+  to: PagedEnvelope
+  kind: extends
+  via: allOf
+  evidence: allOf[0] $ref PagedEnvelope
+- from: Doc
+  to: Doc
+  kind: has_many
+  via: tags
+  evidence: >-
+    Doc.tags is a string array and GET /tags/{slug} resolves a tag to everything it labels across
+    the whole network (getTag), making tags the primary cross-type join.
+- from: Doc
+  to: Doc
+  kind: has_many
+  via: related
+  evidence: >-
+    getPostRelated, getAreaRelated, getPaperRelated, getGuidanceRelated return the most related
+    documents across all types for a given (type, slug).
+- from: Area
+  to: Area
+  kind: has_many
+  via: related areas
+  evidence: getArea "resolves the related-area graph"
+- from: Area
+  to: Doc
+  kind: has_many
+  via: area membership
+  evidence: >-
+    areas "connect stories, building blocks, papers, and services around one of 77 topics"
+    (getting-started docs)
+
+governance_api:
+  note: >-
+    The governance API has no persistent entities and declares no components.schemas — every
+    operation is stateless compute over a `document` supplied in the request body. The only
+    durable object it mints is a governance certificate (POST /governance/certify), re-checkable
+    with POST /governance/verify; the certificate shape is not published in the contract.
+  gaps:
+  - components.schemas is empty in openapi/apievangelist-governance-openapi.json — request and
+    response bodies are described in prose, not schema.
+  - three operations (GET /auth/login, GET /auth/me, POST /billing/checkout) carry no operationId.
+
+gaps:
+- One polymorphic `Doc` with additionalProperties:true means the per-type fields an agent will
+  actually receive are not in the contract.
+- No id-reference fields between resources; the graph is expressed only through tags and the
+  /related operations, so relationships are query-time, not schema-time.

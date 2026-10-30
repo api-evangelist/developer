@@ -1,0 +1,97 @@
+generated: '2026-08-10'
+method: searched
+source: >-
+  live probes of apievangelist.com / developer.apievangelist.com / mcp.apievangelist.com plus
+  openapi/apievangelist-v1-openapi.yml and openapi/apievangelist-governance-openapi.json
+note: >-
+  Cross-cutting standards this API surface conforms to, each with the artifact or probe that
+  proves it. `conforms: false` entries are recorded so absence is data, not silence.
+
+standards:
+- id: openapi-3.1
+  conforms: true
+  evidence: 'both contracts declare openapi: 3.1.0'
+  artifacts: [openapi/apievangelist-v1-openapi.yml, openapi/apievangelist-governance-openapi.json]
+- id: rfc9264-api-catalog
+  conforms: true
+  evidence: >-
+    /.well-known/api-catalog returns 200 application/json with an RFC 9264 `linkset` carrying
+    service-desc / service-doc / service-meta on both apievangelist.com and
+    developer.apievangelist.com
+  artifacts: [well-known/api-evangelist-api-catalog.json, well-known/api-evangelist-developer-api-catalog.json]
+- id: mcp-streamable-http
+  conforms: true
+  evidence: >-
+    anonymous POST tools/list to https://mcp.apievangelist.com/mcp returned 200 with 57 tools;
+    transport declared streamable-http in the server card
+  artifacts: [mcp/api-evangelist-mcp.yml, mcp/api-evangelist-mcp-tools.json]
+- id: mcp-server-card
+  conforms: true
+  evidence: >-
+    /.well-known/mcp/server-card.json returns 200 and validates against the schema it declares
+    ($schema modelcontextprotocol server-card.schema.json)
+  artifacts: [well-known/api-evangelist-mcp-server-card.json]
+- id: agent-skills-discovery
+  conforms: partial
+  evidence: >-
+    /.well-known/agent-skills/index.json returns 200 and declares the Cloudflare agent-skills
+    discovery RFC index schema with 8 skills — but every advertised SKILL.md URL returns 404
+    (discover-apievangelist, search-apis, brief-on-topic, governance-starter-kit all probed)
+  artifacts: [well-known/api-evangelist-agent-skills-index.json, skills/_index.yml]
+- id: llmstxt
+  conforms: true
+  evidence: https://apievangelist.com/llms.txt returns 200 text/plain, 18 KB, llms.txt format
+  artifacts: [llms/api-evangelist-llms.txt]
+- id: a2a
+  conforms: false
+  evidence: >-
+    /.well-known/agent-card.json and /.well-known/agent.json both 404 on apievangelist.com and
+    developer.apievangelist.com
+- id: oauth2
+  conforms: false
+  evidence: no oauth2 securityScheme in either spec; /.well-known/oauth-authorization-server 404
+- id: oidc
+  conforms: false
+  evidence: /.well-known/openid-configuration 404 on every host
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: >-
+    errors are application/json {error, detail} (network) and {error, message} (governance);
+    no application/problem+json and no `type` URI
+  artifacts: [errors/api-evangelist-problem-types.yml]
+- id: rfc9116-security-txt
+  conforms: false
+  evidence: /.well-known/security.txt 404 on apievangelist.com and developer.apievangelist.com
+- id: rfc8594-sunset
+  conforms: false
+  evidence: no Sunset or Deprecation header documented or observed
+  artifacts: [lifecycle/api-evangelist-lifecycle.yml]
+- id: ratelimit-headers
+  conforms: false
+  evidence: >-
+    no RateLimit / X-RateLimit / Retry-After header on a live 200; the 5 req/s, 1,000 req/day
+    limit is documented in prose only
+- id: cors
+  conforms: true
+  evidence: >-
+    access-control-allow-origin is *, allow-headers content-type and x-api-key, on live responses
+- id: apisjson
+  conforms: true
+  evidence: >-
+    the network publishes apis.json collections (apis.apievangelist.com/apis.json,
+    providers.apievangelist.com/apis.json, schema/standards) and this profile is APIs.json 0.21
+- id: json-schema
+  conforms: true
+  evidence: OpenAPI 3.1 schemas are JSON Schema 2020-12 by definition of the 3.1 dialect
+
+compliance_program:
+  published: false
+  certifications: []
+  note: >-
+    No trust center, no SOC 2 / ISO 27001 / PCI / HIPAA / FedRAMP claim. API Evangelist is a
+    one-person research practice; probe-security-programs.py found neither a trust center nor a
+    disclosure program. No `Compliance` pointer is emitted — there is nothing to point at.
+
+x-evidence:
+  checked: '2026-08-10'
+  method: HTTP GET/POST against each host; status and content-type recorded as returned

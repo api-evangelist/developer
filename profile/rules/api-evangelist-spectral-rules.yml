@@ -1,0 +1,661 @@
+# Spectral validates a ruleset against a CLOSED schema -- a root `method:` key
+# makes the file fail to load ("must NOT have additional properties"), i.e. a
+# stamped ruleset is one Spectral will not run. `x-method:` carries the same
+# provenance and loads. Verified with @stoplight/spectral-cli 2026-08-20.
+x-method: generated
+x-generated: '2026-08-20'
+x-source:
+  - openapi/apievangelist-v1-openapi.yml
+  - openapi/apievangelist-governance-openapi.json
+
+# =============================================================================
+# api-evangelist -- Spectral ruleset
+#
+# Regenerated 2026-08-20 from the provider's own two contracts. Every convention
+# below was MEASURED across all 92 operations before it was written down, and the
+# measurement is recorded beside the rule. Where the two contracts disagree the
+# dominant convention wins and the rule fires on the minority -- that is the
+# point of a house style, and a rule tuned until it stops firing measures nothing.
+#
+# Measured (v1 = 66 ops, governance = 26 ops):
+#   openapi                3.1.0 on both
+#   servers                1 each, https, api.apievangelist.com/v1, no trailing slash
+#   path segments          snake @ 97% (n=144) -- 4 kebab exceptions, all governance
+#   path parameters        snake @ 100% (n=25)
+#   operationIds           camel @ 100% (n=92)
+#   query parameters       snake @ 100% (n=175, refs resolved)
+#   components.parameters  PascalCase @ 100% (n=9)
+#   component schemas      PascalCase @ 100% (n=7); properties snake @ 100% (n=20)
+#   auth                   apiKey in header, `x-api-key`, on both; root-level security
+#   media type             application/json (one text/html redirect on /auth/login)
+#   shared error schema    `Error` (v1); governance defines no component schemas
+#   response examples      63/66 v1, 0/26 governance
+#   response headers       0 of 92 operations document any
+#
+# Severity is chosen so the ruleset is usable in a build:
+#   error -- unambiguously wrong or unsafe; should block
+#   warn  -- house convention broken; should be seen
+#   info  -- documentation completeness; advisory
+#
+# Built-in Spectral functions only. No custom-function bundle to ship alongside.
+# =============================================================================
+extends:
+  - spectral:oas
+
+rules:
+
+  # ---------------------------------------------------------------------------
+  # Document & metadata
+  # ---------------------------------------------------------------------------
+  openapi-version-supported:
+    description: The document must declare OpenAPI 3.1 or 3.2. Both contracts are 3.1.0.
+    severity: error
+    given: $
+    then:
+      field: openapi
+      function: pattern
+      functionOptions:
+        match: ^3\.[12](\.\d+)?$
+
+  info-contact-complete:
+    description: >-
+      info.contact must carry a name, an email and a URL. A contract that cannot be
+      asked a question about itself is a dead end for whoever inherits the integration.
+    severity: warn
+    given: $.info
+    then:
+      field: contact
+      function: schema
+      functionOptions:
+        schema:
+          type: object
+          required: [name, email, url]
+
+  info-license-present:
+    description: >-
+      info.license must say what the consumer may do with the contract and the data
+      behind it. Measured: the v1 contract declares CC BY-SA 4.0; governance declares none.
+    severity: warn
+    given: $.info
+    then:
+      field: license
+      function: truthy
+
+  info-summary-present:
+    description: >-
+      info.summary gives an agent one line to route on without parsing the whole
+      description. Measured: present on v1, absent on governance.
+    severity: info
+    given: $.info
+    then:
+      field: summary
+      function: truthy
+
+  info-description-substantive:
+    description: >-
+      info.description must be a real orientation, not a restated title -- at least
+      200 characters covering what the API is for and how access works.
+    severity: warn
+    given: $.info.description
+    then:
+      function: length
+      functionOptions:
+        min: 200
+
+  info-version-semver:
+    description: info.version must be semantic (MAJOR.MINOR.PATCH). Measured 1.2.0 and 1.0.0.
+    severity: warn
+    given: $.info
+    then:
+      field: version
+      function: pattern
+      functionOptions:
+        match: ^\d+\.\d+\.\d+(-[0-9A-Za-z.-]+)?$
+
+  # ---------------------------------------------------------------------------
+  # Servers
+  # ---------------------------------------------------------------------------
+  servers-defined:
+    description: The document must declare at least one server, or the contract is not callable.
+    severity: error
+    given: $
+    then:
+      field: servers
+      function: truthy
+
+  servers-https-only:
+    description: Server URLs must use HTTPS. Measured 100% already compliant.
+    severity: error
+    given: $.servers[*].url
+    then:
+      function: pattern
+      functionOptions:
+        match: ^https://
+
+  servers-expected-domain:
+    description: >-
+      Server URLs must be on apievangelist.com. A contract published under this
+      provider that points somewhere else is either mis-filed or a copied template.
+    severity: warn
+    given: $.servers[*].url
+    then:
+      function: pattern
+      functionOptions:
+        match: ^https://[a-z0-9.-]*apievangelist\.com(/|$)
+
+  servers-no-trailing-slash:
+    description: >-
+      Server URLs must not end in a slash -- concatenating one with a path that also
+      starts with a slash is the single most common cause of a 404 in a generated client.
+    severity: warn
+    given: $.servers[*].url
+    then:
+      function: pattern
+      functionOptions:
+        notMatch: /$
+
+  # ---------------------------------------------------------------------------
+  # Paths
+  # ---------------------------------------------------------------------------
+  path-segments-snake-case:
+    description: >-
+      Path segments and path parameters must be snake_case. Measured snake @ 97%
+      (n=144); the 4 exceptions are all in the governance contract --
+      agent-descriptor, agent-export, context-gate, pipeline-audit.
+    severity: warn
+    given: $.paths
+    then:
+      field: '@key'
+      function: pattern
+      functionOptions:
+        match: ^/$|^(/([a-z0-9]+(_[a-z0-9]+)*|\{[a-z0-9]+(_[a-z0-9]+)*\}))+$
+
+  path-no-trailing-slash:
+    description: >-
+      Paths must not end in a slash (the root path excepted). A contract that
+      documents both /x and /x/ documents two resources it does not have.
+    severity: warn
+    given: $.paths
+    then:
+      field: '@key'
+      function: pattern
+      functionOptions:
+        notMatch: .+/$
+
+  path-no-file-extension:
+    description: >-
+      Paths must not carry a file extension. Format is a matter for Accept or an
+      explicit `format` parameter, not for the resource identifier.
+    severity: warn
+    given: $.paths
+    then:
+      field: '@key'
+      function: pattern
+      functionOptions:
+        notMatch: \.[A-Za-z0-9]+$
+
+  path-params-snake-case:
+    description: Path parameter names must be snake_case. Measured snake @ 100% (n=25).
+    severity: warn
+    given: $.paths[*].parameters[?(@.in=='path')].name
+    then:
+      function: casing
+      functionOptions:
+        type: snake
+
+  # ---------------------------------------------------------------------------
+  # Operations
+  # ---------------------------------------------------------------------------
+  operation-operationid-present:
+    description: >-
+      Every operation must carry an operationId. It is the name every generated
+      client method and every MCP tool derives from; without it the generator invents one.
+    severity: error
+    given: $.paths[*][get,put,post,delete,patch,head,options]
+    then:
+      field: operationId
+      function: truthy
+
+  operation-operationid-camel-case:
+    description: >-
+      operationIds must be camelCase. Measured camel @ 100% (n=92) -- the rule
+      holds the line rather than reporting a backlog.
+    severity: warn
+    given: $.paths[*][get,put,post,delete,patch,head,options].operationId
+    then:
+      function: casing
+      functionOptions:
+        type: camel
+
+  operation-summary-present:
+    description: One line saying what the operation does. Measured 92/92 already compliant.
+    severity: warn
+    given: $.paths[*][get,put,post,delete,patch,head,options]
+    then:
+      field: summary
+      function: truthy
+
+  operation-summary-concise:
+    description: >-
+      A summary is a label, not a paragraph -- keep it under 120 characters and put
+      the rest in the description, which is where a reference renderer expects it.
+    severity: info
+    given: $.paths[*][get,put,post,delete,patch,head,options].summary
+    then:
+      function: length
+      functionOptions:
+        max: 120
+
+  operation-description-present:
+    description: >-
+      Every operation must describe itself beyond its summary -- what it returns,
+      what it costs, and which tier it needs.
+    severity: warn
+    given: $.paths[*][get,put,post,delete,patch,head,options]
+    then:
+      field: description
+      function: truthy
+
+  operation-tags-present:
+    description: >-
+      Every operation must be tagged. Tags are the navigation of the reference and
+      the split key for every per-resource artifact derived from this contract.
+    severity: warn
+    given: $.paths[*][get,put,post,delete,patch,head,options]
+    then:
+      field: tags
+      function: truthy
+
+  operation-single-tag:
+    description: >-
+      Exactly one tag per operation. Measured: 0 of 92 operations carry more than
+      one, and a second tag silently duplicates the operation across split artifacts.
+    severity: warn
+    given: $.paths[*][get,put,post,delete,patch,head,options].tags
+    then:
+      function: length
+      functionOptions:
+        max: 1
+
+  operation-deprecated-needs-sunset:
+    description: >-
+      A deprecated operation must declare `x-sunset` with the date it goes away.
+      Deprecation without a date is a warning nobody can plan against, and the
+      published deprecation policy commits to six months' notice.
+    severity: warn
+    given: $.paths[*][get,put,post,delete,patch,head,options]
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          type: object
+          if:
+            type: object
+            properties:
+              deprecated:
+                const: true
+            required: [deprecated]
+          then:
+            type: object
+            required: [x-sunset]
+
+  # ---------------------------------------------------------------------------
+  # Parameters
+  # ---------------------------------------------------------------------------
+  query-params-snake-case:
+    description: Query parameter names must be snake_case. Measured snake @ 100% (n=175).
+    severity: warn
+    given: $.paths[*][get,put,post,delete,patch,head,options].parameters[?(@.in=='query')].name
+    then:
+      function: casing
+      functionOptions:
+        type: snake
+
+  components-parameters-pascal-case:
+    description: >-
+      Reusable parameter component KEYS must be PascalCase, so a $ref reads as a
+      type name while the wire-level `name` stays snake_case. Measured pascal @ 100% (n=9).
+    severity: warn
+    given: $.components.parameters
+    then:
+      field: '@key'
+      function: casing
+      functionOptions:
+        type: pascal
+
+  parameter-description-present:
+    description: >-
+      Every parameter must say what it does. Measured: 6 distinct parameters carry
+      no description, including `limit` and `page`.
+    severity: info
+    resolved: false
+    given:
+      - $.components.parameters[*]
+      - $.paths[*][get,put,post,delete,patch,head,options].parameters[?(@.name)]
+    then:
+      field: description
+      function: truthy
+
+  parameter-schema-typed:
+    description: >-
+      Every parameter must declare a schema. An untyped parameter is a string by
+      accident, and every generated client will treat it as one.
+    severity: warn
+    resolved: false
+    given:
+      - $.components.parameters[*]
+      - $.paths[*][get,put,post,delete,patch,head,options].parameters[?(@.name)]
+    then:
+      field: schema
+      function: truthy
+
+  pagination-limit-bounded:
+    description: >-
+      A `limit` parameter must declare a maximum, or the contract promises a page
+      size the service will refuse. Measured: components.parameters.Limit is
+      correctly bounded 1..100 with a default of 25.
+    severity: warn
+    resolved: false
+    given:
+      - $.components.parameters[?(@.name == 'limit')]
+      - $.paths[*][get,put,post,delete,patch,head,options].parameters[?(@.name == 'limit')]
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          type: object
+          required: [schema]
+          properties:
+            schema:
+              type: object
+              required: [maximum]
+
+  # ---------------------------------------------------------------------------
+  # Responses
+  # ---------------------------------------------------------------------------
+  response-2xx-present:
+    description: >-
+      Every operation must document a success response. Measured: 91 of 92 do --
+      /auth/login documents only a 302, which is a real gap for any non-browser client.
+    severity: warn
+    given: $.paths[*][get,put,post,delete,patch,head,options]
+    then:
+      field: responses
+      function: schema
+      functionOptions:
+        schema:
+          type: object
+          anyOf:
+            - required: ['200']
+            - required: ['201']
+            - required: ['202']
+            - required: ['204']
+
+  response-error-documented:
+    description: >-
+      Every operation must document at least one failure. Measured: only 48 of 92
+      do, so two thirds of this API's error behaviour is undocumented.
+    severity: warn
+    given: $.paths[*][get,put,post,delete,patch,head,options]
+    then:
+      field: responses
+      function: schema
+      functionOptions:
+        schema:
+          type: object
+          anyOf:
+            - required: ['400']
+            - required: ['401']
+            - required: ['402']
+            - required: ['403']
+            - required: ['404']
+            - required: ['422']
+            - required: ['429']
+            - required: ['500']
+
+  response-description-present:
+    description: Every response must describe the condition it represents.
+    severity: warn
+    given: $.paths[*][get,put,post,delete,patch,head,options].responses[*]
+    then:
+      field: description
+      function: truthy
+
+  response-json-media-type:
+    description: >-
+      Responses that carry a body must offer application/json. Measured: 25 of 26
+      media types are application/json; the exception is the text/html sign-in redirect.
+    severity: info
+    given: $.paths[*][get,put,post,delete,patch,head,options].responses[*].content
+    then:
+      field: application/json
+      function: truthy
+
+  response-example-present:
+    description: >-
+      Response bodies should carry an example or examples object. Agents and
+      generated SDKs read examples as the shape contract; a schema alone leaves
+      every consumer guessing at real values. Measured 63/66 on v1, 0/26 on governance.
+    severity: info
+    given: $.paths[*][get,put,post,delete,patch,head,options].responses[*].content[*]
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          type: object
+          anyOf:
+            - required: [example]
+            - required: [examples]
+
+  response-headers-documented:
+    description: >-
+      Successful responses should document their headers. Rate-limit and pagination
+      signals are part of the contract, and an agent that cannot see them cannot
+      pace itself. Measured: 0 of 92 operations document any response header.
+    severity: info
+    given: $.paths[*][get,put,post,delete,patch,head,options].responses[?(@property.match(/^2/))]
+    then:
+      field: headers
+      function: truthy
+
+  error-response-shares-a-schema:
+    description: >-
+      A 4xx or 5xx body must $ref a shared error schema rather than redefining the
+      shape inline, so one error contract covers the whole API.
+    severity: warn
+    resolved: false
+    given: $.paths[*][get,put,post,delete,patch,head,options].responses[?(@property.match(/^[45]/))].content[*]
+    then:
+      field: schema
+      function: schema
+      functionOptions:
+        schema:
+          type: object
+          required: ['$ref']
+
+  # ---------------------------------------------------------------------------
+  # Schemas
+  # ---------------------------------------------------------------------------
+  error-schema-defined:
+    description: >-
+      A shared `Error` schema must exist in components. Anchored at the document
+      root for the same reason as security-schemes-defined: the governance
+      contract defines no components.schemas whatsoever, so a rule given
+      $.components.schemas selected nothing and reported it clean. Measured:
+      defined in v1, absent from governance -- which is why that contract has no
+      error shape to $ref.
+    severity: warn
+    given: $
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          type: object
+          required: [components]
+          properties:
+            components:
+              type: object
+              required: [schemas]
+              properties:
+                schemas:
+                  type: object
+                  required: [Error]
+
+  schema-names-pascal-case:
+    description: Component schema names must be PascalCase. Measured pascal @ 100% (n=7).
+    severity: warn
+    given: $.components.schemas
+    then:
+      field: '@key'
+      function: casing
+      functionOptions:
+        type: pascal
+
+  schema-properties-snake-case:
+    description: Schema properties must be snake_case. Measured snake @ 100% (n=20).
+    severity: warn
+    given: $.components.schemas[*].properties
+    then:
+      field: '@key'
+      function: casing
+      functionOptions:
+        type: snake
+
+  schema-has-type:
+    description: >-
+      Every component schema must declare a type. Measured: 5 of 7 do. An untyped
+      schema validates nothing and generates nothing.
+    severity: warn
+    given: $.components.schemas[*]
+    then:
+      field: type
+      function: truthy
+
+  schema-has-description:
+    description: >-
+      Every component schema must describe the thing it models. Measured: 1 of 7 do.
+    severity: info
+    given: $.components.schemas[*]
+    then:
+      field: description
+      function: truthy
+
+  schema-property-descriptions:
+    description: >-
+      Every schema property should describe what it holds -- property names carry
+      less meaning to a consumer than the author assumes. Measured: 17 of 20 have none.
+    severity: info
+    given: $.components.schemas[*].properties[*]
+    then:
+      field: description
+      function: truthy
+
+  # ---------------------------------------------------------------------------
+  # Tags
+  # ---------------------------------------------------------------------------
+  tag-has-description:
+    description: >-
+      Declared tags must have descriptions -- they are the navigation of the
+      reference and of every tag-split artifact derived from it. Measured 21/21 compliant.
+    severity: warn
+    given: $.tags[*]
+    then:
+      field: description
+      function: truthy
+
+  # ---------------------------------------------------------------------------
+  # Security
+  # ---------------------------------------------------------------------------
+  security-schemes-defined:
+    description: >-
+      Security schemes must be defined in components. Anchored at the document
+      root, not at $.components -- a document with no components object at all
+      selects nothing under $.components, and the rule would go silent on exactly
+      the case it exists to catch. Measured: both contracts declare one.
+    severity: error
+    given: $
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          type: object
+          required: [components]
+          properties:
+            components:
+              type: object
+              required: [securitySchemes]
+
+  security-applied-at-root:
+    description: >-
+      A root-level `security` array must state the default posture for every
+      operation, including the keyless tier, rather than leaving it to be inferred.
+    severity: warn
+    given: $
+    then:
+      field: security
+      function: truthy
+
+  apikey-scheme-in-header:
+    description: >-
+      An apiKey scheme must be carried in a header or a cookie -- never a query
+      string, where the credential lands in access logs, referrers and browser history.
+    severity: error
+    given: $.components.securitySchemes[*]
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          type: object
+          if:
+            type: object
+            properties:
+              type:
+                const: apiKey
+            required: [type]
+          then:
+            type: object
+            properties:
+              in:
+                enum: [header, cookie]
+
+  apikey-header-name-consistent:
+    description: >-
+      Header-borne API keys must use `x-api-key` across the estate. Measured: both
+      contracts already do, and a client configured for one should work against the other.
+    severity: warn
+    given: $.components.securitySchemes[?(@.type == 'apiKey' && @.in == 'header')]
+    then:
+      field: name
+      function: pattern
+      functionOptions:
+        match: ^x-api-key$
+
+  no-credentials-in-query:
+    description: >-
+      No parameter may carry a credential in the query string. Matches the common
+      names -- api_key, apikey, token, access_token, password, secret.
+    severity: error
+    resolved: false
+    given:
+      - $.components.parameters[?(@.in == 'query')].name
+      - $.paths[*][get,put,post,delete,patch,head,options].parameters[?(@.in == 'query')].name
+    then:
+      function: pattern
+      functionOptions:
+        # Spectral's pattern function compiles JS regex — inline (?i) is a syntax
+        # error there. Flags go in the /…/i literal form instead.
+        notMatch: /^(api[-_]?key|access[-_]?token|auth[-_]?token|token|secret|password|passwd|pwd|client[-_]?secret)$/i
+
+  no-credentials-in-path:
+    description: >-
+      No path parameter may carry a credential. A secret in a path is a secret in
+      every proxy log and every shared URL.
+    severity: error
+    resolved: false
+    given: $.paths[*].parameters[?(@.in == 'path')].name
+    then:
+      function: pattern
+      functionOptions:
+        # Spectral's pattern function compiles JS regex — inline (?i) is a syntax
+        # error there. Flags go in the /…/i literal form instead.
+        notMatch: /^(api[-_]?key|access[-_]?token|auth[-_]?token|token|secret|password|passwd|pwd|client[-_]?secret)$/i

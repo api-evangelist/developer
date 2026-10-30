@@ -1,0 +1,70 @@
+generated: '2026-09-13'
+method: probed
+source: https://apievangelist.com/.well-known/agent-card.json
+discovery:
+  path: /.well-known/agent-card.json
+  canonical: true
+  host: apievangelist.com
+  misses:
+  - host: mcp.apievangelist.com
+    path: /.well-known/agent-card.json
+    http_status: 405
+    note: MCP endpoint answers non-POST with 405; serves no card of its own
+  - host: api.apievangelist.com
+    path: /.well-known/agent-card.json
+    http_status: 404
+  - host: developer.apievangelist.com
+    path: /.well-known/agent-card.json
+    http_status: 404
+  - host: apievangelist.com
+    path: /.well-known/agent.json
+    http_status: 404
+    note: no pre-0.3 legacy mirror; the canonical path is the only one served
+  note: All 16 hosts recorded in apis.yml were probed at both A2A paths. Exactly one
+    card is served, from the apex over the provider's own TLS.
+conformance:
+  spec: A2A 1.0.0
+  grade: conformant
+  protocol_version: '0.3'
+  preferred_transport: MCP
+  hard_checks:
+    capabilities_is_object: true
+    protocol_version_present: true
+    skills_is_array: true
+  deviations:
+  - id: nonstandard-preferredTransport
+    detail: 'preferredTransport is `MCP`, which is not one of the transport values A2A
+      1.0.0 defines (JSONRPC, GRPC, HTTP+JSON). The card is explicit about why: API
+      Evangelist serves no native A2A JSON-RPC endpoint, and the interface the card
+      describes is a Model Context Protocol server. Same posture as pydantic.dev —
+      agent-card discovery decoupled from A2A transport.'
+  - id: nonstandard-protocolBinding
+    detail: additionalInterfaces[] entries carry a `protocolBinding` key (JSONRPC, REST)
+      alongside the A2A-defined `url` and `transport`. Extra field, not a missing one.
+  notes: Uses the A2A-defined `additionalInterfaces` field name, not the `supportedInterfaces`
+    variant most publishers ship, and declares real securitySchemes (OAuth 2.1 + PKCE
+    S256 + RFC 7591 dynamic client registration, audience-bound to the MCP endpoint)
+    rather than an empty object.
+card:
+  name: API Evangelist
+  description: 'Sixteen years of API research, governance and vendor intelligence as
+    machine-readable tools: 5,100+ stories, 77 topic areas, 2,400+ governance building
+    blocks (guidance, rules, policies, standards, strategies), papers, conversations,
+    the API vocabulary, plus API validation, scorecards and estate governance. Browsing,
+    searching and reading summaries is free and needs no key. Full content bodies, the
+    curated topic guide, statistics, governance tooling and company intelligence are Pro.'
+  url: https://mcp.apievangelist.com/mcp
+  documentation_url: https://developer.apievangelist.com/mcp-server
+  version: 2.0.0
+  skills: 6
+  file: api-evangelist-agent-card.json
+x-evidence:
+  fetched: '2026-09-13'
+  url: https://apievangelist.com/.well-known/agent-card.json
+  http_status: 200
+  content_type: application/json; charset=utf-8
+  bytes: 7333
+  md5: ab898bb5ae3edea9b8fa669d30401a6f
+  method: GET against every host in apis.yml at both /.well-known/agent-card.json and
+    /.well-known/agent.json; body accepted only on an observed 200 parsing as a JSON
+    object carrying AgentCard shape

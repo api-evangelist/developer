@@ -1,0 +1,21 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: https://raw.githubusercontent.com/api-evangelist/api-evangelist/refs/heads/main/schema/Area.yml
+title: Area
+allOf:
+- $ref: Doc.yml
+- type: object
+  properties:
+    related:
+      type: array
+      items:
+        type: object
+        properties:
+          slug:
+            type: string
+          title:
+            type: string
+          url:
+            type: string
+            format: uri
+          summary:
+            type: string

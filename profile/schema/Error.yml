@@ -1,0 +1,9 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: https://raw.githubusercontent.com/api-evangelist/api-evangelist/refs/heads/main/schema/Error.yml
+title: Error
+type: object
+properties:
+  error:
+    type: string
+  detail:
+    type: string

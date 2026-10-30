@@ -1,0 +1,38 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for the Governance & Discovery API
+  version: 1.0.0
+x-generated: '2026-08-10'
+x-method: generated
+x-source: openapi/apievangelist-governance-openapi.json
+extends: openapi/apievangelist-governance-openapi.json
+actions:
+- target: $.info
+  description: Link the profile artifacts derived from this contract.
+  update:
+    x-apievangelist-profile: https://github.com/api-evangelist/api-evangelist
+    x-apievangelist-artifacts:
+      authentication: authentication/api-evangelist-authentication.yml
+      conventions: conventions/api-evangelist-conventions.yml
+      errors: errors/api-evangelist-problem-types.yml
+      tool-crosswalk: mcp/api-evangelist-tool-crosswalk.yml
+      agentic-access: agentic-access/api-evangelist-agentic-access.yml
+- target: $.info
+  description: Record the gaps this pass found in the contract itself, without editing it.
+  update:
+    x-apievangelist-gaps:
+    - components.schemas is empty — every request and response body is described in prose only,
+      so no client or agent can be generated from the contract.
+    - Three operations carry no operationId - GET /auth/login, GET /auth/me and
+      POST /billing/checkout - so they cannot be referenced by an MCP tool binding.
+    - The error envelope uses `message` while the sibling network API on the same base URL uses
+      `detail`.
+    - The Pro wall returns 402 here and 403 on the network API for the same condition.
+    - No 429 and no 5xx responses are declared on any operation.
+- target: $.paths['/governance/certify'].post
+  description: Flag the one operation that mints a durable artifact.
+  update:
+    x-apievangelist-note: >-
+      The only operation in this contract that produces a persistent object (a governance
+      certificate, re-checkable via POST /governance/verify). It has no idempotency key, so a
+      retried request issues a second certificate.

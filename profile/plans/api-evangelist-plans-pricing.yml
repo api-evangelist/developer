@@ -1,0 +1,51 @@
+# Pricing transcribed from the provider's own page — see provenance. Numbers are quoted, not derived.
+generated: '2026-10-28'
+method: searched
+source: https://developer.apievangelist.com/plans
+sources:
+- https://developer.apievangelist.com/plans
+- https://developer.apievangelist.com/plans/
+provenance:
+  tool: engine/economics/harvest_pricing.py
+  run: 20261028T120612
+  grounding: every price_text was found verbatim in the fetched page text
+audience: developer-api
+pricing_basis: tiered-subscription
+delivery:
+  delivery: managed
+  method: page
+  read: '2026-10-28'
+  managed_tier: Pro
+published: true
+note: Tiered API subscription page; prices stated as introductory, annual/volume pricing on request.
+plan_count: 4
+currency: USD
+plans:
+- name: Free
+  price_text: $0
+  price: 0
+  currency: USD
+  period: month
+  included_quota: Discovery — search, browse, tags, related, summaries; Keyless; 1,000 req/day; Community
+    support
+- name: Pro
+  price_text: $29/mo
+  price: 29
+  currency: USD
+  period: month
+  included_quota: Everything, incl. full content, /guide, /stats; 1 key; 5,000 req/day; Email support
+- name: Team
+  price_text: $149/mo
+  price: 149
+  currency: USD
+  period: month
+  included_quota: Everything in Pro; Multiple keys; 25,000 req/day; Priority email
+- name: Enterprise
+  price_text: Contact
+  period: none
+  included_quota: Everything + advisory; Negotiated keys; Custom rate limit
+rate_limit_statements:
+- 1,000 req/day
+- 5,000 req/day
+- 25,000 req/day
+- 'Rate limits: 5 req/s, 1,000 req/day. No key required.'

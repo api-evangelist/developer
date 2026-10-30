@@ -1,0 +1,451 @@
+openapi: 3.2.0
+info:
+  title: Evangelist Network APIs API
+  version: 1.2.0
+  summary: Sixteen years of API research as one API.
+  description: 'The API Evangelist network — 5,000+ stories, 77 topic areas, 2,400+ governance building
+
+    blocks (guidance, rules, policies, standards, strategies, schema, properties, experiences,
+
+    lifecycle), conversations, videos, white papers, tools, timelines, services, and the API
+
+    vocabulary — served as a single, searchable REST API.'
+  contact:
+    name: API Evangelist
+    email: info@apievangelist.com
+    url: https://apievangelist.com
+  license:
+    name: CC BY-SA 4.0
+    url: https://creativecommons.org/licenses/by-sa/4.0/
+servers:
+- url: https://api.apievangelist.com/v1
+security:
+- {}
+- ApiKeyAuth: []
+tags:
+- name: APIs
+  description: Individual API resources tracked across the network, and the relevance graph between them.
+paths:
+  /posts/{slug}/related:
+    get:
+      operationId: getPostRelated
+      x-tier: free
+      x-mcp-tool: find_related
+      x-agent-skill: brief-on-topic
+      tags:
+      - APIs
+      summary: Related content across the network
+      description: Stories, areas, guidance, and papers related to a story. Ranked by shared-tag relevance (rare, specific tags weigh most). Cross-type by default; filter with types.
+      parameters:
+      - name: slug
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: types
+        in: query
+        description: Restrict to these content types (comma-separated).
+        schema:
+          type: string
+      - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: A page of related content.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+              example:
+                meta:
+                  total: 1413
+                  page: 1
+                  limit: 2
+                  pages: 707
+                  query:
+                    related_to: posts:2026-09-29-you-cannot-see-your-own-api-from-the-outside
+                    types: null
+                data:
+                - slug: 2026-09-26-apis-io-provides-discovery-grade-artifacts
+                  title: APIs.io Provides Discovery-Grade Artifacts
+                  summary: ''
+                  url: https://apievangelist.com/2026/09/26/apis-io-provides-discovery-grade-artifacts/
+                  tags:
+                  - Discovery
+                  - APIs.io
+                  - OpenAPI
+                  - Artifacts
+                  - API Discovery
+                  - Kin Score
+                  - Strategy
+                  - APIs
+                  date: '2026-09-26'
+                  image: https://kinlane-images.s3.amazonaws.com/apievangelist/api-evangelist-images/apis-io-provides-discovery-grade-artifacts.png
+                  has_content: true
+                  type: posts
+                  shared_tags: 5
+                  relevance: 25.147
+                - slug: 2026-08-19-where-i-am-at-with-forking-spectral
+                  title: Where I Am At With Forking Spectral
+                  summary: ''
+                  url: https://apievangelist.com/2026/08/19/where-i-am-at-with-forking-spectral/
+                  tags:
+                  - Spectral
+                  - API Governance
+                  - Governance
+                  - Open Source
+                  - OpenAPI
+                  - Rulesets
+                  - Standards
+                  - APIs.io
+                  - Kin Score
+                  - APIs
+                  date: '2026-08-19'
+                  image: https://kinlane-images.s3.amazonaws.com/apievangelist/api-evangelist-images/where-i-am-at-with-forking-spectral.png
+                  has_content: true
+                  type: posts
+                  shared_tags: 4
+                  relevance: 21.452
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  headers:
+    XRateLimitWindow:
+      description: The quota window in seconds. Always 86400 (one day).
+      schema:
+        type: integer
+        examples:
+        - 86400
+    XRateLimitLimit:
+      description: The daily request quota for the tier that served this response.
+      schema:
+        type: integer
+        examples:
+        - 1000
+    RateLimitPolicy:
+      description: 'The rate-limit policy in force for the tier that served this response, in RFC 9331 quota-policy syntax: `"quota";q=1000;w=86400, "burst";q=5;w=1` — a daily quota and a per-second burst. This is the POLICY, not a live counter: `RateLimit-Remaining` and `RateLimit-Reset` are deliberately not sent, because the quota is enforced by the gateway and there is no per-key usage accounting to read. Pace against the policy, and treat a 429 as authoritative.'
+      schema:
+        type: string
+        examples:
+        - '"quota";q=1000;w=86400, "burst";q=5;w=1'
+    XRateLimitTier:
+      description: The tier this request was served on — `free`, `pro`, `business`, `internal` or `owner`. Keyless requests are `free`; requests from an apievangelist.com origin are `internal`.
+      schema:
+        type: string
+        examples:
+        - free
+  parameters:
+    Limit:
+      name: limit
+      in: query
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 25
+  responses:
+    NotFound:
+      description: No such resource.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+        detail:
+          type: string
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: Optional — raises rate limits above the keyless free tier.
+x-apis-io:
+  tiers:
+    free:
+      label: Free
+      description: Browse, search, and read summaries across the whole network — stories, areas, guidance, building blocks, papers, tags, related. Keyless.
+    pro:
+      label: Pro
+      description: The research depth — full content (include=content), curated topic guides (/guide), and catalog intelligence (/stats). Requires X-API-Key.
+      plans: https://developer.apievangelist.com/plans/
+  mcp:
+    endpoint: https://mcp.apievangelist.com/mcp
+  agentSkills:
+    index: https://apievangelist.com/.well-known/agent-skills/index.json
+  prompts:
+  - name: where_can_ae_help
+    tier: free
+    description: Map a team's API need to the relevant research areas + the services Kin Lane offers.
+    uses:
+    - search_api_evangelist
+    - find_services
+  - name: catch_up
+    tier: free
+    description: Catch up on a topic — the most recent stories, newest first.
+    uses:
+    - find_posts
+  - name: research_topic
+    tier: pro
+    description: 'PRO — Deep-research a topic: the curated guide bundle plus the full research bodies.'
+    uses:
+    - guide_topic
+    - get_post
+    - find_related
+  - name: governance_starter_kit
+    tier: pro
+    description: 'PRO — Assemble an API governance starter kit: guidance, rules, policies, standards + services.'
+    uses:
+    - guide_topic
+    - find_building_blocks
+  - name: vendor_landscape
+    tier: pro
+    description: PRO — Map the vendor + tooling landscape for a capability, with research context.
+    uses:
+    - find_solutions
+    - find_tools
+    - guide_topic
+  resources:
+  - uri: ae://overview
+    tier: free
+    description: Service root — what the network offers, counts, entry points, how to engage.
+    operation: getServiceInfo
+  - uri: ae://services
+    tier: free
+    description: The services Kin Lane offers teams.
+    operation: listServices
+  - uri: ae://contact
+    tier: free
+    description: Every way to reach API Evangelist.
+    operation: getContact
+  - uri: ae://stats
+    tier: pro
+    description: PRO — per-type counts, stories-per-year, top tags by reach.
+    operation: getStats
+  - uri: ae://area/{slug}
+    tier: free
+    description: One topic area with its related-area graph.
+    operation: getArea
+  - uri: ae://tag/{slug}
+    tier: free
+    description: One tag with per-type counts and everything it labels.
+    operation: getTag
+  - uri: ae://post/{slug}
+    tier: free
+    description: One story by slug.
+    operation: getPost
+  - uri: ae://guide/{topic}
+    tier: pro
+    description: PRO — a curated cross-network guide bundle for a topic.
+    operation: getGuide
+  operations:
+    getServiceInfo:
+      tier: free
+      mcpTool: get_overview
+    searchNetwork:
+      tier: free
+      mcpTool: search_api_evangelist
+      agentSkill: brief-on-topic
+    listPosts:
+      tier: free
+      mcpTool: find_posts
+      agentSkill: brief-on-topic
+    getPost:
+      tier: free
+      mcpTool: get_post
+    listAreas:
+      tier: free
+      mcpTool: find_areas
+      agentSkill: brief-on-topic
+    getArea:
+      tier: free
+      mcpTool: get_area
+    listGuidanceHistory:
+      tier: free
+      mcpTool: get_guidance_section
+    listGuidanceTechnology:
+      tier: free
+      mcpTool: get_guidance_section
+    listGuidanceBusiness:
+      tier: free
+      mcpTool: get_guidance_section
+    listGuidancePolitics:
+      tier: free
+      mcpTool: get_guidance_section
+    listGuidanceGovernance:
+      tier: free
+      mcpTool: get_guidance_section
+    listGuidanceEvangelism:
+      tier: free
+      mcpTool: get_guidance_section
+    listGuidance:
+      tier: free
+      mcpTool: find_building_blocks
+      agentSkill: governance-starter-kit
+    getGuidanceItem:
+      tier: free
+      mcpTool: get_building_block
+    listPolicies:
+      tier: free
+      mcpTool: find_building_blocks
+      agentSkill: governance-starter-kit
+    getPoliciesItem:
+      tier: free
+      mcpTool: get_building_block
+    listRules:
+      tier: free
+      mcpTool: find_building_blocks
+      agentSkill: governance-starter-kit
+    getRulesItem:
+      tier: free
+      mcpTool: get_building_block
+    listStandards:
+      tier: free
+      mcpTool: find_building_blocks
+      agentSkill: governance-starter-kit
+    getStandardsItem:
+      tier: free
+      mcpTool: get_building_block
+    listSolutions:
+      tier: free
+      mcpTool: find_solutions
+      agentSkill: map-vendor-landscape
+    getSolution:
+      tier: free
+      mcpTool: get_solution
+    listTools:
+      tier: free
+      mcpTool: find_tools
+      agentSkill: map-vendor-landscape
+    getTool:
+      tier: free
+      mcpTool: get_tool
+    listSchema:
+      tier: free
+      mcpTool: find_building_blocks
+    getSchemaItem:
+      tier: free
+      mcpTool: get_building_block
+    listProperties:
+      tier: free
+      mcpTool: find_building_blocks
+    getPropertiesItem:
+      tier: free
+      mcpTool: get_building_block
+    listStrategies:
+      tier: free
+      mcpTool: find_building_blocks
+    getStrategiesItem:
+      tier: free
+      mcpTool: get_building_block
+    listExperiences:
+      tier: free
+      mcpTool: find_building_blocks
+    getExperiencesItem:
+      tier: free
+      mcpTool: get_building_block
+    listLifecycle:
+      tier: free
+      mcpTool: find_building_blocks
+    getLifecycleItem:
+      tier: free
+      mcpTool: get_building_block
+    listConversations:
+      tier: free
+      mcpTool: find_conversations
+    getConversation:
+      tier: free
+      mcpTool: get_conversation
+    listVideos:
+      tier: free
+      mcpTool: find_videos
+    getVideo:
+      tier: free
+      mcpTool: get_video
+    listPapers:
+      tier: free
+      mcpTool: find_papers
+      agentSkill: research-with-api-evangelist
+    getPaper:
+      tier: free
+      mcpTool: get_paper
+    listNewsletters:
+      tier: free
+      mcpTool: search_api_evangelist
+    listVocabulary:
+      tier: free
+      mcpTool: find_vocabulary
+    listVocabularyCategory:
+      tier: free
+      mcpTool: find_vocabulary
+    listFeeds:
+      tier: free
+      mcpTool: get_feeds
+    getTimelineApi:
+      tier: free
+      mcpTool: get_timeline
+    getTimelineResources:
+      tier: free
+      mcpTool: get_timeline
+    getTimelineIndustries:
+      tier: free
+      mcpTool: get_timeline
+    getTimelinePeople:
+      tier: free
+      mcpTool: get_timeline
+    listServices:
+      tier: free
+      mcpTool: find_services
+      agentSkill: find-where-ae-helps
+    getService:
+      tier: free
+      mcpTool: get_service
+      agentSkill: find-where-ae-helps
+    getContact:
+      tier: free
+      mcpTool: get_contact
+      agentSkill: find-where-ae-helps
+    listTags:
+      tier: free
+      mcpTool: find_tags
+      agentSkill: brief-on-topic
+    getTag:
+      tier: free
+      mcpTool: get_tag
+      agentSkill: brief-on-topic
+    getGuide:
+      tier: pro
+      mcpTool: guide_topic
+      agentSkill: research-with-api-evangelist
+    getStats:
+      tier: pro
+      mcpTool: get_stats
+    getPostRelated:
+      tier: free
+      mcpTool: find_related
+      agentSkill: brief-on-topic
+    getAreaRelated:
+      tier: free
+      mcpTool: find_related
+      agentSkill: brief-on-topic
+    getPaperRelated:
+      tier: free
+      mcpTool: find_related
+      agentSkill: research-with-api-evangelist
+    getGuidanceRelated:
+      tier: free
+      mcpTool: find_related
+      agentSkill: brief-on-topic

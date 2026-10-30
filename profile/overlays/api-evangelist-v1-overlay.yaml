@@ -1,0 +1,52 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for the API Evangelist Network API
+  version: 1.0.0
+x-generated: '2026-08-10'
+x-method: generated
+x-source: openapi/apievangelist-v1-openapi.yml
+extends: openapi/apievangelist-v1-openapi.yml
+actions:
+- target: $.info
+  description: Link the profile artifacts derived from this contract.
+  update:
+    x-apievangelist-profile: https://github.com/api-evangelist/api-evangelist
+    x-apievangelist-artifacts:
+      authentication: authentication/api-evangelist-authentication.yml
+      conventions: conventions/api-evangelist-conventions.yml
+      errors: errors/api-evangelist-problem-types.yml
+      lifecycle: lifecycle/api-evangelist-lifecycle.yml
+      data-model: data-model/api-evangelist-data-model.yml
+      mcp: mcp/api-evangelist-mcp.yml
+      tool-crosswalk: mcp/api-evangelist-tool-crosswalk.yml
+      agentic-access: agentic-access/api-evangelist-agentic-access.yml
+      skills: skills/_index.yml
+- target: $.info
+  description: Record the gaps this pass found in the contract itself, without editing it.
+  update:
+    x-apievangelist-gaps:
+    - No 429 response is declared on any operation, though a 5 req/s and 1,000 req/day limit is
+      documented in prose and enforced.
+    - No 5xx response is declared on any operation.
+    - GET /stats returns 403 upgrade_required in production but declares no 403 in the contract.
+    - The seven /insights operations are absent from x-apis-io.operations, so the published
+      operation -> MCP tool -> Agent Skill map is behind the spec.
+    - Doc uses additionalProperties true, so the per-collection fields an agent receives are not
+      described.
+- target: $.components.schemas.Error
+  description: Name the error envelope contract explicitly — it is not RFC 9457.
+  update:
+    x-error-format: custom-json
+    x-rfc9457: false
+    x-observed-codes:
+    - not_found
+    - upgrade_required
+    - bad_request
+- target: $.components.schemas.PagedEnvelope
+  description: Name the pagination style the envelope implements.
+  update:
+    x-pagination-style: page-number
+    x-pagination-params:
+    - page
+    - limit
+    x-pagination-max-limit: 100

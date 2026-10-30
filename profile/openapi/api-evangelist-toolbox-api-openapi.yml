@@ -1,0 +1,936 @@
+openapi: 3.2.0
+info:
+  title: Evangelist Network Toolbox API
+  version: 1.2.0
+  summary: Sixteen years of API research as one API.
+  description: 'The API Evangelist network — 5,000+ stories, 77 topic areas, 2,400+ governance building
+
+    blocks (guidance, rules, policies, standards, strategies, schema, properties, experiences,
+
+    lifecycle), conversations, videos, white papers, tools, timelines, services, and the API
+
+    vocabulary — served as a single, searchable REST API.'
+  contact:
+    name: API Evangelist
+    email: info@apievangelist.com
+    url: https://apievangelist.com
+  license:
+    name: CC BY-SA 4.0
+    url: https://creativecommons.org/licenses/by-sa/4.0/
+servers:
+- url: https://api.apievangelist.com/v1
+security:
+- {}
+- ApiKeyAuth: []
+tags:
+- name: Toolbox
+  description: Standards, solutions, tools, schema, and properties — the raw materials of API operations.
+paths:
+  /standards:
+    get:
+      operationId: listStandards
+      tags:
+      - Toolbox
+      summary: Standards
+      description: Search or browse the standards collection (432) — the API standards landscape.
+      parameters:
+      - $ref: '#/components/parameters/Q'
+      - $ref: '#/components/parameters/Tags'
+      - $ref: '#/components/parameters/Match'
+      - $ref: '#/components/parameters/Fields'
+      - $ref: '#/components/parameters/Page'
+      - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: Paged standards.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedEnvelope'
+              example:
+                meta:
+                  total: 613
+                  page: 1
+                  limit: 2
+                  pages: 307
+                  query:
+                    tags: null
+                data:
+                - slug: aiignore
+                  title: .aiignore
+                  summary: Configuration file specifying files and directories that AI coding agents should not process or modify, similar to .gitignore but for AI tools. Used by JetBrains Junie and other AI agents.
+                  url: https://standards.apievangelist.com/store/aiignore/
+                  tags:
+                  - AI Agents
+                  - Configuration
+                  - Security
+                  - Developer Workflow
+                  has_content: true
+                  type: standards
+                - slug: clinerules
+                  title: .clinerules
+                  summary: Configuration file for Cline AI coding assistant providing project-specific rules, coding conventions, and behavioral instructions.
+                  url: https://standards.apievangelist.com/store/clinerules/
+                  tags:
+                  - AI Agents
+                  - Cline
+                  - Developer Workflow
+                  - Coding Standards
+                  - AI Copilot
+                  has_content: true
+                  type: standards
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
+  /standards/{slug}:
+    get:
+      operationId: getStandardsItem
+      tags:
+      - Toolbox
+      summary: Standard
+      description: One entry from the standards collection; `include=content` adds the full body.
+      parameters:
+      - $ref: '#/components/parameters/Slug'
+      - $ref: '#/components/parameters/Include'
+      responses:
+        '200':
+          description: The entry.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Doc'
+              example:
+                slug: aiignore
+                title: .aiignore
+                summary: Configuration file specifying files and directories that AI coding agents should not process or modify, similar to .gitignore but for AI tools. Used by JetBrains Junie and other AI agents.
+                url: https://standards.apievangelist.com/store/aiignore/
+                tags:
+                - AI Agents
+                - Configuration
+                - Security
+                - Developer Workflow
+                has_content: true
+                type: standards
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /solutions:
+    get:
+      operationId: listSolutions
+      tags:
+      - Toolbox
+      summary: Solutions
+      description: The solutions registry (742) — third-party API services and tools (gateways, portals, testing, monitoring, …) ranked by adoption across the companies API Evangelist tracks. Browse the site at https://solutions.apievangelist.com.
+      parameters:
+      - $ref: '#/components/parameters/Q'
+      - $ref: '#/components/parameters/Tags'
+      - $ref: '#/components/parameters/Page'
+      - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: Solutions.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedEnvelope'
+              example:
+                meta:
+                  total: 742
+                  page: 1
+                  limit: 2
+                  pages: 371
+                  query:
+                    tags: null
+                data:
+                - slug: activepieces
+                  title: Activepieces
+                  summary: An open-source, no-code automation platform that allows users to connect apps and automate workflows with a visual builder.
+                  url: https://solutions.apievangelist.com/store/activepieces/
+                  tags:
+                  - Workflows
+                  website: https://www.activepieces.com
+                  companyCount: 0
+                  type: solutions
+                - slug: adobe
+                  title: Adobe
+                  summary: A multinational software company known for creative and multimedia software products including Photoshop, Illustrator, and Acrobat PDF.
+                  url: https://solutions.apievangelist.com/store/adobe/
+                  tags:
+                  - Software
+                  - Design
+                  - Creative Tools
+                  - Adobe
+                  website: https://www.adobe.com
+                  companyCount: 401
+                  type: solutions
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
+  /solutions/{slug}:
+    get:
+      operationId: getSolution
+      tags:
+      - Toolbox
+      summary: Solution
+      description: One solution from the vendor registry, with its website and adoption count.
+      parameters:
+      - $ref: '#/components/parameters/Slug'
+      responses:
+        '200':
+          description: The solution.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Doc'
+              example:
+                slug: activepieces
+                title: Activepieces
+                summary: An open-source, no-code automation platform that allows users to connect apps and automate workflows with a visual builder.
+                url: https://solutions.apievangelist.com/store/activepieces/
+                tags:
+                - Workflows
+                website: https://www.activepieces.com
+                companyCount: 0
+                type: solutions
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /tools:
+    get:
+      operationId: listTools
+      tags:
+      - Toolbox
+      summary: Tools
+      description: The open-source tooling registry (405) — the tools in use across the companies API Evangelist tracks, each with adoption counts and technology-radar placement. Browse the site at https://tools.apievangelist.com.
+      parameters:
+      - $ref: '#/components/parameters/Q'
+      - $ref: '#/components/parameters/Tags'
+      - $ref: '#/components/parameters/Page'
+      - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: Tools.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedEnvelope'
+              example:
+                meta:
+                  total: 527
+                  page: 1
+                  limit: 2
+                  pages: 264
+                  query:
+                    tags: null
+                data:
+                - slug: ajv
+                  title: Ajv
+                  summary: The fastest JSON Schema validator for JavaScript — compiles schemas to validation functions and supports every modern dialect.
+                  url: https://tools.apievangelist.com/store/ajv/
+                  tags:
+                  - JSON Schema
+                  website: https://ajv.js.org
+                  companyCount: 0
+                  radarRing: Initial
+                  type: tools
+                - slug: akri
+                  title: Akri
+                  summary: A Kubernetes resource interface for exposing leaf devices such as IP cameras and USB devices as resources in a Kubernetes cluster, enabling dynamic discovery and utilization of IoT edge devices.
+                  url: https://tools.apievangelist.com/store/akri/
+                  tags:
+                  - Kubernetes
+                  - IoT
+                  - Edge Computing
+                  - Device Management
+                  website: https://github.com/project-akri/akri
+                  companyCount: 0
+                  radarRing: Initial
+                  type: tools
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
+  /tools/{slug}:
+    get:
+      operationId: getTool
+      tags:
+      - Toolbox
+      summary: Tool
+      description: One tool from the tooling registry, with its website, adoption count, and radar ring.
+      parameters:
+      - $ref: '#/components/parameters/Slug'
+      responses:
+        '200':
+          description: The tool.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Doc'
+              example:
+                slug: ajv
+                title: Ajv
+                summary: The fastest JSON Schema validator for JavaScript — compiles schemas to validation functions and supports every modern dialect.
+                url: https://tools.apievangelist.com/store/ajv/
+                tags:
+                - JSON Schema
+                website: https://ajv.js.org
+                companyCount: 0
+                radarRing: Initial
+                type: tools
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /schema:
+    get:
+      operationId: listSchema
+      tags:
+      - Toolbox
+      summary: Schemas
+      description: Search or browse the schema collection (11) — schema definitions and patterns.
+      parameters:
+      - $ref: '#/components/parameters/Q'
+      - $ref: '#/components/parameters/Tags'
+      - $ref: '#/components/parameters/Match'
+      - $ref: '#/components/parameters/Fields'
+      - $ref: '#/components/parameters/Page'
+      - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: Paged schema.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedEnvelope'
+              example:
+                meta:
+                  total: 11
+                  page: 1
+                  limit: 2
+                  pages: 6
+                  query:
+                    tags: null
+                data:
+                - slug: apis-json
+                  title: APIs.json (V0.19)
+                  summary: This is the JSON Schema for V0.19 of the APIs.json specification, which is  used to valid API contracts, indexes, and other ways in which APIs are being produced, consumed, and aggregated.
+                  url: https://schema.apievangelist.com/store/apis-json/
+                  tags:
+                  - Discovery
+                  - Contracts
+                  has_content: false
+                  type: schema
+                - slug: arazzo
+                  title: Arazzo (v1.0)
+                  summary: This is the JSON Schema for V1.0 of the Arazzo specification, which is used to define and validate workflow documents that describe sequences of API calls across multiple APIs.
+                  url: https://schema.apievangelist.com/store/arazzo/
+                  tags:
+                  - OpenAPI
+                  - Workflows
+                  - Arazzo
+                  has_content: false
+                  type: schema
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
+  /schema/{slug}:
+    get:
+      operationId: getSchemaItem
+      tags:
+      - Toolbox
+      summary: Schema
+      description: One entry from the schema collection; `include=content` adds the full body.
+      parameters:
+      - $ref: '#/components/parameters/Slug'
+      - $ref: '#/components/parameters/Include'
+      responses:
+        '200':
+          description: The entry.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Doc'
+              example:
+                slug: apis-json
+                title: APIs.json (V0.19)
+                summary: This is the JSON Schema for V0.19 of the APIs.json specification, which is  used to valid API contracts, indexes, and other ways in which APIs are being produced, consumed, and aggregated.
+                url: https://schema.apievangelist.com/store/apis-json/
+                tags:
+                - Discovery
+                - Contracts
+                has_content: false
+                type: schema
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /properties:
+    get:
+      operationId: listProperties
+      tags:
+      - Toolbox
+      summary: Properties
+      description: Search or browse the properties collection (790) — API property patterns.
+      parameters:
+      - $ref: '#/components/parameters/Q'
+      - $ref: '#/components/parameters/Tags'
+      - $ref: '#/components/parameters/Match'
+      - $ref: '#/components/parameters/Fields'
+      - $ref: '#/components/parameters/Page'
+      - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: Paged properties.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedEnvelope'
+              example:
+                meta:
+                  total: 791
+                  page: 1
+                  limit: 2
+                  pages: 396
+                  query:
+                    tags: null
+                data:
+                - slug: 42crunchaudit
+                  title: 42CrunchAudit
+                  summary: Needs a description.
+                  url: https://properties.apievangelist.com/store/42crunchaudit/
+                  tags: []
+                  has_content: false
+                  type: properties
+                - slug: 42crunchcapture
+                  title: 42CrunchCapture
+                  summary: Needs a description.
+                  url: https://properties.apievangelist.com/store/42crunchcapture/
+                  tags: []
+                  has_content: false
+                  type: properties
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
+  /properties/{slug}:
+    get:
+      operationId: getPropertiesItem
+      tags:
+      - Toolbox
+      summary: Property
+      description: One entry from the properties collection; `include=content` adds the full body.
+      parameters:
+      - $ref: '#/components/parameters/Slug'
+      - $ref: '#/components/parameters/Include'
+      responses:
+        '200':
+          description: The entry.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Doc'
+              example:
+                slug: 42crunchaudit
+                title: 42CrunchAudit
+                summary: Needs a description.
+                url: https://properties.apievangelist.com/store/42crunchaudit/
+                tags: []
+                has_content: false
+                type: properties
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  parameters:
+    Fields:
+      name: fields
+      in: query
+      description: Comma-separated sparse field projection.
+      schema:
+        type: string
+        example: slug,title,url
+    Match:
+      name: match
+      in: query
+      description: Tag match mode.
+      schema:
+        type: string
+        enum:
+        - any
+        - all
+        default: any
+    Include:
+      name: include
+      in: query
+      description: Set to `content` to inline the full markdown body (up to 200 KB).
+      schema:
+        type: string
+        enum:
+        - content
+    Tags:
+      name: tags
+      in: query
+      description: Comma-separated tag slugs.
+      schema:
+        type: string
+    Page:
+      name: page
+      in: query
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
+    Limit:
+      name: limit
+      in: query
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 25
+    Q:
+      name: q
+      in: query
+      description: Free-text query over title, summary, tags, and body.
+      schema:
+        type: string
+    Slug:
+      name: slug
+      in: path
+      required: true
+      schema:
+        type: string
+  schemas:
+    PagedEnvelope:
+      type: object
+      properties:
+        meta:
+          type: object
+          properties:
+            total:
+              type: integer
+            page:
+              type: integer
+            limit:
+              type: integer
+            pages:
+              type: integer
+            query:
+              type: object
+              additionalProperties: true
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Doc'
+    Doc:
+      type: object
+      description: One network resource. Extra type-specific fields (guest, outline, party, …) appear per type.
+      properties:
+        type:
+          type: string
+        slug:
+          type: string
+        title:
+          type: string
+        summary:
+          type: string
+        url:
+          type: string
+          format: uri
+        tags:
+          type: array
+          items:
+            type: string
+        date:
+          type: string
+        content:
+          type: string
+          description: Full markdown body when include=content.
+      additionalProperties: true
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+        detail:
+          type: string
+  headers:
+    XRateLimitWindow:
+      description: The quota window in seconds. Always 86400 (one day).
+      schema:
+        type: integer
+        examples:
+        - 86400
+    XRateLimitLimit:
+      description: The daily request quota for the tier that served this response.
+      schema:
+        type: integer
+        examples:
+        - 1000
+    RateLimitPolicy:
+      description: 'The rate-limit policy in force for the tier that served this response, in RFC 9331 quota-policy syntax: `"quota";q=1000;w=86400, "burst";q=5;w=1` — a daily quota and a per-second burst. This is the POLICY, not a live counter: `RateLimit-Remaining` and `RateLimit-Reset` are deliberately not sent, because the quota is enforced by the gateway and there is no per-key usage accounting to read. Pace against the policy, and treat a 429 as authoritative.'
+      schema:
+        type: string
+        examples:
+        - '"quota";q=1000;w=86400, "burst";q=5;w=1'
+    XRateLimitTier:
+      description: The tier this request was served on — `free`, `pro`, `business`, `internal` or `owner`. Keyless requests are `free`; requests from an apievangelist.com origin are `internal`.
+      schema:
+        type: string
+        examples:
+        - free
+  responses:
+    NotFound:
+      description: No such resource.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: Optional — raises rate limits above the keyless free tier.
+x-apis-io:
+  tiers:
+    free:
+      label: Free
+      description: Browse, search, and read summaries across the whole network — stories, areas, guidance, building blocks, papers, tags, related. Keyless.
+    pro:
+      label: Pro
+      description: The research depth — full content (include=content), curated topic guides (/guide), and catalog intelligence (/stats). Requires X-API-Key.
+      plans: https://developer.apievangelist.com/plans/
+  mcp:
+    endpoint: https://mcp.apievangelist.com/mcp
+  agentSkills:
+    index: https://apievangelist.com/.well-known/agent-skills/index.json
+  prompts:
+  - name: where_can_ae_help
+    tier: free
+    description: Map a team's API need to the relevant research areas + the services Kin Lane offers.
+    uses:
+    - search_api_evangelist
+    - find_services
+  - name: catch_up
+    tier: free
+    description: Catch up on a topic — the most recent stories, newest first.
+    uses:
+    - find_posts
+  - name: research_topic
+    tier: pro
+    description: 'PRO — Deep-research a topic: the curated guide bundle plus the full research bodies.'
+    uses:
+    - guide_topic
+    - get_post
+    - find_related
+  - name: governance_starter_kit
+    tier: pro
+    description: 'PRO — Assemble an API governance starter kit: guidance, rules, policies, standards + services.'
+    uses:
+    - guide_topic
+    - find_building_blocks
+  - name: vendor_landscape
+    tier: pro
+    description: PRO — Map the vendor + tooling landscape for a capability, with research context.
+    uses:
+    - find_solutions
+    - find_tools
+    - guide_topic
+  resources:
+  - uri: ae://overview
+    tier: free
+    description: Service root — what the network offers, counts, entry points, how to engage.
+    operation: getServiceInfo
+  - uri: ae://services
+    tier: free
+    description: The services Kin Lane offers teams.
+    operation: listServices
+  - uri: ae://contact
+    tier: free
+    description: Every way to reach API Evangelist.
+    operation: getContact
+  - uri: ae://stats
+    tier: pro
+    description: PRO — per-type counts, stories-per-year, top tags by reach.
+    operation: getStats
+  - uri: ae://area/{slug}
+    tier: free
+    description: One topic area with its related-area graph.
+    operation: getArea
+  - uri: ae://tag/{slug}
+    tier: free
+    description: One tag with per-type counts and everything it labels.
+    operation: getTag
+  - uri: ae://post/{slug}
+    tier: free
+    description: One story by slug.
+    operation: getPost
+  - uri: ae://guide/{topic}
+    tier: pro
+    description: PRO — a curated cross-network guide bundle for a topic.
+    operation: getGuide
+  operations:
+    getServiceInfo:
+      tier: free
+      mcpTool: get_overview
+    searchNetwork:
+      tier: free
+      mcpTool: search_api_evangelist
+      agentSkill: brief-on-topic
+    listPosts:
+      tier: free
+      mcpTool: find_posts
+      agentSkill: brief-on-topic
+    getPost:
+      tier: free
+      mcpTool: get_post
+    listAreas:
+      tier: free
+      mcpTool: find_areas
+      agentSkill: brief-on-topic
+    getArea:
+      tier: free
+      mcpTool: get_area
+    listGuidanceHistory:
+      tier: free
+      mcpTool: get_guidance_section
+    listGuidanceTechnology:
+      tier: free
+      mcpTool: get_guidance_section
+    listGuidanceBusiness:
+      tier: free
+      mcpTool: get_guidance_section
+    listGuidancePolitics:
+      tier: free
+      mcpTool: get_guidance_section
+    listGuidanceGovernance:
+      tier: free
+      mcpTool: get_guidance_section
+    listGuidanceEvangelism:
+      tier: free
+      mcpTool: get_guidance_section
+    listGuidance:
+      tier: free
+      mcpTool: find_building_blocks
+      agentSkill: governance-starter-kit
+    getGuidanceItem:
+      tier: free
+      mcpTool: get_building_block
+    listPolicies:
+      tier: free
+      mcpTool: find_building_blocks
+      agentSkill: governance-starter-kit
+    getPoliciesItem:
+      tier: free
+      mcpTool: get_building_block
+    listRules:
+      tier: free
+      mcpTool: find_building_blocks
+      agentSkill: governance-starter-kit
+    getRulesItem:
+      tier: free
+      mcpTool: get_building_block
+    listStandards:
+      tier: free
+      mcpTool: find_building_blocks
+      agentSkill: governance-starter-kit
+    getStandardsItem:
+      tier: free
+      mcpTool: get_building_block
+    listSolutions:
+      tier: free
+      mcpTool: find_solutions
+      agentSkill: map-vendor-landscape
+    getSolution:
+      tier: free
+      mcpTool: get_solution
+    listTools:
+      tier: free
+      mcpTool: find_tools
+      agentSkill: map-vendor-landscape
+    getTool:
+      tier: free
+      mcpTool: get_tool
+    listSchema:
+      tier: free
+      mcpTool: find_building_blocks
+    getSchemaItem:
+      tier: free
+      mcpTool: get_building_block
+    listProperties:
+      tier: free
+      mcpTool: find_building_blocks
+    getPropertiesItem:
+      tier: free
+      mcpTool: get_building_block
+    listStrategies:
+      tier: free
+      mcpTool: find_building_blocks
+    getStrategiesItem:
+      tier: free
+      mcpTool: get_building_block
+    listExperiences:
+      tier: free
+      mcpTool: find_building_blocks
+    getExperiencesItem:
+      tier: free
+      mcpTool: get_building_block
+    listLifecycle:
+      tier: free
+      mcpTool: find_building_blocks
+    getLifecycleItem:
+      tier: free
+      mcpTool: get_building_block
+    listConversations:
+      tier: free
+      mcpTool: find_conversations
+    getConversation:
+      tier: free
+      mcpTool: get_conversation
+    listVideos:
+      tier: free
+      mcpTool: find_videos
+    getVideo:
+      tier: free
+      mcpTool: get_video
+    listPapers:
+      tier: free
+      mcpTool: find_papers
+      agentSkill: research-with-api-evangelist
+    getPaper:
+      tier: free
+      mcpTool: get_paper
+    listNewsletters:
+      tier: free
+      mcpTool: search_api_evangelist
+    listVocabulary:
+      tier: free
+      mcpTool: find_vocabulary
+    listVocabularyCategory:
+      tier: free
+      mcpTool: find_vocabulary
+    listFeeds:
+      tier: free
+      mcpTool: get_feeds
+    getTimelineApi:
+      tier: free
+      mcpTool: get_timeline
+    getTimelineResources:
+      tier: free
+      mcpTool: get_timeline
+    getTimelineIndustries:
+      tier: free
+      mcpTool: get_timeline
+    getTimelinePeople:
+      tier: free
+      mcpTool: get_timeline
+    listServices:
+      tier: free
+      mcpTool: find_services
+      agentSkill: find-where-ae-helps
+    getService:
+      tier: free
+      mcpTool: get_service
+      agentSkill: find-where-ae-helps
+    getContact:
+      tier: free
+      mcpTool: get_contact
+      agentSkill: find-where-ae-helps
+    listTags:
+      tier: free
+      mcpTool: find_tags
+      agentSkill: brief-on-topic
+    getTag:
+      tier: free
+      mcpTool: get_tag
+      agentSkill: brief-on-topic
+    getGuide:
+      tier: pro
+      mcpTool: guide_topic
+      agentSkill: research-with-api-evangelist
+    getStats:
+      tier: pro
+      mcpTool: get_stats
+    getPostRelated:
+      tier: free
+      mcpTool: find_related
+      agentSkill: brief-on-topic
+    getAreaRelated:
+      tier: free
+      mcpTool: find_related
+      agentSkill: brief-on-topic
+    getPaperRelated:
+      tier: free
+      mcpTool: find_related
+      agentSkill: research-with-api-evangelist
+    getGuidanceRelated:
+      tier: free
+      mcpTool: find_related
+      agentSkill: brief-on-topic

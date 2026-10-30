@@ -1,0 +1,18 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: https://raw.githubusercontent.com/api-evangelist/api-evangelist/refs/heads/main/schema/ContactOption.yml
+title: ContactOption
+type: object
+properties:
+  channel:
+    type: string
+    description: Machine-readable channel key (email, form, newsletter, github, linkedin,
+      bluesky, youtube, mail).
+  label:
+    type: string
+  value:
+    type: string
+    description: The address itself, where the channel is not a URL.
+  url:
+    type: string
+  description:
+    type: string

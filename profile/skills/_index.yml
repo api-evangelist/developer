@@ -1,0 +1,61 @@
+generated: '2026-08-10'
+method: generated
+source: openapi/apievangelist-v1-openapi.yml, openapi/apievangelist-governance-openapi.json
+note: >-
+  Every step in every skill below is grounded in an operationId that exists verbatim in one of the
+  two published contracts. Nothing here was invented.
+
+provider_published:
+  index: https://apievangelist.com/.well-known/agent-skills/index.json
+  mirror: https://apievangelist.com/skills/index.json
+  status: 200
+  skills_declared: 8
+  bodies_reachable: false
+  saved_verbatim: well-known/api-evangelist-agent-skills-index.json
+  finding: >-
+    The provider publishes a conformant agent-skills discovery index declaring eight skills, but
+    every SKILL.md URL it advertises returns 404 — discover-apievangelist, search-apis,
+    brief-on-topic and governance-starter-kit were each probed on 2026-08-10 and all 404, as does
+    the directory listing at /skills/<name>/. The index is real; the skill bodies are not served.
+    So the published skills could not be saved verbatim, and the skills below were generated from
+    the contracts instead. When the bodies are published, they supersede these.
+  probed:
+  - {url: 'https://apievangelist.com/.well-known/agent-skills/index.json', status: 200}
+  - {url: 'https://apievangelist.com/skills/index.json', status: 200}
+  - {url: 'https://apievangelist.com/skills/discover-apievangelist/SKILL.md', status: 404}
+  - {url: 'https://apievangelist.com/skills/search-apis/SKILL.md', status: 404}
+  - {url: 'https://apievangelist.com/skills/brief-on-topic/SKILL.md', status: 404}
+  - {url: 'https://apievangelist.com/skills/governance-starter-kit/SKILL.md', status: 404}
+  - {url: 'https://apievangelist.com/skills/discover-apievangelist/', status: 404}
+
+skills:
+- file: api-evangelist-research-a-topic.md
+  name: Research an API topic
+  api: openapi/apievangelist-v1-openapi.yml
+  operations: [searchNetwork, listAreas, getArea, getAreaRelated, listTags, getTag, listPosts, getPost, getPostRelated, getGuide]
+  maps_to_published_skill: brief-on-topic
+- file: api-evangelist-governance-starter-kit.md
+  name: Assemble a governance starter kit
+  api: openapi/apievangelist-v1-openapi.yml
+  operations: [listGuidance, getGuidanceItem, getGuidanceRelated, listRules, getRulesItem, listPolicies, getPoliciesItem, listStandards, getStandardsItem, listStrategies, getStrategiesItem, listServices, getService]
+  maps_to_published_skill: governance-starter-kit
+- file: api-evangelist-lint-and-score-an-openapi.md
+  name: Lint and score an OpenAPI
+  api: openapi/apievangelist-governance-openapi.json
+  operations: [rulesets, rules, validate, coverage, waivers, scorecard, report, classify, diff, deprecation, certify, verify]
+  maps_to_published_skill: null
+- file: api-evangelist-make-an-api-agent-ready.md
+  name: Make an API agent-ready
+  api: openapi/apievangelist-governance-openapi.json
+  operations: [classify, contextGate, toolsmith, agentDescriptor, experience, agentExport, reusability, onboarding]
+  maps_to_published_skill: null
+- file: api-evangelist-map-vendor-landscape.md
+  name: Map the vendor landscape for a capability
+  api: openapi/apievangelist-v1-openapi.yml
+  operations: [listSolutions, getSolution, listTools, getTool, listInsightAdoption, listStandards, getStandardsItem, listAreas, getArea]
+  maps_to_published_skill: map-vendor-landscape
+- file: api-evangelist-profile-company-demand.md
+  name: Profile a company's API demand
+  api: openapi/apievangelist-v1-openapi.yml
+  operations: [getInsightsSummary, listInsightCompanies, listInsightIndustries, listInsightDimensions, listInsightAdoption, getCompanyInsight, getCompanyGaps]
+  maps_to_published_skill: null

@@ -1,0 +1,28 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: https://raw.githubusercontent.com/api-evangelist/api-evangelist/refs/heads/main/schema/Doc.yml
+title: Doc
+type: object
+description: One network resource. Extra type-specific fields (guest, outline, party,
+  …) appear per type.
+properties:
+  type:
+    type: string
+  slug:
+    type: string
+  title:
+    type: string
+  summary:
+    type: string
+  url:
+    type: string
+    format: uri
+  tags:
+    type: array
+    items:
+      type: string
+  date:
+    type: string
+  content:
+    type: string
+    description: Full markdown body when include=content.
+additionalProperties: true

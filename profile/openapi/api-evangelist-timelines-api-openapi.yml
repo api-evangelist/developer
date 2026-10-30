@@ -1,0 +1,636 @@
+openapi: 3.2.0
+info:
+  title: Evangelist Network Timelines API
+  version: 1.2.0
+  summary: Sixteen years of API research as one API.
+  description: 'The API Evangelist network — 5,000+ stories, 77 topic areas, 2,400+ governance building
+
+    blocks (guidance, rules, policies, standards, strategies, schema, properties, experiences,
+
+    lifecycle), conversations, videos, white papers, tools, timelines, services, and the API
+
+    vocabulary — served as a single, searchable REST API.'
+  contact:
+    name: API Evangelist
+    email: info@apievangelist.com
+    url: https://apievangelist.com
+  license:
+    name: CC BY-SA 4.0
+    url: https://creativecommons.org/licenses/by-sa/4.0/
+servers:
+- url: https://api.apievangelist.com/v1
+security:
+- {}
+- ApiKeyAuth: []
+tags:
+- name: Timelines
+  description: The API, resource, industry, and people timelines behind sixteen years of research.
+paths:
+  /timelines/api:
+    get:
+      operationId: getTimelineApi
+      tags:
+      - Timelines
+      summary: API
+      description: The API timeline — the moments that led to and shaped web APIs, from early communication technology through the modern API economy, in chronological order.
+      parameters:
+      - $ref: '#/components/parameters/Page'
+      - $ref: '#/components/parameters/Limit'
+      - $ref: '#/components/parameters/Fields'
+      responses:
+        '200':
+          description: Timeline events in chronological order.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedEnvelope'
+              example:
+                meta:
+                  total: 320
+                  page: 1
+                  limit: 2
+                  pages: 160
+                  query:
+                    timeline: api
+                data:
+                - slug: api-drums-are-used-to-communicate
+                  title: Drums Are Used to Communicate
+                  summary: Long before written language, human communities used drums to send messages across distances too great for the voice to carry, encoding meaning in rhythmic patterns. Talking drums represent one of the earliest examples of transmitting structured information over a shared medium, a precursor to every signaling network that followed.
+                  url: https://apievangelist.com/timeline/api/
+                  tags: []
+                  timeline: api
+                  when: Pre-Historic
+                  position: 0
+                  type: timelines
+                - slug: api-pigeons-are-used-to-send-messages
+                  title: Pigeons Are Used to Send Messages
+                  summary: Ancient civilizations including the Persians, Greeks, and Romans used homing pigeons to carry written messages between distant points, establishing some of the first organized long-distance messaging systems. Pigeon post demonstrated the value of reliable message delivery networks centuries before wires and radio made electronic communication possible.
+                  url: https://apievangelist.com/timeline/api/
+                  tags: []
+                  timeline: api
+                  when: Historic
+                  position: 1
+                  type: timelines
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
+  /timelines/resources:
+    get:
+      operationId: getTimelineResources
+      tags:
+      - Timelines
+      summary: Resources
+      description: The resources timeline — which digital resources became APIs, and when, in chronological order.
+      parameters:
+      - $ref: '#/components/parameters/Page'
+      - $ref: '#/components/parameters/Limit'
+      - $ref: '#/components/parameters/Fields'
+      responses:
+        '200':
+          description: Timeline events in chronological order.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedEnvelope'
+              example:
+                meta:
+                  total: 59
+                  page: 1
+                  limit: 2
+                  pages: 30
+                  query:
+                    timeline: resources
+                data:
+                - slug: resources-contacts-relationships-salesforce
+                  title: Contacts, Relationships (Salesforce)
+                  summary: Salesforce launched as one of the first API-first software companies, exposing customer contacts, accounts, and relationship data over the web. By making CRM records programmable, it established that business data could live in the cloud and be integrated into any other system rather than locked inside desktop software.
+                  url: https://apievangelist.com/timeline/resources/
+                  tags: []
+                  timeline: resources
+                  when: '2000'
+                  position: 0
+                  type: timelines
+                - slug: resources-auctions-products-ebay
+                  title: Auctions, Products (eBay)
+                  summary: eBay released its API in November 2000, giving developers programmatic access to auction listings, products, and bidding. The move let third-party sellers and tool makers build applications on top of the marketplace, demonstrating early on that opening commerce data via API could grow an ecosystem rather than threaten it.
+                  url: https://apievangelist.com/timeline/resources/
+                  tags: []
+                  timeline: resources
+                  when: '2000'
+                  position: 1
+                  type: timelines
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
+  /timelines/industries:
+    get:
+      operationId: getTimelineIndustries
+      tags:
+      - Timelines
+      summary: Industries
+      description: The industries timeline — the industrial history that frames how API infrastructure evolves, in chronological order.
+      parameters:
+      - $ref: '#/components/parameters/Page'
+      - $ref: '#/components/parameters/Limit'
+      - $ref: '#/components/parameters/Fields'
+      responses:
+        '200':
+          description: Timeline events in chronological order.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedEnvelope'
+              example:
+                meta:
+                  total: 40
+                  page: 1
+                  limit: 2
+                  pages: 20
+                  query:
+                    timeline: industries
+                data:
+                - slug: industries-the-pacific-railroad-acts
+                  title: The Pacific Railroad Acts
+                  summary: The Pacific Railroad Acts of 1862 drove the construction of a transcontinental railroad in the United States through authorizing the issuance of government bonds and the grants of land to railroad companies. Most of the transcontinentals were heavily subsidized by all levels of government via sub-market-rate loans, land grants, and special local privileges on the frontier.
+                  url: https://apievangelist.com/timeline/industry/
+                  tags:
+                  - Railroad
+                  timeline: industries
+                  when: '1862'
+                  position: 0
+                  link: https://en.wikipedia.org/wiki/Pacific_Railroad_Acts
+                  type: timelines
+                - slug: industries-the-pacific-railroad-acts-amendments
+                  title: The Pacific Railroad Acts (Amendments)
+                  summary: AN ACT to establish the gauge of the Pacific railroad and its branches. Be it enacted by the Senate and House of Representatives of the United States of America in Congress assembled, That the gauge of the Pacific railroad and its branches throughout their whole extent, from the Pacific coast to the Missouri river, shall be, and hereby is, established at four feet eight and one-half inches.
+                  url: https://apievangelist.com/timeline/industry/
+                  tags:
+                  - Railroad
+                  timeline: industries
+                  when: '1862'
+                  position: 1
+                  link: https://en.wikipedia.org/wiki/Pacific_Railroad_Acts
+                  type: timelines
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
+  /timelines/people:
+    get:
+      operationId: getTimelinePeople
+      tags:
+      - Timelines
+      summary: People
+      description: The people timeline — the people whose work made compute, the internet, and APIs possible.
+      parameters:
+      - $ref: '#/components/parameters/Page'
+      - $ref: '#/components/parameters/Limit'
+      - $ref: '#/components/parameters/Fields'
+      responses:
+        '200':
+          description: Timeline entries.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedEnvelope'
+              example:
+                meta:
+                  total: 146
+                  page: 1
+                  limit: 2
+                  pages: 73
+                  query:
+                    timeline: people
+                data:
+                - slug: people-ada-lovelace
+                  title: Ada Lovelace
+                  summary: Augusta Ada King, Countess of Lovelace, born Augusta Ada Byron and now commonly known as Ada Lovelace, was an English mathematician and writer chiefly known for her work on Charles Babbage's early mechanical general-purpose computer, the Analytical Engine. Her notes on the engine include what is recognized as the first algorithm intended to be carried out by a machine. Because of this, she is often described as the world's first computer programmer.
+                  url: https://apievangelist.com/timeline/people/
+                  tags:
+                  - Women in Tech
+                  - Compute
+                  - Mathematics
+                  - Software
+                  timeline: people
+                  when: 1815–1852
+                  position: 0
+                  link: http://en.wikipedia.org/wiki/Ada_Lovelace
+                  type: timelines
+                - slug: people-adele-goldberg
+                  title: Adele Goldberg
+                  summary: Adele Goldberg is a computer scientist who participated in the development of the programming language Smalltalk-80 and various concepts related to object-oriented programming while a researcher at the Xerox Palo Alto Research Center, PARC, in the 1970s. Goldberg began working at PARC in 1973 as a laboratory and research assistant, and eventually became manager of the System Concepts Laboratory where she, Alan Kay, and others developed Smalltalk-80, which both developed the object-oriented approach of Simula 67 and introduced a programming environment of overlapping windows on graphic display screens. Not only was Smalltalk's innovative format simpler to use, it was also customizable and objects could be transferred among applications with minimal effort. Goldberg and Kay also were involved in the development of design templates, forerunners of the design patterns commonly used in software design.
+                  url: https://apievangelist.com/timeline/people/
+                  tags:
+                  - Women in Tech
+                  - Compute
+                  - Smalltalk
+                  - PARC
+                  timeline: people
+                  when: '1945'
+                  position: 1
+                  link: http://en.wikipedia.org/wiki/Adele_Goldberg_(computer_scientist)
+                  type: timelines
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
+components:
+  parameters:
+    Fields:
+      name: fields
+      in: query
+      description: Comma-separated sparse field projection.
+      schema:
+        type: string
+        example: slug,title,url
+    Limit:
+      name: limit
+      in: query
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 25
+    Page:
+      name: page
+      in: query
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
+  headers:
+    XRateLimitWindow:
+      description: The quota window in seconds. Always 86400 (one day).
+      schema:
+        type: integer
+        examples:
+        - 86400
+    XRateLimitLimit:
+      description: The daily request quota for the tier that served this response.
+      schema:
+        type: integer
+        examples:
+        - 1000
+    RateLimitPolicy:
+      description: 'The rate-limit policy in force for the tier that served this response, in RFC 9331 quota-policy syntax: `"quota";q=1000;w=86400, "burst";q=5;w=1` — a daily quota and a per-second burst. This is the POLICY, not a live counter: `RateLimit-Remaining` and `RateLimit-Reset` are deliberately not sent, because the quota is enforced by the gateway and there is no per-key usage accounting to read. Pace against the policy, and treat a 429 as authoritative.'
+      schema:
+        type: string
+        examples:
+        - '"quota";q=1000;w=86400, "burst";q=5;w=1'
+    XRateLimitTier:
+      description: The tier this request was served on — `free`, `pro`, `business`, `internal` or `owner`. Keyless requests are `free`; requests from an apievangelist.com origin are `internal`.
+      schema:
+        type: string
+        examples:
+        - free
+  schemas:
+    Doc:
+      type: object
+      description: One network resource. Extra type-specific fields (guest, outline, party, …) appear per type.
+      properties:
+        type:
+          type: string
+        slug:
+          type: string
+        title:
+          type: string
+        summary:
+          type: string
+        url:
+          type: string
+          format: uri
+        tags:
+          type: array
+          items:
+            type: string
+        date:
+          type: string
+        content:
+          type: string
+          description: Full markdown body when include=content.
+      additionalProperties: true
+    PagedEnvelope:
+      type: object
+      properties:
+        meta:
+          type: object
+          properties:
+            total:
+              type: integer
+            page:
+              type: integer
+            limit:
+              type: integer
+            pages:
+              type: integer
+            query:
+              type: object
+              additionalProperties: true
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Doc'
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: Optional — raises rate limits above the keyless free tier.
+x-apis-io:
+  tiers:
+    free:
+      label: Free
+      description: Browse, search, and read summaries across the whole network — stories, areas, guidance, building blocks, papers, tags, related. Keyless.
+    pro:
+      label: Pro
+      description: The research depth — full content (include=content), curated topic guides (/guide), and catalog intelligence (/stats). Requires X-API-Key.
+      plans: https://developer.apievangelist.com/plans/
+  mcp:
+    endpoint: https://mcp.apievangelist.com/mcp
+  agentSkills:
+    index: https://apievangelist.com/.well-known/agent-skills/index.json
+  prompts:
+  - name: where_can_ae_help
+    tier: free
+    description: Map a team's API need to the relevant research areas + the services Kin Lane offers.
+    uses:
+    - search_api_evangelist
+    - find_services
+  - name: catch_up
+    tier: free
+    description: Catch up on a topic — the most recent stories, newest first.
+    uses:
+    - find_posts
+  - name: research_topic
+    tier: pro
+    description: 'PRO — Deep-research a topic: the curated guide bundle plus the full research bodies.'
+    uses:
+    - guide_topic
+    - get_post
+    - find_related
+  - name: governance_starter_kit
+    tier: pro
+    description: 'PRO — Assemble an API governance starter kit: guidance, rules, policies, standards + services.'
+    uses:
+    - guide_topic
+    - find_building_blocks
+  - name: vendor_landscape
+    tier: pro
+    description: PRO — Map the vendor + tooling landscape for a capability, with research context.
+    uses:
+    - find_solutions
+    - find_tools
+    - guide_topic
+  resources:
+  - uri: ae://overview
+    tier: free
+    description: Service root — what the network offers, counts, entry points, how to engage.
+    operation: getServiceInfo
+  - uri: ae://services
+    tier: free
+    description: The services Kin Lane offers teams.
+    operation: listServices
+  - uri: ae://contact
+    tier: free
+    description: Every way to reach API Evangelist.
+    operation: getContact
+  - uri: ae://stats
+    tier: pro
+    description: PRO — per-type counts, stories-per-year, top tags by reach.
+    operation: getStats
+  - uri: ae://area/{slug}
+    tier: free
+    description: One topic area with its related-area graph.
+    operation: getArea
+  - uri: ae://tag/{slug}
+    tier: free
+    description: One tag with per-type counts and everything it labels.
+    operation: getTag
+  - uri: ae://post/{slug}
+    tier: free
+    description: One story by slug.
+    operation: getPost
+  - uri: ae://guide/{topic}
+    tier: pro
+    description: PRO — a curated cross-network guide bundle for a topic.
+    operation: getGuide
+  operations:
+    getServiceInfo:
+      tier: free
+      mcpTool: get_overview
+    searchNetwork:
+      tier: free
+      mcpTool: search_api_evangelist
+      agentSkill: brief-on-topic
+    listPosts:
+      tier: free
+      mcpTool: find_posts
+      agentSkill: brief-on-topic
+    getPost:
+      tier: free
+      mcpTool: get_post
+    listAreas:
+      tier: free
+      mcpTool: find_areas
+      agentSkill: brief-on-topic
+    getArea:
+      tier: free
+      mcpTool: get_area
+    listGuidanceHistory:
+      tier: free
+      mcpTool: get_guidance_section
+    listGuidanceTechnology:
+      tier: free
+      mcpTool: get_guidance_section
+    listGuidanceBusiness:
+      tier: free
+      mcpTool: get_guidance_section
+    listGuidancePolitics:
+      tier: free
+      mcpTool: get_guidance_section
+    listGuidanceGovernance:
+      tier: free
+      mcpTool: get_guidance_section
+    listGuidanceEvangelism:
+      tier: free
+      mcpTool: get_guidance_section
+    listGuidance:
+      tier: free
+      mcpTool: find_building_blocks
+      agentSkill: governance-starter-kit
+    getGuidanceItem:
+      tier: free
+      mcpTool: get_building_block
+    listPolicies:
+      tier: free
+      mcpTool: find_building_blocks
+      agentSkill: governance-starter-kit
+    getPoliciesItem:
+      tier: free
+      mcpTool: get_building_block
+    listRules:
+      tier: free
+      mcpTool: find_building_blocks
+      agentSkill: governance-starter-kit
+    getRulesItem:
+      tier: free
+      mcpTool: get_building_block
+    listStandards:
+      tier: free
+      mcpTool: find_building_blocks
+      agentSkill: governance-starter-kit
+    getStandardsItem:
+      tier: free
+      mcpTool: get_building_block
+    listSolutions:
+      tier: free
+      mcpTool: find_solutions
+      agentSkill: map-vendor-landscape
+    getSolution:
+      tier: free
+      mcpTool: get_solution
+    listTools:
+      tier: free
+      mcpTool: find_tools
+      agentSkill: map-vendor-landscape
+    getTool:
+      tier: free
+      mcpTool: get_tool
+    listSchema:
+      tier: free
+      mcpTool: find_building_blocks
+    getSchemaItem:
+      tier: free
+      mcpTool: get_building_block
+    listProperties:
+      tier: free
+      mcpTool: find_building_blocks
+    getPropertiesItem:
+      tier: free
+      mcpTool: get_building_block
+    listStrategies:
+      tier: free
+      mcpTool: find_building_blocks
+    getStrategiesItem:
+      tier: free
+      mcpTool: get_building_block
+    listExperiences:
+      tier: free
+      mcpTool: find_building_blocks
+    getExperiencesItem:
+      tier: free
+      mcpTool: get_building_block
+    listLifecycle:
+      tier: free
+      mcpTool: find_building_blocks
+    getLifecycleItem:
+      tier: free
+      mcpTool: get_building_block
+    listConversations:
+      tier: free
+      mcpTool: find_conversations
+    getConversation:
+      tier: free
+      mcpTool: get_conversation
+    listVideos:
+      tier: free
+      mcpTool: find_videos
+    getVideo:
+      tier: free
+      mcpTool: get_video
+    listPapers:
+      tier: free
+      mcpTool: find_papers
+      agentSkill: research-with-api-evangelist
+    getPaper:
+      tier: free
+      mcpTool: get_paper
+    listNewsletters:
+      tier: free
+      mcpTool: search_api_evangelist
+    listVocabulary:
+      tier: free
+      mcpTool: find_vocabulary
+    listVocabularyCategory:
+      tier: free
+      mcpTool: find_vocabulary
+    listFeeds:
+      tier: free
+      mcpTool: get_feeds
+    getTimelineApi:
+      tier: free
+      mcpTool: get_timeline
+    getTimelineResources:
+      tier: free
+      mcpTool: get_timeline
+    getTimelineIndustries:
+      tier: free
+      mcpTool: get_timeline
+    getTimelinePeople:
+      tier: free
+      mcpTool: get_timeline
+    listServices:
+      tier: free
+      mcpTool: find_services
+      agentSkill: find-where-ae-helps
+    getService:
+      tier: free
+      mcpTool: get_service
+      agentSkill: find-where-ae-helps
+    getContact:
+      tier: free
+      mcpTool: get_contact
+      agentSkill: find-where-ae-helps
+    listTags:
+      tier: free
+      mcpTool: find_tags
+      agentSkill: brief-on-topic
+    getTag:
+      tier: free
+      mcpTool: get_tag
+      agentSkill: brief-on-topic
+    getGuide:
+      tier: pro
+      mcpTool: guide_topic
+      agentSkill: research-with-api-evangelist
+    getStats:
+      tier: pro
+      mcpTool: get_stats
+    getPostRelated:
+      tier: free
+      mcpTool: find_related
+      agentSkill: brief-on-topic
+    getAreaRelated:
+      tier: free
+      mcpTool: find_related
+      agentSkill: brief-on-topic
+    getPaperRelated:
+      tier: free
+      mcpTool: find_related
+      agentSkill: research-with-api-evangelist
+    getGuidanceRelated:
+      tier: free
+      mcpTool: find_related
+      agentSkill: brief-on-topic

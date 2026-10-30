@@ -1,0 +1,66 @@
+generated: '2026-08-10'
+method: searched
+source: openapi/apievangelist-governance-openapi.json, openapi/apievangelist-v1-openapi.yml
+docs: https://developer.apievangelist.com/authentication
+summary:
+  types:
+  - apiKey
+  api_key_in:
+  - header
+  anonymous_supported: true
+  oauth2_flows: []
+schemes:
+- name: ApiKey
+  type: apiKey
+  in: header
+  parameter: x-api-key
+  description: A Pro or Team key from sign-in. Omit for keyless free-tier access.
+  sources:
+  - openapi/apievangelist-governance-openapi.json
+  - openapi/apievangelist-v1-openapi.yml
+  aliases:
+  - name: ApiKeyAuth
+    spec: openapi/apievangelist-v1-openapi.yml
+    note: >-
+      The network API names the identical x-api-key header scheme ApiKeyAuth; the governance API
+      names it ApiKey. Same header, same location, two names across one base URL.
+anonymous_access:
+  supported: true
+  declared: >-
+    both specs declare `security: [{}, {ApiKey: []}]` — the empty requirement is the
+    machine-readable statement that the API works with no credential
+  tier: free — 5 requests/second, 1,000 requests/day, no signup
+  verified: GET https://api.apievangelist.com/v1/posts?limit=1 returned 200 with no credential
+key_acquisition:
+  signup: https://api.apievangelist.com/v1/auth/login
+  plans: https://developer.apievangelist.com/plans/
+  contact: info@apievangelist.com
+  note: >-
+    GET /v1/auth/login (200) is the sign-in entry point; POST /v1/billing/checkout starts a paid
+    plan. Neither operation carries an operationId in the governance contract.
+tiering:
+  free: keyless — browse, search and read summaries across the whole network
+  pro: x-api-key — full content (include=content), /guide, /stats, and the artifact-generating
+    governance capabilities
+  enforcement:
+    network_api: 403 {"error":"upgrade_required","tier":"pro"}
+    governance_api: 402 {"error":"payment_required"}
+mcp:
+  url: https://mcp.apievangelist.com/mcp
+  authentication: none
+  note: >-
+    The MCP server card declares authentication type "none" and anonymous tools/list returns 200
+    with all 57 tools. Pro tools upsell rather than reject at listing time.
+transport_security: security/api-evangelist-domain-security.yml
+gaps:
+- No OAuth 2.0 and no OIDC — /.well-known/oauth-authorization-server and
+  /.well-known/openid-configuration both 404, so there is no scope surface and no scopes/ artifact.
+- The same header scheme carries two different names across the two contracts.
+- No documented key rotation or revocation procedure.
+x-evidence:
+  checked: '2026-08-10'
+  requests:
+  - {url: 'https://api.apievangelist.com/v1/posts?limit=1', status: 200}
+  - {url: 'https://api.apievangelist.com/v1/auth/login', status: 200}
+  - {url: 'https://developer.apievangelist.com/authentication', status: 200}
+  - {url: 'https://apievangelist.com/.well-known/openid-configuration', status: 404}

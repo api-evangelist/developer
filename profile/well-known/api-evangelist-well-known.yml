@@ -1,0 +1,800 @@
+generated: '2026-09-14'
+method: probed
+note: Full re-probe under the current contract (roadmap#337). The 2026-08-10 artifact asked only apievangelist.com
+  and developer. for the OAuth paths -- the two hosts that structurally cannot serve them -- and predated
+  /apis.json joining the path list (roadmap#164). Every host the record knows is probed here, each with
+  a negative control.
+hosts:
+- host: https://api.apievangelist.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/api-catalog.json
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 200
+    file: api-evangelist-api-openid-configuration.json
+    bytes: 916
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    file: api-evangelist-api-oauth-authorization-server.json
+    bytes: 916
+  - path: /.well-known/oauth-protected-resource
+    status: 200
+    file: api-evangelist-api-oauth-protected-resource.json
+    bytes: 378
+  - path: /.well-known/ucp.json
+    status: 404
+  - path: /.well-known/acp.json
+    status: 404
+  - path: /.well-known/aauth-resource.json
+    status: 404
+  - path: /.well-known/apis.json
+    status: 404
+  - path: /apis.json
+    status: 403
+  - path: /apis.yml
+    status: 403
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /.well-known/mcp/server-card.json
+    status: 404
+  - path: /.well-known/agent-skills/index.json
+    status: 404
+  path_echo_control: passed
+- host: https://apievangelist.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 200
+    file: api-evangelist-api-catalog.json
+    bytes: 2054
+  - path: /.well-known/api-catalog.json
+    status: 200
+    file: api-evangelist-api-catalog.json
+    bytes: 2054
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/ucp.json
+    status: 404
+  - path: /.well-known/acp.json
+    status: 404
+  - path: /.well-known/aauth-resource.json
+    status: 404
+  - path: /.well-known/apis.json
+    status: 404
+  - path: /apis.json
+    status: 404
+  - path: /apis.yml
+    status: 200
+    file: api-evangelist-apis.yml
+    bytes: 3736
+  - path: /.well-known/agent-card.json
+    status: 200
+    file: api-evangelist-agent-card.json
+    bytes: 7333
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /.well-known/mcp/server-card.json
+    status: 200
+    file: api-evangelist-mcp-server-card.json
+    bytes: 1990
+  - path: /.well-known/agent-skills/index.json
+    status: 200
+    file: api-evangelist-agent-skills-index.json
+    bytes: 3602
+  path_echo_control: passed
+- host: https://apis.apievangelist.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 200
+    bytes: 6793117
+    recorded_miss: 'served and valid (6,309 linkset entries) but NOT archived: 6.8 MB of generated catalog.
+      The api-catalog surface is already evidenced by the apex document; archiving this one adds no signal
+      and 6.8 MB of git history.'
+  - path: /.well-known/api-catalog.json
+    status: 200
+    bytes: 6793117
+    recorded_miss: 'served and valid (6,309 linkset entries) but NOT archived: 6.8 MB of generated catalog.
+      The api-catalog surface is already evidenced by the apex document; archiving this one adds no signal
+      and 6.8 MB of git history.'
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/ucp.json
+    status: 404
+  - path: /.well-known/acp.json
+    status: 404
+  - path: /.well-known/aauth-resource.json
+    status: 404
+  - path: /.well-known/apis.json
+    status: 404
+  - path: /apis.json
+    status: 200
+    file: api-evangelist-apis-apis.json
+    bytes: 1917
+  - path: /apis.yml
+    status: 200
+    file: api-evangelist-apis-apis.yml
+    bytes: 1610
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /.well-known/mcp/server-card.json
+    status: 200
+    file: api-evangelist-apis-mcp-server-card.json
+    bytes: 1990
+  - path: /.well-known/agent-skills/index.json
+    status: 404
+  path_echo_control: passed
+- host: https://conversations.apievangelist.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 200
+    file: api-evangelist-conversations-api-catalog.json
+    bytes: 28640
+  - path: /.well-known/api-catalog.json
+    status: 200
+    file: api-evangelist-conversations-api-catalog.json
+    bytes: 28640
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/ucp.json
+    status: 404
+  - path: /.well-known/acp.json
+    status: 404
+  - path: /.well-known/aauth-resource.json
+    status: 404
+  - path: /.well-known/apis.json
+    status: 404
+  - path: /apis.json
+    status: 200
+    file: api-evangelist-conversations-apis.json
+    bytes: 2278
+  - path: /apis.yml
+    status: 200
+    file: api-evangelist-conversations-apis.yml
+    bytes: 1791
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /.well-known/mcp/server-card.json
+    status: 200
+    file: api-evangelist-conversations-mcp-server-card.json
+    bytes: 1990
+  - path: /.well-known/agent-skills/index.json
+    status: 404
+  path_echo_control: passed
+- host: https://developer.apievangelist.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    file: api-evangelist-developer-security.txt
+    bytes: 400
+  - path: /.well-known/api-catalog
+    status: 200
+    file: api-evangelist-developer-api-catalog.json
+    bytes: 2807
+  - path: /.well-known/api-catalog.json
+    status: 200
+    file: api-evangelist-developer-api-catalog.json
+    bytes: 2807
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/ucp.json
+    status: 404
+  - path: /.well-known/acp.json
+    status: 404
+  - path: /.well-known/aauth-resource.json
+    status: 404
+  - path: /.well-known/apis.json
+    status: 404
+  - path: /apis.json
+    status: 404
+  - path: /apis.yml
+    status: 200
+    file: api-evangelist-developer-apis.yml
+    bytes: 18642
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /.well-known/mcp/server-card.json
+    status: 200
+    file: api-evangelist-developer-mcp-server-card.json
+    bytes: 1990
+  - path: /.well-known/agent-skills/index.json
+    status: 404
+  path_echo_control: passed
+- host: https://experiences.apievangelist.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 200
+    file: api-evangelist-experiences-api-catalog.json
+    bytes: 22146
+  - path: /.well-known/api-catalog.json
+    status: 200
+    file: api-evangelist-experiences-api-catalog.json
+    bytes: 22146
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/ucp.json
+    status: 404
+  - path: /.well-known/acp.json
+    status: 404
+  - path: /.well-known/aauth-resource.json
+    status: 404
+  - path: /.well-known/apis.json
+    status: 404
+  - path: /apis.json
+    status: 200
+    file: api-evangelist-experiences-apis.json
+    bytes: 2268
+  - path: /apis.yml
+    status: 200
+    file: api-evangelist-experiences-apis.yml
+    bytes: 1779
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /.well-known/mcp/server-card.json
+    status: 200
+    file: api-evangelist-experiences-mcp-server-card.json
+    bytes: 1990
+  - path: /.well-known/agent-skills/index.json
+    status: 404
+  path_echo_control: passed
+- host: https://guidance.apievangelist.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 200
+    file: api-evangelist-guidance-api-catalog.json
+    bytes: 487
+  - path: /.well-known/api-catalog.json
+    status: 200
+    file: api-evangelist-guidance-api-catalog.json
+    bytes: 487
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/ucp.json
+    status: 404
+  - path: /.well-known/acp.json
+    status: 404
+  - path: /.well-known/aauth-resource.json
+    status: 404
+  - path: /.well-known/apis.json
+    status: 404
+  - path: /apis.json
+    status: 404
+  - path: /apis.yml
+    status: 200
+    file: api-evangelist-guidance-apis.yml
+    bytes: 1713
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /.well-known/mcp/server-card.json
+    status: 200
+    file: api-evangelist-guidance-mcp-server-card.json
+    bytes: 1990
+  - path: /.well-known/agent-skills/index.json
+    status: 404
+  path_echo_control: passed
+- host: https://mcp.apievangelist.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 405
+  - path: /.well-known/api-catalog
+    status: 405
+  - path: /.well-known/api-catalog.json
+    status: 405
+  - path: /.well-known/openid-configuration
+    status: 405
+  - path: /.well-known/ai-plugin.json
+    status: 405
+  - path: /.well-known/oauth-authorization-server
+    status: 405
+  - path: /.well-known/oauth-protected-resource
+    status: 200
+    file: api-evangelist-mcp-oauth-protected-resource.json
+    bytes: 353
+  - path: /.well-known/ucp.json
+    status: 405
+  - path: /.well-known/acp.json
+    status: 405
+  - path: /.well-known/aauth-resource.json
+    status: 405
+  - path: /.well-known/apis.json
+    status: 405
+  - path: /apis.json
+    status: 405
+  - path: /apis.yml
+    status: 405
+  - path: /.well-known/agent-card.json
+    status: 405
+  - path: /.well-known/agent.json
+    status: 405
+  - path: /.well-known/mcp/server-card.json
+    status: 405
+  - path: /.well-known/agent-skills/index.json
+    status: 405
+  path_echo_control: passed
+- host: https://policies.apievangelist.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 200
+    file: api-evangelist-policies-api-catalog.json
+    bytes: 48044
+  - path: /.well-known/api-catalog.json
+    status: 200
+    file: api-evangelist-policies-api-catalog.json
+    bytes: 48044
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/ucp.json
+    status: 404
+  - path: /.well-known/acp.json
+    status: 404
+  - path: /.well-known/aauth-resource.json
+    status: 404
+  - path: /.well-known/apis.json
+    status: 404
+  - path: /apis.json
+    status: 200
+    file: api-evangelist-policies-apis.json
+    bytes: 2351
+  - path: /apis.yml
+    status: 200
+    file: api-evangelist-policies-apis.yml
+    bytes: 1811
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /.well-known/mcp/server-card.json
+    status: 200
+    file: api-evangelist-policies-mcp-server-card.json
+    bytes: 1990
+  - path: /.well-known/agent-skills/index.json
+    status: 404
+  path_echo_control: passed
+- host: https://properties.apievangelist.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 200
+    file: api-evangelist-properties-api-catalog.json
+    bytes: 139941
+  - path: /.well-known/api-catalog.json
+    status: 200
+    file: api-evangelist-properties-api-catalog.json
+    bytes: 139941
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/ucp.json
+    status: 404
+  - path: /.well-known/acp.json
+    status: 404
+  - path: /.well-known/aauth-resource.json
+    status: 404
+  - path: /.well-known/apis.json
+    status: 404
+  - path: /apis.json
+    status: 200
+    file: api-evangelist-properties-apis.json
+    bytes: 2404
+  - path: /apis.yml
+    status: 200
+    file: api-evangelist-properties-apis.yml
+    bytes: 1797
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /.well-known/mcp/server-card.json
+    status: 200
+    file: api-evangelist-properties-mcp-server-card.json
+    bytes: 1990
+  - path: /.well-known/agent-skills/index.json
+    status: 404
+  path_echo_control: passed
+- host: https://providers.apievangelist.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 200
+    file: api-evangelist-providers-api-catalog.json
+    bytes: 616
+  - path: /.well-known/api-catalog.json
+    status: 200
+    file: api-evangelist-providers-api-catalog.json
+    bytes: 616
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/ucp.json
+    status: 404
+  - path: /.well-known/acp.json
+    status: 404
+  - path: /.well-known/aauth-resource.json
+    status: 404
+  - path: /.well-known/apis.json
+    status: 404
+  - path: /apis.json
+    status: 200
+    file: api-evangelist-providers-apis.json
+    bytes: 833
+  - path: /apis.yml
+    status: 200
+    file: api-evangelist-providers-apis.yml
+    bytes: 667
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /.well-known/mcp/server-card.json
+    status: 200
+    file: api-evangelist-providers-mcp-server-card.json
+    bytes: 1990
+  - path: /.well-known/agent-skills/index.json
+    status: 404
+  path_echo_control: passed
+- host: https://rules.apievangelist.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 200
+    file: api-evangelist-rules-api-catalog.json
+    bytes: 200279
+  - path: /.well-known/api-catalog.json
+    status: 200
+    file: api-evangelist-rules-api-catalog.json
+    bytes: 200279
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/ucp.json
+    status: 404
+  - path: /.well-known/acp.json
+    status: 404
+  - path: /.well-known/aauth-resource.json
+    status: 404
+  - path: /.well-known/apis.json
+    status: 404
+  - path: /apis.json
+    status: 200
+    file: api-evangelist-rules-apis.json
+    bytes: 2215
+  - path: /apis.yml
+    status: 200
+    file: api-evangelist-rules-apis.yml
+    bytes: 1644
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /.well-known/mcp/server-card.json
+    status: 200
+    file: api-evangelist-rules-mcp-server-card.json
+    bytes: 1990
+  - path: /.well-known/agent-skills/index.json
+    status: 404
+  path_echo_control: passed
+- host: https://schema.apievangelist.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 200
+    file: api-evangelist-schema-api-catalog.json
+    bytes: 4357
+  - path: /.well-known/api-catalog.json
+    status: 200
+    file: api-evangelist-schema-api-catalog.json
+    bytes: 4357
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/ucp.json
+    status: 404
+  - path: /.well-known/acp.json
+    status: 404
+  - path: /.well-known/aauth-resource.json
+    status: 404
+  - path: /.well-known/apis.json
+    status: 404
+  - path: /apis.json
+    status: 200
+    file: api-evangelist-schema-apis.json
+    bytes: 2215
+  - path: /apis.yml
+    status: 200
+    file: api-evangelist-schema-apis.yml
+    bytes: 1709
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /.well-known/mcp/server-card.json
+    status: 200
+    file: api-evangelist-schema-mcp-server-card.json
+    bytes: 1990
+  - path: /.well-known/agent-skills/index.json
+    status: 404
+  path_echo_control: passed
+- host: https://standards.apievangelist.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 200
+    file: api-evangelist-standards-api-catalog.json
+    bytes: 264789
+  - path: /.well-known/api-catalog.json
+    status: 200
+    file: api-evangelist-standards-api-catalog.json
+    bytes: 264789
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/ucp.json
+    status: 404
+  - path: /.well-known/acp.json
+    status: 404
+  - path: /.well-known/aauth-resource.json
+    status: 404
+  - path: /.well-known/apis.json
+    status: 404
+  - path: /apis.json
+    status: 200
+    file: api-evangelist-standards-apis.json
+    bytes: 2241
+  - path: /apis.yml
+    status: 200
+    file: api-evangelist-standards-apis.yml
+    bytes: 1750
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /.well-known/mcp/server-card.json
+    status: 200
+    file: api-evangelist-standards-mcp-server-card.json
+    bytes: 1990
+  - path: /.well-known/agent-skills/index.json
+    status: 404
+  path_echo_control: passed
+- host: https://strategies.apievangelist.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 200
+    file: api-evangelist-strategies-api-catalog.json
+    bytes: 26146
+  - path: /.well-known/api-catalog.json
+    status: 200
+    file: api-evangelist-strategies-api-catalog.json
+    bytes: 26146
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/ucp.json
+    status: 404
+  - path: /.well-known/acp.json
+    status: 404
+  - path: /.well-known/aauth-resource.json
+    status: 404
+  - path: /.well-known/apis.json
+    status: 404
+  - path: /apis.json
+    status: 200
+    file: api-evangelist-strategies-apis.json
+    bytes: 2220
+  - path: /apis.yml
+    status: 200
+    file: api-evangelist-strategies-apis.yml
+    bytes: 1724
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /.well-known/mcp/server-card.json
+    status: 200
+    file: api-evangelist-strategies-mcp-server-card.json
+    bytes: 1990
+  - path: /.well-known/agent-skills/index.json
+    status: 404
+  path_echo_control: passed
+- host: https://vocabularies.apievangelist.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 200
+    file: api-evangelist-vocabularies-api-catalog.json
+    bytes: 631
+  - path: /.well-known/api-catalog.json
+    status: 200
+    file: api-evangelist-vocabularies-api-catalog.json
+    bytes: 631
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/ucp.json
+    status: 404
+  - path: /.well-known/acp.json
+    status: 404
+  - path: /.well-known/aauth-resource.json
+    status: 404
+  - path: /.well-known/apis.json
+    status: 404
+  - path: /apis.json
+    status: 200
+    file: api-evangelist-vocabularies-apis.json
+    bytes: 2229
+  - path: /apis.yml
+    status: 200
+    file: api-evangelist-vocabularies-apis.yml
+    bytes: 1673
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /.well-known/mcp/server-card.json
+    status: 200
+    file: api-evangelist-vocabularies-mcp-server-card.json
+    bytes: 1990
+  - path: /.well-known/agent-skills/index.json
+    status: 404
+  path_echo_control: passed
+- host: https://www.apievangelist.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 200
+    file: api-evangelist-api-catalog.json
+    bytes: 2054
+  - path: /.well-known/api-catalog.json
+    status: 200
+    file: api-evangelist-api-catalog.json
+    bytes: 2054
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/ucp.json
+    status: 404
+  - path: /.well-known/acp.json
+    status: 404
+  - path: /.well-known/aauth-resource.json
+    status: 404
+  - path: /.well-known/apis.json
+    status: 404
+  - path: /apis.json
+    status: 404
+  - path: /apis.yml
+    status: 200
+    file: api-evangelist-apis.yml
+    bytes: 3736
+  - path: /.well-known/agent-card.json
+    status: 200
+    file: api-evangelist-agent-card.json
+    bytes: 7333
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /.well-known/mcp/server-card.json
+    status: 200
+    file: api-evangelist-mcp-server-card.json
+    bytes: 1990
+  - path: /.well-known/agent-skills/index.json
+    status: 200
+    file: api-evangelist-agent-skills-index.json
+    bytes: 3602
+  path_echo_control: passed

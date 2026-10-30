@@ -1,0 +1,827 @@
+openapi: 3.2.0
+info:
+  title: Evangelist Network Media API
+  version: 1.2.0
+  summary: Sixteen years of API research as one API.
+  description: 'The API Evangelist network — 5,000+ stories, 77 topic areas, 2,400+ governance building
+
+    blocks (guidance, rules, policies, standards, strategies, schema, properties, experiences,
+
+    lifecycle), conversations, videos, white papers, tools, timelines, services, and the API
+
+    vocabulary — served as a single, searchable REST API.'
+  contact:
+    name: API Evangelist
+    email: info@apievangelist.com
+    url: https://apievangelist.com
+  license:
+    name: CC BY-SA 4.0
+    url: https://creativecommons.org/licenses/by-sa/4.0/
+servers:
+- url: https://api.apievangelist.com/v1
+security:
+- {}
+- ApiKeyAuth: []
+tags:
+- name: Media
+  description: Conversations, videos, white papers, and the newsletter.
+paths:
+  /conversations:
+    get:
+      operationId: listConversations
+      tags:
+      - Media
+      summary: Conversations
+      description: Search or browse recorded conversations with API practitioners, with guest and media metadata.
+      parameters:
+      - $ref: '#/components/parameters/Q'
+      - $ref: '#/components/parameters/Tags'
+      - $ref: '#/components/parameters/Page'
+      - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: Recorded conversations with guest and media metadata.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedEnvelope'
+              example:
+                meta:
+                  total: 59
+                  page: 1
+                  limit: 2
+                  pages: 30
+                  query:
+                    tags: null
+                data:
+                - slug: 2026-08-18-sebastian-loch
+                  title: API Evangelist Conversation with Sebastian Loch on Verified Nutrition Data, Building Image Recognition on Top of LLMs, and a 100x Influx of Vibe-Coding Developers
+                  summary: Sebastian Loch on how a twenty-year-old verified nutrition database survived the AI rush, why LLMs are welcome everywhere except in the data itself, and what a 100x wave of vibe-coding developers does to a bootstrapped API business.
+                  url: https://conversations.apievangelist.com/store/2026-08-18-sebastian-loch.html
+                  tags:
+                  - Nutrition
+                  - Artificial Intelligence
+                  - Data
+                  - Vibe Coding
+                  - Health
+                  date: '2026-08-18 15:00:00'
+                  guest: Sebastian Loch
+                  guest_role: Head of Business Development
+                  guest_company: fatsecret
+                  youtube_id: -ym0WKjZwZ8
+                  soundcloud: https://soundcloud.com/kinlane/api-evangelist-conversation-with-sebastian-loch
+                  duration: 0:36:51
+                  has_content: false
+                  type: conversations
+                - slug: 2026-08-13-phil-leggetter
+                  title: API Evangelist Conversation with Phil Leggetter on Webhooks, Event Destinations, and Building a Team as a Fleet of Agents
+                  summary: Phil Leggetter on why event-driven architecture is often over-built, the Outpost open-source story, and scaling a small team with a fleet of role-based agents.
+                  url: https://conversations.apievangelist.com/store/2026-08-13-phil-leggetter.html
+                  tags:
+                  - Webhooks
+                  - Event-Driven Architecture
+                  - Developer Relations
+                  - Open Source
+                  - Artificial Intelligence
+                  date: '2026-08-13 15:00:00'
+                  guest: Phil Leggetter
+                  guest_role: Head of Product-Led Growth and Developer Relations
+                  guest_company: Hookdeck
+                  youtube_id: gwu5saNLmeY
+                  soundcloud: https://soundcloud.com/kinlane/api-evangelist-conversation-with-phil-leggetter
+                  duration: 0:28:43
+                  has_content: false
+                  type: conversations
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
+  /conversations/{slug}:
+    get:
+      operationId: getConversation
+      tags:
+      - Media
+      summary: Conversation
+      description: One conversation with guest detail and YouTube/SoundCloud links.
+      parameters:
+      - $ref: '#/components/parameters/Slug'
+      - $ref: '#/components/parameters/Include'
+      responses:
+        '200':
+          description: The conversation.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Doc'
+              example:
+                slug: 2026-08-18-sebastian-loch
+                title: API Evangelist Conversation with Sebastian Loch on Verified Nutrition Data, Building Image Recognition on Top of LLMs, and a 100x Influx of Vibe-Coding Developers
+                summary: Sebastian Loch on how a twenty-year-old verified nutrition database survived the AI rush, why LLMs are welcome everywhere except in the data itself, and what a 100x wave of vibe-coding developers does to a bootstrapped API business.
+                url: https://conversations.apievangelist.com/store/2026-08-18-sebastian-loch.html
+                tags:
+                - Nutrition
+                - Artificial Intelligence
+                - Data
+                - Vibe Coding
+                - Health
+                date: '2026-08-18 15:00:00'
+                guest: Sebastian Loch
+                guest_role: Head of Business Development
+                guest_company: fatsecret
+                youtube_id: -ym0WKjZwZ8
+                soundcloud: https://soundcloud.com/kinlane/api-evangelist-conversation-with-sebastian-loch
+                duration: 0:36:51
+                has_content: false
+                type: conversations
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /videos:
+    get:
+      operationId: listVideos
+      tags:
+      - Media
+      summary: Videos
+      description: Search or browse the video library (video.apievangelist.com) — interviews and discussions from across the API space, searchable by transcript.
+      parameters:
+      - $ref: '#/components/parameters/Q'
+      - $ref: '#/components/parameters/Tags'
+      - $ref: '#/components/parameters/Page'
+      - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: Videos with YouTube metadata.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedEnvelope'
+              example:
+                meta:
+                  total: 103
+                  page: 1
+                  limit: 2
+                  pages: 52
+                  query:
+                    tags: null
+                data:
+                - slug: adam-duvander
+                  title: Adam DuVander
+                  summary: ''
+                  url: https://video.apievangelist.com/store/adam-duvander/
+                  tags:
+                  - Website
+                  image: https://i3.ytimg.com/vi/v2u5rfdZCt4/maxresdefault.jpg
+                  youtube_id: v2u5rfdZCt4
+                  has_content: true
+                  type: videos
+                - slug: aleksei-akimov-adyen
+                  title: Aleksei Akimov, Adyen
+                  summary: ''
+                  url: https://video.apievangelist.com/store/aleksei-akimov-adyen/
+                  tags:
+                  - Website
+                  image: https://i3.ytimg.com/vi/l4Xp28MTAQk/maxresdefault.jpg
+                  youtube_id: l4Xp28MTAQk
+                  has_content: true
+                  type: videos
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
+  /videos/{slug}:
+    get:
+      operationId: getVideo
+      tags:
+      - Media
+      summary: Video
+      description: One video with its YouTube id; `include=content` adds the full transcript.
+      parameters:
+      - $ref: '#/components/parameters/Slug'
+      - $ref: '#/components/parameters/Include'
+      responses:
+        '200':
+          description: The video.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Doc'
+              example:
+                slug: adam-duvander
+                title: Adam DuVander
+                summary: ''
+                url: https://video.apievangelist.com/store/adam-duvander/
+                tags:
+                - Website
+                image: https://i3.ytimg.com/vi/v2u5rfdZCt4/maxresdefault.jpg
+                youtube_id: v2u5rfdZCt4
+                has_content: true
+                type: videos
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /papers:
+    get:
+      operationId: listPapers
+      tags:
+      - Media
+      summary: Papers
+      description: API Evangelist white papers — deep dives distilled from sixteen years of research, with outlines.
+      parameters:
+      - $ref: '#/components/parameters/Q'
+      - $ref: '#/components/parameters/Page'
+      - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: Papers with outlines and landing URLs.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedEnvelope'
+              example:
+                meta:
+                  total: 21
+                  page: 1
+                  limit: 2
+                  pages: 11
+                  query:
+                    tags: null
+                data:
+                - slug: change-on-the-agent-surface
+                  title: Change on the Agent Surface
+                  summary: Everything the industry knows about API change assumes a consumer who reads. Three layers govern change in MCP, the discipline degrades as it approaches the consumer, and the tool surface an agent actually binds to is governed by nobody — with the evidence from a full walk of the public MCP registry, and eight rules for the layer versioning does not reach.
+                  url: https://papers.apievangelist.com/papers/change-on-the-agent-surface/
+                  tags: []
+                  area: Fundamentals
+                  tagline: Governing versioning, breaking changes, and deprecation for the MCP tools an agent binds to.
+                  pages: ~16
+                  version: '1.0'
+                  updated: August 2026
+                  outline:
+                  - The three layers, and what governs each
+                  - What the evidence shows
+                  - The description is not documentation, it is input
+                  - Which changes actually break an agent
+                  - The practice — eight rules for the agent surface
+                  - Anti-patterns worth watching for
+                  - Provider self-assessment
+                  - Where this is going
+                  - Appendix A — Evidence and method
+                  - Appendix B — Sources and further reading
+                  cover: /assets/covers/change-on-the-agent-surface.png
+                  type: papers
+                - slug: arazzo-api-integration-page
+                  title: Delivering a Modern API Integration Page with Arazzo
+                  summary: You should not be building integrations anymore — you should be describing them. An integration is two ends and a wire; both ends already publish OpenAPI, and Arazzo is the wire. This paper reframes the integrations page from a gallery of connector apps into a directory of Arazzo workflows anyone can fork and run, walks the anatomy, rebuilds a real marketplace's popular listings as verified workflows, is honest about the hard parts, and shows why owning an integration beats renting a connector — plus a provider self-assessment.
+                  url: https://papers.apievangelist.com/papers/arazzo-api-integration-page/
+                  tags: []
+                  area: Fundamentals
+                  tagline: Turn your integrations page from a gallery of connectors into a directory of forkable workflows.
+                  pages: ~20
+                  version: '1.0'
+                  updated: July 2026
+                  outline:
+                  - The integration was always two ends and a wire
+                  - From connectors to described behavior — the sixteen-year trap
+                  - What Arazzo is, and what it is not
+                  - From a gallery to a directory — the integrations page reimagined
+                  - The anatomy of an Arazzo-backed integration
+                  - A worked example — rebuilding a marketplace as workflows
+                  - The honest hard parts — auth, rate limits, pagination, async, failure
+                  - What the marketplace becomes — the economics of described integrations
+                  - Anti-patterns worth watching for
+                  - Where this is going — MCP is the wire, Arazzo is the conductor
+                  - Provider self-assessment
+                  cover: /assets/covers/arazzo-api-integration-page.png
+                  type: papers
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
+  /papers/{slug}:
+    get:
+      operationId: getPaper
+      tags:
+      - Media
+      summary: Paper
+      description: One paper with its full outline and landing URL.
+      parameters:
+      - $ref: '#/components/parameters/Slug'
+      responses:
+        '200':
+          description: The paper.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Doc'
+              example:
+                slug: change-on-the-agent-surface
+                title: Change on the Agent Surface
+                summary: Everything the industry knows about API change assumes a consumer who reads. Three layers govern change in MCP, the discipline degrades as it approaches the consumer, and the tool surface an agent actually binds to is governed by nobody — with the evidence from a full walk of the public MCP registry, and eight rules for the layer versioning does not reach.
+                url: https://papers.apievangelist.com/papers/change-on-the-agent-surface/
+                tags: []
+                area: Fundamentals
+                tagline: Governing versioning, breaking changes, and deprecation for the MCP tools an agent binds to.
+                pages: ~16
+                version: '1.0'
+                updated: August 2026
+                outline:
+                - The three layers, and what governs each
+                - What the evidence shows
+                - The description is not documentation, it is input
+                - Which changes actually break an agent
+                - The practice — eight rules for the agent surface
+                - Anti-patterns worth watching for
+                - Provider self-assessment
+                - Where this is going
+                - Appendix A — Evidence and method
+                - Appendix B — Sources and further reading
+                cover: /assets/covers/change-on-the-agent-surface.png
+                type: papers
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /newsletters:
+    get:
+      operationId: listNewsletters
+      tags:
+      - Media
+      summary: Newsletter
+      description: Weekly newsletter editions.
+      parameters:
+      - $ref: '#/components/parameters/Page'
+      - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: Weekly newsletter editions.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedEnvelope'
+              example:
+                meta:
+                  total: 0
+                  page: 1
+                  limit: 2
+                  pages: 0
+                  query:
+                    tags: null
+                data: []
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
+components:
+  parameters:
+    Include:
+      name: include
+      in: query
+      description: Set to `content` to inline the full markdown body (up to 200 KB).
+      schema:
+        type: string
+        enum:
+        - content
+    Tags:
+      name: tags
+      in: query
+      description: Comma-separated tag slugs.
+      schema:
+        type: string
+    Page:
+      name: page
+      in: query
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
+    Limit:
+      name: limit
+      in: query
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 25
+    Q:
+      name: q
+      in: query
+      description: Free-text query over title, summary, tags, and body.
+      schema:
+        type: string
+    Slug:
+      name: slug
+      in: path
+      required: true
+      schema:
+        type: string
+  headers:
+    XRateLimitWindow:
+      description: The quota window in seconds. Always 86400 (one day).
+      schema:
+        type: integer
+        examples:
+        - 86400
+    XRateLimitLimit:
+      description: The daily request quota for the tier that served this response.
+      schema:
+        type: integer
+        examples:
+        - 1000
+    RateLimitPolicy:
+      description: 'The rate-limit policy in force for the tier that served this response, in RFC 9331 quota-policy syntax: `"quota";q=1000;w=86400, "burst";q=5;w=1` — a daily quota and a per-second burst. This is the POLICY, not a live counter: `RateLimit-Remaining` and `RateLimit-Reset` are deliberately not sent, because the quota is enforced by the gateway and there is no per-key usage accounting to read. Pace against the policy, and treat a 429 as authoritative.'
+      schema:
+        type: string
+        examples:
+        - '"quota";q=1000;w=86400, "burst";q=5;w=1'
+    XRateLimitTier:
+      description: The tier this request was served on — `free`, `pro`, `business`, `internal` or `owner`. Keyless requests are `free`; requests from an apievangelist.com origin are `internal`.
+      schema:
+        type: string
+        examples:
+        - free
+  schemas:
+    Doc:
+      type: object
+      description: One network resource. Extra type-specific fields (guest, outline, party, …) appear per type.
+      properties:
+        type:
+          type: string
+        slug:
+          type: string
+        title:
+          type: string
+        summary:
+          type: string
+        url:
+          type: string
+          format: uri
+        tags:
+          type: array
+          items:
+            type: string
+        date:
+          type: string
+        content:
+          type: string
+          description: Full markdown body when include=content.
+      additionalProperties: true
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+        detail:
+          type: string
+    PagedEnvelope:
+      type: object
+      properties:
+        meta:
+          type: object
+          properties:
+            total:
+              type: integer
+            page:
+              type: integer
+            limit:
+              type: integer
+            pages:
+              type: integer
+            query:
+              type: object
+              additionalProperties: true
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Doc'
+  responses:
+    NotFound:
+      description: No such resource.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: Optional — raises rate limits above the keyless free tier.
+x-apis-io:
+  tiers:
+    free:
+      label: Free
+      description: Browse, search, and read summaries across the whole network — stories, areas, guidance, building blocks, papers, tags, related. Keyless.
+    pro:
+      label: Pro
+      description: The research depth — full content (include=content), curated topic guides (/guide), and catalog intelligence (/stats). Requires X-API-Key.
+      plans: https://developer.apievangelist.com/plans/
+  mcp:
+    endpoint: https://mcp.apievangelist.com/mcp
+  agentSkills:
+    index: https://apievangelist.com/.well-known/agent-skills/index.json
+  prompts:
+  - name: where_can_ae_help
+    tier: free
+    description: Map a team's API need to the relevant research areas + the services Kin Lane offers.
+    uses:
+    - search_api_evangelist
+    - find_services
+  - name: catch_up
+    tier: free
+    description: Catch up on a topic — the most recent stories, newest first.
+    uses:
+    - find_posts
+  - name: research_topic
+    tier: pro
+    description: 'PRO — Deep-research a topic: the curated guide bundle plus the full research bodies.'
+    uses:
+    - guide_topic
+    - get_post
+    - find_related
+  - name: governance_starter_kit
+    tier: pro
+    description: 'PRO — Assemble an API governance starter kit: guidance, rules, policies, standards + services.'
+    uses:
+    - guide_topic
+    - find_building_blocks
+  - name: vendor_landscape
+    tier: pro
+    description: PRO — Map the vendor + tooling landscape for a capability, with research context.
+    uses:
+    - find_solutions
+    - find_tools
+    - guide_topic
+  resources:
+  - uri: ae://overview
+    tier: free
+    description: Service root — what the network offers, counts, entry points, how to engage.
+    operation: getServiceInfo
+  - uri: ae://services
+    tier: free
+    description: The services Kin Lane offers teams.
+    operation: listServices
+  - uri: ae://contact
+    tier: free
+    description: Every way to reach API Evangelist.
+    operation: getContact
+  - uri: ae://stats
+    tier: pro
+    description: PRO — per-type counts, stories-per-year, top tags by reach.
+    operation: getStats
+  - uri: ae://area/{slug}
+    tier: free
+    description: One topic area with its related-area graph.
+    operation: getArea
+  - uri: ae://tag/{slug}
+    tier: free
+    description: One tag with per-type counts and everything it labels.
+    operation: getTag
+  - uri: ae://post/{slug}
+    tier: free
+    description: One story by slug.
+    operation: getPost
+  - uri: ae://guide/{topic}
+    tier: pro
+    description: PRO — a curated cross-network guide bundle for a topic.
+    operation: getGuide
+  operations:
+    getServiceInfo:
+      tier: free
+      mcpTool: get_overview
+    searchNetwork:
+      tier: free
+      mcpTool: search_api_evangelist
+      agentSkill: brief-on-topic
+    listPosts:
+      tier: free
+      mcpTool: find_posts
+      agentSkill: brief-on-topic
+    getPost:
+      tier: free
+      mcpTool: get_post
+    listAreas:
+      tier: free
+      mcpTool: find_areas
+      agentSkill: brief-on-topic
+    getArea:
+      tier: free
+      mcpTool: get_area
+    listGuidanceHistory:
+      tier: free
+      mcpTool: get_guidance_section
+    listGuidanceTechnology:
+      tier: free
+      mcpTool: get_guidance_section
+    listGuidanceBusiness:
+      tier: free
+      mcpTool: get_guidance_section
+    listGuidancePolitics:
+      tier: free
+      mcpTool: get_guidance_section
+    listGuidanceGovernance:
+      tier: free
+      mcpTool: get_guidance_section
+    listGuidanceEvangelism:
+      tier: free
+      mcpTool: get_guidance_section
+    listGuidance:
+      tier: free
+      mcpTool: find_building_blocks
+      agentSkill: governance-starter-kit
+    getGuidanceItem:
+      tier: free
+      mcpTool: get_building_block
+    listPolicies:
+      tier: free
+      mcpTool: find_building_blocks
+      agentSkill: governance-starter-kit
+    getPoliciesItem:
+      tier: free
+      mcpTool: get_building_block
+    listRules:
+      tier: free
+      mcpTool: find_building_blocks
+      agentSkill: governance-starter-kit
+    getRulesItem:
+      tier: free
+      mcpTool: get_building_block
+    listStandards:
+      tier: free
+      mcpTool: find_building_blocks
+      agentSkill: governance-starter-kit
+    getStandardsItem:
+      tier: free
+      mcpTool: get_building_block
+    listSolutions:
+      tier: free
+      mcpTool: find_solutions
+      agentSkill: map-vendor-landscape
+    getSolution:
+      tier: free
+      mcpTool: get_solution
+    listTools:
+      tier: free
+      mcpTool: find_tools
+      agentSkill: map-vendor-landscape
+    getTool:
+      tier: free
+      mcpTool: get_tool
+    listSchema:
+      tier: free
+      mcpTool: find_building_blocks
+    getSchemaItem:
+      tier: free
+      mcpTool: get_building_block
+    listProperties:
+      tier: free
+      mcpTool: find_building_blocks
+    getPropertiesItem:
+      tier: free
+      mcpTool: get_building_block
+    listStrategies:
+      tier: free
+      mcpTool: find_building_blocks
+    getStrategiesItem:
+      tier: free
+      mcpTool: get_building_block
+    listExperiences:
+      tier: free
+      mcpTool: find_building_blocks
+    getExperiencesItem:
+      tier: free
+      mcpTool: get_building_block
+    listLifecycle:
+      tier: free
+      mcpTool: find_building_blocks
+    getLifecycleItem:
+      tier: free
+      mcpTool: get_building_block
+    listConversations:
+      tier: free
+      mcpTool: find_conversations
+    getConversation:
+      tier: free
+      mcpTool: get_conversation
+    listVideos:
+      tier: free
+      mcpTool: find_videos
+    getVideo:
+      tier: free
+      mcpTool: get_video
+    listPapers:
+      tier: free
+      mcpTool: find_papers
+      agentSkill: research-with-api-evangelist
+    getPaper:
+      tier: free
+      mcpTool: get_paper
+    listNewsletters:
+      tier: free
+      mcpTool: search_api_evangelist
+    listVocabulary:
+      tier: free
+      mcpTool: find_vocabulary
+    listVocabularyCategory:
+      tier: free
+      mcpTool: find_vocabulary
+    listFeeds:
+      tier: free
+      mcpTool: get_feeds
+    getTimelineApi:
+      tier: free
+      mcpTool: get_timeline
+    getTimelineResources:
+      tier: free
+      mcpTool: get_timeline
+    getTimelineIndustries:
+      tier: free
+      mcpTool: get_timeline
+    getTimelinePeople:
+      tier: free
+      mcpTool: get_timeline
+    listServices:
+      tier: free
+      mcpTool: find_services
+      agentSkill: find-where-ae-helps
+    getService:
+      tier: free
+      mcpTool: get_service
+      agentSkill: find-where-ae-helps
+    getContact:
+      tier: free
+      mcpTool: get_contact
+      agentSkill: find-where-ae-helps
+    listTags:
+      tier: free
+      mcpTool: find_tags
+      agentSkill: brief-on-topic
+    getTag:
+      tier: free
+      mcpTool: get_tag
+      agentSkill: brief-on-topic
+    getGuide:
+      tier: pro
+      mcpTool: guide_topic
+      agentSkill: research-with-api-evangelist
+    getStats:
+      tier: pro
+      mcpTool: get_stats
+    getPostRelated:
+      tier: free
+      mcpTool: find_related
+      agentSkill: brief-on-topic
+    getAreaRelated:
+      tier: free
+      mcpTool: find_related
+      agentSkill: brief-on-topic
+    getPaperRelated:
+      tier: free
+      mcpTool: find_related
+      agentSkill: research-with-api-evangelist
+    getGuidanceRelated:
+      tier: free
+      mcpTool: find_related
+      agentSkill: brief-on-topic

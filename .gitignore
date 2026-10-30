@@ -6,3 +6,25 @@ public/apis/
 public/apis.yml
 .cache/
 public/.well-known/security.txt
+# Published copies of profile/ (scripts/mirror-apis-yml.mjs) — profile/ is the committed source.
+/public/a2a/
+/public/agentic-access/
+/public/authentication/
+/public/capabilities/
+/public/collections/
+/public/conformance/
+/public/conventions/
+/public/data-model/
+/public/errors/
+/public/lifecycle/
+/public/llms/
+/public/mcp/
+/public/openapi/
+/public/overlays/
+/public/plans/
+/public/rate-limits/
+/public/rules/
+/public/schema/
+/public/security/
+/public/skills/
+/public/well-known/
