@@ -3,7 +3,7 @@
   "info": {
     "title": "API Evangelist Governance & Discovery API",
     "version": "1.0.0",
-    "description": "The API Commons governance and discovery tools — lint, coverage, waivers, reporting, certification, agent export, pipeline audit, MCP/skill forging, consumer gating, reusability, and experience mapping — as one hosted REST API. Every endpoint runs the same engine the browser tools at apicommons.org/tools run, server-side. Discovery-grade linting is free; the capabilities that generate artifacts, certify, audit repos, or roll up across many APIs are Pro. Free tier is keyless (5 req/s, 1,000/day, one document per call). Send a Pro key in the x-api-key header to unlock the Pro endpoints, SARIF output, and bulk input. Get a key at https://api.apievangelist.com/v1/auth/login.",
+    "description": "The API Commons governance and discovery tools — lint, rule authoring (validate, test and explain rulesets), coverage, waivers, reporting, certification, agent export, pipeline audit, MCP/skill forging, consumer gating, reusability, and experience mapping, plus estate adoption (baselines, federation, code-first, fixes, style guide to ruleset, org default ruleset) — as one hosted REST API. Every endpoint runs the same engine the browser tools at apicommons.org/tools run, server-side. Discovery-grade linting is free; the capabilities that generate artifacts, certify, audit repos, or roll up across many APIs are Pro. Free tier is keyless (5 req/s, 1,000/day, one document per call). Send a Pro key in the x-api-key header to unlock the Pro endpoints, SARIF output, and bulk input. Get a key at https://api.apievangelist.com/v1/auth/login.",
     "contact": {
       "name": "API Evangelist",
       "url": "https://apievangelist.com",
@@ -43,7 +43,7 @@
           "Governance"
         ],
         "summary": "Lint an API artifact (FREE)",
-        "description": "Lint an OpenAPI, AsyncAPI, Arazzo, or JSON Schema document against the curated 574-rule best-of-breed ruleset (Spectral). Pass your own Spectral ruleset to override the catalog.",
+        "description": "Lint an API artifact — OpenAPI, AsyncAPI, Arazzo, JSON Schema, APIs.json, MCP, an agent SKILL.md and more (format auto-detected) — with the OpenLint engine against the curated rule catalog. Pass your own `ruleset`, or a named `profile` (OWASP, Problem Details, FHIR, API Authorization). Paid callers with an org ruleset get it by default; `ruleset` in the response says which ran.",
         "x-tier": "free",
         "requestBody": {
           "required": true,
@@ -61,17 +61,24 @@
                   },
                   "format": {
                     "type": "string",
-                    "description": "Auto-detected when omitted.",
+                    "description": "Auto-detected when omitted. Synonyms accepted: swagger, oas, json-schema, apis.json, skill.",
                     "enum": [
                       "openapi",
+                      "apis-json",
                       "asyncapi",
                       "arazzo",
-                      "jsonschema"
+                      "jsonschema",
+                      "json-structure",
+                      "json-ld",
+                      "mcp",
+                      "plans",
+                      "rate-limits",
+                      "finops",
+                      "agent-skill"
                     ]
                   },
                   "ruleset": {
-                    "type": "object",
-                    "description": "An optional full Spectral ruleset definition to run instead of the catalog."
+                    "description": "A full ruleset to run instead of the catalog — object or YAML/JSON text."
                   },
                   "tags": {
                     "type": "array",
@@ -79,6 +86,27 @@
                       "type": "string"
                     },
                     "description": "Only run catalog rules carrying one of these tags."
+                  },
+                  "profile": {
+                    "type": "string",
+                    "enum": [
+                      "owasp",
+                      "problem-details",
+                      "fhir",
+                      "api-authorization",
+                      "api-authorization-oauth-metadata"
+                    ],
+                    "description": "Run one of the curated rulesets by name instead of the catalog."
+                  },
+                  "builtins": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Also run OpenLint's built-in Arazzo ruleset on Arazzo documents."
+                  },
+                  "use_org_ruleset": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Set false to lint against the catalog even when you have an org ruleset."
                   }
                 },
                 "example": {
@@ -157,6 +185,10 @@
                           }
                         }
                       }
+                    },
+                    "ruleset": {
+                      "type": "string",
+                      "description": "Which rules ran: request, org, profile:<name> or catalog."
                     }
                   }
                 }
@@ -946,9 +978,17 @@
               "type": "string",
               "enum": [
                 "openapi",
+                "apis-json",
                 "asyncapi",
                 "arazzo",
-                "jsonschema"
+                "jsonschema",
+                "json-structure",
+                "json-ld",
+                "mcp",
+                "plans",
+                "rate-limits",
+                "finops",
+                "agent-skill"
               ]
             },
             "description": "Only rules for this artifact format."
@@ -1006,7 +1046,7 @@
         ],
         "summary": "The Ruleset Commons registry (FREE)",
         "x-tier": "free",
-        "description": "The registry of adoptable, provenanced governance rulesets — national, industry, security, and company rulesets you can extend by reference instead of running the linter defaults.",
+        "description": "The registry of adoptable, provenanced governance rulesets — national, industry, security, and company rulesets you can extend by reference instead of running the linter defaults. Also lists `profiles`: the curated rulesets validate runs by name.",
         "responses": {
           "200": {
             "description": "The ruleset registry.",
@@ -1920,6 +1960,1908 @@
         },
         "operationId": "billingCheckout"
       }
+    },
+    "/governance/validate-ruleset": {
+      "post": {
+        "operationId": "validateRuleset",
+        "tags": [
+          "Governance"
+        ],
+        "summary": "Validate a ruleset (FREE)",
+        "description": "Check that a ruleset is valid before it is run or stored: invalid JSONPath in `given` (parsed with nimma, the engine's own parser), unknown functions the engine would otherwise skip silently, undefined `#aliases`, a missing `then`, and anything the OpenLint engine rejects. Catalog metadata OpenLint refuses on a rule (`title`, `prompt`, `x-*` …) is set aside and listed in `stripped`; the engine-ready ruleset is returned when anything was stripped.",
+        "x-tier": "free",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "ruleset": {
+                    "description": "An OpenLint (Spectral-format) ruleset: an object, or YAML/JSON text."
+                  }
+                },
+                "required": [
+                  "ruleset"
+                ],
+                "example": {
+                  "ruleset": {
+                    "rules": {
+                      "operation-summary": {
+                        "description": "Every operation has a summary.",
+                        "message": "Add a summary.",
+                        "severity": "warn",
+                        "given": "$.paths[*][get,post,put,delete,patch]",
+                        "then": {
+                          "field": "summary",
+                          "function": "truthy"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Validation report.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "valid": {
+                      "type": "boolean"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    },
+                    "warnings": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    },
+                    "ruleCount": {
+                      "type": "integer"
+                    },
+                    "stripped": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "ruleset": {
+                      "type": "object"
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {
+              "RateLimit-Policy": {
+                "$ref": "#/components/headers/RateLimitPolicy"
+              },
+              "X-RateLimit-Limit": {
+                "$ref": "#/components/headers/XRateLimitLimit"
+              },
+              "X-RateLimit-Window": {
+                "$ref": "#/components/headers/XRateLimitWindow"
+              },
+              "X-RateLimit-Tier": {
+                "$ref": "#/components/headers/XRateLimitTier"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          }
+        }
+      }
+    },
+    "/governance/jsonpath": {
+      "post": {
+        "operationId": "queryJsonPath",
+        "tags": [
+          "Governance"
+        ],
+        "summary": "Evaluate a JSONPath (FREE)",
+        "description": "Evaluate a JSONPath — a rule's `given` — against a document and return what it matches: pointer, path and a value preview per match. Pass `field` to see whether that field is present on each match, the way `then.field` reads it. `paths` evaluates several at once.",
+        "x-tier": "free",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "document": {
+                    "description": "The API description, as YAML/JSON text or a parsed object."
+                  },
+                  "path": {
+                    "type": "string",
+                    "example": "$.paths[*][get,post]"
+                  },
+                  "paths": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "field": {
+                    "type": "string"
+                  },
+                  "limit": {
+                    "type": "integer",
+                    "default": 50,
+                    "maximum": 500
+                  }
+                },
+                "required": [
+                  "document"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Matches per expression.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "results": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "path": {
+                            "type": "string"
+                          },
+                          "count": {
+                            "type": "integer"
+                          },
+                          "matches": {
+                            "type": "array",
+                            "items": {
+                              "type": "object"
+                            }
+                          },
+                          "error": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {
+              "RateLimit-Policy": {
+                "$ref": "#/components/headers/RateLimitPolicy"
+              },
+              "X-RateLimit-Limit": {
+                "$ref": "#/components/headers/XRateLimitLimit"
+              },
+              "X-RateLimit-Window": {
+                "$ref": "#/components/headers/XRateLimitWindow"
+              },
+              "X-RateLimit-Tier": {
+                "$ref": "#/components/headers/XRateLimitTier"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          }
+        }
+      }
+    },
+    "/governance/test-ruleset": {
+      "post": {
+        "operationId": "testRuleset",
+        "tags": [
+          "Governance"
+        ],
+        "summary": "Test a ruleset against fixtures (FREE)",
+        "description": "Run a ruleset against fixture documents with expectations. Each case is `{ name, document, expect }`: `expect` is a list of rule codes that must fire, a `{ code: count }` map for exact counts, or `[]` for \"must lint clean\"; optional `forbid` lists codes that must not fire. Reports pass/fail per case and rule-logic coverage: rules no case asserts on, and rules no fixture triggers. Up to 50 cases.",
+        "x-tier": "free",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "ruleset": {
+                    "description": "An OpenLint (Spectral-format) ruleset: an object, or YAML/JSON text."
+                  },
+                  "cases": {
+                    "type": "array",
+                    "maxItems": 50,
+                    "items": {
+                      "type": "object",
+                      "required": [
+                        "document"
+                      ],
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "document": {
+                          "description": "The API description, as YAML/JSON text or a parsed object."
+                        },
+                        "format": {
+                          "type": "string"
+                        },
+                        "expect": {
+                          "oneOf": [
+                            {
+                              "type": "array",
+                              "items": {
+                                "type": "string"
+                              }
+                            },
+                            {
+                              "type": "object",
+                              "additionalProperties": {
+                                "type": "integer"
+                              }
+                            }
+                          ]
+                        },
+                        "forbid": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": [
+                  "ruleset",
+                  "cases"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Per-case results and coverage.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "pass": {
+                      "type": "boolean"
+                    },
+                    "summary": {
+                      "type": "object"
+                    },
+                    "cases": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    },
+                    "coverage": {
+                      "type": "object",
+                      "properties": {
+                        "rules": {
+                          "type": "integer"
+                        },
+                        "asserted": {
+                          "type": "integer"
+                        },
+                        "untested": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        },
+                        "neverFired": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {
+              "RateLimit-Policy": {
+                "$ref": "#/components/headers/RateLimitPolicy"
+              },
+              "X-RateLimit-Limit": {
+                "$ref": "#/components/headers/XRateLimitLimit"
+              },
+              "X-RateLimit-Window": {
+                "$ref": "#/components/headers/XRateLimitWindow"
+              },
+              "X-RateLimit-Tier": {
+                "$ref": "#/components/headers/XRateLimitTier"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "422": {
+            "$ref": "#/components/responses/Unprocessable"
+          }
+        }
+      }
+    },
+    "/governance/explain": {
+      "post": {
+        "operationId": "explainRuleResult",
+        "tags": [
+          "Governance"
+        ],
+        "summary": "Explain a rule result (FREE)",
+        "description": "Explain why a rule did or did not fire on a document, step by step: whether the document matches the rule's `formats`, what each `given` matched (aliases resolved, including the built-ins' `#OperationObject` and friends), what `then` checks, and a one-line verdict. The rule is looked up in the `ruleset` you pass, then the curated catalog, then OpenLint's built-in rulesets.",
+        "x-tier": "free",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "document": {
+                    "description": "The API description, as YAML/JSON text or a parsed object."
+                  },
+                  "rule": {
+                    "type": "string"
+                  },
+                  "ruleset": {
+                    "description": "An OpenLint (Spectral-format) ruleset: an object, or YAML/JSON text."
+                  }
+                },
+                "required": [
+                  "document",
+                  "rule"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Explanation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "rule": {
+                      "type": "string"
+                    },
+                    "origin": {
+                      "type": "string",
+                      "enum": [
+                        "ruleset",
+                        "catalog",
+                        "builtin"
+                      ]
+                    },
+                    "verdict": {
+                      "type": "string"
+                    },
+                    "steps": {
+                      "type": "object"
+                    },
+                    "fired": {
+                      "type": "integer"
+                    },
+                    "diagnostics": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {
+              "RateLimit-Policy": {
+                "$ref": "#/components/headers/RateLimitPolicy"
+              },
+              "X-RateLimit-Limit": {
+                "$ref": "#/components/headers/XRateLimitLimit"
+              },
+              "X-RateLimit-Window": {
+                "$ref": "#/components/headers/XRateLimitWindow"
+              },
+              "X-RateLimit-Tier": {
+                "$ref": "#/components/headers/XRateLimitTier"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "422": {
+            "$ref": "#/components/responses/Unprocessable"
+          }
+        }
+      }
+    },
+    "/governance/describe-rule": {
+      "get": {
+        "operationId": "describeRule",
+        "tags": [
+          "Governance"
+        ],
+        "summary": "Describe a rule (FREE)",
+        "description": "One rule by id — description, severity, given/then, tags, reference — and its `remediation` prompt: what to change when it fires. An unknown id returns 404 with the closest rule ids in `detail.suggestions`. Also available as POST `{ rule }` for clients that only POST.",
+        "x-tier": "free",
+        "responses": {
+          "200": {
+            "description": "The rule.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "origin": {
+                      "type": "string"
+                    },
+                    "format": {
+                      "type": "string"
+                    },
+                    "title": {
+                      "type": "string"
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "severity": {
+                      "type": "string"
+                    },
+                    "given": {},
+                    "then": {},
+                    "tags": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "reference": {
+                      "type": "string"
+                    },
+                    "remediation": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {
+              "RateLimit-Policy": {
+                "$ref": "#/components/headers/RateLimitPolicy"
+              },
+              "X-RateLimit-Limit": {
+                "$ref": "#/components/headers/XRateLimitLimit"
+              },
+              "X-RateLimit-Window": {
+                "$ref": "#/components/headers/XRateLimitWindow"
+              },
+              "X-RateLimit-Tier": {
+                "$ref": "#/components/headers/XRateLimitTier"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        },
+        "parameters": [
+          {
+            "name": "rule",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "info-require-license"
+          }
+        ]
+      },
+      "post": {
+        "operationId": "describeRuleByPost",
+        "tags": [
+          "Governance"
+        ],
+        "summary": "Describe a rule (FREE)",
+        "description": "The same as GET, with `{ rule }` in the body.",
+        "x-tier": "free",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "rule": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "rule"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The rule.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "remediation": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {
+              "RateLimit-Policy": {
+                "$ref": "#/components/headers/RateLimitPolicy"
+              },
+              "X-RateLimit-Limit": {
+                "$ref": "#/components/headers/XRateLimitLimit"
+              },
+              "X-RateLimit-Window": {
+                "$ref": "#/components/headers/XRateLimitWindow"
+              },
+              "X-RateLimit-Tier": {
+                "$ref": "#/components/headers/XRateLimitTier"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/governance/detect-format": {
+      "post": {
+        "operationId": "detectFormat",
+        "tags": [
+          "Governance"
+        ],
+        "summary": "Detect a document format (FREE)",
+        "description": "Identify a document — OpenAPI (and Swagger 2.0 vs 3.x), AsyncAPI, Arazzo, JSON Schema, APIs.json, MCP, JSON-LD, plans, rate limits, an agent SKILL.md, an Overlay, or a ruleset — with its version, how many catalog rules apply, the built-in ruleset, and the named profiles that apply.",
+        "x-tier": "free",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "document": {
+                    "description": "The API description, as YAML/JSON text or a parsed object."
+                  }
+                },
+                "required": [
+                  "document"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The detected format.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "format": {
+                      "type": "string"
+                    },
+                    "version": {
+                      "type": "string"
+                    },
+                    "openapiMajor": {
+                      "type": "string",
+                      "enum": [
+                        "swagger-2.0",
+                        "openapi-3.x"
+                      ]
+                    },
+                    "catalogRules": {
+                      "type": "integer"
+                    },
+                    "builtinRuleset": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "profiles": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {
+              "RateLimit-Policy": {
+                "$ref": "#/components/headers/RateLimitPolicy"
+              },
+              "X-RateLimit-Limit": {
+                "$ref": "#/components/headers/XRateLimitLimit"
+              },
+              "X-RateLimit-Window": {
+                "$ref": "#/components/headers/XRateLimitWindow"
+              },
+              "X-RateLimit-Tier": {
+                "$ref": "#/components/headers/XRateLimitTier"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          }
+        }
+      }
+    },
+    "/governance/lint-skill": {
+      "post": {
+        "operationId": "lintAgentSkill",
+        "tags": [
+          "Governance"
+        ],
+        "summary": "Lint an agent skill (FREE)",
+        "description": "Lint an agent SKILL.md — Markdown with YAML frontmatter — against the API Commons skill rules (name, description, structure, metadata). `validate` does the same when it detects a skill.",
+        "x-tier": "free",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "document": {
+                    "type": "string",
+                    "description": "The SKILL.md text."
+                  }
+                },
+                "required": [
+                  "document"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Lint result.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "format": {
+                      "type": "string"
+                    },
+                    "ruleCount": {
+                      "type": "integer"
+                    },
+                    "passed": {
+                      "type": "boolean"
+                    },
+                    "summary": {
+                      "type": "object"
+                    },
+                    "diagnostics": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {
+              "RateLimit-Policy": {
+                "$ref": "#/components/headers/RateLimitPolicy"
+              },
+              "X-RateLimit-Limit": {
+                "$ref": "#/components/headers/XRateLimitLimit"
+              },
+              "X-RateLimit-Window": {
+                "$ref": "#/components/headers/XRateLimitWindow"
+              },
+              "X-RateLimit-Tier": {
+                "$ref": "#/components/headers/XRateLimitTier"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "422": {
+            "$ref": "#/components/responses/Unprocessable"
+          }
+        }
+      }
+    },
+    "/governance/ruleset-docs": {
+      "post": {
+        "operationId": "documentRuleset",
+        "tags": [
+          "Governance"
+        ],
+        "summary": "Document a ruleset (FREE)",
+        "description": "Generate human-readable Markdown documentation for a ruleset: each rule's severity, formats, description, message, what it applies to, the check, how to fix it, and its reference — grouped by topic. Pass `ruleset`, or `profile` for one of the curated profiles.",
+        "x-tier": "free",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "ruleset": {
+                    "description": "An OpenLint (Spectral-format) ruleset: an object, or YAML/JSON text."
+                  },
+                  "profile": {
+                    "type": "string",
+                    "enum": [
+                      "owasp",
+                      "problem-details",
+                      "fhir",
+                      "api-authorization",
+                      "api-authorization-oauth-metadata"
+                    ]
+                  },
+                  "title": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Markdown documentation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "title": {
+                      "type": "string"
+                    },
+                    "ruleCount": {
+                      "type": "integer"
+                    },
+                    "markdown": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {
+              "RateLimit-Policy": {
+                "$ref": "#/components/headers/RateLimitPolicy"
+              },
+              "X-RateLimit-Limit": {
+                "$ref": "#/components/headers/XRateLimitLimit"
+              },
+              "X-RateLimit-Window": {
+                "$ref": "#/components/headers/XRateLimitWindow"
+              },
+              "X-RateLimit-Tier": {
+                "$ref": "#/components/headers/XRateLimitTier"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          }
+        }
+      }
+    },
+    "/governance/baseline": {
+      "post": {
+        "operationId": "baselineViolations",
+        "tags": [
+          "Governance"
+        ],
+        "summary": "Baseline violations (PRO)",
+        "description": "Adopt a ruleset on a legacy API without a wall of red. With no `baseline`, snapshot today's violations into a baseline file (JSON and YAML). With a `baseline`, reconcile a new lint against it: only NEW violations fail; fixed ones are counted so the baseline can shrink; `budget` adds a warning ceiling and per-rule no-increase. Lints `document` with your `ruleset`, your org ruleset, or the catalog — or pass `violations` from your own linter.",
+        "x-tier": "pro",
+        "security": [
+          {
+            "ApiKey": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "document": {
+                    "description": "The API description, as YAML/JSON text or a parsed object."
+                  },
+                  "violations": {
+                    "type": "array",
+                    "items": {
+                      "type": "object"
+                    }
+                  },
+                  "ruleset": {
+                    "description": "An OpenLint (Spectral-format) ruleset: an object, or YAML/JSON text."
+                  },
+                  "baseline": {
+                    "description": "A baseline file from a snapshot (object or YAML/JSON text)."
+                  },
+                  "budget": {
+                    "type": "object",
+                    "properties": {
+                      "maxWarnings": {
+                        "type": [
+                          "integer",
+                          "null"
+                        ]
+                      },
+                      "noIncreasePerRule": {
+                        "type": "boolean"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Snapshot or reconciliation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "mode": {
+                      "type": "string",
+                      "enum": [
+                        "snapshot",
+                        "reconcile"
+                      ]
+                    },
+                    "pass": {
+                      "type": "boolean"
+                    },
+                    "counts": {
+                      "type": "object"
+                    },
+                    "new": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    },
+                    "baseline": {
+                      "type": "object"
+                    },
+                    "yaml": {
+                      "type": "string"
+                    },
+                    "burndown": {
+                      "type": "object"
+                    },
+                    "budget": {
+                      "type": "object"
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {
+              "RateLimit-Policy": {
+                "$ref": "#/components/headers/RateLimitPolicy"
+              },
+              "X-RateLimit-Limit": {
+                "$ref": "#/components/headers/XRateLimitLimit"
+              },
+              "X-RateLimit-Window": {
+                "$ref": "#/components/headers/XRateLimitWindow"
+              },
+              "X-RateLimit-Tier": {
+                "$ref": "#/components/headers/XRateLimitTier"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "402": {
+            "$ref": "#/components/responses/PaymentRequired"
+          },
+          "422": {
+            "$ref": "#/components/responses/Unprocessable"
+          }
+        }
+      }
+    },
+    "/governance/federate": {
+      "post": {
+        "operationId": "federateRulesets",
+        "tags": [
+          "Governance"
+        ],
+        "summary": "Federate rulesets (PRO)",
+        "description": "A central baseline ruleset plus the domains that adopt it — each rule inherited, overridden (with a reason), waived, deferred, or grown locally — computed into divergence per rule, drift per domain, contested rules, and local rules worth promoting to the center.",
+        "x-tier": "pro",
+        "security": [
+          {
+            "ApiKey": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "federation": {
+                    "description": "{ central: { rules: [{ code, severity, … }] }, domains: [{ id, adoptions: [{ code, state, severity?, reason? }] }] } — object or YAML/JSON text."
+                  }
+                },
+                "required": [
+                  "federation"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The federation report.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "central": {
+                      "type": "object"
+                    },
+                    "domains": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    },
+                    "ruleRows": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    },
+                    "domainRows": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    },
+                    "localRules": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    },
+                    "promotionCandidates": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    },
+                    "totals": {
+                      "type": "object"
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {
+              "RateLimit-Policy": {
+                "$ref": "#/components/headers/RateLimitPolicy"
+              },
+              "X-RateLimit-Limit": {
+                "$ref": "#/components/headers/XRateLimitLimit"
+              },
+              "X-RateLimit-Window": {
+                "$ref": "#/components/headers/XRateLimitWindow"
+              },
+              "X-RateLimit-Tier": {
+                "$ref": "#/components/headers/XRateLimitTier"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "402": {
+            "$ref": "#/components/responses/PaymentRequired"
+          }
+        }
+      }
+    },
+    "/governance/codefirst": {
+      "post": {
+        "operationId": "fingerprintGenerator",
+        "tags": [
+          "Governance"
+        ],
+        "summary": "Fingerprint the OpenAPI generator (PRO)",
+        "description": "For a code-first API: identify the generator that produced the spec (with confidence and evidence), and split findings into the ones to fix with annotations in code — grouped by concern, with the fix for that generator — and the ones to fix in spec authoring. Lints with OpenLint's built-in OAS rules unless you pass a `ruleset` or `violations`.",
+        "x-tier": "pro",
+        "security": [
+          {
+            "ApiKey": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "document": {
+                    "description": "The API description, as YAML/JSON text or a parsed object."
+                  },
+                  "violations": {
+                    "type": "array",
+                    "items": {
+                      "type": "object"
+                    }
+                  },
+                  "ruleset": {
+                    "description": "An OpenLint (Spectral-format) ruleset: an object, or YAML/JSON text."
+                  }
+                },
+                "required": [
+                  "document"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Generator and classified findings.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "generator": {
+                      "type": "object"
+                    },
+                    "ruleset": {
+                      "type": "string"
+                    },
+                    "counts": {
+                      "type": "object"
+                    },
+                    "codegen": {
+                      "type": "object"
+                    },
+                    "authoring": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {
+              "RateLimit-Policy": {
+                "$ref": "#/components/headers/RateLimitPolicy"
+              },
+              "X-RateLimit-Limit": {
+                "$ref": "#/components/headers/XRateLimitLimit"
+              },
+              "X-RateLimit-Window": {
+                "$ref": "#/components/headers/XRateLimitWindow"
+              },
+              "X-RateLimit-Tier": {
+                "$ref": "#/components/headers/XRateLimitTier"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "402": {
+            "$ref": "#/components/responses/PaymentRequired"
+          },
+          "422": {
+            "$ref": "#/components/responses/Unprocessable"
+          }
+        }
+      }
+    },
+    "/governance/fix": {
+      "post": {
+        "operationId": "fixDiagnostics",
+        "tags": [
+          "Governance"
+        ],
+        "summary": "Fix lint findings (PRO)",
+        "description": "Propose an OpenAPI Overlay that fixes the lint errors — or the `rules` you name, plus warnings with `include_warnings` — using each rule's remediation guidance; then apply it, re-lint, and diff. Returns the overlay to review, the fixed document, what was resolved, what now fires more often (`introduced`), and any breaking change. OpenAPI only; up to 150 KB. Model-backed.",
+        "x-tier": "pro",
+        "security": [
+          {
+            "ApiKey": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "document": {
+                    "description": "The API description, as YAML/JSON text or a parsed object."
+                  },
+                  "rules": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "include_warnings": {
+                    "type": "boolean",
+                    "default": false
+                  },
+                  "ruleset": {
+                    "description": "An OpenLint (Spectral-format) ruleset: an object, or YAML/JSON text."
+                  }
+                },
+                "required": [
+                  "document"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The proposed fix, proven.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "model": {
+                      "type": "string"
+                    },
+                    "overlay": {
+                      "type": "object"
+                    },
+                    "skipped": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    },
+                    "before": {
+                      "type": "object"
+                    },
+                    "after": {
+                      "type": "object"
+                    },
+                    "resolved": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    },
+                    "introduced": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    },
+                    "breaking": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    },
+                    "document": {
+                      "type": "object"
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {
+              "RateLimit-Policy": {
+                "$ref": "#/components/headers/RateLimitPolicy"
+              },
+              "X-RateLimit-Limit": {
+                "$ref": "#/components/headers/XRateLimitLimit"
+              },
+              "X-RateLimit-Window": {
+                "$ref": "#/components/headers/XRateLimitWindow"
+              },
+              "X-RateLimit-Tier": {
+                "$ref": "#/components/headers/XRateLimitTier"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "402": {
+            "$ref": "#/components/responses/PaymentRequired"
+          },
+          "413": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "422": {
+            "$ref": "#/components/responses/Unprocessable"
+          },
+          "503": {
+            "$ref": "#/components/responses/ServiceUnavailable"
+          }
+        }
+      }
+    },
+    "/governance/ruleset-from-guide": {
+      "post": {
+        "operationId": "rulesetFromStyleGuide",
+        "tags": [
+          "Governance"
+        ],
+        "summary": "Ruleset from a style guide (PRO)",
+        "description": "Turn a prose API style guide into an owned, grounded ruleset: one rule per checkable statement, following the API Commons rule-id convention, each validated (drafts that fail are listed in `rejected`), with the statements no rule can check listed in `unchecked`. Test the result with /governance/test-ruleset before gating on it. Up to 40 KB. Model-backed.",
+        "x-tier": "pro",
+        "security": [
+          {
+            "ApiKey": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "guide": {
+                    "type": "string"
+                  },
+                  "target": {
+                    "type": "string",
+                    "enum": [
+                      "oas3",
+                      "oas2",
+                      "both"
+                    ],
+                    "default": "both"
+                  },
+                  "owner": {
+                    "type": "string"
+                  },
+                  "docs": {
+                    "type": "string",
+                    "format": "uri"
+                  },
+                  "title": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "guide"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The drafted ruleset.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "model": {
+                      "type": "string"
+                    },
+                    "valid": {
+                      "type": "boolean"
+                    },
+                    "ruleCount": {
+                      "type": "integer"
+                    },
+                    "ruleset": {
+                      "type": "object"
+                    },
+                    "yaml": {
+                      "type": "string"
+                    },
+                    "rejected": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    },
+                    "unchecked": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {
+              "RateLimit-Policy": {
+                "$ref": "#/components/headers/RateLimitPolicy"
+              },
+              "X-RateLimit-Limit": {
+                "$ref": "#/components/headers/XRateLimitLimit"
+              },
+              "X-RateLimit-Window": {
+                "$ref": "#/components/headers/XRateLimitWindow"
+              },
+              "X-RateLimit-Tier": {
+                "$ref": "#/components/headers/XRateLimitTier"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "402": {
+            "$ref": "#/components/responses/PaymentRequired"
+          },
+          "413": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "503": {
+            "$ref": "#/components/responses/ServiceUnavailable"
+          }
+        }
+      }
+    },
+    "/governance/org-ruleset": {
+      "get": {
+        "operationId": "getOrgRuleset",
+        "tags": [
+          "Governance"
+        ],
+        "summary": "Get the org ruleset (PRO)",
+        "description": "Your org default ruleset. Once set, validate, coverage, scorecard, estate, baseline, codefirst and fix use it for any call that passes no `ruleset` (pass `use_org_ruleset: false` to opt out for one call). The ruleset is validated before it is stored. POST `{ action: \"get\" | \"set\" | \"delete\" }` does the same for POST-only clients.",
+        "x-tier": "pro",
+        "security": [
+          {
+            "ApiKey": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The stored ruleset.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "updated": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "ruleCount": {
+                      "type": "integer"
+                    },
+                    "ruleset": {
+                      "type": "object"
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {
+              "RateLimit-Policy": {
+                "$ref": "#/components/headers/RateLimitPolicy"
+              },
+              "X-RateLimit-Limit": {
+                "$ref": "#/components/headers/XRateLimitLimit"
+              },
+              "X-RateLimit-Window": {
+                "$ref": "#/components/headers/XRateLimitWindow"
+              },
+              "X-RateLimit-Tier": {
+                "$ref": "#/components/headers/XRateLimitTier"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "402": {
+            "$ref": "#/components/responses/PaymentRequired"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      },
+      "put": {
+        "operationId": "setOrgRuleset",
+        "tags": [
+          "Governance"
+        ],
+        "summary": "Set the org ruleset (PRO)",
+        "description": "Your org default ruleset. Once set, validate, coverage, scorecard, estate, baseline, codefirst and fix use it for any call that passes no `ruleset` (pass `use_org_ruleset: false` to opt out for one call). The ruleset is validated before it is stored. POST `{ action: \"get\" | \"set\" | \"delete\" }` does the same for POST-only clients.",
+        "x-tier": "pro",
+        "security": [
+          {
+            "ApiKey": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "ruleset": {
+                    "description": "An OpenLint (Spectral-format) ruleset: an object, or YAML/JSON text."
+                  },
+                  "name": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "ruleset"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Stored.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "updated": {
+                      "type": "string"
+                    },
+                    "ruleCount": {
+                      "type": "integer"
+                    },
+                    "warnings": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    },
+                    "stripped": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {
+              "RateLimit-Policy": {
+                "$ref": "#/components/headers/RateLimitPolicy"
+              },
+              "X-RateLimit-Limit": {
+                "$ref": "#/components/headers/XRateLimitLimit"
+              },
+              "X-RateLimit-Window": {
+                "$ref": "#/components/headers/XRateLimitWindow"
+              },
+              "X-RateLimit-Tier": {
+                "$ref": "#/components/headers/XRateLimitTier"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "402": {
+            "$ref": "#/components/responses/PaymentRequired"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "413": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "422": {
+            "$ref": "#/components/responses/Unprocessable"
+          }
+        }
+      },
+      "delete": {
+        "operationId": "deleteOrgRuleset",
+        "tags": [
+          "Governance"
+        ],
+        "summary": "Delete the org ruleset (PRO)",
+        "description": "Your org default ruleset. Once set, validate, coverage, scorecard, estate, baseline, codefirst and fix use it for any call that passes no `ruleset` (pass `use_org_ruleset: false` to opt out for one call). The ruleset is validated before it is stored. POST `{ action: \"get\" | \"set\" | \"delete\" }` does the same for POST-only clients.",
+        "x-tier": "pro",
+        "security": [
+          {
+            "ApiKey": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Deleted.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "deleted": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {
+              "RateLimit-Policy": {
+                "$ref": "#/components/headers/RateLimitPolicy"
+              },
+              "X-RateLimit-Limit": {
+                "$ref": "#/components/headers/XRateLimitLimit"
+              },
+              "X-RateLimit-Window": {
+                "$ref": "#/components/headers/XRateLimitWindow"
+              },
+              "X-RateLimit-Tier": {
+                "$ref": "#/components/headers/XRateLimitTier"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "402": {
+            "$ref": "#/components/responses/PaymentRequired"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      },
+      "post": {
+        "operationId": "orgRulesetAction",
+        "tags": [
+          "Governance"
+        ],
+        "summary": "Get, set or delete the org ruleset (PRO)",
+        "description": "Your org default ruleset. Once set, validate, coverage, scorecard, estate, baseline, codefirst and fix use it for any call that passes no `ruleset` (pass `use_org_ruleset: false` to opt out for one call). The ruleset is validated before it is stored. POST `{ action: \"get\" | \"set\" | \"delete\" }` does the same for POST-only clients.",
+        "x-tier": "pro",
+        "security": [
+          {
+            "ApiKey": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "action": {
+                    "type": "string",
+                    "enum": [
+                      "get",
+                      "set",
+                      "delete"
+                    ]
+                  },
+                  "ruleset": {
+                    "description": "An OpenLint (Spectral-format) ruleset: an object, or YAML/JSON text."
+                  },
+                  "name": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "action"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "As for GET, PUT or DELETE.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "updated": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "ruleCount": {
+                      "type": "integer"
+                    },
+                    "ruleset": {
+                      "type": "object"
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {
+              "RateLimit-Policy": {
+                "$ref": "#/components/headers/RateLimitPolicy"
+              },
+              "X-RateLimit-Limit": {
+                "$ref": "#/components/headers/XRateLimitLimit"
+              },
+              "X-RateLimit-Window": {
+                "$ref": "#/components/headers/XRateLimitWindow"
+              },
+              "X-RateLimit-Tier": {
+                "$ref": "#/components/headers/XRateLimitTier"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "402": {
+            "$ref": "#/components/responses/PaymentRequired"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "422": {
+            "$ref": "#/components/responses/Unprocessable"
+          }
+        }
+      }
+    },
+    "/governance/estate": {
+      "post": {
+        "operationId": "governEstate",
+        "tags": [
+          "Governance"
+        ],
+        "summary": "Govern an API estate (PRO)",
+        "description": "Run the core governance checks — lint, coverage, scorecard, PII and secret classification — across a whole set of APIs and roll them up: per-API score, grade, errors and sensitive fields, estate aggregates (average score, grade distribution, APIs with PII or secrets, strongest and weakest), and a worst-first list of what needs attention. Pass your own `ruleset` (or set an org ruleset): a score against rules you never adopted means little. `detail: true` adds per-API dimensions.",
+        "x-tier": "pro",
+        "security": [
+          {
+            "ApiKey": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "apis": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "document": {
+                          "description": "The API description (YAML/JSON text or object)."
+                        }
+                      }
+                    },
+                    "description": "The estate, one entry per API."
+                  },
+                  "document": {
+                    "description": "A single API, when `apis` is omitted."
+                  },
+                  "ruleset": {
+                    "type": "object",
+                    "description": "The ruleset to score against."
+                  },
+                  "detail": {
+                    "type": "boolean",
+                    "default": false
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Estate rollup.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "summary": {
+                      "type": "object",
+                      "properties": {
+                        "apis": {
+                          "type": "integer"
+                        },
+                        "scored": {
+                          "type": "integer"
+                        },
+                        "failed_to_parse": {
+                          "type": "integer"
+                        },
+                        "ruleset": {
+                          "type": "string"
+                        },
+                        "avg_score": {
+                          "type": [
+                            "integer",
+                            "null"
+                          ]
+                        },
+                        "grade_distribution": {
+                          "type": "object"
+                        },
+                        "total_errors": {
+                          "type": "integer"
+                        },
+                        "apis_with_pii": {
+                          "type": "integer"
+                        },
+                        "apis_with_secrets": {
+                          "type": "integer"
+                        },
+                        "strongest": {
+                          "type": [
+                            "object",
+                            "null"
+                          ]
+                        },
+                        "weakest": {
+                          "type": [
+                            "object",
+                            "null"
+                          ]
+                        }
+                      }
+                    },
+                    "needs_attention": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    },
+                    "apis": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    },
+                    "note": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {
+              "RateLimit-Policy": {
+                "$ref": "#/components/headers/RateLimitPolicy"
+              },
+              "X-RateLimit-Limit": {
+                "$ref": "#/components/headers/XRateLimitLimit"
+              },
+              "X-RateLimit-Window": {
+                "$ref": "#/components/headers/XRateLimitWindow"
+              },
+              "X-RateLimit-Tier": {
+                "$ref": "#/components/headers/XRateLimitTier"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "402": {
+            "$ref": "#/components/responses/PaymentRequired"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -1985,6 +3927,63 @@
                 "upgrade": {
                   "type": "string",
                   "example": "https://developer.apievangelist.com/plans"
+                }
+              }
+            }
+          }
+        }
+      },
+      "NotFound": {
+        "description": "Not found.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                },
+                "detail": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      },
+      "Unauthorized": {
+        "description": "This needs an individual caller (an API key or a signed-in MCP session).",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "ServiceUnavailable": {
+        "description": "Model-backed governance is not enabled on this deployment, or the model timed out (504).",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
                 }
               }
             }

@@ -99,7 +99,7 @@ repo, or rolling up across an estate is Pro.**
 
 | Tool | Tier | What it does |
 | --- | --- | --- |
-| `validate_api` | Free | Lint OpenAPI / AsyncAPI / Arazzo / JSON Schema against the curated ruleset — or pass your own `ruleset`. |
+| `validate_api` | Free | Lint OpenAPI, AsyncAPI, Arazzo, JSON Schema, APIs.json, MCP, agent skills… against the curated ruleset — or your own `ruleset`, or a named `profile`. |
 | `api_coverage` | Free | How much of a description your governance actually inspects. |
 | `api_scorecard` | Free | 0–100 maturity score + letter grade across design, coverage, docs, and agent-readiness. |
 | `diff_api_versions` | Free | Breaking-change detection between two OpenAPI versions. |
@@ -119,6 +119,18 @@ repo, or rolling up across an estate is Pro.**
 | `score_reusability` | **Pro** | Reuse + duplication across a set of APIs. |
 | `map_api_experience` | **Pro** | The API → MCP → Agent-Skill chain, with coverage. |
 | `generate_agent_descriptor` | **Pro** | An API's `llms.txt` + `AGENTS.md` consumption contract. |
+| `validate_ruleset` | Free | Check a ruleset is valid before running or storing it. |
+| `query_jsonpath` | Free | See what a rule's `given` matches in a document. |
+| `test_ruleset` | Free | Run a ruleset against fixtures with expectations; pass/fail and untested rules. |
+| `explain_rule_result` | Free | Why a rule did or didn't fire on a document. |
+| `describe_rule` | Free | One rule with its remediation prompt. |
+| `detect_format` · `lint_agent_skill` · `document_ruleset` | Free | Identify a document; lint a SKILL.md; Markdown docs for a ruleset. |
+| `baseline_violations` | **Pro** | Snapshot violations, then fail only on new ones. |
+| `federate_rulesets` | **Pro** | Central baseline vs. domain adoptions → divergence and drift. |
+| `fingerprint_generator` | **Pro** | Code-first: which generator, and which findings to fix in code. |
+| `fix_diagnostics` | **Pro** | A reviewable Overlay that fixes the findings, proven by a re-lint. |
+| `ruleset_from_style_guide` | **Pro** | Prose style guide → owned, validated ruleset. |
+| `get_org_ruleset` · `set_org_ruleset` | **Pro** | Your org default ruleset, applied to every call without its own. |
 
 Two Agent Skills describe this surface for agents:
 [`api-governance`](https://github.com/api-commons/agent-skills/tree/main/api-governance) (check,
@@ -129,7 +141,7 @@ gate, certify) and
 **A note on rulesets.** The default catalog is a best-of-breed *superset* — run it raw against
 a real API and you get thousands of warnings and no errors, which is how teams learn to ignore
 governance. Pass a `ruleset` you own to `validate_api`, `api_coverage`, and `api_scorecard` and
-gate on that instead.
+gate on that instead — or store it once with `set_org_ruleset` and every call uses it.
 
 ## Prompts
 
@@ -143,6 +155,9 @@ upsell on use. Call `prompts/list` for the always-current set, `prompts/get` to 
 
 **Check an API (free)** — `governance_baseline`, `classify_exposure`, `version_change_review`,
 `waivers_review`, `governance_html_report`
+
+**Write and adopt rules** — `author_a_rule` (free); `fix_these_diagnostics` **Pro**,
+`write_ruleset_from_style_guide` **Pro**
 
 **Make an API agent-ready** — `agent_ready_audit` (free first pass); `make_my_api_agent_ready`
 **Pro**, `forge_mcp_server` **Pro**, `generate_consumption_contract` **Pro**, `mock_and_snippets` **Pro**
@@ -166,6 +181,7 @@ Attachable, readable context an agent can pin into a session. Free unless marked
 - `ae://overview`, `ae://services`, `ae://contact` — the network root, Kin's services, and how to reach out
 - `ae://stats` **Pro** — per-type counts, stories-per-year, top tags
 - Templated: `ae://area/{slug}`, `ae://tag/{slug}`, `ae://post/{slug}` (free); `ae://guide/{topic}` **Pro**
+- `openlint://profiles` and the template `openlint://rules/{format}` — the named ruleset profiles, and the rule catalog for one format (free)
 
 Call `resources/list` and `resources/templates/list` for the authoritative set. The
 [`experience.apicommons.org`](https://experience.apicommons.org) tool renders any APIs.json as a

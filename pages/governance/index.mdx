@@ -4,8 +4,9 @@ title: Governance & Discovery API
 
 The API Commons governance and discovery tools — the ones you run in your browser at
 [apicommons.org/tools](https://apicommons.org/tools/) — are also a hosted REST API on the
-API Evangelist stack. Same engines (Spectral, the 574-rule best-of-breed catalog, the
-certification and reusability logic), now callable from CI, an agent, or a script.
+API Evangelist stack. Same engines ([OpenLint](https://openlint.org), the 776-rule curated
+catalog across 12 formats, the certification and reusability logic), now callable from CI,
+an agent, or a script.
 
 **Discovery-grade linting is free. The capabilities that generate artifacts, certify,
 audit repos, or roll up across many APIs are Pro.**
@@ -39,7 +40,8 @@ curl -X POST https://api.apievangelist.com/v1/governance/validate \
 ```
 
 `passed` reflects errors only — nineteen warnings and it still passes. Tighten the gate with
-`tags` to run a subset, or send your own `ruleset`.
+`tags` to run a subset, send your own `ruleset`, or name a curated `profile` — `owasp`,
+`problem-details`, `fhir`, `api-authorization`. The response's `ruleset` field says which ran.
 
 No key needed. Free tier is 5 req/s, 1,000/day, one document per call.
 
@@ -47,7 +49,7 @@ No key needed. Free tier is 5 req/s, 1,000/day, one document per call.
 
 | Endpoint | Tier | What it does |
 | --- | --- | --- |
-| `POST /governance/validate` | Free | Lint OpenAPI / AsyncAPI / Arazzo / JSON Schema against the curated ruleset. |
+| `POST /governance/validate` | Free | Lint OpenAPI, AsyncAPI, Arazzo, JSON Schema, APIs.json, MCP, agent skills and more — the catalog, your `ruleset`, or a named `profile`. |
 | `POST /governance/coverage` | Free | How much of a description your governance actually inspects. |
 | `POST /governance/waivers` | Free | Reconcile a waivers file against lint output → the effective failing set. |
 | `POST /governance/report` | Free / **Pro** | Findings → self-contained HTML report. SARIF output is Pro. |
@@ -56,8 +58,9 @@ No key needed. Free tier is 5 req/s, 1,000/day, one document per call.
 | `POST /governance/diff` | Free | Breaking-change detection between two OpenAPI versions. |
 | `POST /governance/scorecard` | Free | Composite API maturity score + letter grade across dimensions. |
 | `POST /governance/deprecation` | Free | Deprecation / sunset posture — which deprecated ops announce a sunset. |
-| `GET /governance/rules` | Free | The 574-rule best-of-breed catalog. |
-| `GET /governance/rulesets` | Free | The Ruleset Commons registry of adoptable rulesets. |
+| `GET /governance/rules` | Free | The 776-rule curated catalog, filterable by format. |
+| `GET /governance/rulesets` | Free | The Ruleset Commons registry, plus the named `profiles` validate runs. |
+| `POST /governance/estate` | **Pro** | Run the core checks across a whole set of APIs and roll them up, worst first. |
 | `POST /governance/certify` | **Pro** | Issue a tamper-evident governance certificate. |
 | `POST /governance/agent-export` | **Pro** | Ruleset → AGENTS.md, system prompt, remediation pack, digest. |
 | `POST /governance/pipeline-audit` | **Pro** | Score a repo's Spectral CI maturity + punch-list. |
@@ -70,6 +73,34 @@ No key needed. Free tier is 5 req/s, 1,000/day, one document per call.
 | `POST /discovery/agent-descriptor` | **Pro** | Generate an API's `llms.txt` + `AGENTS.md` consumption contract. |
 | `POST /discovery/reusability` | **Pro** | Reuse + duplication scores across a set of APIs. |
 | `POST /discovery/experience` | **Pro** | The API → MCP → Agent-Skill coverage model + SVG. |
+
+### Writing rules
+
+Agents write most rules now, and they're good at writing rules and bad at writing *valid*
+ones. These close the loop: check the ruleset, see what a JSONPath hits, test against
+fixtures, ask why a rule did or didn't fire. All free.
+
+| Endpoint | Tier | What it does |
+| --- | --- | --- |
+| `POST /governance/validate-ruleset` | Free | Is this ruleset valid? Bad JSONPath, unknown functions (which the engine skips silently), undefined aliases. |
+| `POST /governance/jsonpath` | Free | What a `given` actually matches — pointers, values, and whether `field` is present. |
+| `POST /governance/test-ruleset` | Free | Run a ruleset against fixtures with expectations; report pass/fail and untested rules. |
+| `POST /governance/explain` | Free | Why a rule did or didn't fire: formats → `given` → `then` → verdict. |
+| `GET /governance/describe-rule` | Free | One rule, with its remediation prompt. Suggests the nearest id for a typo. |
+| `POST /governance/detect-format` | Free | What a document is (incl. Swagger 2.0 vs 3.x, agent skills) and which rules apply. |
+| `POST /governance/lint-skill` | Free | Lint an agent SKILL.md against the API Commons skill rules. |
+| `POST /governance/ruleset-docs` | Free | Markdown documentation for a ruleset or a named profile. |
+
+### Adopting rules on a real estate
+
+| Endpoint | Tier | What it does |
+| --- | --- | --- |
+| `POST /governance/baseline` | **Pro** | Snapshot today's violations; then fail only on new ones, with burndown. |
+| `POST /governance/federate` | **Pro** | A central baseline + the domains that adopt it → divergence and drift. |
+| `POST /governance/codefirst` | **Pro** | Which generator made the spec, and which findings to fix in code vs. the spec. |
+| `POST /governance/fix` | **Pro** | Propose an Overlay that fixes the findings, apply it, re-lint, flag breaking changes. |
+| `POST /governance/ruleset-from-guide` | **Pro** | Turn a prose style guide into an owned, validated ruleset. |
+| `GET` `PUT` `DELETE /governance/org-ruleset` | **Pro** | Your org default ruleset, used by every call that doesn't pass one. |
 
 See the full [Governance API Reference](/governance-api) for request and response schemas,
 and [Free vs Pro](/governance/free-vs-pro) for exactly where the line falls.
