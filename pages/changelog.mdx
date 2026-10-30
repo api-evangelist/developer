@@ -15,6 +15,20 @@ and back-filling it from commit messages would dress up a reconstruction as a re
 Breaking changes are called out explicitly and follow the
 [deprecation policy](/deprecation). One removal from `/v1` to date: `/reports`, on 2026-08-21.
 
+## 2026-10-30
+
+- **Rule authoring, free:** `/governance/validate-ruleset`, `/jsonpath`, `/test-ruleset`, `/explain`,
+  `/describe-rule`, `/detect-format`, `/lint-skill` and `/ruleset-docs` — check, probe, test and
+  explain rules before trusting them.
+- **Estate adoption, Pro:** `/governance/baseline`, `/federate`, `/codefirst`, `/fix`,
+  `/ruleset-from-guide` and `/org-ruleset`. A stored org ruleset applies to every governance call
+  that passes none.
+- **`validate`** runs named profiles (`owasp`, `problem-details`, `fhir`, `api-authorization`),
+  lints agent skills, accepts format synonyms, and can add OpenLint's built-in Arazzo rules.
+- **MCP:** 15 new governance tools (83 in all), the `author_a_rule`, `fix_these_diagnostics` and
+  `write_ruleset_from_style_guide` prompts, and `openlint://` resources.
+- **Documented:** `/governance/estate`, which had shipped without a place in the contract.
+
 ## 2026-10-29
 
 - **The governance engine is now [OpenLint](https://openlint.org)**, the community-governed
