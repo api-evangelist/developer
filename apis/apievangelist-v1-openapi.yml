@@ -479,7 +479,7 @@ paths:
                 engage:
                   email: info@apievangelist.com
                   services_url: https://apievangelist.com/services/
-                  newsletter: https://buttondown.com/apievangelist
+                  newsletter: https://usecommune.com/n/apievangelist
           headers:
             RateLimit-Policy:
               $ref: '#/components/headers/RateLimitPolicy'
